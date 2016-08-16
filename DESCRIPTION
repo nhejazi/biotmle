@@ -1,0 +1,24 @@
+Package: TargetedLimma
+Title: Targeted Learning for Genomics with Limma
+Version: 0.0.1
+Authors@R: c(
+              person("Nima", "Hejazi", email = "nhejazi@berkeley.edu",
+                     role = c("aut", "cre")),
+              person("Wilson", "Cai", email = "wcai@berkeley.edu",
+                     role = c("aut", "cre")),
+              person("Alan", "Hubbard", email = "hubbard@berkeley.edu",
+                     role = c("aut"))
+            )
+Description: This package implements a variance shrinkage estimation and linear
+    modeling method on point-wise estimates of the causal effect of a
+    given set of genomic covariates on an outcome of interest. In
+    particular, ...
+Depends:
+    R (>= 3.3.1)
+License: MIT + file LICENSE
+URL: https://github.com/nhejazi/TargetedLimma
+Encoding: UTF-8
+LazyData: true
+Suggests:
+    testthat
+RoxygenNote: 5.0.1
