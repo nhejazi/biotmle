@@ -1,21 +1,24 @@
 # R/TargetedLimma
 
-[![Travis-CI Build Status](https://travis-ci.org/nhejazi/TargetedLimma.svg?branch=master)](https://travis-ci.org/nhejazi/TargetedLimma)
+[![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+[![Travis-CI Build Status](https://travis-ci.org/nhejazi/TargetedLimma.svg?branch=develop)](https://travis-ci.org/nhejazi/TargetedLimma)
 
-This is an R package for using Limma with the Targeted Learning paradigm to
-obtain variance-shrunken estimates of the causal effect of gene expression
-changes with respect to a particular outcome of interest.
+`TargetedLimma` is an R package for using the empirical Bayes method formulated
+in the [Limma]() (Linear Models for Microarrays) package alongside Targeted
+Minimum Loss-Based Estimation (TMLE) to estimate a causally identifiable
+statistical target parameter (_e.g._, the Average Treatment Effect (ATE)) that
+relates changes in levels of gene expression to a particular outcome of
+interest (_e.g._, survival).
 
 ---
 
 ## Installation
 
 - To install the most recent _stable release_:
-  - from CRAN, use `install.packages("TargetedLimma")`
   - from GitHub, use `devtools::install_github("nhejazi/TargetedLimma")`
 
 - To install the _development version_, use
-  `devtools::install_github("nhejazi/TargetedLimma", ref = "devel")`
+  `devtools::install_github("nhejazi/TargetedLimma", ref = "develop")`
 
 ---
 

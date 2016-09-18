@@ -41,7 +41,7 @@ tmle.multi = function(W, A, Y, a = 1, g.lib, Q.lib, family = "binomial",
   }
 
   if (parallel) {
-    foreach::foreach (i = 1:n_a) foreach::%dopar% {
+    foreach::foreach (i = 1:n_a) %dopar% {
       A_star = as.numeric(A == a[i])
       tmle.0 = tmle(Y, A_star, W, g.SL.library = g.lib, Q.SL.library = Q.lib,
                     family = family, verbose = FALSE)

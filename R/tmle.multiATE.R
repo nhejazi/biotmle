@@ -38,7 +38,7 @@ tmle.multiATE <- function(W, A, Y, a = 1, g.lib, Q.lib, family = "binomial",
              will likely take on the order of days/weeks to run to completion.")
   }
 
-  ATE <- foreach::foreach(gene = 1:ncol(A), .combine = rbind) foreach::%dopar% {
+  ATE <- foreach::foreach(gene = 1:ncol(A), .combine = rbind) %dopar% {
     print(paste("estimating casual effect", gene, "of", ncol(A), ". Gene ID:",
                  colnames(A)[gene]))
     out <- tmle.multi(W = W, A = A[, gene], Y = Y$Y, a = a, g.lib, Q.lib,
