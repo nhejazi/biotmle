@@ -1,5 +1,5 @@
-Package: TargetedLimma
-Title: Targeted Learning for Genomics with Limma
+Package: limmaTMLE
+Title: Targeted learning in high-dimensions with moderated t-statistics
 Version: 0.0.1
 Authors@R: c(
               person("Nima", "Hejazi", email = "nhejazi@berkeley.edu",
@@ -16,7 +16,7 @@ Description: This package implements a variance shrinkage estimation and linear
 Depends:
     R (>= 3.3.1)
 License: MIT + file LICENSE
-URL: https://github.com/nhejazi/TargetedLimma
+URL: https://github.com/nhejazi/limmaTMLE
 Encoding: UTF-8
 LazyData: true
 Suggests:
