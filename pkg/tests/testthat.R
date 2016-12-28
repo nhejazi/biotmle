@@ -1,4 +1,4 @@
 library(testthat)
-library(TargetedLimma)
+library(tmlelimma)
 
-test_check("TargetedLimma")
+#test_check("tmlelimma")

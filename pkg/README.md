@@ -1,16 +1,18 @@
-# R/limmaTMLE
+# R/`tmlelimma`
 
 [![MIT
 license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 [![Travis-CI Build
-Status](https://travis-ci.org/nhejazi/limmaTMLE.svg)](https://travis-ci.org/nhejazi/limmaTMLE)
+Status](https://travis-ci.org/nhejazi/tmlelimma.svg)](https://travis-ci.org/nhejazi/tmlelimma)
 
-`limmaTMLE` is an R package for using the empirical Bayes method formulated
-in the [Limma]() (Linear Models for Microarrays) package alongside Targeted
-Minimum Loss-Based Estimation (TMLE) to estimate a causally identifiable
-statistical target parameter (_e.g._, the Average Treatment Effect (ATE)) that
-relates changes in levels of gene expression to a particular outcome of
-interest (_e.g._, survival).
+`tmlelimma` is an R package that generalizes the moderated t-statistic of Smyth
+for use with asymptotically linear target parameters. The technique implemented
+here relies on the use of Targeted Minimum Loss-Based Estimation (TMLE) to
+transform observed data based on influence curve representations of statistical
+target parameters (e.g., the Average Treatment Effect), with the transformed
+data then being used to test for differences between groups using the moderated
+t-statistic as implemented in the R package
+[limma](https://bioconductor.org/packages/release/bioc/html/limma.html).
 
 ---
 
@@ -18,25 +20,25 @@ interest (_e.g._, survival).
 
 - To install the most recent _stable release_ from GitHub, use
   ```r
-  devtools::install_github("nhejazi/limmaTMLE", subdir = "pkg")
+  devtools::install_github("nhejazi/tmlelimma", subdir = "pkg")
   ```
 
 - To install the _development version_, use
   ```r
-  devtools::install_github("nhejazi/limmaTMLE", ref = "develop", subdir = "pkg")
+  devtools::install_github("nhejazi/tmlelimma", ref = "develop", subdir = "pkg")
   ```
 
 ---
 
 ## License
 
-&copy; 2016-2017 Nima Hejazi, Wilson Cai, Alan Hubbard
+&copy; 2016-2017 Nima S. Hejazi, Weixin (Wilson) Cai, Alan E. Hubbard
 
 This repository is licensed under the MIT license. See below for details:
 ```
 The MIT License (MIT)
 
-Copyright (c) 2016-2017 Nima Hejazi, Wilson Cai, Alan Hubbard
+Copyright (c) 2016-2017 Nima S. Hejazi, Weixin (Wilson) Cai, Alan E. Hubbard
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

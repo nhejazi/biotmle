@@ -1,2 +1,2 @@
-December 1, 2016
-* The first working releast of package `TargetedLimma` is available on CRAN.
+February 1, 2017
+* The first working releast of package `tmlelimma` is available on CRAN.

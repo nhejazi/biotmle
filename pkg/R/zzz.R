@@ -1,5 +1,5 @@
 .onAttach <- function(...) {
-  packageStartupMessage("TargetedLimma: Targeted Learning with Genomic Data")
+  packageStartupMessage("tmlelimma: Targeted Learning with the moderated t-statistic")
   packageStartupMessage("Version: ",
-                        utils::packageDescription("TargetedLimma")$Version)
+                        utils::packageDescription("tmlelimma")$Version)
 }
