@@ -1,15 +1,4 @@
----
-title: "Identifying and Analyzing Biomarkers with `tmlelimma`"
-author: "Nima S. Hejazi & Alan E. Hubbard"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Identifying and Analyzing Biomarkers with `tmlelimma`}
-  %\VignetteEngine{knitr::rmarkdown}
-  \usepackage[utf8]{inputenc}
----
-
-```{r setup_data}
+## ----setup_data----------------------------------------------------------
 library(dplyr)
 library(tmlelimma)
 data(illumina2007)
@@ -29,9 +18,8 @@ data <- illumina2007 %>%
   dplyr::select(which(colnames(.) %ni% c("newbenz", "current_smoking")))
 
 subjIDs <- data$id
-```
 
-```{r clean_data}
+## ----clean_data----------------------------------------------------------
 # W - age, sex, smoking
 W <- data %>%
   dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %>%
@@ -54,32 +42,25 @@ Y <- data %>%
                                          "id")))
 
 geneIDs <- colnames(Y)
-```
 
-The following procedure takes a long time to run, so rather than run it as part
-of this vignette, we provide the necessary syntax:
-```{r biomarkerTMLE_eval, eval=FALSE}
-biomarkerTMLEout <- genomicTMLE(Y = Y,
-                                W = W,
-                                A = A,
-                                family = "gaussian",
-                                g_lib = c("SL.glmnet", "SL.randomForest",
-                                          "SL.nnet", "SL.polymars", "SL.mean"),
-                                Q_lib = c("SL.glmnet", "SL.randomForest",
-                                          "SL.nnet", "SL.mean")
-                               )
-```
+## ----biomarkerTMLE_eval, eval=FALSE--------------------------------------
+#  biomarkerTMLEout <- genomicTMLE(Y = Y,
+#                                  W = W,
+#                                  A = A,
+#                                  family = "gaussian",
+#                                  g_lib = c("SL.glmnet", "SL.randomForest",
+#                                            "SL.nnet", "SL.polymars", "SL.mean"),
+#                                  Q_lib = c("SL.glmnet", "SL.randomForest",
+#                                            "SL.nnet", "SL.mean")
+#                                 )
 
-A `data.frame` object containing the results of this procedure is included with
-the package and will be used for the remainder of this vignette:
-```{r load_biomarkerTMLE_results}
+## ----load_biomarkerTMLE_results------------------------------------------
 data(illumina2007results)
 biomarkerTMLEout <- illumina2007results
 rownames(biomarkerTMLEout) <- geneIDs
 colnames(biomarkerTMLEout) <- as.character(subjIDs)
-```
 
-```{r limmaTMLE_eval}
+## ----limmaTMLE_eval------------------------------------------------------
 design <- as.data.frame(cbind(rep(1, nrow(Y)),
                               as.numeric(A == max(unique(A)))))
 colnames(design) <- c("intercept", "Tx")
@@ -87,9 +68,8 @@ colnames(design) <- c("intercept", "Tx")
 limmaTMLEout <- limmaTMLE(biomarkerTMLEout, IDs = NULL, designMat = design)
 
 tt <- limmaTMLEout[[2]]
-```
 
-```{r heatmap_limma_results}
+## ----heatmap_limma_results-----------------------------------------------
 # visualization of results produced from statistical analyses
 library(NMF)
 library(ggplot2)
@@ -122,9 +102,8 @@ aheatmap(as.matrix(biomarkerTMLEout_top),
          annColors = "Set2",
          main = "Heatmap of Top 25 Genes (FDR-controlled)"
         )
-```
 
-```{r pval_hist_limma_results}
+## ----pval_hist_limma_results---------------------------------------------
 ggplot(tt, aes(P.Value)) +
   geom_histogram(aes(y = ..count.., fill = ..count..), colour = "white",
                  na.rm = TRUE, binwidth = 0.05) +
@@ -144,9 +123,8 @@ ggplot(tt, aes(adj.P.Val)) +
   scale_fill_gradientn("Count", colors = pal1) +
   guides(fill = guide_legend(title = NULL)) +
   theme_bw()
-```
 
-```{r volcano_plot_limma_results}
+## ----volcano_plot_limma_results------------------------------------------
 # add volcano plot examining genes showing differential expression
 tt_volcano <- tt %>%
   dplyr::arrange(adj.P.Val) %>%
@@ -166,4 +144,4 @@ ggplot(tt_volcano, aes(x = logFC, y = logPval)) +
   ggtitle("Volcano Plot of Differential Average Tx Effect") +
   scale_colour_manual(values = pal2[1:3], guide = FALSE) +
   theme_bw()
-```
+

@@ -4,14 +4,11 @@
 \alias{limmaTMLE}
 \title{Moderated T-Statistic Test for Asymptotically Linear Target Parameters}
 \usage{
-limmaTMLE(biomarkerTMLEout, IDs = NULL, designMat, ...)
+limmaTMLE(biomarkerTMLEout, designMat, ...)
 }
 \arguments{
 \item{biomarkerTMLEout}{a generic object generated as output from the TMLE
 procedure implemented in \code{biomarkerTMLE}}
-
-\item{IDs}{a vector providing the annotation information for the biomarkers,
-genes, or other units of interested in the analysis}
 
 \item{designMat}{a design matrix providing the contrasts to be used in the
 linear model fitting procedure of \code{limma::lmFit}}
