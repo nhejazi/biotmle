@@ -4,6 +4,14 @@
 license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 [![Travis-CI Build
 Status](https://travis-ci.org/nhejazi/tmlelimma.svg)](https://travis-ci.org/nhejazi/tmlelimma)
+[![Coverage
+Status](https://coveralls.io/repos/github/nhejazi/limmatmle/badge.svg?branch=master)](https://coveralls.io/github/nhejazi/tmlelimma?branch=master)
+
+> Targeted Learning in high dimensions with the moderated t-statistic.
+
+---
+
+## Description
 
 `tmlelimma` is an R package that generalizes the moderated t-statistic of Smyth
 for use with asymptotically linear target parameters. The technique implemented

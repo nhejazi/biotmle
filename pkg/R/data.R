@@ -8,3 +8,13 @@
 #'   ...some information ought to go here...
 #' }
 "illumina2007"
+
+#' Results obtained from running the `tmlelimma` procedure on illumina2007 data
+#'
+#' description...
+#'
+#' @format A data frame with 22177 rows and 125 variables:
+#' \describe{
+#'   ...some information ought to go here...
+#' }
+"illumina2007results"

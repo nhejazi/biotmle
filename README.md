@@ -3,7 +3,15 @@
 [![MIT
 license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 [![Travis-CI Build
-Status](https://travis-ci.org/nhejazi/limmaTMLE.svg)](https://travis-ci.org/nhejazi/limmaTMLE)
+Status](https://travis-ci.org/nhejazi/tmlelimma.svg)](https://travis-ci.org/nhejazi/tmlelimma)
+[![Coverage
+Status](https://coveralls.io/repos/github/nhejazi/limmatmle/badge.svg?branch=master)](https://coveralls.io/github/nhejazi/tmlelimma?branch=master)
+
+> Targeted Learning in high dimensions with the moderated t-statistic.
+
+---
+
+## Description
 
 `tmlelimma` is an R package that generalizes the moderated t-statistic of Smyth
 for use with asymptotically linear target parameters. The technique implemented
@@ -19,14 +27,15 @@ t-statistic as implemented in the R package
 ## Installation
 
 - To install the most recent _stable release_ from GitHub, use
-  ```r
-  devtools::install_github("nhejazi/tmlelimma", subdir = "pkg")
-  ```
+    ```r
+    devtools::install_github("nhejazi/tmlelimma", subdir = "pkg")
+    ```
 
 - To install the _development version_, use
-  ```r
-  devtools::install_github("nhejazi/tmlelimma", ref = "develop", subdir = "pkg")
-  ```
+    ```r
+    devtools::install_github("nhejazi/tmlelimma", ref = "develop",
+                             subdir = "pkg")
+    ```
 
 ---
 
