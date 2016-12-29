@@ -1,5 +1,35 @@
-# R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
+language: r
+r:
+  - oldrel
+  - release
+  - devel
 
-language: R
-sudo: false
+sudo: required
+
+before_install:
+  - cd pkg
+
+warnings_are_errors: true
+
 cache: packages
+
+r_packages:
+  - testthat
+  - rmarkdown
+  - doParallel
+  - parallel
+  - foreach
+  - SuperLearner
+  - tmle
+  - limma
+
+r_github_packages:
+  - jimhester/covr
+
+after_success:
+  - Rscript -e 'covr::coveralls()'
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change

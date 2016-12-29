@@ -1,0 +1,34 @@
+Package: tmlelimma
+Title: Targeted learning in high-dimensions with the moderated t-statistic
+Version: 0.0.1
+Authors@R: c(
+              person("Nima", "Hejazi", email = "nhejazi@berkeley.edu",
+                     role = c("aut", "cre")),
+              person("Weixin", "Cai", email = "wcai@berkeley.edu",
+                     role = c("ctb")),
+              person("Alan", "Hubbard", email = "hubbard@berkeley.edu",
+                     role = c("aut"))
+            )
+Description: This package implements a variance shrinkage estimation and linear
+    modeling method on point-wise estimates of the causal effect of a
+    given set of genomic covariates on an outcome of interest. In
+    particular, ...
+Depends:
+    R (>= 3.3.1)
+License: MIT + file LICENSE
+URL: https://github.com/nhejazi/tmlelimma
+Encoding: UTF-8
+LazyData: true
+Imports:
+    tmle,
+    foreach,
+    parallel,
+    doParallel,
+    SuperLearner,
+    limma
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 5.0.1
