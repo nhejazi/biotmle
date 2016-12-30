@@ -26,15 +26,11 @@ t-statistic as implemented in the R package
 
 ## Installation
 
-- To install the most recent _stable release_ from GitHub, use
-  ```r
-  devtools::install_github("nhejazi/tmlelimma", subdir = "pkg")
-  ```
+- Install the most recent _stable release_ from GitHub:
+  `devtools::install_github("nhejazi/tmlelimma", subdir = "pkg")`
 
-- To install the _development version_, use
-  ```r
-  devtools::install_github("nhejazi/tmlelimma", ref = "develop", subdir = "pkg")
-  ```
+- Install the _development version_:
+  `devtools::install_github("nhejazi/tmlelimma", ref = "develop", subdir = "pkg")`
 
 ---
 
@@ -42,7 +38,8 @@ t-statistic as implemented in the R package
 
 &copy; 2016-2017 Nima S. Hejazi, Weixin (Wilson) Cai, Alan E. Hubbard
 
-This repository is licensed under the MIT license. See below for details:
+The contents of this repository are distributed under the MIT license. See
+below for details:
 ```
 The MIT License (MIT)
 
