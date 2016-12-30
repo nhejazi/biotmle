@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Identifying and Analyzing Biomarkers with <code>tmlelimma</code> • tmlelimma</title>
+<title>Identifying Biomarkers from Exposure Patterns • tmlelimma</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -57,11 +57,10 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Identifying and Analyzing Biomarkers with <code>tmlelimma</code>
-</h1>
+      <h1>Identifying Biomarkers from Exposure Patterns</h1>
                         <h4 class="author">Nima S. Hejazi &amp; Alan E. Hubbard</h4>
             
-            <h4 class="date">2016-12-28</h4>
+            <h4 class="date">2016-12-29</h4>
           </div>
 
     
@@ -172,7 +171,7 @@ annot &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span cla
          <span class="dt">annColors =</span> <span class="st">"Set2"</span>,
          <span class="dt">main =</span> <span class="st">"Heatmap of Top 25 Genes (FDR-controlled)"</span>
         )</code></pre></div>
-<p><img src="biomarkerAnalysis_files/figure-html/heatmap_limma_results-1.png" width="672"></p>
+<p><img src="exposureBiomarkers_files/figure-html/heatmap_limma_results-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tt, <span class="kw">aes</span>(P.Value)) +
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..count.., <span class="dt">fill =</span> ..count..), <span class="dt">colour =</span> <span class="st">"white"</span>,
                  <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">binwidth =</span> <span class="fl">0.05</span>) +
@@ -182,7 +181,7 @@ annot &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span cla
 <span class="st">  </span><span class="kw">scale_fill_gradientn</span>(<span class="st">"Count"</span>, <span class="dt">colors =</span> pal1) +
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="ot">NULL</span>)) +
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="biomarkerAnalysis_files/figure-html/pval_hist_limma_results-1.png" width="672"></p>
+<p><img src="exposureBiomarkers_files/figure-html/pval_hist_limma_results-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tt, <span class="kw">aes</span>(adj.P.Val)) +
 <span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..count.., <span class="dt">fill =</span> ..count..), <span class="dt">colour =</span> <span class="st">"white"</span>,
                  <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">binwidth =</span> <span class="fl">0.05</span>) +
@@ -192,7 +191,7 @@ annot &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span cla
 <span class="st">  </span><span class="kw">scale_fill_gradientn</span>(<span class="st">"Count"</span>, <span class="dt">colors =</span> pal1) +
 <span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="ot">NULL</span>)) +
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="biomarkerAnalysis_files/figure-html/pval_hist_limma_results-2.png" width="672"></p>
+<p><img src="exposureBiomarkers_files/figure-html/pval_hist_limma_results-2.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add volcano plot examining genes showing differential expression</span>
 tt_volcano &lt;-<span class="st"> </span>tt %&gt;%
 <span class="st">  </span>dplyr::<span class="kw">arrange</span>(adj.P.Val) %&gt;%
@@ -212,7 +211,7 @@ tt_volcano &lt;-<span class="st"> </span>tt %&gt;%
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Volcano Plot of Differential Average Tx Effect"</span>) +
 <span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> pal2[<span class="dv">1</span>:<span class="dv">3</span>], <span class="dt">guide =</span> <span class="ot">FALSE</span>) +
 <span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="biomarkerAnalysis_files/figure-html/volcano_plot_limma_results-1.png" width="672"></p>
+<p><img src="exposureBiomarkers_files/figure-html/volcano_plot_limma_results-1.png" width="672"></p>
 </div>
   </div>
 

@@ -26,16 +26,11 @@ t-statistic as implemented in the R package
 
 ## Installation
 
-- To install the most recent _stable release_ from GitHub, use
-    ```r
-    devtools::install_github("nhejazi/tmlelimma", subdir = "pkg")
-    ```
+- Install the most recent _stable release_ from GitHub:
+  `devtools::install_github("nhejazi/tmlelimma", subdir = "pkg")`
 
-- To install the _development version_, use
-    ```r
-    devtools::install_github("nhejazi/tmlelimma", ref = "develop",
-                             subdir = "pkg")
-    ```
+- Install the _development version_:
+  `devtools::install_github("nhejazi/tmlelimma", ref = "develop", subdir = "pkg")`
 
 ---
 
