@@ -1,10 +1,10 @@
 ---
-title: "Identifying Biomarkers from an Outcome"
+title: "Identifying Biomarkers from an Outcome Variable"
 author: "Nima S. Hejazi & Alan E. Hubbard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Identifying Biomarkers from an Outcome}
+  %\VignetteIndexEntry{Identifying Biomarkers from an Outcome Variable}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
