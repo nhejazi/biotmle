@@ -12,12 +12,11 @@
 
 plot_biotmle <- function(biotmle,
                          type) {
-  biotmle
   pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
   pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
 
   if(type == "pvals_raw") {
-    ggplot(tt, aes(P.Value)) +
+    ggplot(biotmle$topTable, aes(P.Value)) +
       geom_histogram(aes(y = ..count.., fill = ..count..), colour = "white",
                      na.rm = TRUE, binwidth = 0.05) +
       ggtitle(paste("Histogram of raw p-values \n (applying Limma shrinkage to",
@@ -28,7 +27,7 @@ plot_biotmle <- function(biotmle,
   }
 
   if (type == "pvals_adj") {
-    ggplot(tt, aes(adj.P.Val)) +
+    ggplot(biotmle$topTable, aes(adj.P.Val)) +
       geom_histogram(aes(y = ..count.., fill = ..count..), colour = "white",
                      na.rm = TRUE, binwidth = 0.05) +
       ggtitle(paste("Histogram of FDR-corrected p-values (BH) \n (applying Limma",
@@ -59,7 +58,7 @@ volcplot_biotmle <- function(biotmle) {
   pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
 
   # add volcano plot examining genes showing differential expression
-  tt_volcano <- tt %>%
+  tt_volcano <- biotmle$topTable %>%
     dplyr::arrange(adj.P.Val) %>%
     dplyr::mutate(
       logFC = I(logFC),
@@ -82,6 +81,10 @@ volcplot_biotmle <- function(biotmle) {
 #'
 #' @param biotmle object of class \code{biotmle} as produced by an appropriate
 #'        call to \code{biomarkertmle}
+#' @param designMat a design matrix providing the contrasts to be dispalyed in
+#'        the heatmap (just as would be passed to \code{limma::lmFit})
+#' @param FDRcutoff cutoff to be used in controlling the False Discovery Rate
+#' @param top number of identified biomarkers to plot in the heatmap
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom dplyr arrange filter slice
@@ -90,31 +93,29 @@ volcplot_biotmle <- function(biotmle) {
 #' @export heatmap_biotmle
 #'
 
-heatmap_biotmle <- function(biotmle) {
-  FDRcutoff = 0.05 # cutoff to be used in controlling the False Discovery Rate
-  top = 25 # plot this number of differentially expressed genes in the heat map
+heatmap_biotmle <- function(biotmle, designMat, FDRcutoff = 0.05, top = 25) {
 
   # make heatmap of genes showing differential expression
-  tt_FDR <- tt %>%
-    subset(adj.P.Val < FDRcutoff)
-
-  topgenes <- tt_FDR %>%
+  topbiomarkersFDR <- biotmle$topTable %>%
+    subset(adj.P.Val < FDRcutoff) %>%
     dplyr::arrange(adj.P.Val) %>%
     dplyr::slice(1:top)
 
-  biomarkerTMLEout_top <- biomarkerTMLEout %>%
-    dplyr::filter(rownames(biomarkerTMLEout) %in% topgenes$IDs)
+  biomarkerTMLEout_top <- biotmle$tmleOut %>%
+    dplyr::filter(rownames(biotmle$tmleOut) %in% topbiomarkersFDR$IDs)
 
-  annot <- data.frame(Treatment = ifelse(design$Tx == 0, "Control", "Exposed"))
+  annot <- data.frame(Treatment = ifelse(designMat$Tx == 0,
+                                         "Control", "Exposed"))
   rownames(annot) <- colnames(biomarkerTMLEout_top)
   NMF::nmf.options(grid.patch = TRUE)
 
   NMF::aheatmap(as.matrix(biomarkerTMLEout_top),
-           scale = "row",
-           Rowv = TRUE,
-           Colv = NULL,
-           annCol = annot,
-           annColors = "Set2",
-           main = "Heatmap of Top 25 Genes (FDR-controlled)"
-          )
+                scale = "row",
+                Rowv = TRUE,
+                Colv = NULL,
+                annCol = annot,
+                annColors = "Set2",
+                main = paste("Heatmap of Top", top, "Biomarkers", FDRcutoff,
+                             "(FDR)")
+               )
 }

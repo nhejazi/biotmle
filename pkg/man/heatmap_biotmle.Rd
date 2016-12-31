@@ -4,11 +4,15 @@
 \alias{heatmap_biotmle}
 \title{Heatmap for class \code{biotmle}}
 \usage{
-heatmap_biotmle(biotmle)
+heatmap_biotmle(biotmle, FDRcutoff = 0.05, top = 25)
 }
 \arguments{
 \item{biotmle}{object of class \code{biotmle} as produced by an appropriate
 call to \code{biomarkertmle}}
+
+\item{FDRcutoff}{cutoff to be used in controlling the False Discovery Rate}
+
+\item{top}{number of identified biomarkers to plot in the heatmap}
 }
 \description{
 Heatmap for class \code{biotmle}

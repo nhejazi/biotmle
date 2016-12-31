@@ -4,7 +4,7 @@
 \alias{biomarkerTMLE_outcome}
 \title{TMLE procedure for Biomarker Identication from Outcome}
 \usage{
-biomarkerTMLE_outcome(Y, W, A, a, family = "gaussian", g_lib, Q_lib)
+biomarkerTMLE_outcome(Y, W, A, a, family = "binomial", g_lib, Q_lib)
 }
 \arguments{
 \item{Y}{(numeric vector) - a vector of array expression values for a single
