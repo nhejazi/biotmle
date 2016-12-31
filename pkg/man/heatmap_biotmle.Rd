@@ -4,11 +4,14 @@
 \alias{heatmap_biotmle}
 \title{Heatmap for class \code{biotmle}}
 \usage{
-heatmap_biotmle(biotmle, FDRcutoff = 0.05, top = 25)
+heatmap_biotmle(biotmle, designMat, FDRcutoff = 0.05, top = 25)
 }
 \arguments{
 \item{biotmle}{object of class \code{biotmle} as produced by an appropriate
 call to \code{biomarkertmle}}
+
+\item{designMat}{a design matrix providing the contrasts to be dispalyed in
+the heatmap (just as would be passed to \code{limma::lmFit})}
 
 \item{FDRcutoff}{cutoff to be used in controlling the False Discovery Rate}
 

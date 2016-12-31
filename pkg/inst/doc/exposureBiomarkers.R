@@ -44,104 +44,36 @@ Y <- data %>%
 geneIDs <- colnames(Y)
 
 ## ----biomarkerTMLE_eval, eval=FALSE--------------------------------------
-#  biomarkerTMLEout <- genomicTMLE(Y = Y,
-#                                  W = W,
-#                                  A = A,
-#                                  family = "gaussian",
-#                                  g_lib = c("SL.glmnet", "SL.randomForest",
-#                                            "SL.nnet", "SL.polymars", "SL.mean"),
-#                                  Q_lib = c("SL.glmnet", "SL.randomForest",
-#                                            "SL.nnet", "SL.mean")
-#                                 )
+#  biomarkerTMLEout <- biomarkertmle(Y = Y,
+#                                    W = W,
+#                                    A = A,
+#                                    type = "exposure",
+#                                    family = "gaussian",
+#                                    g_lib = c("SL.glmnet", "SL.randomForest",
+#                                              "SL.nnet", "SL.polymars",
+#                                              "SL.mean"),
+#                                    Q_lib = c("SL.glmnet", "SL.randomForest",
+#                                              "SL.nnet", "SL.mean")
+#                                   )
 
-## ----load_biomarkerTMLE_results------------------------------------------
-data(illumina2007results)
-biomarkerTMLEout <- illumina2007results
-rownames(biomarkerTMLEout) <- geneIDs
-colnames(biomarkerTMLEout) <- as.character(subjIDs)
+## ----load_biomarkerTMLE_result, eval=FALSE-------------------------------
+#  data(illumina2007result)
 
-## ----limmaTMLE_eval------------------------------------------------------
-design <- as.data.frame(cbind(rep(1, nrow(Y)),
-                              as.numeric(A == max(unique(A)))))
-colnames(design) <- c("intercept", "Tx")
+## ----limmaTMLE_eval, eval=FALSE------------------------------------------
+#  design <- as.data.frame(cbind(rep(1, nrow(Y)),
+#                                as.numeric(A == max(unique(A)))))
+#  colnames(design) <- c("intercept", "Tx")
+#  
+#  limmaTMLEout <- limmatmle(biotmle, IDs = NULL, designMat = design)
 
-limmaTMLEout <- limmaTMLE(biomarkerTMLEout, IDs = NULL, designMat = design)
+## ----heatmap_limma_results, eval=FALSE-----------------------------------
+#  heatmap_biotmle(biotmle, designMat = design, FDRcutoff = 0.05, top = 25)
 
-tt <- limmaTMLEout[[2]]
+## ----pval_hist_limma_results, eval=FALSE---------------------------------
+#  plot_biotmle(biotmle, type = "pvals_raw")
+#  
+#  plot_biotmle(biotmle, type = "pvals_adj")
 
-## ----heatmap_limma_results-----------------------------------------------
-# visualization of results produced from statistical analyses
-library(NMF)
-library(ggplot2)
-library(wesanderson)
-pal1 <- wes_palette("Rushmore", 100, type = "continuous")
-pal2 <- wes_palette("Darjeeling", type = "continuous")
-FDRcutoff = 0.05 # cutoff to be used in controlling the False Discovery Rate
-top = 25 # plot this number of differentially expressed genes in the heat map
-
-# make heatmap of genes showing differential expression
-tt_FDR <- tt %>%
-  subset(adj.P.Val < FDRcutoff)
-
-topgenes <- tt_FDR %>%
-  dplyr::arrange(adj.P.Val) %>%
-  dplyr::slice(1:top)
-
-biomarkerTMLEout_top <- biomarkerTMLEout %>%
-  dplyr::filter(rownames(biomarkerTMLEout) %in% topgenes$IDs)
-
-annot <- data.frame(Treatment = ifelse(design$Tx == 0, "Control", "Exposed"))
-rownames(annot) <- colnames(biomarkerTMLEout_top)
-nmf.options(grid.patch = TRUE)
-
-aheatmap(as.matrix(biomarkerTMLEout_top),
-         scale = "row",
-         Rowv = TRUE,
-         Colv = NULL,
-         annCol = annot,
-         annColors = "Set2",
-         main = "Heatmap of Top 25 Genes (FDR-controlled)"
-        )
-
-## ----pval_hist_limma_results---------------------------------------------
-ggplot(tt, aes(P.Value)) +
-  geom_histogram(aes(y = ..count.., fill = ..count..), colour = "white",
-                 na.rm = TRUE, binwidth = 0.05) +
-  ggtitle(paste("Histogram of raw p-values \n (applying Limma shrinkage to",
-                "TMLE results)")) +
-  xlab("magnitude of raw p-values") +
-  scale_fill_gradientn("Count", colors = pal1) +
-  guides(fill = guide_legend(title = NULL)) +
-  theme_bw()
-
-ggplot(tt, aes(adj.P.Val)) +
-  geom_histogram(aes(y = ..count.., fill = ..count..), colour = "white",
-                 na.rm = TRUE, binwidth = 0.05) +
-  ggtitle(paste("Histogram of FDR-corrected p-values (BH) \n (applying Limma",
-                "shrinkage to TMLE results)")) +
-  xlab("magnitude of BH-corrected p-values") +
-  scale_fill_gradientn("Count", colors = pal1) +
-  guides(fill = guide_legend(title = NULL)) +
-  theme_bw()
-
-## ----volcano_plot_limma_results------------------------------------------
-# add volcano plot examining genes showing differential expression
-tt_volcano <- tt %>%
-  dplyr::arrange(adj.P.Val) %>%
-  dplyr::mutate(
-    logFC = I(logFC),
-    logPval = -log10(P.Value),
-    color = ifelse((logFC > 3.0) & (adj.P.Val < 0.2), "1",
-                   ifelse((logFC < -3.0) & (adj.P.Val < 0.2), "-1", "0"))
-  ) %>%
-  dplyr::select(which(colnames(.) %in% c("logFC", "logPval", "color"))) %>%
-  dplyr::filter((logFC > quantile(logFC, probs = 0.2)) &
-                  logFC < quantile(logFC, probs = 0.75))
-
-ggplot(tt_volcano, aes(x = logFC, y = logPval)) +
-  geom_point(aes(colour = color)) +
-  xlab("log2(Fold Change)") + ylab("-log10(raw p-value)") +
-  ggtitle("Volcano Plot of Differential Average Tx Effect") +
-  scale_colour_manual(values = pal2[1:3], guide = FALSE) +
-  theme_bw()
+## ----volcano_plot_limma_results, eval=FALSE------------------------------
+#  volcplot_biotmle(biotmle)
 

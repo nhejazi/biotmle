@@ -2,6 +2,8 @@
 #'
 #' @param biotmle object of class \code{biotmle} as produced by an appropriate
 #'        call to \code{biomarkertmle}
+#' @param type character describing whether to provide a plot of unadjusted or
+#'        adjusted p-values (adjustment performed via Benjamini-Hochberg)
 #'
 #' @importFrom ggplot2 ggplot aes geom_histogram geom_point scale_fill_gradientn
 #'             scale_colour_manual guides guide_legend xlab ylab ggtitle
@@ -37,6 +39,10 @@ plot_biotmle <- function(biotmle,
       guides(fill = guide_legend(title = NULL))
   }
 }
+
+#==============================================================================#
+## NEXT FUNCTION ===============================================================
+#==============================================================================#
 
 #' Volcano plot for class \code{biotmle}
 #'
@@ -76,6 +82,12 @@ volcplot_biotmle <- function(biotmle) {
       ggtitle("Volcano Plot of Differential Average Tx Effect") +
       scale_colour_manual(values = pal2[1:3], guide = FALSE)
 }
+
+#==============================================================================#
+## NEXT FUNCTION ===============================================================
+#==============================================================================#
+utils::globalVariables(c(".", "..count..", "P.Value", "adj.P.Val", "color",
+                         "logFC", "logPval"))
 
 #' Heatmap for class \code{biotmle}
 #'

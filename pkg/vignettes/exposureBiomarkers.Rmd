@@ -74,11 +74,11 @@ biomarkerTMLEout <- biomarkertmle(Y = Y,
 
 A `data.frame` object containing the results of this procedure is included with
 the package and will be used for the remainder of this vignette:
-```{r load_biomarkerTMLE_results}
+```{r load_biomarkerTMLE_result, eval=FALSE}
 data(illumina2007result)
 ```
 
-```{r limmaTMLE_eval}
+```{r limmaTMLE_eval, eval=FALSE}
 design <- as.data.frame(cbind(rep(1, nrow(Y)),
                               as.numeric(A == max(unique(A)))))
 colnames(design) <- c("intercept", "Tx")
@@ -86,16 +86,16 @@ colnames(design) <- c("intercept", "Tx")
 limmaTMLEout <- limmatmle(biotmle, IDs = NULL, designMat = design)
 ```
 
-```{r heatmap_limma_results}
+```{r heatmap_limma_results, eval=FALSE}
 heatmap_biotmle(biotmle, designMat = design, FDRcutoff = 0.05, top = 25)
 ```
 
-```{r pval_hist_limma_results}
+```{r pval_hist_limma_results, eval=FALSE}
 plot_biotmle(biotmle, type = "pvals_raw")
 
 plot_biotmle(biotmle, type = "pvals_adj")
 ```
 
-```{r volcano_plot_limma_results}
+```{r volcano_plot_limma_results, eval=FALSE}
 volcplot_biotmle(biotmle)
 ```

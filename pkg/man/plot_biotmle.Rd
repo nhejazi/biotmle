@@ -9,6 +9,9 @@ plot_biotmle(biotmle, type)
 \arguments{
 \item{biotmle}{object of class \code{biotmle} as produced by an appropriate
 call to \code{biomarkertmle}}
+
+\item{type}{character describing whether to provide a plot of unadjusted or
+adjusted p-values (adjustment performed via Benjamini-Hochberg)}
 }
 \description{
 Plot utility for class \code{biotmle}
