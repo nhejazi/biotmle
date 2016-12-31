@@ -3,7 +3,7 @@
 \docType{data}
 \name{illumina2007results}
 \alias{illumina2007results}
-\title{Results obtained from running the `tmlelimma` procedure on illumina2007 data}
+\title{Results obtained from running the `biotmle` procedure on `illumina2007` data}
 \format{A data frame with 22177 rows and 125 variables:
 \describe{
   ...some information ought to go here...

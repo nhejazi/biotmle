@@ -1,4 +1,4 @@
-#' Moderated T-Statistic Test for Asymptotically Linear Target Parameters
+#' Testing via the Moderated T-Statistic for Asymptotically Linear Parameters
 #'
 #' Performs variance shrinkage via empirical Bayes procedures on influence
 #' curve transforms of the Average Treatment Effect of gene expression
@@ -23,7 +23,7 @@ limmatmle <- function(biotmle,
                       ...) {
 
   biomarkerTMLEout <- biotmle$tmleOut
-  
+
   fit <- limma::lmFit(as.data.frame(biomarkerTMLEout), designMat)
   fit <- limma::eBayes(fit)
 

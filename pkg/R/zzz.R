@@ -1,5 +1,5 @@
 .onAttach <- function(...) {
-  packageStartupMessage("tmlelimma: Targeted Learning with the moderated t-statistic")
+  packageStartupMessage("biotmle: Targeted Learning for Biomarker Discovery")
   packageStartupMessage("Version: ",
-                        utils::packageDescription("tmlelimma")$Version)
+                        utils::packageDescription("biotmle")$Version)
 }

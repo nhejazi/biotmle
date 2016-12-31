@@ -3,7 +3,7 @@
 \docType{data}
 \name{illumina2007}
 \alias{illumina2007}
-\title{Baseline covariates and microarray data from 2007 study...}
+\title{Baseline covariates and Illumina microarray data from 2007 study}
 \format{A data frame with 144 rows and 22196 variables:
 \describe{
   ...some information ought to go here...

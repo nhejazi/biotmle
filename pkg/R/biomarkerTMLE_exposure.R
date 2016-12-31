@@ -1,4 +1,4 @@
-#' TMLE for Biomarker Identication from Exposure
+#' TMLE procedure for Biomarker Identication from Exposure
 #'
 #' This function performs influence curve-based estimation of the effect of an
 #' exposure on (gene) expression array values associated with a given biomarker,
@@ -19,7 +19,7 @@
 #'
 #' @importFrom tmle tmle
 #'
-#' @export biomarkerTMLE_expsoure
+#' @export biomarkerTMLE_exposure
 #'
 
 biomarkerTMLE_exposure <- function(Y,

@@ -1,6 +1,6 @@
 utils::globalVariables("gene")
 
-#' Moderated T-Statistic Test for Asymptotically Linear Target Parameters
+#' Biomarker Discovery via Targeted Minimum Loss-Based Estimation (TMLE)
 #'
 #' computes the (rather complicated) parameter defined as the difference in the
 #' blips in Tx effects (difference between counterfactual max, min Tx effects)
@@ -84,7 +84,7 @@ biomarkertmle <- function(Y,
     # perform multi-level TMLE estimation (for all columns/genes)
     foreach::foreach(gene = 1:ncol(Y), .combine = cbind) %dopar% {
       print(paste("Estimating target parameter for", gene, "of", ncol(Y)))
-      out <- biomarkerTMLE_expsoure(Y = Y[, gene],
+      out <- biomarkerTMLE_exposure(Y = Y[, gene],
                                     W = W,
                                     A = A,
                                     a = 1:length(unique(A)),
@@ -101,7 +101,7 @@ biomarkertmle <- function(Y,
   #=============================================================================
   # TMLE procedure to identify biomarkers based on an OUTCOME
   #=============================================================================
-    # stuff goes here...
+    warning("TMLE for biomarker discovery from outcomes is not yet implemented")
 
   } else {
     warning("improper input for 'type': choices are 'exposure' and 'outcome'")

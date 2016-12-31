@@ -1,4 +1,4 @@
-#' Baseline covariates and microarray data from 2007 study...
+#' Baseline covariates and Illumina microarray data from 2007 study
 #'
 #' A dataset containing various baseline covariates and microarray expression
 #' measures from Illumina arrays used in a 2007 study.
@@ -9,7 +9,7 @@
 #' }
 "illumina2007"
 
-#' Results obtained from running the `tmlelimma` procedure on illumina2007 data
+#' Results obtained from running the `biotmle` procedure on `illumina2007` data
 #'
 #' description...
 #'

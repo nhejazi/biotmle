@@ -1,4 +1,4 @@
-#' TMLE for Biomarker Identication from Outcome
+#' TMLE procedure for Biomarker Identication from Outcome
 #'
 #' This function performs influence curve-based estimation of the effect of an
 #' exposure on (gene) expression array values associated with a given biomarker,

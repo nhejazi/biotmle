@@ -2,7 +2,7 @@ Package: biotmle
 Title: Targeted Learning for Biomarker Discovery with the Moderated T-Statistic
 Version: 0.0.5
 Authors@R: as.person(c(
-    "Nima S. Hejazi <nhejazi@berkeley.edu> [aut, cre]"
+    "Nima S. Hejazi <nhejazi@berkeley.edu> [aut, cre]",
     "Alan E. Hubbard <hubbard@berkeley.edu> [aut]",
     "Wilson (Weixin) Cai <wcai@berkeley.edu> [ctb]"))
 Description: This package facilitates the discovery of biomarkers from Omics
@@ -18,11 +18,16 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     tmle,
+    limma,
+    SuperLearner,
     foreach,
     parallel,
     doParallel,
-    SuperLearner,
-    limma
+    ggplot2,
+    wesanderson,
+    magrittr,
+    dplyr,
+    NMF
 Suggests:
     testthat,
     rmarkdown,

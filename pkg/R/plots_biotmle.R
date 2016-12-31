@@ -3,19 +3,18 @@
 #' @param biotmle object of class \code{biotmle} as produced by an appropriate
 #'        call to \code{biomarkertmle}
 #'
-#' @importFrom dplyr arrange mutate select filter slice
 #' @importFrom ggplot2 ggplot aes geom_histogram geom_point scale_fill_gradientn
 #'             scale_colour_manual guides guide_legend xlab ylab ggtitle
 #' @importFrom wesanderson wes_palette
 #'
-#' @export plot.biotmle
+#' @export plot_biotmle
 #'
 
-plot.biotmle <- function(biotmle,
+plot_biotmle <- function(biotmle,
                          type) {
   biotmle
-  pal1 <- wes_palette("Rushmore", 100, type = "continuous")
-  pal2 <- wes_palette("Darjeeling", type = "continuous")
+  pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
+  pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
 
   if(type == "pvals_raw") {
     ggplot(tt, aes(P.Value)) +
@@ -45,18 +44,19 @@ plot.biotmle <- function(biotmle,
 #' @param biotmle object of class \code{biotmle} as produced by an appropriate
 #'        call to \code{biomarkertmle}
 #'
-#' @importFrom dplyr arrange mutate select filter slice
+#' @importFrom magrittr "%>%"
+#' @importFrom dplyr arrange mutate select filter
 #' @importFrom ggplot2 ggplot aes geom_histogram geom_point scale_fill_gradientn
 #'             scale_colour_manual guides guide_legend xlab ylab ggtitle
 #' @importFrom wesanderson wes_palette
 #'
-#' @export volcplot.biotmle
+#' @export volcplot_biotmle
 #'
 
-volcplot.biotmle <- function(biotmle) {
+volcplot_biotmle <- function(biotmle) {
 
-  pal1 <- wes_palette("Rushmore", 100, type = "continuous")
-  pal2 <- wes_palette("Darjeeling", type = "continuous")
+  pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
+  pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
 
   # add volcano plot examining genes showing differential expression
   tt_volcano <- tt %>%
@@ -83,13 +83,14 @@ volcplot.biotmle <- function(biotmle) {
 #' @param biotmle object of class \code{biotmle} as produced by an appropriate
 #'        call to \code{biomarkertmle}
 #'
-#' @importFrom dplyr arrange mutate select filter slice
+#' @importFrom magrittr "%>%"
+#' @importFrom dplyr arrange filter slice
 #' @importFrom NMF nmf.options aheatmap
 #'
-#' @export heatmap.biotmle
+#' @export heatmap_biotmle
 #'
 
-heatmap.biotmle <- function(biotmle) {
+heatmap_biotmle <- function(biotmle) {
   FDRcutoff = 0.05 # cutoff to be used in controlling the False Discovery Rate
   top = 25 # plot this number of differentially expressed genes in the heat map
 
@@ -106,9 +107,9 @@ heatmap.biotmle <- function(biotmle) {
 
   annot <- data.frame(Treatment = ifelse(design$Tx == 0, "Control", "Exposed"))
   rownames(annot) <- colnames(biomarkerTMLEout_top)
-  nmf.options(grid.patch = TRUE)
+  NMF::nmf.options(grid.patch = TRUE)
 
-  aheatmap(as.matrix(biomarkerTMLEout_top),
+  NMF::aheatmap(as.matrix(biomarkerTMLEout_top),
            scale = "row",
            Rowv = TRUE,
            Colv = NULL,
