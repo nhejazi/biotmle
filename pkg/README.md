@@ -36,7 +36,8 @@ t-statistic as implemented in the R package
 
 ## License
 
-&copy; 2016-2017 Nima S. Hejazi & Alan E. Hubbard
+&copy; 2016-2017 [Nima S. Hejazi](http://nimahejazi.org) & [Alan E.
+Hubbard](https://ahubb40.github.io)
 
 The contents of this repository are distributed under the MIT license. See
 below for details:

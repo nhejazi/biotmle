@@ -59,17 +59,15 @@ geneIDs <- colnames(Y)
 The following procedure takes a long time to run, so rather than run it as part
 of this vignette, we provide the necessary syntax:
 ```{r biomarkerTMLE_eval, eval=FALSE}
-biomarkerTMLEout <- biomarkertmle(Y = Y,
-                                  W = W,
-                                  A = A,
-                                  type = "exposure",
-                                  family = "gaussian",
-                                  g_lib = c("SL.glmnet", "SL.randomForest",
-                                            "SL.nnet", "SL.polymars",
-                                            "SL.mean"),
-                                  Q_lib = c("SL.glmnet", "SL.randomForest",
-                                            "SL.nnet", "SL.mean")
-                                 )
+biomarkerTMLEout <- genomicTMLE(Y = Y,
+                                W = W,
+                                A = A,
+                                family = "gaussian",
+                                g_lib = c("SL.glmnet", "SL.randomForest",
+                                          "SL.nnet", "SL.polymars", "SL.mean"),
+                                Q_lib = c("SL.glmnet", "SL.randomForest",
+                                          "SL.nnet", "SL.mean")
+                               )
 ```
 
 A `data.frame` object containing the results of this procedure is included with
@@ -86,7 +84,7 @@ design <- as.data.frame(cbind(rep(1, nrow(Y)),
                               as.numeric(A == max(unique(A)))))
 colnames(design) <- c("intercept", "Tx")
 
-limmaTMLEout <- limmatmle(biomarkerTMLEout, IDs = NULL, designMat = design)
+limmaTMLEout <- limmaTMLE(biomarkerTMLEout, IDs = NULL, designMat = design)
 
 tt <- limmaTMLEout[[2]]
 ```

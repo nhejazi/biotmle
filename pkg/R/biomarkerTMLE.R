@@ -88,9 +88,9 @@ biomarkertmle <- function(Y,
                                     W = W,
                                     A = A,
                                     a = 1:length(unique(A)),
-                                    g.lib = g_lib,
-                                    Q.lib = Q_lib,
-                                    family = "gaussian"
+                                    g_lib = g_lib,
+                                    Q_lib = Q_lib,
+                                    family = family
                                    )
     }
     biomarkerTMLEout <- as.data.frame(t(out))

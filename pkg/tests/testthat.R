@@ -1,4 +1,4 @@
 library(testthat)
-library(tmlelimma)
+library(biotmle)
 
-test_check("tmlelimma")
+test_check("biotmle")

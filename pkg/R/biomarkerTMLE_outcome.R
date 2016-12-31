@@ -26,7 +26,7 @@ biomarkerTMLE_outcome <- function(Y,
                                   W,
                                   A,
                                   a,
-                                  family = "gaussian",
+                                  family = "binomial",
                                   g_lib,
                                   Q_lib) {
 
