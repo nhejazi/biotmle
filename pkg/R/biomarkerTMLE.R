@@ -82,7 +82,8 @@ biomarkertmle <- function(Y,
     }
 
     # perform multi-level TMLE estimation (for all columns/genes)
-    foreach::foreach(gene = 1:ncol(Y), .combine = cbind) %dopar% {
+    biomarkerTMLEout <- foreach::foreach(gene = 1:ncol(Y),
+                                         .combine = cbind) %dopar% {
       print(paste("Estimating target parameter for", gene, "of", ncol(Y)))
       out <- biomarkerTMLE_exposure(Y = Y[, gene],
                                     W = W,
@@ -93,8 +94,7 @@ biomarkertmle <- function(Y,
                                     family = family
                                    )
     }
-    biomarkerTMLEout <- as.data.frame(t(out))
-    biotmle$tmleOut <- biomarkerTMLEout
+    biotmle$tmleOut <- as.data.frame(t(biomarkerTMLEout))
     return(biotmle)
 
   } else if (type == "outcome") {

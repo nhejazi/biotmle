@@ -20,7 +20,7 @@ transform observed data based on influence curve representations of statistical
 target parameters (e.g., the Average Treatment Effect), with the transformed
 data then being used to test for differences between groups using the moderated
 t-statistic as implemented in the R package
-[limma](https://bioconductor.org/packages/release/bioc/html/limma.html).
+[`limma`](https://bioconductor.org/packages/release/bioc/html/limma.html).
 
 ---
 

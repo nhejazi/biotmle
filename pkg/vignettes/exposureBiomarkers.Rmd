@@ -63,18 +63,16 @@ biomarkerTMLEout <- biomarkertmle(Y = Y,
                                   W = W,
                                   A = A,
                                   type = "exposure",
+                                  parallel = TRUE,
                                   family = "gaussian",
                                   g_lib = c("SL.glmnet", "SL.randomForest",
-                                            "SL.nnet", "SL.polymars",
-                                            "SL.mean"),
+                                            "SL.polymars", "SL.mean"),
                                   Q_lib = c("SL.glmnet", "SL.randomForest",
                                             "SL.nnet", "SL.mean")
                                  )
 ```
 
-A `data.frame` object containing the results of this procedure is included with
-the package and will be used for the remainder of this vignette:
-```{r load_biomarkerTMLE_result, eval=FALSE}
+```{r load_biomarkerTMLE_result, echo=FALSE, eval=FALSE}
 data(illumina2007result)
 ```
 
