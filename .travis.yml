@@ -1,3 +1,8 @@
+branches:
+  only:
+  - master
+  - develop
+
 language: r
 r:
   - oldrel
@@ -6,8 +11,7 @@ r:
 
 sudo: required
 
-before_install:
-  - cd pkg
+before_script: cd pkg
 
 warnings_are_errors: true
 

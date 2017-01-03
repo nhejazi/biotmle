@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Targeted learning in high-dimensions with the moderated t-statistic • tmlelimma</title>
+<title>Targeted Learning for Biomarker Discovery with the Moderated T-Statistic • biotmle</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">tmlelimma</a>
+      <a class="navbar-brand" href="index.html">biotmle</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -40,7 +40,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/nhejazi/tmlelimma">
+  <a href="https://github.com/nhejazi/biotmle/pkg">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -56,38 +56,64 @@
       
       </header><div class="row">
   <div class="contents col-md-9">
-    <div id="rtmlelimma" class="section level1">
+    <div id="rbiotmle" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#rtmlelimma" class="anchor"> </a>R/<code>tmlelimma</code>
+<a href="#rbiotmle" class="anchor"> </a>R/<code>biotmle</code>
 </h1></div>
 
 <blockquote>
-<p>Targeted Learning in high dimensions with the moderated t-statistic.</p>
+<p>Targeted Learning for Biomarker Discovery with the Moderated T-Statistic</p>
 </blockquote>
 <hr>
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"> </a>Description</h2>
-<p><code>tmlelimma</code> is an R package that generalizes the moderated t-statistic of Smyth for use with asymptotically linear target parameters. The technique implemented here relies on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform observed data based on influence curve representations of statistical target parameters (e.g., the Average Treatment Effect), with the transformed data then being used to test for differences between groups using the moderated t-statistic as implemented in the R package <a href="https://bioconductor.org/packages/release/bioc/html/limma.html">limma</a>.</p>
+<p><code>biotmle</code> is an R package that generalizes the moderated t-statistic of Smyth for use with asymptotically linear target parameters. The technique implemented here relies on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform a given omics data set based on the influence curve representation of a particular statistical target parameter (e.g., the Average Treatment Effect). The transformed data is then used to test for differences between groups using the moderated t-statistic as implemented in the R package <a href="https://bioconductor.org/packages/release/bioc/html/limma.html"><code>limma</code></a>.</p>
+<div id="buildstesting" class="section level3">
+<h3 class="hasAnchor">
+<a href="#buildstesting" class="anchor"> </a>Builds/Testing</h3>
+<table>
+<thead><tr class="header">
+<th align="left">@</th>
+<th align="left">Build (macOS/Linux)</th>
+<th align="left">Build (Windows)</th>
+<th align="left">Coverage</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left"><strong>master</strong></td>
+<td align="left"><a href="https://travis-ci.org/nhejazi/biotmle"><img src="https://travis-ci.org/nhejazi/biotmle.svg?branch=master" alt="Travis-CI Build Status"></a></td>
+<td align="left"><a href="https://ci.appveyor.com/project/nhejazi/biotmle"><img src="https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></td>
+<td align="left"><a href="https://coveralls.io/github/nhejazi/biotmle?branch=master"><img src="https://coveralls.io/repos/github/nhejazi/biotmle/badge.svg?branch=master" alt="Coverage Status"></a></td>
+</tr>
+<tr class="even">
+<td align="left"><strong>develop</strong></td>
+<td align="left"><a href="https://travis-ci.org/nhejazi/biotmle"><img src="https://travis-ci.org/nhejazi/biotmle.svg?branch=develop" alt="Travis-CI Build Status"></a></td>
+<td align="left"><a href="https://ci.appveyor.com/project/nhejazi/biotmle"><img src="https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=develop&amp;svg=true" alt="AppVeyor Build Status"></a></td>
+<td align="left"><a href="https://coveralls.io/github/nhejazi/biotmle?branch=develop"><img src="https://coveralls.io/repos/github/nhejazi/biotmle/badge.svg?branch=develop" alt="Coverage Status"></a></td>
+</tr>
+</tbody>
+</table>
 <hr>
+</div>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"> </a>Installation</h2>
 <ul>
-<li><p>Install the most recent <em>stable release</em> from GitHub: <code>devtools::install_github("nhejazi/tmlelimma", subdir = "pkg")</code></p></li>
-<li><p>Install the <em>development version</em>: <code>devtools::install_github("nhejazi/tmlelimma", ref = "develop", subdir = "pkg")</code></p></li>
+<li><p>Install the most recent <em>stable release</em> from GitHub: <code>devtools::install_github("nhejazi/biotmle", subdir = "pkg")</code></p></li>
+<li><p>To contribute, install the <em>development version</em>: <code>devtools::install_github("nhejazi/biotmle", ref = "develop", subdir = "pkg")</code></p></li>
 </ul>
 <hr>
 </div>
 <div id="license" class="section level2">
 <h2 class="hasAnchor">
 <a href="#license" class="anchor"> </a>License</h2>
-<p>© 2016-2017 Nima S. Hejazi, Weixin (Wilson) Cai, Alan E. Hubbard</p>
+<p>© 2016-2017 <a href="http://nimahejazi.org">Nima S. Hejazi</a> &amp; <a href="https://ahubb40.github.io">Alan E. Hubbard</a></p>
 <p>The contents of this repository are distributed under the MIT license. See below for details:</p>
 <pre><code>The MIT License (MIT)
 
-Copyright (c) 2016-2017 Nima S. Hejazi, Weixin (Wilson) Cai, Alan E. Hubbard
+Copyright (c) 2016-2017 Nima S. Hejazi &amp; Alan E. Hubbard
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -113,15 +139,15 @@ SOFTWARE.</code></pre>
   <div class="col-md-3" id="sidebar">
     <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/nhejazi/tmlelimma">https://​github.com/​nhejazi/​tmlelimma</a>
+<li>Browse source code at <br><a href="https://github.com/nhejazi/biotmle/pkg">https://​github.com/​nhejazi/​biotmle/​pkg</a>
 </li>
 </ul>
 <h2>License</h2>
 <p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE">LICENSE</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Nima Hejazi <br><small class="roles"> Author, maintainer </small> </li>
-<li>Alan Hubbard <br><small class="roles"> Author </small> </li>
+<li>Nima S. Hejazi <br><small class="roles"> Author, maintainer </small> </li>
+<li>Alan E. Hubbard <br><small class="roles"> Author </small> </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 <html><body>
@@ -129,10 +155,8 @@ SOFTWARE.</code></pre>
 <ul class="list-unstyled">
 <li><a href="http://opensource.org/licenses/MIT">
   <img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT license"></a></li>
-<li><a href="https://travis-ci.org/nhejazi/tmlelimma">
-  <img src="https://travis-ci.org/nhejazi/tmlelimma.svg" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://coveralls.io/github/nhejazi/tmlelimma?branch=master">
-  <img src="https://coveralls.io/repos/github/nhejazi/limmatmle/badge.svg?branch=master" alt="Coverage Status"></a></li>
+<li><a href="http://www.repostatus.org/#wip">
+  <img src="http://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
 </ul>
 </body></html>
 </div>
@@ -140,7 +164,7 @@ SOFTWARE.</code></pre>
 
 
       <footer><div class="copyright">
-  <p>Developed by Nima Hejazi, Alan Hubbard.</p>
+  <p>Developed by Nima S. Hejazi, Alan E. Hubbard.</p>
 </div>
 
 <div class="pkgdown">

@@ -1,34 +1,37 @@
-Package: tmlelimma
-Title: Targeted learning in high-dimensions with the moderated t-statistic
-Version: 0.0.1
-Authors@R: c(
-              person("Nima", "Hejazi", email = "nhejazi@berkeley.edu",
-                     role = c("aut", "cre")),
-              person("Weixin", "Cai", email = "wcai@berkeley.edu",
-                     role = c("ctb")),
-              person("Alan", "Hubbard", email = "hubbard@berkeley.edu",
-                     role = c("aut"))
-            )
-Description: This package implements a variance shrinkage estimation and linear
-    modeling method on point-wise estimates of the causal effect of a
-    given set of genomic covariates on an outcome of interest. In
-    particular, ...
+Package: biotmle
+Title: Targeted Learning for Biomarker Discovery with the Moderated T-Statistic
+Version: 0.0.5
+Authors@R: as.person(c(
+    "Nima S. Hejazi <nhejazi@berkeley.edu> [aut, cre]",
+    "Alan E. Hubbard <hubbard@berkeley.edu> [aut]",
+    "Wilson (Weixin) Cai <wcai@berkeley.edu> [ctb]"))
+Description: This package facilitates the discovery of biomarkers from Omics
+    data based on the associations of potential biomarkers with exposure and
+    outcome variables by implementing an estimation procedure that combines a
+    generalization of the moderated t-statistic with asymptotically linear statistical parameters estimated via targeted minimum loss-based estimation
+    (TMLE).
 Depends:
     R (>= 3.3.1)
 License: MIT + file LICENSE
-URL: https://github.com/nhejazi/tmlelimma
+URL: https://github.com/nhejazi/biotmle/pkg
 Encoding: UTF-8
 LazyData: true
 Imports:
+    Matrix,
     tmle,
+    limma,
+    SuperLearner,
     foreach,
     parallel,
     doParallel,
-    SuperLearner,
-    limma
+    ggplot2,
+    wesanderson,
+    magrittr,
+    dplyr,
+    NMF
 Suggests:
     testthat,
-    knitr,
-    rmarkdown
+    rmarkdown,
+    knitr
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
