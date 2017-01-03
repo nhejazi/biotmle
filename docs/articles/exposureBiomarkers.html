@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Identifying Biomarkers from Exposure Patterns • tmlelimma</title>
+<title>Identifying Biomarkers from an Exposure Variable • biotmle</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">tmlelimma</a>
+      <a class="navbar-brand" href="../index.html">biotmle</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -40,7 +40,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/nhejazi/tmlelimma">
+  <a href="https://github.com/nhejazi/biotmle/pkg">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -57,17 +57,17 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>Identifying Biomarkers from Exposure Patterns</h1>
+      <h1>Identifying Biomarkers from an Exposure Variable</h1>
                         <h4 class="author">Nima S. Hejazi &amp; Alan E. Hubbard</h4>
             
-            <h4 class="date">2016-12-29</h4>
+            <h4 class="date">2017-01-03</h4>
           </div>
 
     
     
 <div class="contents">
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
-<span class="kw">library</span>(tmlelimma)
+<span class="kw">library</span>(biotmle)
 <span class="kw">data</span>(illumina2007)
 <span class="st">"%ni%"</span> =<span class="st"> </span><span class="kw">Negate</span>(<span class="st">"%in%"</span>)
 
@@ -108,110 +108,27 @@ Y &lt;-<span class="st"> </span>data %&gt;%
 
 geneIDs &lt;-<span class="st"> </span><span class="kw">colnames</span>(Y)</code></pre></div>
 <p>The following procedure takes a long time to run, so rather than run it as part of this vignette, we provide the necessary syntax:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">biomarkerTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/genomicTMLE.html">genomicTMLE</a></span>(<span class="dt">Y =</span> Y,
-                                <span class="dt">W =</span> W,
-                                <span class="dt">A =</span> A,
-                                <span class="dt">family =</span> <span class="st">"gaussian"</span>,
-                                <span class="dt">g_lib =</span> <span class="kw">c</span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,
-                                          <span class="st">"SL.nnet"</span>, <span class="st">"SL.polymars"</span>, <span class="st">"SL.mean"</span>),
-                                <span class="dt">Q_lib =</span> <span class="kw">c</span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,
-                                          <span class="st">"SL.nnet"</span>, <span class="st">"SL.mean"</span>)
-                               )</code></pre></div>
-<p>A <code>data.frame</code> object containing the results of this procedure is included with the package and will be used for the remainder of this vignette:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(illumina2007results)
-biomarkerTMLEout &lt;-<span class="st"> </span>illumina2007results
-<span class="kw">rownames</span>(biomarkerTMLEout) &lt;-<span class="st"> </span>geneIDs
-<span class="kw">colnames</span>(biomarkerTMLEout) &lt;-<span class="st"> </span><span class="kw">as.character</span>(subjIDs)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">biomarkerTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/biomarkertmle.html">biomarkertmle</a></span>(<span class="dt">Y =</span> Y,
+                                  <span class="dt">W =</span> W,
+                                  <span class="dt">A =</span> A,
+                                  <span class="dt">type =</span> <span class="st">"exposure"</span>,
+                                  <span class="dt">parallel =</span> <span class="ot">TRUE</span>,
+                                  <span class="dt">family =</span> <span class="st">"gaussian"</span>,
+                                  <span class="dt">g_lib =</span> <span class="kw">c</span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,
+                                            <span class="st">"SL.polymars"</span>, <span class="st">"SL.mean"</span>),
+                                  <span class="dt">Q_lib =</span> <span class="kw">c</span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,
+                                            <span class="st">"SL.nnet"</span>, <span class="st">"SL.mean"</span>)
+                                 )</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">design &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(Y)),
                               <span class="kw">as.numeric</span>(A ==<span class="st"> </span><span class="kw">max</span>(<span class="kw">unique</span>(A)))))
 <span class="kw">colnames</span>(design) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"intercept"</span>, <span class="st">"Tx"</span>)
 
-limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/limmaTMLE.html">limmaTMLE</a></span>(biomarkerTMLEout, <span class="dt">IDs =</span> <span class="ot">NULL</span>, <span class="dt">designMat =</span> design)
+limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/limmatmle.html">limmatmle</a></span>(biotmle, <span class="dt">IDs =</span> <span class="ot">NULL</span>, <span class="dt">designMat =</span> design)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">heatmap_biotmle</span>(biotmle, <span class="dt">designMat =</span> design, <span class="dt">FDRcutoff =</span> <span class="fl">0.05</span>, <span class="dt">top =</span> <span class="dv">25</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot_biotmle</span>(biotmle, <span class="dt">type =</span> <span class="st">"pvals_raw"</span>)
 
-tt &lt;-<span class="st"> </span>limmaTMLEout[[<span class="dv">2</span>]]</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># visualization of results produced from statistical analyses</span>
-<span class="kw">library</span>(NMF)</code></pre></div>
-<pre><code>## Loading required package: pkgmaker</code></pre>
-<pre><code>## Loading required package: registry</code></pre>
-<pre><code>## 
-## Attaching package: 'pkgmaker'</code></pre>
-<pre><code>## The following object is masked from 'package:base':
-## 
-##     isNamespaceLoaded</code></pre>
-<pre><code>## Loading required package: rngtools</code></pre>
-<pre><code>## Loading required package: cluster</code></pre>
-<pre><code>## NMF - BioConductor layer [OK] | Shared memory capabilities [OK] | Cores 3/4</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
-<span class="kw">library</span>(wesanderson)
-pal1 &lt;-<span class="st"> </span><span class="kw">wes_palette</span>(<span class="st">"Rushmore"</span>, <span class="dv">100</span>, <span class="dt">type =</span> <span class="st">"continuous"</span>)
-pal2 &lt;-<span class="st"> </span><span class="kw">wes_palette</span>(<span class="st">"Darjeeling"</span>, <span class="dt">type =</span> <span class="st">"continuous"</span>)
-FDRcutoff =<span class="st"> </span><span class="fl">0.05</span> <span class="co"># cutoff to be used in controlling the False Discovery Rate</span>
-top =<span class="st"> </span><span class="dv">25</span> <span class="co"># plot this number of differentially expressed genes in the heat map</span>
-
-<span class="co"># make heatmap of genes showing differential expression</span>
-tt_FDR &lt;-<span class="st"> </span>tt %&gt;%
-<span class="st">  </span><span class="kw">subset</span>(adj.P.Val &lt;<span class="st"> </span>FDRcutoff)
-
-topgenes &lt;-<span class="st"> </span>tt_FDR %&gt;%
-<span class="st">  </span>dplyr::<span class="kw">arrange</span>(adj.P.Val) %&gt;%
-<span class="st">  </span>dplyr::<span class="kw">slice</span>(<span class="dv">1</span>:top)
-
-biomarkerTMLEout_top &lt;-<span class="st"> </span>biomarkerTMLEout %&gt;%
-<span class="st">  </span>dplyr::<span class="kw">filter</span>(<span class="kw">rownames</span>(biomarkerTMLEout) %in%<span class="st"> </span>topgenes$IDs)
-
-annot &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Treatment =</span> <span class="kw">ifelse</span>(design$Tx ==<span class="st"> </span><span class="dv">0</span>, <span class="st">"Control"</span>, <span class="st">"Exposed"</span>))
-<span class="kw">rownames</span>(annot) &lt;-<span class="st"> </span><span class="kw">colnames</span>(biomarkerTMLEout_top)
-<span class="kw">nmf.options</span>(<span class="dt">grid.patch =</span> <span class="ot">TRUE</span>)
-
-<span class="kw">aheatmap</span>(<span class="kw">as.matrix</span>(biomarkerTMLEout_top),
-         <span class="dt">scale =</span> <span class="st">"row"</span>,
-         <span class="dt">Rowv =</span> <span class="ot">TRUE</span>,
-         <span class="dt">Colv =</span> <span class="ot">NULL</span>,
-         <span class="dt">annCol =</span> annot,
-         <span class="dt">annColors =</span> <span class="st">"Set2"</span>,
-         <span class="dt">main =</span> <span class="st">"Heatmap of Top 25 Genes (FDR-controlled)"</span>
-        )</code></pre></div>
-<p><img src="exposureBiomarkers_files/figure-html/heatmap_limma_results-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tt, <span class="kw">aes</span>(P.Value)) +
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..count.., <span class="dt">fill =</span> ..count..), <span class="dt">colour =</span> <span class="st">"white"</span>,
-                 <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">binwidth =</span> <span class="fl">0.05</span>) +
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="kw">paste</span>(<span class="st">"Histogram of raw p-values </span><span class="ch">\n</span><span class="st"> (applying Limma shrinkage to"</span>,
-                <span class="st">"TMLE results)"</span>)) +
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"magnitude of raw p-values"</span>) +
-<span class="st">  </span><span class="kw">scale_fill_gradientn</span>(<span class="st">"Count"</span>, <span class="dt">colors =</span> pal1) +
-<span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="ot">NULL</span>)) +
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="exposureBiomarkers_files/figure-html/pval_hist_limma_results-1.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ggplot</span>(tt, <span class="kw">aes</span>(adj.P.Val)) +
-<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">y =</span> ..count.., <span class="dt">fill =</span> ..count..), <span class="dt">colour =</span> <span class="st">"white"</span>,
-                 <span class="dt">na.rm =</span> <span class="ot">TRUE</span>, <span class="dt">binwidth =</span> <span class="fl">0.05</span>) +
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="kw">paste</span>(<span class="st">"Histogram of FDR-corrected p-values (BH) </span><span class="ch">\n</span><span class="st"> (applying Limma"</span>,
-                <span class="st">"shrinkage to TMLE results)"</span>)) +
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"magnitude of BH-corrected p-values"</span>) +
-<span class="st">  </span><span class="kw">scale_fill_gradientn</span>(<span class="st">"Count"</span>, <span class="dt">colors =</span> pal1) +
-<span class="st">  </span><span class="kw">guides</span>(<span class="dt">fill =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="ot">NULL</span>)) +
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="exposureBiomarkers_files/figure-html/pval_hist_limma_results-2.png" width="672"></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># add volcano plot examining genes showing differential expression</span>
-tt_volcano &lt;-<span class="st"> </span>tt %&gt;%
-<span class="st">  </span>dplyr::<span class="kw">arrange</span>(adj.P.Val) %&gt;%
-<span class="st">  </span>dplyr::<span class="kw">mutate</span>(
-    <span class="dt">logFC =</span> <span class="kw">I</span>(logFC),
-    <span class="dt">logPval =</span> -<span class="kw">log10</span>(P.Value),
-    <span class="dt">color =</span> <span class="kw">ifelse</span>((logFC &gt;<span class="st"> </span><span class="fl">3.0</span>) &amp;<span class="st"> </span>(adj.P.Val &lt;<span class="st"> </span><span class="fl">0.2</span>), <span class="st">"1"</span>,
-                   <span class="kw">ifelse</span>((logFC &lt;<span class="st"> </span>-<span class="fl">3.0</span>) &amp;<span class="st"> </span>(adj.P.Val &lt;<span class="st"> </span><span class="fl">0.2</span>), <span class="st">"-1"</span>, <span class="st">"0"</span>))
-  ) %&gt;%
-<span class="st">  </span>dplyr::<span class="kw">select</span>(<span class="kw">which</span>(<span class="kw">colnames</span>(.) %in%<span class="st"> </span><span class="kw">c</span>(<span class="st">"logFC"</span>, <span class="st">"logPval"</span>, <span class="st">"color"</span>))) %&gt;%
-<span class="st">  </span>dplyr::<span class="kw">filter</span>((logFC &gt;<span class="st"> </span><span class="kw">quantile</span>(logFC, <span class="dt">probs =</span> <span class="fl">0.2</span>)) &amp;
-<span class="st">                  </span>logFC &lt;<span class="st"> </span><span class="kw">quantile</span>(logFC, <span class="dt">probs =</span> <span class="fl">0.75</span>))
-
-<span class="kw">ggplot</span>(tt_volcano, <span class="kw">aes</span>(<span class="dt">x =</span> logFC, <span class="dt">y =</span> logPval)) +
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">colour =</span> color)) +
-<span class="st">  </span><span class="kw">xlab</span>(<span class="st">"log2(Fold Change)"</span>) +<span class="st"> </span><span class="kw">ylab</span>(<span class="st">"-log10(raw p-value)"</span>) +
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Volcano Plot of Differential Average Tx Effect"</span>) +
-<span class="st">  </span><span class="kw">scale_colour_manual</span>(<span class="dt">values =</span> pal2[<span class="dv">1</span>:<span class="dv">3</span>], <span class="dt">guide =</span> <span class="ot">FALSE</span>) +
-<span class="st">  </span><span class="kw">theme_bw</span>()</code></pre></div>
-<p><img src="exposureBiomarkers_files/figure-html/volcano_plot_limma_results-1.png" width="672"></p>
+<span class="kw">plot_biotmle</span>(biotmle, <span class="dt">type =</span> <span class="st">"pvals_adj"</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">volcplot_biotmle</span>(biotmle)</code></pre></div>
 </div>
   </div>
 
@@ -222,7 +139,7 @@ tt_volcano &lt;-<span class="st"> </span>tt %&gt;%
 
 
       <footer><div class="copyright">
-  <p>Developed by Nima Hejazi, Alan Hubbard.</p>
+  <p>Developed by Nima S. Hejazi, Alan E. Hubbard.</p>
 </div>
 
 <div class="pkgdown">

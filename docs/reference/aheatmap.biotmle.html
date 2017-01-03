@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Results obtained from running the `tmlelimma` procedure on illumina2007 data — illumina2007results • tmlelimma</title>
+<title>Heatmap for class  — aheatmap.biotmle • biotmle</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -44,7 +44,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">tmlelimma</a>
+      <a class="navbar-brand" href="../index.html">biotmle</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -61,7 +61,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/nhejazi/tmlelimma">
+  <a href="https://github.com/nhejazi/biotmle/pkg">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -77,37 +77,48 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Results obtained from running the `tmlelimma` procedure on illumina2007 data</h1>
+    <h1>Heatmap for class </h1>
     </div>
 
     
-    <p>description...</p>
+    <p>Heatmap for class <code>biotmle</code></p>
     
 
-    <pre><span class='no'>illumina2007results</span></pre>
-        
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>A data frame with 22177 rows and 125 variables:
-<dl class='dl-horizontal'>
-  ...some information ought to go here...
-</dl></p>
+    <pre><span class='fu'>aheatmap.biotmle</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>designMat</span>, <span class='kw'>term</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>FDRcutoff</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>25</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <dl class="dl-horizontal">
+      <dt>x</dt>
+      <dd>object of class <code>biotmle</code> as produced by an appropriate call to
+<code>biomarkertmle</code></dd>
+      <dt>...</dt>
+      <dd>additional arguments passed <code>NMF::aheatmap</code> as necessary</dd>
+      <dt>designMat</dt>
+      <dd>a design matrix providing the contrasts to be dispalyed in
+the heatmap (as would be passed to <code>limma::lmFit</code>).</dd>
+      <dt>term</dt>
+      <dd>numeric value indicating the column of the design matrix that
+corresponds to the expression covariate of interest.</dd>
+      <dt>FDRcutoff</dt>
+      <dd>cutoff to be used in controlling the False Discovery Rate</dd>
+      <dt>top</dt>
+      <dd>number of identified biomarkers to plot in the heatmap</dd>
+    </dl>
     
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
-      <li><a href="#format">Format</a></li>
-          </ul>
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
 
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nima Hejazi, Alan Hubbard.</p>
+  <p>Developed by Nima S. Hejazi, Alan E. Hubbard.</p>
 </div>
 
 <div class="pkgdown">

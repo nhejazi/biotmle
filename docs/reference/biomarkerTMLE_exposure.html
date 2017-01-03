@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Moderated T-Statistic Test for Asymptotically Linear Target Parameters — genomicTMLE • tmlelimma</title>
+<title>TMLE procedure for Biomarker Identication from Exposure — biomarkerTMLE_exposure • biotmle</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -44,7 +44,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">tmlelimma</a>
+      <a class="navbar-brand" href="../index.html">biotmle</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -61,7 +61,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/nhejazi/tmlelimma">
+  <a href="https://github.com/nhejazi/biotmle/pkg">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -77,17 +77,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Moderated T-Statistic Test for Asymptotically Linear Target Parameters</h1>
+    <h1>TMLE procedure for Biomarker Identication from Exposure</h1>
     </div>
 
     
-    <p>computes the (rather complicated) parameter defined as the difference in the
-blips in Tx effects (difference between counterfactual max, min Tx effects)</p>
+    <p>This function performs influence curve-based estimation of the effect of an
+exposure on (gene) expression array values associated with a given biomarker,
+controlling for a user-specified set of baseline covariates</p>
     
 
-    <pre><span class='fu'>genomicTMLE</span>(<span class='no'>Y</span>, <span class='no'>W</span>, <span class='no'>A</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>,
-  <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"SL.glmnet"</span>, <span class='st'>"SL.randomForest"</span>, <span class='st'>"SL.nnet"</span>, <span class='st'>"SL.polymars"</span>,
-  <span class='st'>"SL.mean"</span>), <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"SL.glmnet"</span>, <span class='st'>"SL.randomForest"</span>, <span class='st'>"SL.nnet"</span>, <span class='st'>"SL.mean"</span>))</pre>
+    <pre><span class='fu'>biomarkerTMLE_exposure</span>(<span class='no'>Y</span>, <span class='no'>W</span>, <span class='no'>A</span>, <span class='no'>a</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>, <span class='no'>g_lib</span>, <span class='no'>Q_lib</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -100,9 +99,9 @@ estimation</dd>
       <dt>A</dt>
       <dd>(numeric vector) - a discretized exposure vector whose effect on
 expression gene expression values is of interest</dd>
-      <dt>parallel</dt>
-      <dd>(logical, numeric) - whether to use or number of cores to be
-used when the TMLE-based estimation procedure is parallelized</dd>
+      <dt>a</dt>
+      <dd>(numeric vector) - the levels of A against which comparisons are to
+be made</dd>
       <dt>family</dt>
       <dd>(character) - specification of error family: &quot;binomial&quot; or
 &quot;gaussian&quot;</dd>
@@ -125,7 +124,7 @@ used when the TMLE-based estimation procedure is parallelized</dd>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nima Hejazi, Alan Hubbard.</p>
+  <p>Developed by Nima S. Hejazi, Alan E. Hubbard.</p>
 </div>
 
 <div class="pkgdown">
