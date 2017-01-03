@@ -1,5 +1,5 @@
 ---
-title: 'biotmle: Targeted Learning for biomarker discovery with the moderated
+title: 'biotmle: targeted learning for biomarker discovery with the moderated
         t-statistic'
 tags:
   - R language
@@ -11,13 +11,16 @@ authors:
   - name: Nima Hejazi
     orcid: 0000-0002-7127-2789
     affiliation: 1
- - name: Alan Hubbard
-   orcid: 0000-0002-3769-0127
-   affiliation: 1
+  - name: Weixin Cai
+    orcid: 0000-0003-2680-3066
+    affiliation: 1
+  - name: Alan Hubbard
+    orcid: 0000-0002-3769-0127
+    affiliation: 1
 affiliations:
- - name: Division of Biostatistics, University of California, Berkeley
-   index: 1
-date: 11 January 2017
+  - name: Division of Biostatistics, University of California, Berkeley
+    index: 1
+date: 09 January 2017
 bibliography: manuscript.bib
 ---
 

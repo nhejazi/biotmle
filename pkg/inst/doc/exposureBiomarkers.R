@@ -48,16 +48,16 @@ geneIDs <- colnames(Y)
 #                                    W = W,
 #                                    A = A,
 #                                    type = "exposure",
+#                                    parallel = TRUE,
 #                                    family = "gaussian",
 #                                    g_lib = c("SL.glmnet", "SL.randomForest",
-#                                              "SL.nnet", "SL.polymars",
-#                                              "SL.mean"),
+#                                              "SL.polymars", "SL.mean"),
 #                                    Q_lib = c("SL.glmnet", "SL.randomForest",
 #                                              "SL.nnet", "SL.mean")
 #                                   )
 
-## ----load_biomarkerTMLE_result, eval=FALSE-------------------------------
-#  data(illumina2007result)
+## ----load_biomarkerTMLE_result, echo=FALSE-------------------------------
+data(biomarkertmleOut)
 
 ## ----limmaTMLE_eval, eval=FALSE------------------------------------------
 #  design <- as.data.frame(cbind(rep(1, nrow(Y)),

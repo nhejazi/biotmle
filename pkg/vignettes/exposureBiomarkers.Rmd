@@ -72,8 +72,8 @@ biomarkerTMLEout <- biomarkertmle(Y = Y,
                                  )
 ```
 
-```{r load_biomarkerTMLE_result, echo=FALSE, eval=FALSE}
-data(illumina2007result)
+```{r load_biomarkerTMLE_result, echo=FALSE}
+data(biomarkertmleOut)
 ```
 
 ```{r limmaTMLE_eval, eval=FALSE}

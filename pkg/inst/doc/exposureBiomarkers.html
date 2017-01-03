@@ -12,7 +12,7 @@
 
 <meta name="author" content="Nima S. Hejazi &amp; Alan E. Hubbard" />
 
-<meta name="date" content="2016-12-30" />
+<meta name="date" content="2017-01-03" />
 
 <title>Identifying Biomarkers from an Exposure Variable</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Identifying Biomarkers from an Exposure Variable</h1>
 <h4 class="author"><em>Nima S. Hejazi &amp; Alan E. Hubbard</em></h4>
-<h4 class="date"><em>2016-12-30</em></h4>
+<h4 class="date"><em>2017-01-03</em></h4>
 
 
 
@@ -120,15 +120,13 @@ geneIDs &lt;-<span class="st"> </span><span class="kw">colnames</span>(Y)</code>
                                   <span class="dt">W =</span> W,
                                   <span class="dt">A =</span> A,
                                   <span class="dt">type =</span> <span class="st">&quot;exposure&quot;</span>,
+                                  <span class="dt">parallel =</span> <span class="ot">TRUE</span>,
                                   <span class="dt">family =</span> <span class="st">&quot;gaussian&quot;</span>,
                                   <span class="dt">g_lib =</span> <span class="kw">c</span>(<span class="st">&quot;SL.glmnet&quot;</span>, <span class="st">&quot;SL.randomForest&quot;</span>,
-                                            <span class="st">&quot;SL.nnet&quot;</span>, <span class="st">&quot;SL.polymars&quot;</span>,
-                                            <span class="st">&quot;SL.mean&quot;</span>),
+                                            <span class="st">&quot;SL.polymars&quot;</span>, <span class="st">&quot;SL.mean&quot;</span>),
                                   <span class="dt">Q_lib =</span> <span class="kw">c</span>(<span class="st">&quot;SL.glmnet&quot;</span>, <span class="st">&quot;SL.randomForest&quot;</span>,
                                             <span class="st">&quot;SL.nnet&quot;</span>, <span class="st">&quot;SL.mean&quot;</span>)
                                  )</code></pre></div>
-<p>A <code>data.frame</code> object containing the results of this procedure is included with the package and will be used for the remainder of this vignette:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(illumina2007result)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">design &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(Y)),
                               <span class="kw">as.numeric</span>(A ==<span class="st"> </span><span class="kw">max</span>(<span class="kw">unique</span>(A)))))
 <span class="kw">colnames</span>(design) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;intercept&quot;</span>, <span class="st">&quot;Tx&quot;</span>)
