@@ -1,12 +1,12 @@
 ---
-title: 'biotmle: targeted learning for biomarker discovery with the moderated
-        t-statistic'
+title: 'biotmle: Targeted Learning for Biomarker Discovery'
 tags:
-  - R language
   - targeted learning
   - multiple testing
   - bioinformatics
+  - biomarkers
   - genomics
+  - R
 authors:
   - name: Nima Hejazi
     orcid: 0000-0002-7127-2789
@@ -20,31 +20,30 @@ authors:
 affiliations:
   - name: Division of Biostatistics, University of California, Berkeley
     index: 1
-date: 09 January 2017
+date: 04 January 2017
 bibliography: manuscript.bib
 ---
 
 # Summary
 
-we introduce and implement a method to identify genes
-differentially expressed (based on the ATE) across subjects with varying levels of
-benzene exposure.
-\item We use targeted maximum likelihood estimation (TMLE), relying on the influence
-curve of the proposed estimator, with the moderated t-statistic for gene expression.
+The `biotmle` package provides an implementation of a biomarker discovery
+methodology based on Targeted Minimum Loss-Based Estimation (TMLE) and a
+generalization of the moderated t-statistic of [@smyth2005limma], designed for
+use with biological sequencing data (e.g., microarrays, RNA-seq). The
+statistical approach made available in this package relies on TMLE to
+rigorously evaluate the association between a set of potential biomarkers and
+another variable of interest (either an exposure or outcome), while adjusting
+for potential confounding from another set of user-specified covariates. The
+implementation provided here comes the form of a package for the R language for
+statistical computing [@R].
 
-Let $O=(W,A,Y)\sim{P_0}$, where W represents confounders, A the exposure of
-interest, and $Y=({Y_b}, b=1,\dots,B)$ a vector of potential biomarkers. The
-proposed target parameter is $\Psi_b(P_0)= E_W[E_0(Y_b|A=1,W) - E_0(Y_b|A=0,W)]$.
+The ...
 
-The moderated t-statistic \cite{smyth2005limma} for an asymptotically linear
-parameter estimate:
-$\tilde{t}_j=\frac{\sqrt[]{n}(\Psi_j(P_n)-\psi_0)}{S_j(IC_{j,n})}$.
+![Heatmap visualizing ATE difference by exposure](figs/heatmap_biotmle.png)
 
-Our goal is to define $\Psi$ as the difference (per gene) in outcome between
-receiving the maximum and minimum levels of treatment. Let: $\Psi_j$*=$E [ E[Y_j \mid
-A = max(A), W]- E[Y_j \mid A = min(A), W]]$.
+![Adjusted p-value histogram (moderated t-test)](figs/hist_adjp_biotmle.png)
 
-The heatmap visualizes the ATE difference induced by benzene exposure.
+![Volcano plot of ATE difference by exposure](figs/volcanoplot_biotmle.png)
 
 \newpage
 

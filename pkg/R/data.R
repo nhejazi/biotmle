@@ -7,7 +7,7 @@
 #' \describe{
 #'   ...some information ought to go here...
 #' }
-"illumina2007"
+"illuminaData"
 
 #' Results obtained from running the `biomarkertmle` on `illumina2007` data
 #'

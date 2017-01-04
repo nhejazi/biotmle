@@ -1,27 +1,13 @@
 ## ----setup_data----------------------------------------------------------
 library(dplyr)
 library(biotmle)
-data(illumina2007)
+data(illuminaData)
 "%ni%" = Negate("%in%")
-
-data <- illumina2007 %>%
-  dplyr::select(which(colnames(.) %ni% c("box", "riboaveugml", "ng", "exclude",
-                                         "hyb", "totalrnaug", "chip", "Chip.Id",
-                                         "Chip.Section", "label.c", "benzene",
-                                         "illumID", "berkeley_vial_label",
-                                         "cRNA"))) %>%
-  dplyr::filter(!duplicated(.$id)) %>%
-  dplyr::mutate(
-    benzene = I(newbenz),
-    smoking = I(current_smoking)
-  ) %>%
-  dplyr::select(which(colnames(.) %ni% c("newbenz", "current_smoking")))
-
-subjIDs <- data$id
+subjIDs <- illuminaData$id
 
 ## ----clean_data----------------------------------------------------------
 # W - age, sex, smoking
-W <- data %>%
+W <- illuminaData %>%
   dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %>%
   dplyr::mutate(
     age = as.numeric((age > quantile(age, 0.25))),
@@ -31,16 +17,15 @@ W <- data %>%
 
 
 # A - benzene exposure (discretized)
-A <- data %>%
+A <- illuminaData %>%
   dplyr::select(which(colnames(.) %in% c("benzene")))
 A <- A[, 1]
 
 
 # Y - genes
-Y <- data %>%
+Y <- illuminaData %>%
   dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",
                                          "id")))
-
 geneIDs <- colnames(Y)
 
 ## ----biomarkerTMLE_eval, eval=FALSE--------------------------------------
@@ -59,21 +44,24 @@ geneIDs <- colnames(Y)
 ## ----load_biomarkerTMLE_result, echo=FALSE-------------------------------
 data(biomarkertmleOut)
 
-## ----limmaTMLE_eval, eval=FALSE------------------------------------------
-#  design <- as.data.frame(cbind(rep(1, nrow(Y)),
-#                                as.numeric(A == max(unique(A)))))
-#  colnames(design) <- c("intercept", "Tx")
-#  
-#  limmaTMLEout <- limmatmle(biotmle, IDs = NULL, designMat = design)
+## ----limmaTMLE_eval------------------------------------------------------
+design <- as.data.frame(cbind(rep(1, nrow(Y)),
+                              as.numeric(A == max(unique(A)))))
+colnames(design) <- c("intercept", "Tx")
 
-## ----heatmap_limma_results, eval=FALSE-----------------------------------
-#  heatmap_biotmle(biotmle, designMat = design, FDRcutoff = 0.05, top = 25)
+limmaTMLEout <- limmatmle(biotmle = biomarkerTMLEout, IDs = NULL,
+                          designMat = design)
 
-## ----pval_hist_limma_results, eval=FALSE---------------------------------
-#  plot_biotmle(biotmle, type = "pvals_raw")
-#  
-#  plot_biotmle(biotmle, type = "pvals_adj")
+## ----pval_hist_limma_adjp------------------------------------------------
+plot(x = limmaTMLEout, type = "pvals_adj")
 
-## ----volcano_plot_limma_results, eval=FALSE------------------------------
-#  volcplot_biotmle(biotmle)
+## ----pval_hist_limma_rawp------------------------------------------------
+plot(x = limmaTMLEout, type = "pvals_raw")
+
+## ----heatmap_limma_results-----------------------------------------------
+aheatmap.biotmle(x = limmaTMLEout, designMat = design, FDRcutoff = 0.05,
+                 top = 25)
+
+## ----volcano_plot_limma_results------------------------------------------
+volcanoPlot_biotmle(biotmle = limmaTMLEout)
 
