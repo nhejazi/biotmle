@@ -1,17 +1,21 @@
 branches:
   only:
   - master
-  - develop
+
+env:
+  - TEST_DIR=pkg/
 
 language: r
+
+sudo: required
+
 r:
   - oldrel
   - release
   - devel
 
-sudo: required
-
-before_script: cd pkg
+before_install:
+  - cd $TEST_DIR
 
 warnings_are_errors: true
 

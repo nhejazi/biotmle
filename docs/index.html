@@ -40,7 +40,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/nhejazi/biotmle/pkg">
+  <a href="https://github.com/nhejazi/biotmle">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -68,34 +68,8 @@
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"> </a>Description</h2>
-<p><code>biotmle</code> is an R package that generalizes the moderated t-statistic of Smyth for use with asymptotically linear target parameters. The technique implemented here relies on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform a given omics data set based on the influence curve representation of a particular statistical target parameter (e.g., the Average Treatment Effect). The transformed data is then used to test for differences between groups using the moderated t-statistic as implemented in the R package <a href="https://bioconductor.org/packages/release/bioc/html/limma.html"><code>limma</code></a>.</p>
-<div id="buildstesting" class="section level3">
-<h3 class="hasAnchor">
-<a href="#buildstesting" class="anchor"> </a>Builds/Testing</h3>
-<table>
-<thead><tr class="header">
-<th align="left">@</th>
-<th align="left">Build (macOS/Linux)</th>
-<th align="left">Build (Windows)</th>
-<th align="left">Coverage</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td align="left"><strong>master</strong></td>
-<td align="left"><a href="https://travis-ci.org/nhejazi/biotmle"><img src="https://travis-ci.org/nhejazi/biotmle.svg?branch=master" alt="Travis-CI Build Status"></a></td>
-<td align="left"><a href="https://ci.appveyor.com/project/nhejazi/biotmle"><img src="https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></td>
-<td align="left"><a href="https://coveralls.io/github/nhejazi/biotmle?branch=master"><img src="https://coveralls.io/repos/github/nhejazi/biotmle/badge.svg?branch=master" alt="Coverage Status"></a></td>
-</tr>
-<tr class="even">
-<td align="left"><strong>develop</strong></td>
-<td align="left"><a href="https://travis-ci.org/nhejazi/biotmle"><img src="https://travis-ci.org/nhejazi/biotmle.svg?branch=develop" alt="Travis-CI Build Status"></a></td>
-<td align="left"><a href="https://ci.appveyor.com/project/nhejazi/biotmle"><img src="https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=develop&amp;svg=true" alt="AppVeyor Build Status"></a></td>
-<td align="left"><a href="https://coveralls.io/github/nhejazi/biotmle?branch=develop"><img src="https://coveralls.io/repos/github/nhejazi/biotmle/badge.svg?branch=develop" alt="Coverage Status"></a></td>
-</tr>
-</tbody>
-</table>
+<p><code>biotmle</code> is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic of Smyth for use with asymptotically linear target parameters. The set of methods implemented in this R package rely on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform a given <em>Omics</em> data set (e.g., microarray, RNA-seq) based on the influence curve representation of a particular statistical target parameter (e.g., the Average Treatment Effect). The transformed data is then used to test for differences between groups using the moderated t-statistic as implemented in the R package <a href="https://bioconductor.org/packages/release/bioc/html/limma.html"><code>limma</code></a>.</p>
 <hr>
-</div>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -139,7 +113,7 @@ SOFTWARE.</code></pre>
   <div class="col-md-3" id="sidebar">
     <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/nhejazi/biotmle/pkg">https://​github.com/​nhejazi/​biotmle/​pkg</a>
+<li>Browse source code at <br><a href="https://github.com/nhejazi/biotmle">https://​github.com/​nhejazi/​biotmle</a>
 </li>
 </ul>
 <h2>License</h2>
@@ -153,10 +127,18 @@ SOFTWARE.</code></pre>
 <html><body>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="http://opensource.org/licenses/MIT">
-  <img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT license"></a></li>
+<li><a href="https://travis-ci.org/nhejazi/biotmle">
+  <img src="https://travis-ci.org/nhejazi/biotmle.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/nhejazi/biotmle">
+  <img src="https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://coveralls.io/github/nhejazi/biotmle?branch=master">
+  <img src="https://coveralls.io/repos/github/nhejazi/biotmle/badge.svg?branch=master" alt="Coverage Status"></a></li>
+<li><a href="http://www.r-pkg.org/pkg/biotmle">
+  <img src="http://www.r-pkg.org/badges/version/biotmle" alt="CRAN"></a></li>
 <li><a href="http://www.repostatus.org/#wip">
   <img src="http://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
+<li><a href="http://opensource.org/licenses/MIT">
+  <img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT license"></a></li>
 </ul>
 </body></html>
 </div>

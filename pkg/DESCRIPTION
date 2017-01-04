@@ -4,16 +4,17 @@ Version: 0.0.5
 Authors@R: as.person(c(
     "Nima S. Hejazi <nhejazi@berkeley.edu> [aut, cre]",
     "Alan E. Hubbard <hubbard@berkeley.edu> [aut]",
-    "Wilson (Weixin) Cai <wcai@berkeley.edu> [ctb]"))
+    "Weixin Cai <wcai@berkeley.edu> [ctb]"))
 Description: This package facilitates the discovery of biomarkers from Omics
     data based on the associations of potential biomarkers with exposure and
     outcome variables by implementing an estimation procedure that combines a
-    generalization of the moderated t-statistic with asymptotically linear statistical parameters estimated via targeted minimum loss-based estimation
+    generalization of the moderated t-statistic with asymptotically linear
+    statistical parameters estimated via targeted minimum loss-based estimation
     (TMLE).
 Depends:
     R (>= 3.3.1)
 License: MIT + file LICENSE
-URL: https://github.com/nhejazi/biotmle/pkg
+URL: https://github.com/nhejazi/biotmle
 Encoding: UTF-8
 LazyData: true
 Imports:

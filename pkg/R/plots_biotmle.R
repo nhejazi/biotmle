@@ -84,6 +84,8 @@ volcanoPlot_biotmle <- function(biotmle) {
       ggplot2::ylab("-log10(raw p-value)") +
       ggplot2::ggtitle("Volcano Plot of Differential Average Tx Effect") +
       ggplot2::scale_colour_manual(values = pal2[1:3], guide = FALSE)
+
+  return(p)
 }
 
 #==============================================================================#
@@ -138,7 +140,7 @@ aheatmap.biotmle <- function(x, ..., designMat,
                 Colv = NULL,
                 annCol = annot,
                 annColors = "Set2",
-                main = paste("Heatmap of Top", top, "Biomarkers", FDRcutoff,
-                             "(FDR)")
+                main = paste("Heatmap of Top", top, "Biomarkers", "( FDR =",
+                             FDRcutoff, ")")
                )
 }
