@@ -3,31 +3,41 @@
 # Download script file from GitHub
 init:
   ps: |
+        Get-Date
         $ErrorActionPreference = "Stop"
-        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
-        Import-Module '..\appveyor-tool.ps1'
 install:
-  ps: Bootstrap
-
-cache:
-  - C:\RLibrary
+  ps: |
+        Import-Module '.\scripts\appveyor-tool.ps1'
+        Bootstrap
 
 # Adapt as necessary starting from here
 environment:
+  global:
+    WARNINGS_ARE_ERRORS: 1
+
   matrix:
   - TEST_DIR: pkg
 
-before_build:
-  - cp ..\travis-tool.sh .\travis-tool.sh
-  - cp travis-tool.sh.cmd %TEST_DIR%\travis-tool.sh.cmd
-  - cd %TEST_DIR%
-  - bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
+  - R_VERSION: devel
+    GCC_PATH: mingw_32
 
-before_test:
-  - ps: cd pkg
-  - cinst pandoc
-  - ps: $env:Path += ";C:\Program Files (x86)\Pandoc\"
-  - pandoc -v
+  - R_VERSION: devel
+    R_ARCH: x64
+    GCC_PATH: mingw_64
+
+  - R_VERSION: release
+    R_ARCH: x64
+
+  - R_VERSION: stable
+
+  - R_VERSION: patched
+
+  - R_VERSION: oldrel
+    RTOOLS_VERSION: 32
+    CRAN: http://cran.rstudio.com
+
+before_build:
+  - cd %TEST_DIR%
 
 build_script:
   - travis-tool.sh install_deps
@@ -57,3 +67,13 @@ artifacts:
 
   - path: '\*_*.zip'
     name: Bits
+
+notifications:
+ - provider: Email
+   to:
+     - nh@nimahejazi.org
+   subject: 'r-appveyor build {{status}}'
+   message: "https://ci.appveyor.com/project/krlmlr/r-appveyor"
+   on_build_success: false
+   on_build_failure: true
+   on_build_status_changed: true
