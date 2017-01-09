@@ -1,25 +1,29 @@
 branches:
   only:
   - master
-
-env:
-  - TEST_DIR=pkg/
+  - develop
 
 language: r
-
 sudo: required
+cache: packages
+warnings_are_errors: true
 
 r:
-  - oldrel
   - release
   - devel
 
+env:
+  - TEST_DIR=pkg/
+  
 before_install:
   - cd $TEST_DIR
+  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+  - chmod 755 ./travis-tool.sh
+  - ./travis-tool.sh bootstrap
 
-warnings_are_errors: true
-
-cache: packages
+install:
+  - ./travis-tool.sh install_bioc limma
+  - ./travis-tool.sh install_bioc_deps
 
 r_github_packages:
   - jimhester/covr

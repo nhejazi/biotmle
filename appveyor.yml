@@ -15,16 +15,20 @@ cache:
 # Adapt as necessary starting from here
 environment:
   global:
-    WARNINGS_ARE_ERRORS: 1
+    WARNINGS_ARE_ERRORS: 0
 
   matrix:
   - TEST_DIR: pkg
 
 before_build:
+  - cp ../travis-tool.sh travis-tool.sh
+  - cp travis-tool.sh.cmd %TEST_DIR%\travis-tool.sh.cmd
   - cd %TEST_DIR%
+  - bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
 
 build_script:
   - travis-tool.sh install_deps
+  - travis-tool.sh install_bioc limma
 
 test_script:
   - travis-tool.sh run_tests
