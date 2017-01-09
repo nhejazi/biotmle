@@ -1,9 +1,7 @@
 branches:
   only:
   - master
-
-env:
-  - TEST_DIR=pkg/
+  - develop
 
 language: r
 
@@ -14,12 +12,19 @@ r:
   - release
   - devel
 
+env:
+  - TEST_DIR=pkg/
+  
 before_install:
   - cd $TEST_DIR
 
 warnings_are_errors: true
 
 cache: packages
+
+install:
+  - ./travis-tool.sh install_bioc limma
+  - ./travis-tool.sh install_bioc_deps
 
 r_github_packages:
   - jimhester/covr
