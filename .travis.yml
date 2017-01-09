@@ -21,16 +21,6 @@ warnings_are_errors: true
 
 cache: packages
 
-r_packages:
-  - testthat
-  - rmarkdown
-  - doParallel
-  - parallel
-  - foreach
-  - SuperLearner
-  - tmle
-  - limma
-
 r_github_packages:
   - jimhester/covr
 

@@ -1,6 +1,6 @@
 Package: biotmle
 Title: Targeted Learning for Biomarker Discovery with the Moderated T-Statistic
-Version: 0.0.5
+Version: 0.1.0
 Authors@R: as.person(c(
     "Nima S. Hejazi <nhejazi@berkeley.edu> [aut, cre]",
     "Alan E. Hubbard <hubbard@berkeley.edu> [aut]",

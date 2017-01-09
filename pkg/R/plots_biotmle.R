@@ -1,4 +1,6 @@
-#' Plot utility for class \code{biotmle}
+#' Plot utility for class biotmle
+#'
+#' extended description goes here...
 #'
 #' @param x object of class \code{biotmle} as produced by an appropriate call to
 #'        \code{biomarkertmle}
@@ -21,23 +23,23 @@ plot.biotmle <- function(x, ..., type = "pvals_adj") {
   pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
 
   if(type == "pvals_raw") {
-    p <- ggplot2::ggplot(x$topTable, ggplot2::aes(P.Value)) +
-      ggplot2::geom_histogram(ggplot2::aes(y = ..count.., fill = ..count..),
-                              colour = "white", na.rm = TRUE, binwidth = 0.05) +
-      ggplot2::ggtitle("Histogram of raw p-values") +
-      ggplot2::xlab("magnitude of raw p-values") +
-      ggplot2::scale_fill_gradientn("Count", colors = pal1) +
-      ggplot2::guides(fill = ggplot2::guide_legend(title = NULL))
+    p <- ggplot2::ggplot(x$topTable, ggplot2::aes(P.Value))
+    p <- p + ggplot2::geom_histogram(ggplot2::aes(y = ..count..,
+      fill = ..count..), colour = "white", na.rm = TRUE, binwidth = 0.025)
+    p <- p + ggplot2::ggtitle("Histogram of raw p-values")
+    p <- p + ggplot2::xlab("magnitude of raw p-values")
+    p <- p + ggplot2::scale_fill_gradientn("Count", colors = pal1)
+    p <- p + ggplot2::guides(fill = ggplot2::guide_legend(title = NULL))
   }
 
   if (type == "pvals_adj") {
-    p <- ggplot2::ggplot(x$topTable, ggplot2::aes(adj.P.Val)) +
-      ggplot2::geom_histogram(ggplot2::aes(y = ..count.., fill = ..count..),
-                              colour = "white", na.rm = TRUE, binwidth = 0.05) +
-      ggplot2::ggtitle("Histogram of BH-corrected FDR p-values") +
-      ggplot2::xlab("magnitude of BH-corrected p-values") +
-      ggplot2::scale_fill_gradientn("Count", colors = pal1) +
-      ggplot2::guides(fill = ggplot2::guide_legend(title = NULL))
+    p <- ggplot2::ggplot(x$topTable, ggplot2::aes(adj.P.Val))
+    p <- p + ggplot2::geom_histogram(ggplot2::aes(y = ..count..,
+      fill = ..count..), colour = "white", na.rm = TRUE, binwidth = 0.025)
+    p <- p + ggplot2::ggtitle("Histogram of BH-corrected FDR p-values")
+    p <- p + ggplot2::xlab("magnitude of BH-corrected p-values")
+    p <- p + ggplot2::scale_fill_gradientn("Count", colors = pal1)
+    p <- p + ggplot2::guides(fill = ggplot2::guide_legend(title = NULL))
   }
   return(p)
 }
@@ -46,7 +48,9 @@ plot.biotmle <- function(x, ..., type = "pvals_adj") {
 ## NEXT FUNCTION ===============================================================
 #==============================================================================#
 
-#' Volcano plot for class \code{biotmle}
+#' Volcano plot for class biotmle
+#'
+#' extended description goes here...
 #'
 #' @param biotmle object of class \code{biotmle} as produced by an appropriate
 #'        call to \code{biomarkertmle}
@@ -75,15 +79,15 @@ volcanoPlot_biotmle <- function(biotmle) {
                       ifelse((logFC < -3.0) & (adj.P.Val < 0.2), "-1", "0"))
     ) %>%
     dplyr::select(which(colnames(.) %in% c("logFC", "logPval", "color"))) %>%
-    dplyr::filter((logFC > quantile(logFC, probs = 0.2)) &
-                   logFC < quantile(logFC, probs = 0.75))
+    dplyr::filter((logFC > quantile(logFC, probs = 0.1)) &
+                   logFC < quantile(logFC, probs = 0.9))
 
-  p <- ggplot2::ggplot(tt_volcano, ggplot2::aes(x = logFC, y = logPval)) +
-      ggplot2::geom_point(aes(colour = color)) +
-      ggplot2::xlab("log2(Fold Change)") +
-      ggplot2::ylab("-log10(raw p-value)") +
-      ggplot2::ggtitle("Volcano Plot of Differential Average Tx Effect") +
-      ggplot2::scale_colour_manual(values = pal2[1:3], guide = FALSE)
+  p <- ggplot2::ggplot(tt_volcano, ggplot2::aes(x = logFC, y = logPval))
+  p <- p + ggplot2::geom_point(aes(colour = color))
+  p <- p + ggplot2::xlab("log2(Fold Change)")
+  p <- p + ggplot2::ylab("-log10(raw p-value)")
+  p <- p + ggplot2::ggtitle("Volcano Plot: Average Treatment Effect")
+  p <- p + ggplot2::scale_colour_manual(values = pal2[1:3], guide = FALSE)
 
   return(p)
 }
@@ -94,7 +98,9 @@ volcanoPlot_biotmle <- function(biotmle) {
 utils::globalVariables(c(".", "..count..", "P.Value", "adj.P.Val", "color",
                          "logFC", "logPval"))
 
-#' Heatmap for class \code{biotmle}
+#' Heatmap for class biotmle
+#'
+#' extended description goes here...
 #'
 #' @param x object of class \code{biotmle} as produced by an appropriate call to
 #'        \code{biomarkertmle}

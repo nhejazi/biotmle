@@ -1,4 +1,4 @@
-TITLE = manuscript
+TITLE = paper
 .PHONY : pdf
 
 pdf:

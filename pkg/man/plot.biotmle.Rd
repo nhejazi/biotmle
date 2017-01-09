@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots_biotmle.R
 \name{plot.biotmle}
 \alias{plot.biotmle}
-\title{Plot utility for class \code{biotmle}}
+\title{Plot utility for class biotmle}
 \usage{
 \method{plot}{biotmle}(x, ..., type = "pvals_adj")
 }
@@ -16,6 +16,6 @@
 adjusted p-values (adjustment performed via Benjamini-Hochberg)}
 }
 \description{
-Plot utility for class \code{biotmle}
+extended description goes here...
 }
 

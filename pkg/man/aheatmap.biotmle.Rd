@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots_biotmle.R
 \name{aheatmap.biotmle}
 \alias{aheatmap.biotmle}
-\title{Heatmap for class \code{biotmle}}
+\title{Heatmap for class biotmle}
 \usage{
 aheatmap.biotmle(x, ..., designMat, term = 2, FDRcutoff = 0.05, top = 25)
 }
@@ -23,6 +23,6 @@ corresponds to the expression covariate of interest.}
 \item{top}{number of identified biomarkers to plot in the heatmap}
 }
 \description{
-Heatmap for class \code{biotmle}
+extended description goes here...
 }
 

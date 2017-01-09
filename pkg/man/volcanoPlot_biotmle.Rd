@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots_biotmle.R
 \name{volcanoPlot_biotmle}
 \alias{volcanoPlot_biotmle}
-\title{Volcano plot for class \code{biotmle}}
+\title{Volcano plot for class biotmle}
 \usage{
 volcanoPlot_biotmle(biotmle)
 }
@@ -11,6 +11,6 @@ volcanoPlot_biotmle(biotmle)
 call to \code{biomarkertmle}}
 }
 \description{
-Volcano plot for class \code{biotmle}
+extended description goes here...
 }
 

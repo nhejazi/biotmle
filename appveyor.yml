@@ -3,12 +3,14 @@
 # Download script file from GitHub
 init:
   ps: |
-        Get-Date
         $ErrorActionPreference = "Stop"
+        Invoke-WebRequest http://raw.github.com/krlmlr/r-appveyor/master/scripts/appveyor-tool.ps1 -OutFile "..\appveyor-tool.ps1"
+        Import-Module '..\appveyor-tool.ps1'
 install:
-  ps: |
-        Import-Module '.\scripts\appveyor-tool.ps1'
-        Bootstrap
+  ps: Bootstrap
+
+cache:
+  - C:\RLibrary
 
 # Adapt as necessary starting from here
 environment:
@@ -17,24 +19,6 @@ environment:
 
   matrix:
   - TEST_DIR: pkg
-
-  - R_VERSION: devel
-    GCC_PATH: mingw_32
-
-  - R_VERSION: devel
-    R_ARCH: x64
-    GCC_PATH: mingw_64
-
-  - R_VERSION: release
-    R_ARCH: x64
-
-  - R_VERSION: stable
-
-  - R_VERSION: patched
-
-  - R_VERSION: oldrel
-    RTOOLS_VERSION: 32
-    CRAN: http://cran.rstudio.com
 
 before_build:
   - cd %TEST_DIR%
@@ -73,7 +57,7 @@ notifications:
    to:
      - nh@nimahejazi.org
    subject: 'r-appveyor build {{status}}'
-   message: "https://ci.appveyor.com/project/krlmlr/r-appveyor"
+   message: "https://ci.appveyor.com/project/nhejazi/biotmle"
    on_build_success: false
    on_build_failure: true
    on_build_status_changed: true
