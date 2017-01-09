@@ -28,6 +28,7 @@ before_build:
 
 build_script:
   - travis-tool.sh install_deps
+  - travis-tool.sh install_bioc limma
 
 test_script:
   - travis-tool.sh run_tests
