@@ -4,8 +4,9 @@ branches:
   - develop
 
 language: r
-
 sudo: required
+cache: packages
+warnings_are_errors: true
 
 r:
   - oldrel
@@ -17,10 +18,9 @@ env:
   
 before_install:
   - cd $TEST_DIR
-
-warnings_are_errors: true
-
-cache: packages
+  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
+  - chmod 755 ./travis-tool.sh
+  - ./travis-tool.sh bootstrap
 
 install:
   - ./travis-tool.sh install_bioc limma
