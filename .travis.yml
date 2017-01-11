@@ -1,7 +1,7 @@
 branches:
   only:
-  - master
-  - develop
+    - master
+    - develop
 
 language: r
 sudo: required
@@ -14,7 +14,7 @@ r:
 
 env:
   - TEST_DIR=pkg/
-  
+
 before_install:
   - cd $TEST_DIR
   - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
