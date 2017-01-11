@@ -35,6 +35,33 @@ the moderated t-statistic as implemented in the R package
 
 ---
 
+## Citation
+
+After using the `biotmle` R package, please cite it:
+
+        @article{hejazi2017,
+          doi = {},
+          url = {},
+          year  = {2017},
+          month = {},
+          publisher = {The Open Journal},
+          volume = {},
+          number = {},
+          author = {Hejazi, Nima S and Cai, Weixin and Hubbard, Alan E},
+          title = {biotmle: Targeted Learning for Biomarker Discovery},
+          journal = {The Journal of Open Source Software}
+        }
+
+---
+
+## Principal Reference
+
+* [N.S. Hejazi, S. Kherad-Pajouh, and A.E. Hubbard. "Generalizing the moderated
+    t-statistic with targeted maximum likelihood estimation." __in
+    preparation__, 2017.]()
+
+---
+
 ## License
 
 &copy; 2016-2017 [Nima S. Hejazi](http://nimahejazi.org) & [Alan E.
