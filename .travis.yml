@@ -4,26 +4,18 @@ branches:
   - develop
 
 language: r
+
 sudo: required
+
 cache: packages
+
 warnings_are_errors: true
-r_build_args: "--no-build-vignettes"
-r_check_args: "--no-vignettes"
 
 r:
   - bioc-release
   - bioc-devel
   - release
   - devel
-
-env:
-  - TEST_DIR=pkg/
-
-before_install:
-  - cd $TEST_DIR
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
 
 install:
   - ./travis-tool.sh install_bioc limma
