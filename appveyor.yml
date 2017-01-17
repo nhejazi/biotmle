@@ -17,15 +17,6 @@ environment:
   global:
     WARNINGS_ARE_ERRORS: 1
 
-  matrix:
-  - TEST_DIR: pkg
-
-before_build:
-  - cp ../travis-tool.sh travis-tool.sh
-  - cp travis-tool.sh.cmd %TEST_DIR%\travis-tool.sh.cmd
-  - cd %TEST_DIR%
-  - bash -c "echo '^travis-tool\.sh\.cmd$' >> .Rbuildignore"
-
 build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh install_bioc limma
