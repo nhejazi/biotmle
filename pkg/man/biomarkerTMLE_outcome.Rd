@@ -4,31 +4,38 @@
 \alias{biomarkerTMLE_outcome}
 \title{TMLE procedure for Biomarker Identication from Outcome}
 \usage{
-biomarkerTMLE_outcome(Y, W, A, a, family = "binomial", g_lib, Q_lib)
+biomarkerTMLE_outcome(Y, W, A, a = 1, family = "binomial", g_lib, Q_lib)
 }
 \arguments{
-\item{Y}{(numeric vector) - a vector of array expression values for a single
-gene}
+\item{Y}{(numeric vector) - a vector of binarized outcome values, thought
+to be impacted by changes in biomarker expression values.}
 
-\item{W}{(numeric matrix) - a matrix of covariates to be controlled in
-estimation}
+\item{W}{(numeric matrix) - a matrix of baseline covariates to be controlled
+for in the estimation procedure.}
 
-\item{A}{(numeric vector) - a discretized exposure vector whose effect on
-expression gene expression values is of interest}
+\item{A}{(numeric vector) - a discretized vector of expression values from a
+given biomarker.}
 
 \item{a}{(numeric vector) - the levels of A against which comparisons are to
-be made}
+be made.}
 
 \item{family}{(character) - specification of error family: "binomial" or
 "gaussian"}
 
-\item{g_lib}{(char vector) - library of learning algorithms to be used in ...}
+\item{g_lib}{(char vector) - library of learning algorithms to be used in
+fitting the "g" step of the standard TMLE procedure.}
 
-\item{Q_lib}{(char vector) - library of learning algorithms to be used in ...}
+\item{Q_lib}{(char vector) - library of learning algorithms to be used in
+fitting the "Q" step of the standard TMLE procedure.}
+}
+\value{
+TMLE-based estimate of the relationship between chagnes in biomarker
+        expression and an outcome variable, computed iteratively and saved in
+        the \code{tmleOut} slot in a \code{biotmle} object.
 }
 \description{
-This function performs influence curve-based estimation of the effect of an
-exposure on (gene) expression array values associated with a given biomarker,
-controlling for a user-specified set of baseline covariates
+This function performs influence curve-based estimation of the effect of
+expression changes of a biomarker on an outcome while controlling for a set
+of user-specified baseline covariates.
 }
 

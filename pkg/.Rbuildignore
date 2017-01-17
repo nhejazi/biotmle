@@ -3,4 +3,5 @@
 ^\.travis\.yml$
 ^README\.md$
 ^\.gitignore$
+^\.gitattributes$
 ^data-raw$

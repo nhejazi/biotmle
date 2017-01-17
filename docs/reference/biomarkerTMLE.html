@@ -54,9 +54,6 @@
 <li>
   <a href="../articles/index.html">Articles</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -92,44 +89,92 @@ blips in Tx effects (difference between counterfactual max, min Tx effects)</p>
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>Y</dt>
-      <dd>(numeric vector) - a vector of array expression values for a single
-gene</dd>
+      <dd>(numeric vector) - a vector of expression values for a single
+ biomarker (if type is &quot;exposure&quot;), or a vector of binarized outcomes
+(if type is &quot;exposure&quot;).</dd>
       <dt>W</dt>
-      <dd>(numeric matrix) - a matrix of covariates to be controlled in
-estimation</dd>
+      <dd>(numeric matrix) - a matrix of baseline covariates to be controlled
+in the estimation procedure.</dd>
       <dt>A</dt>
-      <dd>(numeric vector) - a discretized exposure vector whose effect on
-expression gene expression values is of interest</dd>
+      <dd>(numeric vector) - if type is &quot;exposure&quot;: a discretized exposure
+ vector whose effect on biomarker expression is of interest; or, if
+type is &quot;outcome&quot;: a vector of discretized biomarker expression values
+whose changes are thought to be related to the specified outcome.</dd>
       <dt>type</dt>
       <dd>(character) - choice of the type of TMLE to perform: &quot;exposure&quot;
 to identify biomarkers related to an exposure (input as A), or
 &quot;outcome&quot; to identify biomarkers related to an outcome (input as Y).</dd>
       <dt>parallel</dt>
-      <dd>(logical, numeric) - whether to use or number of cores to be
-used when the TMLE-based estimation procedure is parallelized</dd>
+      <dd>(logical, numeric) - whether to use or the number of cores to
+be used when the TMLE-based estimation procedure is parallelized.</dd>
       <dt>family</dt>
       <dd>(character) - specification of error family: &quot;binomial&quot; or
-&quot;gaussian&quot;</dd>
+&quot;gaussian&quot;.</dd>
       <dt>g_lib</dt>
-      <dd>(char vector) - library of learning algorithms to be used in ...</dd>
+      <dd>(char vector) - library of learning algorithms to be used in
+fitting the &quot;g&quot; step of the standard TMLE procedure.</dd>
       <dt>Q_lib</dt>
-      <dd>(char vector) - library of learning algorithms to be used in ...</dd>
+      <dd>(char vector) - library of learning algorithms to be used in
+fitting the &quot;Q&quot; step of the standard TMLE procedure.</dd>
     </dl>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>S3 object of class <code>biotmle</code>, with the <code>tmleOut</code> and the
+        <code>call</code> slots containing TMLE-based estimates of the relationship
+        between a biomarker and exposure/outcome variable and the original
+        call to this function (for user reference), respectively.</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># data(illuminaData)</span>
+<span class='co'># W &lt;- illuminaData %&gt;%</span>
+<span class='co'>#  dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %&gt;%</span>
+<span class='co'>#  dplyr::mutate(</span>
+<span class='co'>#    age = as.numeric((age &gt; quantile(age, 0.25))),</span>
+<span class='co'>#    sex = I(sex),</span>
+<span class='co'>#    smoking = I(smoking)</span>
+<span class='co'>#  )</span>
+<span class='co'># </span>
+<span class='co'># A &lt;- illuminaData %&gt;%</span>
+<span class='co'>#  dplyr::select(which(colnames(.) %in% c("benzene")))</span>
+<span class='co'># A &lt;- A[, 1]</span>
+<span class='co'># </span>
+<span class='co'># Y &lt;- illuminaData %&gt;%</span>
+<span class='co'>#  dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",</span>
+<span class='co'>#                                         "id")))</span>
+<span class='co'># geneIDs &lt;- colnames(Y)</span>
+<span class='co'># </span>
+<span class='co'># biomarkerTMLEout &lt;- biomarkertmle(Y = Y,</span>
+<span class='co'>#                                   W = W,</span>
+<span class='co'>#                                   A = A,</span>
+<span class='co'>#                                   type = "exposure",</span>
+<span class='co'>#                                   parallel = TRUE,</span>
+<span class='co'>#                                   family = "gaussian",</span>
+<span class='co'>#                                   g_lib = c("SL.glmnet", "SL.randomForest",</span>
+<span class='co'>#                                             "SL.polymars", "SL.mean"),</span>
+<span class='co'>#                                   Q_lib = c("SL.glmnet", "SL.randomForest",</span>
+<span class='co'>#                                             "SL.nnet", "SL.mean")</span>
+<span class='co'>#                                  )</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nima S. Hejazi, Alan E. Hubbard.</p>
+  <p>Developed by Nima Hejazi, Alan Hubbard.</p>
 </div>
 
 <div class="pkgdown">

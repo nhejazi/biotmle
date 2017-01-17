@@ -1,20 +1,25 @@
 Package: biotmle
 Title: Targeted Learning for Biomarker Discovery with the Moderated T-Statistic
-Version: 0.1.0
-Authors@R: as.person(c(
-    "Nima S. Hejazi <nhejazi@berkeley.edu> [aut, cre]",
-    "Alan E. Hubbard <hubbard@berkeley.edu> [aut]",
-    "Weixin Cai <wcai@berkeley.edu> [ctb]"))
-Description: This package facilitates the discovery of biomarkers from Omics
-    data based on the associations of potential biomarkers with exposure and
-    outcome variables by implementing an estimation procedure that combines a
-    generalization of the moderated t-statistic with asymptotically linear
-    statistical parameters estimated via targeted minimum loss-based estimation
-    (TMLE).
+Version: 0.99.1
+Authors@R: c(
+    person("Nima", "Hejazi", email = "nhejazi@berkeley.edu",
+           role = c("aut", "cre", "cph")),
+    person("Alan", "Hubbard", email = "hubbard@berkeley.edu", role = "aut"),
+    person("Weixin", "Cai", email = "wcai@berkeley.edu", role = "ctb")
+    )
+Author: Nima Hejazi [aut, cre, cph]
+Maintainer: Nima Hejazi <nhejazi@berkeley.edu>
+Description: This package facilitates the discovery of biomarkers from
+    biological sequencing data (e.g., microarrays, RNA-seq) based on the
+    associations of potential biomarkers with exposure and outcome variables by
+    implementing an estimation procedure that combines a generalization of the
+    moderated t-statistic with asymptotically linear statistical parameters
+    estimated via targeted minimum loss-based estimation (TMLE).
 Depends:
     R (>= 3.3.1)
-License: MIT + file LICENSE
+License: file LICENSE
 URL: https://github.com/nhejazi/biotmle
+BugReports: https://github.com/nhejazi/biotmle/issues
 Encoding: UTF-8
 LazyData: true
 Imports:
@@ -36,3 +41,9 @@ Suggests:
     knitr
 VignetteBuilder: knitr
 RoxygenNote: 5.0.1
+biocViews:
+    GeneExpression,
+    DifferentialExpression,
+    Genetics,
+    Microarray,
+    RNASeq

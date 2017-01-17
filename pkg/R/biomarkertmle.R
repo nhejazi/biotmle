@@ -5,29 +5,71 @@ utils::globalVariables("gene")
 #' computes the (rather complicated) parameter defined as the difference in the
 #' blips in Tx effects (difference between counterfactual max, min Tx effects)
 #'
-#' @param Y (numeric vector) - a vector of array expression values for a single
-#'        gene
-#' @param W (numeric matrix) - a matrix of covariates to be controlled in
-#'        estimation
-#' @param A (numeric vector) - a discretized exposure vector whose effect on
-#'        expression gene expression values is of interest
+#' @param Y (numeric vector) - a vector of expression values for a single
+#'        biomarker (if type is "exposure"), or a vector of binarized outcomes
+#'       (if type is "exposure").
+#' @param W (numeric matrix) - a matrix of baseline covariates to be controlled
+#'        in the estimation procedure.
+#' @param A (numeric vector) - if type is "exposure": a discretized exposure
+#'        vector whose effect on biomarker expression is of interest; or, if
+#'       type is "outcome": a vector of discretized biomarker expression values
+#'       whose changes are thought to be related to the specified outcome.
 #' @param type (character) - choice of the type of TMLE to perform: "exposure"
 #'        to identify biomarkers related to an exposure (input as A), or
 #'        "outcome" to identify biomarkers related to an outcome (input as Y).
-#' @param parallel (logical, numeric) - whether to use or number of cores to be
-#'        used when the TMLE-based estimation procedure is parallelized
+#' @param parallel (logical, numeric) - whether to use or the number of cores to
+#'        be used when the TMLE-based estimation procedure is parallelized.
 #' @param family (character) - specification of error family: "binomial" or
-#'        "gaussian"
-#' @param g_lib (char vector) - library of learning algorithms to be used in ...
-#' @param Q_lib (char vector) - library of learning algorithms to be used in ...
+#'        "gaussian".
+#' @param g_lib (char vector) - library of learning algorithms to be used in
+#'        fitting the "g" step of the standard TMLE procedure.
+#' @param Q_lib (char vector) - library of learning algorithms to be used in
+#'        fitting the "Q" step of the standard TMLE procedure.
 #'
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach foreach "%dopar%"
 #'
+#' @return S3 object of class \code{biotmle}, with the \code{tmleOut} and the
+#'         \code{call} slots containing TMLE-based estimates of the relationship
+#'         between a biomarker and exposure/outcome variable and the original
+#'         call to this function (for user reference), respectively.
+#'
 #' @export biomarkertmle
 #'
-
+#' @examples
+#' \dontrun{
+#' data(illuminaData)
+#' W <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %>%
+#'  dplyr::mutate(
+#'    age = as.numeric((age > quantile(age, 0.25))),
+#'    sex = I(sex),
+#'    smoking = I(smoking)
+#'  )
+#'
+#' A <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %in% c("benzene")))
+#' A <- A[, 1]
+#'
+#' Y <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",
+#'                                         "id")))
+#' geneIDs <- colnames(Y)
+#'
+#' biomarkerTMLEout <- biomarkertmle(Y = Y,
+#'                                   W = W,
+#'                                   A = A,
+#'                                   type = "exposure",
+#'                                   parallel = TRUE,
+#'                                   family = "gaussian",
+#'                                   g_lib = c("SL.glmnet", "SL.randomForest",
+#'                                             "SL.polymars", "SL.mean"),
+#'                                   Q_lib = c("SL.glmnet", "SL.randomForest",
+#'                                             "SL.nnet", "SL.mean")
+#'                                  )
+#' }
+#'
 biomarkertmle <- function(Y,
                           W,
                           A,
@@ -101,9 +143,22 @@ biomarkertmle <- function(Y,
   #=============================================================================
   # TMLE procedure to identify biomarkers based on an OUTCOME
   #=============================================================================
-    warning("TMLE for biomarker discovery from outcomes is not yet implemented")
+    biomarkerTMLEout <- foreach::foreach(gene = 1:ncol(A),
+                                         .combine = rbind) %dopar% {
+      print(paste("Estimating causal effect for", gene, "of", ncol(A)))
+      out <- biomarkerTMLE_outcome(Y = Y,
+                                   W = W,
+                                   A = A[, gene],
+                                   a = 1:length(unique(A)),
+                                   g_lib = g_lib,
+                                   Q_lib = Q_lib,
+                                   family = family
+                                  )
+    }
+    biotmle$tmleOut <- as.data.frame(biomarkerTMLEout)
+    return(biotmle)
 
   } else {
-    warning("improper input for 'type': choices are 'exposure' and 'outcome'")
+    warning("improper input for 'type': choices are 'exposure' and 'outcome'.")
   }
 }

@@ -19,9 +19,16 @@ biotmle(call = NULL, topTable = NULL, limmaOut = NULL, tmleOut = NULL)
 \code{biomarkertmle}}
 }
 \value{
-S3 object of class "biotmle" for TMLE-based biomarker analysis.
+S3 object of class \code{biotmle} for TMLE-based biomarker analysis.
 }
 \description{
 S3 constructor for class \code{biotmle}
+}
+\examples{
+biotmle <- biotmle(call = NULL,
+                   topTable = NULL,
+                   limmaOut = NULL,
+                   tmleOut = NULL)
+
 }
 
