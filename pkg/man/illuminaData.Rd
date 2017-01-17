@@ -6,10 +6,14 @@
 \title{Baseline covariates and Illumina microarray data from 2007 study}
 \format{A \code{data.frame} with 144 rows and 22196 variables:
 \describe{
-  ...some information ought to go here...
+  This is example data to be used in testing the \code{biomarkertmle}
+  procedure. Consult the vignettes for how to use this data.
 }}
 \usage{
 illuminaData
+}
+\value{
+A \code{data.frame} containing biomarkers and baseline covariates.
 }
 \description{
 A dataset containing various baseline covariates and microarray expression

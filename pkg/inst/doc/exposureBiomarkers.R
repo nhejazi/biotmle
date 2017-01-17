@@ -59,9 +59,9 @@ plot(x = limmaTMLEout, type = "pvals_adj")
 plot(x = limmaTMLEout, type = "pvals_raw")
 
 ## ----heatmap_limma_results-----------------------------------------------
-aheatmap.biotmle(x = limmaTMLEout, designMat = design, FDRcutoff = 0.05,
-                 top = 25)
+heatmap_biotmle(x = limmaTMLEout, designMat = design, FDRcutoff = 0.05,
+                top = 25)
 
 ## ----volcano_plot_limma_results------------------------------------------
-volcanoPlot_biotmle(biotmle = limmaTMLEout)
+volcano_biotmle(biotmle = limmaTMLEout)
 

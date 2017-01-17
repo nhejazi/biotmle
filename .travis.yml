@@ -1,14 +1,18 @@
 branches:
   only:
-    - master
-    - develop
+  - master
+  - develop
 
 language: r
 sudo: required
 cache: packages
 warnings_are_errors: true
+r_build_args: "--no-build-vignettes"
+r_check_args: "--no-vignettes"
 
 r:
+  - bioc-release
+  - bioc-devel
   - release
   - devel
 
@@ -25,11 +29,16 @@ install:
   - ./travis-tool.sh install_bioc limma
   - ./travis-tool.sh install_bioc_deps
 
-r_github_packages:
-  - jimhester/covr
+## coverage
+r_packages:
+  - covr
+
+bioc_packages:
+  - BiocCheck
 
 after_success:
-  - Rscript -e 'covr::coveralls()'
+  - Rscript -e 'covr::codecov()'
+  - R CMD BiocCheck .
 
 notifications:
   email:

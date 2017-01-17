@@ -54,9 +54,6 @@
 <li>
   <a href="../articles/index.html">Articles</a>
 </li>
-<li>
-  <a href="../news/index.html">News</a>
-</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -81,7 +78,7 @@
     </div>
 
     
-    <p>extended description goes here...</p>
+    <p>Histogram of raw or FDR-adjusted p-values from the moderated t-test.</p>
     
 
     <pre><span class='co'># S3 method for biotmle</span>
@@ -99,20 +96,59 @@
 adjusted p-values (adjustment performed via Benjamini-Hochberg)</dd>
     </dl>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>object of class <code>ggplot</code> containing a histogram of the raw or
+        Benjamini-Hochberg corrected p-values (depending on user input).</p>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)
+<span class='fu'>data</span>(<span class='no'>illuminaData</span>)
+<span class='fu'>data</span>(<span class='no'>biomarkertmleOut</span>)
+<span class='st'>"%ni%"</span> <span class='kw'>=</span> <span class='fu'>Negate</span>(<span class='st'>"%in%"</span>)
+
+<span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='no'>illuminaData</span> <span class='kw'>%&gt;%</span>
+ <span class='kw'>dplyr</span><span class='kw'>::</span><span class='fu'>select</span>(<span class='fu'>which</span>(<span class='fu'>colnames</span>(<span class='no'>.</span>) <span class='kw'>%in%</span> <span class='fu'>c</span>(<span class='st'>"age"</span>, <span class='st'>"sex"</span>, <span class='st'>"smoking"</span>))) <span class='kw'>%&gt;%</span>
+ <span class='kw'>dplyr</span><span class='kw'>::</span><span class='fu'>mutate</span>(
+   <span class='kw'>age</span> <span class='kw'>=</span> <span class='fu'>as.numeric</span>((<span class='no'>age</span> <span class='kw'>&gt;</span> <span class='fu'>quantile</span>(<span class='no'>age</span>, <span class='fl'>0.25</span>))),
+   <span class='kw'>sex</span> <span class='kw'>=</span> <span class='fu'>I</span>(<span class='no'>sex</span>),
+   <span class='kw'>smoking</span> <span class='kw'>=</span> <span class='fu'>I</span>(<span class='no'>smoking</span>)
+ )
+
+<span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='no'>illuminaData</span> <span class='kw'>%&gt;%</span>
+ <span class='kw'>dplyr</span><span class='kw'>::</span><span class='fu'>select</span>(<span class='fu'>which</span>(<span class='fu'>colnames</span>(<span class='no'>.</span>) <span class='kw'>%in%</span> <span class='fu'>c</span>(<span class='st'>"benzene"</span>)))
+<span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='no'>A</span>[, <span class='fl'>1</span>]
+
+<span class='no'>Y</span> <span class='kw'>&lt;-</span> <span class='no'>illuminaData</span> <span class='kw'>%&gt;%</span>
+ <span class='kw'>dplyr</span><span class='kw'>::</span><span class='fu'>select</span>(<span class='fu'>which</span>(<span class='fu'>colnames</span>(<span class='no'>.</span>) <span class='kw'>%ni%</span> <span class='fu'>c</span>(<span class='st'>"age"</span>, <span class='st'>"sex"</span>, <span class='st'>"smoking"</span>, <span class='st'>"benzene"</span>,
+                                        <span class='st'>"id"</span>)))
+<span class='no'>geneIDs</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>Y</span>)
+
+<span class='no'>design</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.frame</span>(<span class='fu'>cbind</span>(<span class='fu'>rep</span>(<span class='fl'>1</span>, <span class='fu'>nrow</span>(<span class='no'>Y</span>)),
+                             <span class='fu'>as.numeric</span>(<span class='no'>A</span> <span class='kw'>==</span> <span class='fu'>max</span>(<span class='fu'>unique</span>(<span class='no'>A</span>)))))
+<span class='fu'>colnames</span>(<span class='no'>design</span>) <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='st'>"intercept"</span>, <span class='st'>"Tx"</span>)
+<span class='no'>limmaTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='limmatmle.html'>limmatmle</a></span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>biomarkerTMLEout</span>, <span class='kw'>IDs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+                          <span class='kw'>designMat</span> <span class='kw'>=</span> <span class='no'>design</span>)
+<span class='fu'>plot</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>limmaTMLEout</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"pvals_adj"</span>)</div><img src='plot.biotmle-2.png' alt='' width='540' height='400' /><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+      
+      <li><a href="#value">Value</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Nima S. Hejazi, Alan E. Hubbard.</p>
+  <p>Developed by Nima Hejazi, Alan Hubbard.</p>
 </div>
 
 <div class="pkgdown">

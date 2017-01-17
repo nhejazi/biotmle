@@ -34,9 +34,6 @@
 <li>
   <a href="articles/index.html">Articles</a>
 </li>
-<li>
-  <a href="news/index.html">News</a>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -68,7 +65,7 @@
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"> </a>Description</h2>
-<p><code>biotmle</code> is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic of Smyth for use with asymptotically linear target parameters. The set of methods implemented in this R package rely on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform a given <em>Omics</em> data set (e.g., microarray, RNA-seq) based on the influence curve representation of a particular statistical target parameter (e.g., the Average Treatment Effect). The transformed data is then used to test for differences between groups using the moderated t-statistic as implemented in the R package <a href="https://bioconductor.org/packages/release/bioc/html/limma.html"><code>limma</code></a>.</p>
+<p><code>biotmle</code> is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic of Smyth for use with asymptotically linear target parameters. The set of methods implemented in this R package rely on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform a given biological sequencing data set (e.g., microarray, RNA-seq) based on the influence curve representation of a particular statistical target parameter (e.g., the Average Treatment Effect). The transformed data is then used to test for differences between groups using the moderated t-statistic as implemented in the R package <a href="https://bioconductor.org/packages/release/bioc/html/limma.html"><code>limma</code></a>.</p>
 <hr>
 </div>
 <div id="installation" class="section level2">
@@ -78,6 +75,12 @@
 <li><p>Install the most recent <em>stable release</em> from GitHub: <code>devtools::install_github("nhejazi/biotmle", subdir = "pkg")</code></p></li>
 <li><p>To contribute, install the <em>development version</em>: <code>devtools::install_github("nhejazi/biotmle", ref = "develop", subdir = "pkg")</code></p></li>
 </ul>
+<hr>
+</div>
+<div id="issues" class="section level2">
+<h2 class="hasAnchor">
+<a href="#issues" class="anchor"> </a>Issues</h2>
+<p>If you encounter any bugs or have any specific feature requests, please <a href="https://github.com/nhejazi/biotmle/issues">file an issue</a>.</p>
 <hr>
 </div>
 <div id="citation" class="section level2">
@@ -98,18 +101,19 @@
     }</code></pre></div>
 <hr>
 </div>
-<div id="principal-reference" class="section level2">
+<div id="principal-references" class="section level2">
 <h2 class="hasAnchor">
-<a href="#principal-reference" class="anchor"> </a>Principal Reference</h2>
+<a href="#principal-references" class="anchor"> </a>Principal References</h2>
 <ul>
-<li><a href="">N.S. Hejazi, S. Kherad-Pajouh, and A.E. Hubbard. “Generalizing the moderated t-statistic with targeted maximum likelihood estimation.” <strong>in preparation</strong>, 2017.</a></li>
+<li><p><a href="">N.S. Hejazi, S. Kherad-Pajouh, and A.E. Hubbard. “Generalizing the moderated t-statistic with targeted maximum likelihood estimation.” <strong>in preparation</strong>, 2017.</a></p></li>
+<li><p><a href="http://www.statsci.org/smyth/pubs/ebayes.pdf">Gordon K. Smyth. “Linear models and empirical Bayes methods for assessing differential expression in microarray experiments.” <em>Statistical Applications in Genetics and Molecular Biology</em>, 3(1), 2004.</a></p></li>
 </ul>
 <hr>
 </div>
 <div id="license" class="section level2">
 <h2 class="hasAnchor">
 <a href="#license" class="anchor"> </a>License</h2>
-<p>© 2016-2017 <a href="http://nimahejazi.org">Nima S. Hejazi</a> &amp; <a href="https://ahubb40.github.io">Alan E. Hubbard</a></p>
+<p>© 2016-2017 <a href="http://nimahejazi.org">Nima S. Hejazi</a> &amp; <a href="https://hubbardgroup.github.io">Alan E. Hubbard</a></p>
 <p>The contents of this repository are distributed under the MIT license. See below for details:</p>
 <pre><code>The MIT License (MIT)
 
@@ -141,30 +145,25 @@ SOFTWARE.</code></pre>
 <ul class="list-unstyled">
 <li>Browse source code at <br><a href="https://github.com/nhejazi/biotmle">https://​github.com/​nhejazi/​biotmle</a>
 </li>
+<li>Report a bug at <br><a href="https://github.com/nhejazi/biotmle/issues">https://​github.com/​nhejazi/​biotmle/​issues</a>
+</li>
 </ul>
 <h2>License</h2>
-<p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE">LICENSE</a></p>
+<p>file <a href="LICENSE">LICENSE</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Nima S. Hejazi <br><small class="roles"> Author, maintainer </small> </li>
-<li>Alan E. Hubbard <br><small class="roles"> Author </small> </li>
+<li>Nima Hejazi <br><small class="roles"> Author, maintainer, copyright holder </small> </li>
+<li>Alan Hubbard <br><small class="roles"> Author </small> </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 <html><body>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/nhejazi/biotmle">
-  <img src="https://travis-ci.org/nhejazi/biotmle.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/nhejazi/biotmle">
-  <img src="https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
-<li><a href="https://coveralls.io/github/nhejazi/biotmle">
-  <img src="https://coveralls.io/repos/github/nhejazi/biotmle/badge.svg" alt="Coverage Status"></a></li>
-<li><a href="http://www.r-pkg.org/pkg/biotmle">
-  <img src="http://www.r-pkg.org/badges/version/biotmle" alt="CRAN"></a></li>
-<li><a href="http://www.repostatus.org/#wip">
-  <img src="http://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
-<li><a href="http://opensource.org/licenses/MIT">
-  <img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT license"></a></li>
+<li><a href="https://travis-ci.org/nhejazi/biotmle"><img src="https://travis-ci.org/nhejazi/biotmle.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/nhejazi/biotmle"><img src="https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://codecov.io/github/nhejazi/biotmle?branch=master"><img src="https://img.shields.io/codecov/c/github/nhejazi/biotmle/master.svg" alt="Coverage Status"></a></li>
+<li><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active - The project has reached a stable, usable state and is being actively developed."></a></li>
+<li><a href="http://opensource.org/licenses/MIT"><img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT license"></a></li>
 </ul>
 </body></html>
 </div>
@@ -172,7 +171,7 @@ SOFTWARE.</code></pre>
 
 
       <footer><div class="copyright">
-  <p>Developed by Nima S. Hejazi, Alan E. Hubbard.</p>
+  <p>Developed by Nima Hejazi, Alan Hubbard.</p>
 </div>
 
 <div class="pkgdown">

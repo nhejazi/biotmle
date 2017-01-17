@@ -1,6 +1,6 @@
 #' Plot utility for class biotmle
 #'
-#' extended description goes here...
+#' Histogram of raw or FDR-adjusted p-values from the moderated t-test.
 #'
 #' @param x object of class \code{biotmle} as produced by an appropriate call to
 #'        \code{biomarkertmle}
@@ -12,9 +12,41 @@
 #'             scale_colour_manual guides guide_legend xlab ylab ggtitle
 #' @importFrom wesanderson wes_palette
 #'
+#' @return object of class \code{ggplot} containing a histogram of the raw or
+#'         Benjamini-Hochberg corrected p-values (depending on user input).
+#'
 #' @export
 #'
-
+#' @examples
+#' library(dplyr)
+#' data(illuminaData)
+#' data(biomarkertmleOut)
+#' "%ni%" = Negate("%in%")
+#'
+#' W <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %>%
+#'  dplyr::mutate(
+#'    age = as.numeric((age > quantile(age, 0.25))),
+#'    sex = I(sex),
+#'    smoking = I(smoking)
+#'  )
+#'
+#' A <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %in% c("benzene")))
+#' A <- A[, 1]
+#'
+#' Y <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",
+#'                                         "id")))
+#' geneIDs <- colnames(Y)
+#'
+#' design <- as.data.frame(cbind(rep(1, nrow(Y)),
+#'                              as.numeric(A == max(unique(A)))))
+#' colnames(design) <- c("intercept", "Tx")
+#' limmaTMLEout <- limmatmle(biotmle = biomarkerTMLEout, IDs = NULL,
+#'                           designMat = design)
+#' plot(x = limmaTMLEout, type = "pvals_adj")
+#'
 plot.biotmle <- function(x, ..., type = "pvals_adj") {
 
   stopifnot(class(x) == "biotmle")
@@ -50,7 +82,8 @@ plot.biotmle <- function(x, ..., type = "pvals_adj") {
 
 #' Volcano plot for class biotmle
 #'
-#' extended description goes here...
+#' Volcano plot of the log-changes in the target causal paramter against the
+#' log raw p-values from the moderated t-test.
 #'
 #' @param biotmle object of class \code{biotmle} as produced by an appropriate
 #'        call to \code{biomarkertmle}
@@ -61,10 +94,42 @@ plot.biotmle <- function(x, ..., type = "pvals_adj") {
 #'             scale_colour_manual guides guide_legend xlab ylab ggtitle
 #' @importFrom wesanderson wes_palette
 #'
-#' @export volcanoPlot_biotmle
+#' @return object of class \code{ggplot} containing a standard volcano plot of
+#'         the log-fold change in the causal target parameter against the raw
+#'         log p-value computed from the moderated t-test in \code{limmatmle}.
 #'
-
-volcanoPlot_biotmle <- function(biotmle) {
+#' @export volcano_biotmle
+#'
+#' @examples
+#' library(dplyr)
+#' data(illuminaData)
+#' data(biomarkertmleOut)
+#' "%ni%" = Negate("%in%")
+#'
+#' W <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %>%
+#'  dplyr::mutate(
+#'    age = as.numeric((age > quantile(age, 0.25))),
+#'    sex = I(sex),
+#'    smoking = I(smoking)
+#'  )
+#'
+#' A <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %in% c("benzene")))
+#' A <- A[, 1]
+#'
+#' Y <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",
+#'                                         "id")))
+#' geneIDs <- colnames(Y)
+#' design <- as.data.frame(cbind(rep(1, nrow(Y)),
+#'                              as.numeric(A == max(unique(A)))))
+#' colnames(design) <- c("intercept", "Tx")
+#' limmaTMLEout <- limmatmle(biotmle = biomarkerTMLEout, IDs = NULL,
+#'                           designMat = design)
+#' volcano_biotmle(biotmle = limmaTMLEout)
+#'
+volcano_biotmle <- function(biotmle) {
 
   pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
   pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
@@ -100,7 +165,8 @@ utils::globalVariables(c(".", "..count..", "P.Value", "adj.P.Val", "color",
 
 #' Heatmap for class biotmle
 #'
-#' extended description goes here...
+#' Heatmap of changes in the causal target parameter across all subjects and a
+#' selected number of biomarkers.
 #'
 #' @param x object of class \code{biotmle} as produced by an appropriate call to
 #'        \code{biomarkertmle}
@@ -118,11 +184,45 @@ utils::globalVariables(c(".", "..count..", "P.Value", "adj.P.Val", "color",
 #'             scale_colour_manual guides guide_legend xlab ylab ggtitle
 #' @importFrom NMF nmf.options aheatmap
 #'
-#' @export
+#' @return object of class \code{aheatmap} containing a heatmap that uses
+#'         hierarchical clustering to plot the changes in the causal target
+#'         parameter for all subjects and a specified top number of biomarkers.
+#'
+#' @export heatmap_biotmle
+#'
+#' @examples
+#' library(dplyr)
+#' data(illuminaData)
+#' data(biomarkertmleOut)
+#' "%ni%" = Negate("%in%")
+#'
+#' W <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %>%
+#'  dplyr::mutate(
+#'    age = as.numeric((age > quantile(age, 0.25))),
+#'    sex = I(sex),
+#'    smoking = I(smoking)
+#'  )
+#'
+#' A <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %in% c("benzene")))
+#' A <- A[, 1]
+#'
+#' Y <- illuminaData %>%
+#'  dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",
+#'                                         "id")))
+#' geneIDs <- colnames(Y)
+#' design <- as.data.frame(cbind(rep(1, nrow(Y)),
+#'                              as.numeric(A == max(unique(A)))))
+#' colnames(design) <- c("intercept", "Tx")
+#' limmaTMLEout <- limmatmle(biotmle = biomarkerTMLEout, IDs = NULL,
+#'                           designMat = design)
+#' heatmap_biotmle(x = limmaTMLEout, designMat = design, FDRcutoff = 0.05,
+#'                 top = 25)
 #'
 
-aheatmap.biotmle <- function(x, ..., designMat,
-                             term = 2, FDRcutoff = 0.05, top = 25) {
+heatmap_biotmle <- function(x, ..., designMat,
+                            term = 2, FDRcutoff = 0.05, top = 25) {
 
   stopifnot(class(x) == "biotmle")
 

@@ -1,31 +1,35 @@
 #' TMLE procedure for Biomarker Identication from Outcome
 #'
-#' This function performs influence curve-based estimation of the effect of an
-#' exposure on (gene) expression array values associated with a given biomarker,
-#' controlling for a user-specified set of baseline covariates
+#' This function performs influence curve-based estimation of the effect of
+#' expression changes of a biomarker on an outcome while controlling for a set
+#' of user-specified baseline covariates.
 #'
-#' @param Y (numeric vector) - a vector of array expression values for a single
-#'        gene
-#' @param W (numeric matrix) - a matrix of covariates to be controlled in
-#'        estimation
-#' @param A (numeric vector) - a discretized exposure vector whose effect on
-#'        expression gene expression values is of interest
+#' @param Y (numeric vector) - a vector of binarized outcome values, thought
+#'        to be impacted by changes in biomarker expression values.
+#' @param W (numeric matrix) - a matrix of baseline covariates to be controlled
+#'        for in the estimation procedure.
+#' @param A (numeric vector) - a discretized vector of expression values from a
+#'        given biomarker.
 #' @param a (numeric vector) - the levels of A against which comparisons are to
-#'        be made
-#' @param g_lib (char vector) - library of learning algorithms to be used in ...
-#' @param Q_lib (char vector) - library of learning algorithms to be used in ...
+#'        be made.
+#' @param g_lib (char vector) - library of learning algorithms to be used in
+#'        fitting the "g" step of the standard TMLE procedure.
+#' @param Q_lib (char vector) - library of learning algorithms to be used in
+#'        fitting the "Q" step of the standard TMLE procedure.
 #' @param family (character) - specification of error family: "binomial" or
 #'        "gaussian"
 #'
 #' @importFrom tmle tmle
 #'
-#' @export biomarkerTMLE_outcome
+#' @return TMLE-based estimate of the relationship between chagnes in biomarker
+#'         expression and an outcome variable, computed iteratively and saved in
+#'         the \code{tmleOut} slot in a \code{biotmle} object.
 #'
 
 biomarkerTMLE_outcome <- function(Y,
                                   W,
                                   A,
-                                  a,
+                                  a = 1,
                                   family = "binomial",
                                   g_lib,
                                   Q_lib) {

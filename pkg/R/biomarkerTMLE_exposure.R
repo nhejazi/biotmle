@@ -1,25 +1,29 @@
 #' TMLE procedure for Biomarker Identication from Exposure
 #'
 #' This function performs influence curve-based estimation of the effect of an
-#' exposure on (gene) expression array values associated with a given biomarker,
+#' exposure on biological expression values associated with a given biomarker,
 #' controlling for a user-specified set of baseline covariates
 #'
-#' @param Y (numeric vector) - a vector of array expression values for a single
-#'        gene
-#' @param W (numeric matrix) - a matrix of covariates to be controlled in
-#'        estimation
-#' @param A (numeric vector) - a discretized exposure vector whose effect on
-#'        expression gene expression values is of interest
+#' @param Y (numeric vector) - a vector of expression values for a single
+#'        biomarker.
+#' @param W (numeric matrix) - a matrix of baseline covariates to be controlled
+#'        in the estimation process.
+#' @param A (numeric vector) - a discretized exposure vector (e.g., from a
+#'        design matrix whose effect on expression values is of interest.
 #' @param a (numeric vector) - the levels of A against which comparisons are to
-#'        be made
-#' @param g_lib (char vector) - library of learning algorithms to be used in ...
-#' @param Q_lib (char vector) - library of learning algorithms to be used in ...
+#'        be made.
+#' @param g_lib (char vector) - library of learning algorithms to be used in
+#'        fitting the "g" step of the standard TMLE procedure.
+#' @param Q_lib (char vector) - library of learning algorithms to be used in
+#'        fitting the "Q" step of the standard TMLE procedure.
 #' @param family (character) - specification of error family: "binomial" or
 #'        "gaussian"
 #'
 #' @importFrom tmle tmle
 #'
-#' @export biomarkerTMLE_exposure
+#' @return TMLE-based estimate of the relationship between biomarker expression
+#'         and changes in an exposure variable, computed iteratively and saved
+#'         in the \code{tmleOut} slot in a \code{biotmle} object.
 #'
 
 biomarkerTMLE_exposure <- function(Y,
