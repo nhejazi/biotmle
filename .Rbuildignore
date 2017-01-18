@@ -3,6 +3,7 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^README\.md$
+^\.git$
 ^\.gitignore$
 ^\.gitattributes$
 ^data-raw$

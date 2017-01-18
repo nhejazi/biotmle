@@ -2,8 +2,9 @@ utils::globalVariables("gene")
 
 #' Biomarker Discovery via Targeted Minimum Loss-Based Estimation (TMLE)
 #'
-#' computes the (rather complicated) parameter defined as the difference in the
-#' blips in Tx effects (difference between counterfactual max, min Tx effects)
+#' Computes the causal target parameter defined as the difference between the
+#' biomarker expression values under treatment and those same values under no
+#' treatment, using Targeted Minimum Loss-Based Estimation.
 #'
 #' @param Y (numeric vector) - a vector of expression values for a single
 #'        biomarker (if type is "exposure"), or a vector of binarized outcomes
@@ -38,8 +39,13 @@ utils::globalVariables("gene")
 #' @export biomarkertmle
 #'
 #' @examples
-#' \dontrun{
+#' library(dplyr)
+#' library(foreach)
+#' library(parallel)
+#' library(doParallel)
+#' "%ni%" = Negate("%in%")
 #' data(illuminaData)
+#'
 #' W <- illuminaData %>%
 #'  dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %>%
 #'  dplyr::mutate(
@@ -56,6 +62,7 @@ utils::globalVariables("gene")
 #'  dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",
 #'                                         "id")))
 #' geneIDs <- colnames(Y)
+#' Y <- Y[, 1:12]
 #'
 #' biomarkerTMLEout <- biomarkertmle(Y = Y,
 #'                                   W = W,
@@ -68,7 +75,6 @@ utils::globalVariables("gene")
 #'                                   Q_lib = c("SL.glmnet", "SL.randomForest",
 #'                                             "SL.nnet", "SL.mean")
 #'                                  )
-#' }
 #'
 biomarkertmle <- function(Y,
                           W,

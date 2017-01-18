@@ -16,9 +16,7 @@ Description: This package facilitates the discovery of biomarkers from
     moderated t-statistic with asymptotically linear statistical parameters
     estimated via targeted minimum loss-based estimation (TMLE).
 Depends:
-    R (>= 3.3.1),
-    SuperLearner,
-    Matrix
+    R (>= 3.3.1)
 License: file LICENSE
 URL: https://github.com/nhejazi/biotmle
 BugReports: https://github.com/nhejazi/biotmle/issues
@@ -34,7 +32,9 @@ Imports:
     wesanderson,
     magrittr,
     dplyr,
-    NMF
+    NMF,
+    SuperLearner,
+    Matrix
 Suggests:
     testthat,
     rmarkdown,

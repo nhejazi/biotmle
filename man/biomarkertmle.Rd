@@ -44,12 +44,18 @@ S3 object of class \code{biotmle}, with the \code{tmleOut} and the
         call to this function (for user reference), respectively.
 }
 \description{
-computes the (rather complicated) parameter defined as the difference in the
-blips in Tx effects (difference between counterfactual max, min Tx effects)
+Computes the causal target parameter defined as the difference between the
+biomarker expression values under treatment and those same values under no
+treatment, using Targeted Minimum Loss-Based Estimation.
 }
 \examples{
-\dontrun{
+library(dplyr)
+library(foreach)
+library(parallel)
+library(doParallel)
+"\%ni\%" = Negate("\%in\%")
 data(illuminaData)
+
 W <- illuminaData \%>\%
  dplyr::select(which(colnames(.) \%in\% c("age", "sex", "smoking"))) \%>\%
  dplyr::mutate(
@@ -66,6 +72,7 @@ Y <- illuminaData \%>\%
  dplyr::select(which(colnames(.) \%ni\% c("age", "sex", "smoking", "benzene",
                                         "id")))
 geneIDs <- colnames(Y)
+Y <- Y[, 1:12]
 
 biomarkerTMLEout <- biomarkertmle(Y = Y,
                                   W = W,
@@ -78,7 +85,6 @@ biomarkerTMLEout <- biomarkertmle(Y = Y,
                                   Q_lib = c("SL.glmnet", "SL.randomForest",
                                             "SL.nnet", "SL.mean")
                                  )
-}
 
 }
 
