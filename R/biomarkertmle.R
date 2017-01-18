@@ -1,6 +1,6 @@
 utils::globalVariables("gene")
 
-#' Biomarker Discovery via Targeted Minimum Loss-Based Estimation (TMLE)
+#' Biomarker Evaluation with Targeted Minimum Loss-Based Estimation (TMLE)
 #'
 #' Computes the causal target parameter defined as the difference between the
 #' biomarker expression values under treatment and those same values under no
@@ -39,6 +39,7 @@ utils::globalVariables("gene")
 #' @export biomarkertmle
 #'
 #' @examples
+#' \dontrun{
 #' library(dplyr)
 #' library(foreach)
 #' library(parallel)
@@ -75,6 +76,7 @@ utils::globalVariables("gene")
 #'                                   Q_lib = c("SL.glmnet", "SL.randomForest",
 #'                                             "SL.nnet", "SL.mean")
 #'                                  )
+#' }
 #'
 biomarkertmle <- function(Y,
                           W,

@@ -10,14 +10,6 @@
 #'
 #' @return S3 object of class \code{biotmle} for TMLE-based biomarker analysis.
 #'
-#' @export biotmle
-#'
-#' @examples
-#' biotmle <- biotmle(call = NULL,
-#'                    topTable = NULL,
-#'                    limmaOut = NULL,
-#'                    tmleOut = NULL)
-#'
 biotmle <- function(call = NULL,
                     topTable = NULL,
                     limmaOut = NULL,
