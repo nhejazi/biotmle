@@ -149,7 +149,7 @@ volcano_biotmle <- function(biotmle) {
 
   p <- ggplot2::ggplot(tt_volcano, ggplot2::aes(x = logFC, y = logPval))
   p <- p + ggplot2::geom_point(aes(colour = color))
-  p <- p + ggplot2::xlab("log2(Fold Change)")
+  p <- p + ggplot2::xlab("log2(Fold Change in Average Treatment Effect)")
   p <- p + ggplot2::ylab("-log10(raw p-value)")
   p <- p + ggplot2::ggtitle("Volcano Plot: Average Treatment Effect")
   p <- p + ggplot2::scale_colour_manual(values = pal2[1:3], guide = FALSE)
