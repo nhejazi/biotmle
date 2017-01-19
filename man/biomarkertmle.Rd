@@ -49,13 +49,9 @@ biomarker expression values under treatment and those same values under no
 treatment, using Targeted Minimum Loss-Based Estimation.
 }
 \examples{
-\dontrun{
 library(dplyr)
-library(foreach)
-library(parallel)
-library(doParallel)
-"\%ni\%" = Negate("\%in\%")
 data(illuminaData)
+"\%ni\%" = Negate("\%in\%")
 
 W <- illuminaData \%>\%
  dplyr::select(which(colnames(.) \%in\% c("age", "sex", "smoking"))) \%>\%
@@ -73,20 +69,17 @@ Y <- illuminaData \%>\%
  dplyr::select(which(colnames(.) \%ni\% c("age", "sex", "smoking", "benzene",
                                         "id")))
 geneIDs <- colnames(Y)
-Y <- Y[, 1:12]
+Y <- as.data.frame(Y[, 1:4])
 
 biomarkerTMLEout <- biomarkertmle(Y = Y,
                                   W = W,
                                   A = A,
                                   type = "exposure",
-                                  parallel = TRUE,
+                                  parallel = 1,
                                   family = "gaussian",
-                                  g_lib = c("SL.glmnet", "SL.randomForest",
-                                            "SL.polymars", "SL.mean"),
-                                  Q_lib = c("SL.glmnet", "SL.randomForest",
-                                            "SL.nnet", "SL.mean")
+                                  g_lib = c("SL.mean"),
+                                  Q_lib = c("SL.mean")
                                  )
-}
 
 }
 
