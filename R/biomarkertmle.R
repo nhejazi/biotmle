@@ -39,7 +39,7 @@ utils::globalVariables("gene")
 #' @export biomarkertmle
 #'
 #' @examples
-#' \dontrun{
+#'\dontrun{
 #' library(dplyr)
 #' library(foreach)
 #' library(parallel)
@@ -76,7 +76,7 @@ utils::globalVariables("gene")
 #'                                   Q_lib = c("SL.glmnet", "SL.randomForest",
 #'                                             "SL.nnet", "SL.mean")
 #'                                  )
-#' }
+#'}
 #'
 biomarkertmle <- function(Y,
                           W,

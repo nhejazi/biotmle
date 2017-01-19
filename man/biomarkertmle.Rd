@@ -2,7 +2,7 @@
 % Please edit documentation in R/biomarkertmle.R
 \name{biomarkertmle}
 \alias{biomarkertmle}
-\title{Biomarker Discovery via Targeted Minimum Loss-Based Estimation (TMLE)}
+\title{Biomarker Evaluation with Targeted Minimum Loss-Based Estimation (TMLE)}
 \usage{
 biomarkertmle(Y, W, A, type, parallel = TRUE, family = "gaussian",
   g_lib = c("SL.glmnet", "SL.randomForest", "SL.nnet", "SL.polymars",
@@ -49,6 +49,7 @@ biomarker expression values under treatment and those same values under no
 treatment, using Targeted Minimum Loss-Based Estimation.
 }
 \examples{
+\dontrun{
 library(dplyr)
 library(foreach)
 library(parallel)
@@ -85,6 +86,7 @@ biomarkerTMLEout <- biomarkertmle(Y = Y,
                                   Q_lib = c("SL.glmnet", "SL.randomForest",
                                             "SL.nnet", "SL.mean")
                                  )
+}
 
 }
 
