@@ -15,22 +15,32 @@
 `biotmle` is an R package that facilitates biomarker discovery by generalizing
 the moderated t-statistic of Smyth for use with asymptotically linear target
 parameters. The set of methods implemented in this R package rely on the use of
-Targeted Minimum Loss-Based Estimation (TMLE) to transform a given biological
-sequencing data set (e.g., microarray, RNA-seq) based on the influence curve
-representation of a particular statistical target parameter (e.g., the Average
-Treatment Effect). The transformed data is then used to test for differences
-between groups using the moderated t-statistic as implemented in the R package
+Targeted Minimum Loss-Based Estimation (TMLE) to transform biological sequencing
+data (e.g., microarray, RNA-seq) based on the influence curve representation of
+a particular statistical target parameter (e.g., the Average Treatment Effect).
+The transformed data is then used to test for group differences using the
+moderated t-statistic as implemented in the R package
 [`limma`](https://bioconductor.org/packages/release/bioc/html/limma.html).
 
 ---
 
 ## Installation
 
+- For standard use, install from [Bioconductor](https://bioconductor.org):
+  ```r
+  source("https://bioconductor.org/biocLite.R")
+  biocLite("biotmle")
+  ```
+
 - Install the most recent _stable release_ from GitHub:
-  `devtools::install_github("nhejazi/biotmle", subdir = "pkg")`
+  ```r
+  devtools::install_github("nhejazi/biotmle")
+  ```
 
 - To contribute, install the _development version_:
-  `devtools::install_github("nhejazi/biotmle", ref = "develop", subdir = "pkg")`
+  ```r
+  devtools::install_github("nhejazi/biotmle", ref = "develop")
+  ```
 
 ---
 
