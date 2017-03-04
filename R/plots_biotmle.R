@@ -93,6 +93,7 @@ plot.biotmle <- function(x, ..., type = "pvals_adj") {
 #' @importFrom ggplot2 ggplot aes geom_histogram geom_point scale_fill_gradientn
 #'             scale_colour_manual guides guide_legend xlab ylab ggtitle
 #' @importFrom wesanderson wes_palette
+#' @importFrom stats quantile
 #'
 #' @return object of class \code{ggplot} containing a standard volcano plot of
 #'         the log-fold change in the causal target parameter against the raw
@@ -134,7 +135,6 @@ volcano_biotmle <- function(biotmle) {
   pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
   pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
 
-  # add volcano plot examining genes showing differential expression
   tt_volcano <- biotmle$topTable %>%
     dplyr::arrange(adj.P.Val) %>%
     dplyr::mutate(
@@ -144,8 +144,8 @@ volcano_biotmle <- function(biotmle) {
                       ifelse((logFC < -3.0) & (adj.P.Val < 0.2), "-1", "0"))
     ) %>%
     dplyr::select(which(colnames(.) %in% c("logFC", "logPval", "color"))) %>%
-    dplyr::filter((logFC > quantile(logFC, probs = 0.1)) &
-                   logFC < quantile(logFC, probs = 0.9))
+    dplyr::filter((logFC > stats::quantile(logFC, probs = 0.1)) &
+                   logFC < stats::quantile(logFC, probs = 0.9))
 
   p <- ggplot2::ggplot(tt_volcano, ggplot2::aes(x = logFC, y = logPval))
   p <- p + ggplot2::geom_point(aes(colour = color))
@@ -160,33 +160,34 @@ volcano_biotmle <- function(biotmle) {
 #==============================================================================#
 ## NEXT FUNCTION ===============================================================
 #==============================================================================#
-utils::globalVariables(c(".", "..count..", "P.Value", "adj.P.Val", "color",
+utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
                          "logFC", "logPval"))
 
 #' Heatmap for class biotmle
 #'
-#' Heatmap of changes in the causal target parameter across all subjects and a
-#' selected number of biomarkers.
+#' Heatmap of the contributions of a select subset of biomarkers to the variable
+#' importance measure changes as assessed by influence curve-based estimation,
+#' across all subjects.
 #'
 #' @param x object of class \code{biotmle} as produced by an appropriate call to
 #'        \code{biomarkertmle}
 #' @param designMat a design matrix providing the contrasts to be dispalyed in
 #'        the heatmap (as would be passed to \code{limma::lmFit}).
-#' @param term numeric value indicating the column of the design matrix that
+#' @param tx numeric value indicating the column of the design matrix that
 #'        corresponds to the expression covariate of interest.
 #' @param FDRcutoff cutoff to be used in controlling the False Discovery Rate
 #' @param top number of identified biomarkers to plot in the heatmap
-#' @param ... additional arguments passed \code{NMF::aheatmap} as necessary
+#' @param ... additional arguments passed to \code{superheat::superheat} as
+#'        necessary
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom dplyr arrange filter slice
-#' @importFrom ggplot2 ggplot aes geom_histogram geom_point scale_fill_gradientn
-#'             scale_colour_manual guides guide_legend xlab ylab ggtitle
-#' @importFrom NMF nmf.options aheatmap
+#' @importFrom wesanderson wes_palette
+#' @importFrom superheat superheat
 #'
-#' @return object of class \code{aheatmap} containing a heatmap that uses
-#'         hierarchical clustering to plot the changes in the causal target
-#'         parameter for all subjects and a specified top number of biomarkers.
+#' @return heatmap (from the superheat package) using hierarchical clustering to
+#'         plot the changes in the variable importance measure for all subjects
+#'         across a specified top number of biomarkers.
 #'
 #' @export heatmap_biotmle
 #'
@@ -221,12 +222,11 @@ utils::globalVariables(c(".", "..count..", "P.Value", "adj.P.Val", "color",
 #'                 top = 25)
 #'
 
-heatmap_biotmle <- function(x, ..., designMat,
-                            term = 2, FDRcutoff = 0.05, top = 25) {
+heatmap_biotmle <- function(x, ..., designMat, tx = 2,
+                            FDRcutoff = 0.05, top = 25) {
 
   stopifnot(class(x) == "biotmle")
 
-  # make heatmap of genes showing differential expression
   topbiomarkersFDR <- x$topTable %>%
     subset(adj.P.Val < FDRcutoff) %>%
     dplyr::arrange(adj.P.Val) %>%
@@ -235,18 +235,14 @@ heatmap_biotmle <- function(x, ..., designMat,
   biomarkerTMLEout_top <- x$tmleOut %>%
     dplyr::filter(rownames(x$tmleOut) %in% topbiomarkersFDR$IDs)
 
-  annot <- data.frame(Treatment = ifelse(designMat[, term] == 0,
-                                         "Control", "Exposed"))
-  rownames(annot) <- colnames(biomarkerTMLEout_top)
-  NMF::nmf.options(grid.patch = TRUE)
+  annot <- ifelse(designMat[, tx] == 0, "Control", "Treated")
 
-  NMF::aheatmap(as.matrix(biomarkerTMLEout_top),
-                scale = "row",
-                Rowv = TRUE,
-                Colv = NULL,
-                annCol = annot,
-                annColors = "Set2",
-                main = paste("Heatmap of Top", top, "Biomarkers", "( FDR =",
-                             FDRcutoff, ")")
-               )
+  pal <- wes_palette("Zissou", 100, type = "continuous")
+
+  superheat::superheat(as.matrix(biomarkerTMLEout_top), row.dendrogram = TRUE,
+                       grid.hline.col = "white", force.grid.hline = TRUE,
+                       grid.vline.col = "white", force.grid.vline = TRUE,
+                       membership.cols = annot, heat.pal = pal,
+                       title = paste("Heatmap of Top", top, "Biomarkers")
+                      )
 }

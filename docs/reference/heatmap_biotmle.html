@@ -78,11 +78,12 @@
     </div>
 
     
-    <p>Heatmap of changes in the causal target parameter across all subjects and a
-selected number of biomarkers.</p>
+    <p>Heatmap of the contributions of a select subset of biomarkers to the variable
+importance measure changes as assessed by influence curve-based estimation,
+across all subjects.</p>
     
 
-    <pre><span class='fu'>heatmap_biotmle</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>designMat</span>, <span class='kw'>term</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>FDRcutoff</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>25</span>)</pre>
+    <pre><span class='fu'>heatmap_biotmle</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>designMat</span>, <span class='kw'>tx</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>FDRcutoff</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>25</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -90,11 +91,12 @@ selected number of biomarkers.</p>
       <dd>object of class <code>biotmle</code> as produced by an appropriate call to
 <code>biomarkertmle</code></dd>
       <dt>...</dt>
-      <dd>additional arguments passed <code>NMF::aheatmap</code> as necessary</dd>
+      <dd>additional arguments passed to <code>superheat::superheat</code> as
+necessary</dd>
       <dt>designMat</dt>
       <dd>a design matrix providing the contrasts to be dispalyed in
 the heatmap (as would be passed to <code>limma::lmFit</code>).</dd>
-      <dt>term</dt>
+      <dt>tx</dt>
       <dd>numeric value indicating the column of the design matrix that
 corresponds to the expression covariate of interest.</dd>
       <dt>FDRcutoff</dt>
@@ -105,9 +107,9 @@ corresponds to the expression covariate of interest.</dd>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>object of class <code>aheatmap</code> containing a heatmap that uses
-        hierarchical clustering to plot the changes in the causal target
-        parameter for all subjects and a specified top number of biomarkers.</p>
+    <p>heatmap (from the superheat package) using hierarchical clustering to
+        plot the changes in the variable importance measure for all subjects
+        across a specified top number of biomarkers.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

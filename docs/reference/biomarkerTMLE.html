@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Biomarker Discovery via Targeted Minimum Loss-Based Estimation (TMLE) — biomarkertmle • biotmle</title>
+<title>Biomarker Evaluation with Targeted Minimum Loss-Based Estimation (TMLE) — biomarkertmle • biotmle</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,12 +74,13 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Biomarker Discovery via Targeted Minimum Loss-Based Estimation (TMLE)</h1>
+    <h1>Biomarker Evaluation with Targeted Minimum Loss-Based Estimation (TMLE)</h1>
     </div>
 
     
-    <p>computes the (rather complicated) parameter defined as the difference in the
-blips in Tx effects (difference between counterfactual max, min Tx effects)</p>
+    <p>Computes the causal target parameter defined as the difference between the
+biomarker expression values under treatment and those same values under no
+treatment, using Targeted Minimum Loss-Based Estimation.</p>
     
 
     <pre><span class='fu'>biomarkertmle</span>(<span class='no'>Y</span>, <span class='no'>W</span>, <span class='no'>A</span>, <span class='no'>type</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>,
@@ -127,37 +128,40 @@ fitting the &quot;Q&quot; step of the standard TMLE procedure.</dd>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># data(illuminaData)</span>
-<span class='co'># W &lt;- illuminaData %&gt;%</span>
-<span class='co'>#  dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %&gt;%</span>
-<span class='co'>#  dplyr::mutate(</span>
-<span class='co'>#    age = as.numeric((age &gt; quantile(age, 0.25))),</span>
-<span class='co'>#    sex = I(sex),</span>
-<span class='co'>#    smoking = I(smoking)</span>
-<span class='co'>#  )</span>
-<span class='co'># </span>
-<span class='co'># A &lt;- illuminaData %&gt;%</span>
-<span class='co'>#  dplyr::select(which(colnames(.) %in% c("benzene")))</span>
-<span class='co'># A &lt;- A[, 1]</span>
-<span class='co'># </span>
-<span class='co'># Y &lt;- illuminaData %&gt;%</span>
-<span class='co'>#  dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",</span>
-<span class='co'>#                                         "id")))</span>
-<span class='co'># geneIDs &lt;- colnames(Y)</span>
-<span class='co'># </span>
-<span class='co'># biomarkerTMLEout &lt;- biomarkertmle(Y = Y,</span>
-<span class='co'>#                                   W = W,</span>
-<span class='co'>#                                   A = A,</span>
-<span class='co'>#                                   type = "exposure",</span>
-<span class='co'>#                                   parallel = TRUE,</span>
-<span class='co'>#                                   family = "gaussian",</span>
-<span class='co'>#                                   g_lib = c("SL.glmnet", "SL.randomForest",</span>
-<span class='co'>#                                             "SL.polymars", "SL.mean"),</span>
-<span class='co'>#                                   Q_lib = c("SL.glmnet", "SL.randomForest",</span>
-<span class='co'>#                                             "SL.nnet", "SL.mean")</span>
-<span class='co'>#                                  )</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)
+<span class='fu'>data</span>(<span class='no'>illuminaData</span>)
+<span class='st'>"%ni%"</span> <span class='kw'>=</span> <span class='fu'>Negate</span>(<span class='st'>"%in%"</span>)
+
+<span class='no'>W</span> <span class='kw'>&lt;-</span> <span class='no'>illuminaData</span> <span class='kw'>%&gt;%</span>
+ <span class='kw'>dplyr</span><span class='kw'>::</span><span class='fu'>select</span>(<span class='fu'>which</span>(<span class='fu'>colnames</span>(<span class='no'>.</span>) <span class='kw'>%in%</span> <span class='fu'>c</span>(<span class='st'>"age"</span>, <span class='st'>"sex"</span>, <span class='st'>"smoking"</span>))) <span class='kw'>%&gt;%</span>
+ <span class='kw'>dplyr</span><span class='kw'>::</span><span class='fu'>mutate</span>(
+   <span class='kw'>age</span> <span class='kw'>=</span> <span class='fu'>as.numeric</span>((<span class='no'>age</span> <span class='kw'>&gt;</span> <span class='fu'>quantile</span>(<span class='no'>age</span>, <span class='fl'>0.25</span>))),
+   <span class='kw'>sex</span> <span class='kw'>=</span> <span class='fu'>I</span>(<span class='no'>sex</span>),
+   <span class='kw'>smoking</span> <span class='kw'>=</span> <span class='fu'>I</span>(<span class='no'>smoking</span>)
+ )
+
+<span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='no'>illuminaData</span> <span class='kw'>%&gt;%</span>
+ <span class='kw'>dplyr</span><span class='kw'>::</span><span class='fu'>select</span>(<span class='fu'>which</span>(<span class='fu'>colnames</span>(<span class='no'>.</span>) <span class='kw'>%in%</span> <span class='fu'>c</span>(<span class='st'>"benzene"</span>)))
+<span class='no'>A</span> <span class='kw'>&lt;-</span> <span class='no'>A</span>[, <span class='fl'>1</span>]
+
+<span class='no'>Y</span> <span class='kw'>&lt;-</span> <span class='no'>illuminaData</span> <span class='kw'>%&gt;%</span>
+ <span class='kw'>dplyr</span><span class='kw'>::</span><span class='fu'>select</span>(<span class='fu'>which</span>(<span class='fu'>colnames</span>(<span class='no'>.</span>) <span class='kw'>%ni%</span> <span class='fu'>c</span>(<span class='st'>"age"</span>, <span class='st'>"sex"</span>, <span class='st'>"smoking"</span>, <span class='st'>"benzene"</span>,
+                                        <span class='st'>"id"</span>)))
+<span class='no'>geneIDs</span> <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>Y</span>)
+<span class='no'>Y</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.frame</span>(<span class='no'>Y</span>[, <span class='fl'>1</span>:<span class='fl'>4</span>])
+
+<span class='no'>biomarkerTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'>biomarkertmle</span>(<span class='kw'>Y</span> <span class='kw'>=</span> <span class='no'>Y</span>,
+                                  <span class='kw'>W</span> <span class='kw'>=</span> <span class='no'>W</span>,
+                                  <span class='kw'>A</span> <span class='kw'>=</span> <span class='no'>A</span>,
+                                  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"exposure"</span>,
+                                  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+                                  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>,
+                                  <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"SL.mean"</span>),
+                                  <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"SL.mean"</span>)
+                                 )</div><div class='output co'>#&gt; [1] &quot;Estimating target parameter for 1 of 4&quot;</div><div class='output co'>#&gt; <span class='message'>Loading required package: nnls</span></div><div class='output co'>#&gt; [1] &quot;Estimating target parameter for 2 of 4&quot;
+#&gt; [1] &quot;Estimating target parameter for 3 of 4&quot;
+#&gt; [1] &quot;Estimating target parameter for 4 of 4&quot;</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

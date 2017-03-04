@@ -65,15 +65,16 @@
 <div id="description" class="section level2">
 <h2 class="hasAnchor">
 <a href="#description" class="anchor"> </a>Description</h2>
-<p><code>biotmle</code> is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic of Smyth for use with asymptotically linear target parameters. The set of methods implemented in this R package rely on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform a given biological sequencing data set (e.g., microarray, RNA-seq) based on the influence curve representation of a particular statistical target parameter (e.g., the Average Treatment Effect). The transformed data is then used to test for differences between groups using the moderated t-statistic as implemented in the R package <a href="https://bioconductor.org/packages/release/bioc/html/limma.html"><code>limma</code></a>.</p>
+<p><code>biotmle</code> is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic of Smyth for use with asymptotically linear target parameters. The set of methods implemented in this R package rely on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform biological sequencing data (e.g., microarray, RNA-seq) based on the influence curve representation of a particular statistical target parameter (e.g., the Average Treatment Effect). The transformed data is then used to test for group differences using the moderated t-statistic as implemented in the R package <a href="https://bioconductor.org/packages/release/bioc/html/limma.html"><code>limma</code></a>.</p>
 <hr>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"> </a>Installation</h2>
 <ul>
-<li><p>Install the most recent <em>stable release</em> from GitHub: <code>devtools::install_github("nhejazi/biotmle", subdir = "pkg")</code></p></li>
-<li><p>To contribute, install the <em>development version</em>: <code>devtools::install_github("nhejazi/biotmle", ref = "develop", subdir = "pkg")</code></p></li>
+<li><p>For standard use, install from <a href="https://bioconductor.org">Bioconductor</a>: <code>r   source("https://bioconductor.org/biocLite.R")   biocLite("biotmle")</code></p></li>
+<li><p>Install the most recent <em>stable release</em> from GitHub: <code>r   devtools::install_github("nhejazi/biotmle")</code></p></li>
+<li><p>To contribute, install the <em>development version</em>: <code>r   devtools::install_github("nhejazi/biotmle", ref = "develop")</code></p></li>
 </ul>
 <hr>
 </div>
@@ -87,7 +88,7 @@
 <h2 class="hasAnchor">
 <a href="#citation" class="anchor"> </a>Citation</h2>
 <p>After using the <code>biotmle</code> R package, please cite it:</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r">    @article{hejazi2017,
+<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r">    <span class="op">@</span>article{hejazi2017,
       doi =<span class="st"> </span>{},
       url =<span class="st"> </span>{},
       year  =<span class="st"> </span>{<span class="dv">2017</span>},
@@ -96,7 +97,7 @@
       volume =<span class="st"> </span>{},
       number =<span class="st"> </span>{},
       author =<span class="st"> </span>{Hejazi, Nima S and Cai, Weixin and Hubbard, Alan E},
-      title =<span class="st"> </span>{biotmle:<span class="st"> </span>Targeted Learning for Biomarker Discovery},
+      title =<span class="st"> </span>{biotmle<span class="op">:</span><span class="st"> </span>Targeted Learning <span class="cf">for</span> Biomarker Discovery},
       journal =<span class="st"> </span>{The Journal of Open Source Software}
     }</code></pre></div>
 <hr>
@@ -105,7 +106,7 @@
 <h2 class="hasAnchor">
 <a href="#principal-references" class="anchor"> </a>Principal References</h2>
 <ul>
-<li><p><a href="">N.S. Hejazi, S. Kherad-Pajouh, and A.E. Hubbard. “Generalizing the moderated t-statistic with targeted maximum likelihood estimation.” <strong>in preparation</strong>, 2017.</a></p></li>
+<li><p><a href="">Nima S. Hejazi, Sara Kherad-Pajouh, and Alan E. Hubbard. “Generalizing the moderated t-statistic with targeted maximum likelihood estimation.” <strong>in preparation</strong>, 2017.</a></p></li>
 <li><p><a href="http://www.statsci.org/smyth/pubs/ebayes.pdf">Gordon K. Smyth. “Linear models and empirical Bayes methods for assessing differential expression in microarray experiments.” <em>Statistical Applications in Genetics and Molecular Biology</em>, 3(1), 2004.</a></p></li>
 </ul>
 <hr>
@@ -114,28 +115,7 @@
 <h2 class="hasAnchor">
 <a href="#license" class="anchor"> </a>License</h2>
 <p>© 2016-2017 <a href="http://nimahejazi.org">Nima S. Hejazi</a> &amp; <a href="https://hubbardgroup.github.io">Alan E. Hubbard</a></p>
-<p>The contents of this repository are distributed under the MIT license. See below for details:</p>
-<pre><code>The MIT License (MIT)
-
-Copyright (c) 2016-2017 Nima S. Hejazi &amp; Alan E. Hubbard
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.</code></pre>
+<p>The contents of this repository are distributed under the MIT license. See file <code>LICENSE</code> for details.</p>
 </div>
 </div>
   </div>
@@ -162,7 +142,7 @@ SOFTWARE.</code></pre>
 <li><a href="https://travis-ci.org/nhejazi/biotmle"><img src="https://travis-ci.org/nhejazi/biotmle.svg?branch=master" alt="Travis-CI Build Status"></a></li>
 <li><a href="https://ci.appveyor.com/project/nhejazi/biotmle"><img src="https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
 <li><a href="https://codecov.io/github/nhejazi/biotmle?branch=master"><img src="https://img.shields.io/codecov/c/github/nhejazi/biotmle/master.svg" alt="Coverage Status"></a></li>
-<li><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active - The project has reached a stable, usable state and is being actively developed."></a></li>
+<li><a href="http://www.repostatus.org/#wip"><img src="http://www.repostatus.org/badges/latest/wip.svg" alt="Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public."></a></li>
 <li><a href="http://opensource.org/licenses/MIT"><img src="http://img.shields.io/badge/license-MIT-brightgreen.svg" alt="MIT license"></a></li>
 </ul>
 </body></html>

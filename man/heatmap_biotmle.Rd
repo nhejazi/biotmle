@@ -4,18 +4,19 @@
 \alias{heatmap_biotmle}
 \title{Heatmap for class biotmle}
 \usage{
-heatmap_biotmle(x, ..., designMat, term = 2, FDRcutoff = 0.05, top = 25)
+heatmap_biotmle(x, ..., designMat, tx = 2, FDRcutoff = 0.05, top = 25)
 }
 \arguments{
 \item{x}{object of class \code{biotmle} as produced by an appropriate call to
 \code{biomarkertmle}}
 
-\item{...}{additional arguments passed \code{NMF::aheatmap} as necessary}
+\item{...}{additional arguments passed to \code{superheat::superheat} as
+necessary}
 
 \item{designMat}{a design matrix providing the contrasts to be dispalyed in
 the heatmap (as would be passed to \code{limma::lmFit}).}
 
-\item{term}{numeric value indicating the column of the design matrix that
+\item{tx}{numeric value indicating the column of the design matrix that
 corresponds to the expression covariate of interest.}
 
 \item{FDRcutoff}{cutoff to be used in controlling the False Discovery Rate}
@@ -23,13 +24,14 @@ corresponds to the expression covariate of interest.}
 \item{top}{number of identified biomarkers to plot in the heatmap}
 }
 \value{
-object of class \code{aheatmap} containing a heatmap that uses
-        hierarchical clustering to plot the changes in the causal target
-        parameter for all subjects and a specified top number of biomarkers.
+heatmap (from the superheat package) using hierarchical clustering to
+        plot the changes in the variable importance measure for all subjects
+        across a specified top number of biomarkers.
 }
 \description{
-Heatmap of changes in the causal target parameter across all subjects and a
-selected number of biomarkers.
+Heatmap of the contributions of a select subset of biomarkers to the variable
+importance measure changes as assessed by influence curve-based estimation,
+across all subjects.
 }
 \examples{
 library(dplyr)

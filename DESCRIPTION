@@ -32,7 +32,7 @@ Imports:
     wesanderson,
     magrittr,
     dplyr,
-    NMF,
+    superheat,
     SuperLearner,
     Matrix
 Suggests:
