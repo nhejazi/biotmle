@@ -6,7 +6,7 @@
 [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
-> Targeted Learning for Biomarker Discovery with the Moderated T-Statistic
+> Targeted learning with the moderated t-statistic for biomarker discovery
 
 ---
 
@@ -55,7 +55,7 @@ issue](https://github.com/nhejazi/biotmle/issues).
 
 After using the `biotmle` R package, please cite it:
 
-        @article{hejazi2017,
+        @article{hejazi2017biotmle,
           doi = {},
           url = {},
           year  = {2017},
@@ -72,9 +72,9 @@ After using the `biotmle` R package, please cite it:
 
 ## Principal References
 
-* [Nima S. Hejazi, Sara Kherad-Pajouh, and Alan E. Hubbard. "Generalizing the
-    moderated t-statistic with targeted maximum likelihood estimation." __in
-    preparation__, 2017.]()
+* [Nima S. Hejazi, Sara Kherad-Pajouh, Mark J. van der Laan, and Alan E.
+    Hubbard. "Generalized application of the moderated t-statistic to
+    asymptotically linear target parameters." __in preparation__, 2017.]()
 
 * [Gordon K. Smyth. "Linear models and empirical Bayes methods for assessing
     differential expression in microarray experiments." _Statistical
@@ -86,7 +86,7 @@ After using the `biotmle` R package, please cite it:
 ## License
 
 &copy; 2016-2017 [Nima S. Hejazi](http://nimahejazi.org) & [Alan E.
-Hubbard](https://hubbardgroup.github.io)
+Hubbard](http://hubbard.berkeley.edu/)
 
 The contents of this repository are distributed under the MIT license. See file
 `LICENSE` for details.
