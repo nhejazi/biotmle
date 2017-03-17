@@ -243,6 +243,7 @@ heatmap_biotmle <- function(x, ..., designMat, tx = 2,
                        grid.hline.col = "white", force.grid.hline = TRUE,
                        grid.vline.col = "white", force.grid.vline = TRUE,
                        membership.cols = annot, heat.pal = pal,
-                       title = paste("Heatmap of Top", top, "Biomarkers")
+                       title = paste("Heatmap of Top", top, "Biomarkers"),
+                       ...
                       )
 }
