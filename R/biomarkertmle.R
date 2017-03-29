@@ -10,8 +10,8 @@ utils::globalVariables("gene")
 #'        sequencing data in the "assays" slot and a matrix of phenotype-level
 #'        data in the "colData" slot.
 #' @param varInt (numeric) - indicating the column of the design matrix
-#'                 corresponding to the treatment or outcome of interest (in the
-#'                 "colData" slot of the "se" argument above.
+#'        corresponding to the treatment or outcome of interest (in the
+#'        "colData" slot of the "se" argument above).
 #' @param type (character) - choice of the type of TMLE to perform: "exposure"
 #'        to identify biomarkers related to an exposure (input as A), or
 #'        "outcome" to identify biomarkers related to an outcome (input as Y).
@@ -43,7 +43,7 @@ utils::globalVariables("gene")
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
 #'      data.frame %>%
-#'      mutate(age = quantile(age, 0.25)) %>%
+#'      dplyr::mutate(age = as.numeric(age > median(age))) %>%
 #'      DataFrame
 #'
 #' varInt_index <- which(names(colData(illuminaData)) %in% "benzene)
@@ -62,9 +62,9 @@ biomarkertmle <- function(se,
                           type,
                           parallel = TRUE,
                           family = "gaussian",
-                          g_lib = c("SL.glmnet", "SL.randomForest", "SL.nnet",
+                          g_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
                                     "SL.polymars", "SL.mean"),
-                          Q_lib = c("SL.glmnet", "SL.randomForest", "SL.nnet",
+                          Q_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
                                     "SL.mean")
                           ) {
 
@@ -107,8 +107,8 @@ biomarkertmle <- function(se,
     }
 
     # median normalization
-    Y <- as.data.frame(limma::normalizeBetweenArrays(assay(se),
-                                                     method = "scale"))
+    Y <- as.data.frame(t(limma::normalizeBetweenArrays(assay(se),
+                                                       method = "scale")))
 
     # exposure / treatment
     A <- as.numeric(colData(se)[, varInt])
@@ -117,7 +117,7 @@ biomarkertmle <- function(se,
     W <- as.data.frame(colData(se)[, -varInt])
 
     # perform multi-level TMLE-based estimation for genes as Y
-    biomarkerTMLEout <- foreach::foreach(gene = 1:ncol(Y),
+    biomarkerTMLEout <- foreach::foreach(gene = seq_len(ncol(Y)),
                                          .combine = cbind) %dopar% {
       print(paste("Estimating target parameter for", gene, "of", ncol(Y)))
       out <- biomarkerTMLE_exposure(Y = Y[, gene],
@@ -138,8 +138,8 @@ biomarkertmle <- function(se,
   #=============================================================================
 
     # median normalization
-    A <- as.data.frame(limma::normalizeBetweenArrays(assay(se),
-                                                     method = "scale"))
+    A <- as.data.frame(t(limma::normalizeBetweenArrays(assay(se),
+                                                       method = "scale")))
 
     # exposure / treatment
     Y <- as.numeric(colData(se)[, varInt])
@@ -148,7 +148,7 @@ biomarkertmle <- function(se,
     W <- as.data.frame(colData(se)[, -varInt])
 
     # perform multi-level TMLE-bases estimation for genes as A
-    biomarkerTMLEout <- foreach::foreach(gene = 1:ncol(A),
+    biomarkerTMLEout <- foreach::foreach(gene = seq_len(ncol(A)),
                                          .combine = rbind) %dopar% {
       print(paste("Estimating causal effect for", gene, "of", ncol(A)))
       out <- biomarkerTMLE_outcome(Y = Y,
