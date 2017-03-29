@@ -6,15 +6,12 @@ utils::globalVariables("gene")
 #' biomarker expression values under treatment and those same values under no
 #' treatment, using Targeted Minimum Loss-Based Estimation.
 #'
-#' @param Y (numeric vector) - a vector of expression values for a single
-#'        biomarker (if type is "exposure"), or a vector of binarized outcomes
-#'       (if type is "exposure").
-#' @param W (numeric matrix) - a matrix of baseline covariates to be controlled
-#'        in the estimation procedure.
-#' @param A (numeric vector) - if type is "exposure": a discretized exposure
-#'        vector whose effect on biomarker expression is of interest; or, if
-#'       type is "outcome": a vector of discretized biomarker expression values
-#'       whose changes are thought to be related to the specified outcome.
+#' @param se (SummarizedExperiment) - containing expression or next-generation
+#'        sequencing data in the "assays" slot and a matrix of phenotype-level
+#'        data in the "colData" slot.
+#' @param varInt (numeric) - indicating the column of the design matrix
+#'                 corresponding to the treatment or outcome of interest (in the
+#'                 "colData" slot of the "se" argument above.
 #' @param type (character) - choice of the type of TMLE to perform: "exposure"
 #'        to identify biomarkers related to an exposure (input as A), or
 #'        "outcome" to identify biomarkers related to an outcome (input as Y).
@@ -40,30 +37,19 @@ utils::globalVariables("gene")
 #'
 #' @examples
 #' library(dplyr)
+#' library(biotmleData)
 #' data(illuminaData)
 #' "%ni%" = Negate("%in%")
 #'
-#' W <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %>%
-#'  dplyr::mutate(
-#'    age = as.numeric((age > quantile(age, 0.25))),
-#'    sex = I(sex),
-#'    smoking = I(smoking)
-#'  )
+#' colData(illuminaData) <- colData(illuminaData) %>%
+#'      data.frame %>%
+#'      mutate(age = quantile(age, 0.25)) %>%
+#'      DataFrame
 #'
-#' A <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %in% c("benzene")))
-#' A <- A[, 1]
+#' varInt_index <- which(names(colData(illuminaData)) %in% "benzene)
 #'
-#' Y <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",
-#'                                         "id")))
-#' geneIDs <- colnames(Y)
-#' Y <- as.data.frame(Y[, 1:4])
-#'
-#' biomarkerTMLEout <- biomarkertmle(Y = Y,
-#'                                   W = W,
-#'                                   A = A,
+#' biomarkerTMLEout <- biomarkertmle(se = illuminaData,
+#'                                   varInt = varInt_index,
 #'                                   type = "exposure",
 #'                                   parallel = 1,
 #'                                   family = "gaussian",
@@ -71,9 +57,8 @@ utils::globalVariables("gene")
 #'                                   Q_lib = c("SL.mean")
 #'                                  )
 #'
-biomarkertmle <- function(Y,
-                          W,
-                          A,
+biomarkertmle <- function(se,
+                          varInt,
                           type,
                           parallel = TRUE,
                           family = "gaussian",
@@ -116,15 +101,22 @@ biomarkertmle <- function(Y,
   # TMLE procedure to identify biomarkers based on an EXPOSURE
   # ============================================================================
   if (type == "exposure") {
-    # median normalization
-    Y <- as.data.frame(limma::normalizeBetweenArrays(Y, method = "scale"))
-
     # simple sanity check of whether Y includes array values
     if(unique(lapply(Y, class)) != "numeric") {
       print("Warning - values in Y do not appear to be expression measures...")
     }
 
-    # perform multi-level TMLE estimation (for all columns/genes)
+    # median normalization
+    Y <- as.data.frame(limma::normalizeBetweenArrays(assay(se),
+                                                     method = "scale"))
+
+    # exposure / treatment
+    A <- as.numeric(colData(se)[, varInt])
+
+    # baseline covariates
+    W <- as.data.frame(colData(se)[, -varInt])
+
+    # perform multi-level TMLE-based estimation for genes as Y
     biomarkerTMLEout <- foreach::foreach(gene = 1:ncol(Y),
                                          .combine = cbind) %dopar% {
       print(paste("Estimating target parameter for", gene, "of", ncol(Y)))
@@ -144,6 +136,18 @@ biomarkertmle <- function(Y,
   #=============================================================================
   # TMLE procedure to identify biomarkers based on an OUTCOME
   #=============================================================================
+
+    # median normalization
+    A <- as.data.frame(limma::normalizeBetweenArrays(assay(se),
+                                                     method = "scale"))
+
+    # exposure / treatment
+    Y <- as.numeric(colData(se)[, varInt])
+
+    # baseline covariates
+    W <- as.data.frame(colData(se)[, -varInt])
+
+    # perform multi-level TMLE-bases estimation for genes as A
     biomarkerTMLEout <- foreach::foreach(gene = 1:ncol(A),
                                          .combine = rbind) %dopar% {
       print(paste("Estimating causal effect for", gene, "of", ncol(A)))
