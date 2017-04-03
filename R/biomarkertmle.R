@@ -27,6 +27,7 @@ utils::globalVariables("gene")
 #' @importFrom parallel detectCores
 #' @importFrom doParallel registerDoParallel
 #' @importFrom foreach foreach "%dopar%"
+#' @importFrom SummarizedExperiment assay colData
 #'
 #' @return S3 object of class \code{biotmle}, with the \code{tmleOut} and the
 #'         \code{call} slots containing TMLE-based estimates of the relationship
@@ -39,6 +40,7 @@ utils::globalVariables("gene")
 #' library(dplyr)
 #' library(biotmleData)
 #' data(illuminaData)
+#' library(SummarizedExperiment)
 #' "%ni%" = Negate("%in%")
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
@@ -46,20 +48,20 @@ utils::globalVariables("gene")
 #'      dplyr::mutate(age = as.numeric(age > median(age))) %>%
 #'      DataFrame
 #'
-#' varInt_index <- which(names(colData(illuminaData)) %in% "benzene)
+#' varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
 #'
-#' biomarkerTMLEout <- biomarkertmle(se = illuminaData,
+#' biomarkerTMLEout <- biomarkertmle(se = illuminaData[1:10, ],
 #'                                   varInt = varInt_index,
 #'                                   type = "exposure",
 #'                                   parallel = 1,
 #'                                   family = "gaussian",
-#'                                   g_lib = c("SL.mean"),
-#'                                   Q_lib = c("SL.mean")
+#'                                   g_lib = c("SL.mean", "SL.glm"),
+#'                                   Q_lib = c("SL.mean", "SL.glm")
 #'                                  )
 #'
 biomarkertmle <- function(se,
                           varInt,
-                          type,
+                          type = c("exposure", "outcome"),
                           parallel = TRUE,
                           family = "gaussian",
                           g_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
@@ -72,6 +74,11 @@ biomarkertmle <- function(se,
   # catch input and return in output object for user convenience
   # ============================================================================
   call <- match.call(expand.dots = TRUE)
+
+  # ============================================================================
+  # explicitly check that the "type" argument is of the appropriate type
+  # ============================================================================
+  type <- match.arg(type)
 
   # ============================================================================
   # invoke S3 class constructor for "biotmle" object
@@ -101,14 +108,14 @@ biomarkertmle <- function(se,
   # TMLE procedure to identify biomarkers based on an EXPOSURE
   # ============================================================================
   if (type == "exposure") {
-    # simple sanity check of whether Y includes array values
-    if(unique(lapply(Y, class)) != "numeric") {
-      print("Warning - values in Y do not appear to be expression measures...")
-    }
 
     # median normalization
     Y <- as.data.frame(t(limma::normalizeBetweenArrays(assay(se),
                                                        method = "scale")))
+    # simple sanity check of whether Y includes array values
+    if(unique(lapply(Y, class)) != "numeric") {
+      print("Warning - values in Y do not appear to be numeric...")
+    }
 
     # exposure / treatment
     A <- as.numeric(colData(se)[, varInt])
@@ -140,6 +147,10 @@ biomarkertmle <- function(se,
     # median normalization
     A <- as.data.frame(t(limma::normalizeBetweenArrays(assay(se),
                                                        method = "scale")))
+    # simple sanity check of whether A includes array values
+    if(unique(lapply(A, class)) != "numeric") {
+      print("Warning - values in A do not appear to be numeric...")
+    }
 
     # exposure / treatment
     Y <- as.numeric(colData(se)[, varInt])

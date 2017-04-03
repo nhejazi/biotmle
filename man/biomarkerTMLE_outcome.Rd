@@ -38,4 +38,3 @@ This function performs influence curve-based estimation of the effect of
 expression changes of a biomarker on an outcome while controlling for a set
 of user-specified baseline covariates.
 }
-

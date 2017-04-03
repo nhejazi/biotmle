@@ -19,32 +19,24 @@
 #'
 #' @examples
 #' library(dplyr)
+#' library(biotmleData)
+#' library(SummarizedExperiment)
 #' data(illuminaData)
 #' data(biomarkertmleOut)
 #' "%ni%" = Negate("%in%")
 #'
-#' W <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %>%
-#'  dplyr::mutate(
-#'    age = as.numeric((age > quantile(age, 0.25))),
-#'    sex = I(sex),
-#'    smoking = I(smoking)
-#'  )
+#' colData(illuminaData) <- colData(illuminaData) %>%
+#'      data.frame %>%
+#'      dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'      DataFrame
 #'
-#' A <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %in% c("benzene")))
-#' A <- A[, 1]
+#' varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
+#' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
+#' design <- as.numeric(designVar == max(designVar))
 #'
-#' Y <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",
-#'                                         "id")))
-#' geneIDs <- colnames(Y)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
+#'                            design = design)
 #'
-#' design <- as.data.frame(cbind(rep(1, nrow(Y)),
-#'                              as.numeric(A == max(unique(A)))))
-#' colnames(design) <- c("intercept", "Tx")
-#' limmaTMLEout <- limmatmle(biotmle = biomarkerTMLEout, IDs = NULL,
-#'                           designMat = design)
 #' plot(x = limmaTMLEout, type = "pvals_adj")
 #'
 plot.biotmle <- function(x, ..., type = "pvals_adj") {
@@ -99,38 +91,31 @@ plot.biotmle <- function(x, ..., type = "pvals_adj") {
 #'         the log-fold change in the causal target parameter against the raw
 #'         log p-value computed from the moderated t-test in \code{limmatmle}.
 #'
-#' @export volcano_biotmle
+#' @export volcano_ic
 #'
 #' @examples
 #' library(dplyr)
+#' library(biotmleData)
+#' library(SummarizedExperiment)
 #' data(illuminaData)
 #' data(biomarkertmleOut)
 #' "%ni%" = Negate("%in%")
 #'
-#' W <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %>%
-#'  dplyr::mutate(
-#'    age = as.numeric((age > quantile(age, 0.25))),
-#'    sex = I(sex),
-#'    smoking = I(smoking)
-#'  )
+#' colData(illuminaData) <- colData(illuminaData) %>%
+#'      data.frame %>%
+#'      dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'      DataFrame
 #'
-#' A <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %in% c("benzene")))
-#' A <- A[, 1]
+#' varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
+#' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
+#' design <- as.numeric(designVar == max(designVar))
 #'
-#' Y <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",
-#'                                         "id")))
-#' geneIDs <- colnames(Y)
-#' design <- as.data.frame(cbind(rep(1, nrow(Y)),
-#'                              as.numeric(A == max(unique(A)))))
-#' colnames(design) <- c("intercept", "Tx")
-#' limmaTMLEout <- limmatmle(biotmle = biomarkerTMLEout, IDs = NULL,
-#'                           designMat = design)
-#' volcano_biotmle(biotmle = limmaTMLEout)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
+#'                            design = design)
 #'
-volcano_biotmle <- function(biotmle) {
+#' volcano_ic(biotmle = limmaTMLEout)
+#'
+volcano_ic <- function(biotmle) {
 
   pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
   pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
@@ -171,8 +156,8 @@ utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
 #'
 #' @param x object of class \code{biotmle} as produced by an appropriate call to
 #'        \code{biomarkertmle}
-#' @param designMat a design matrix providing the contrasts to be dispalyed in
-#'        the heatmap (as would be passed to \code{limma::lmFit}).
+#' @param design a design matrix providing the contrasts to be dispalyed in the
+#'        heatmap (as would be passed to \code{limma::lmFit}).
 #' @param tx numeric value indicating the column of the design matrix that
 #'        corresponds to the expression covariate of interest.
 #' @param FDRcutoff cutoff to be used in controlling the False Discovery Rate
@@ -189,41 +174,33 @@ utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
 #'         plot the changes in the variable importance measure for all subjects
 #'         across a specified top number of biomarkers.
 #'
-#' @export heatmap_biotmle
+#' @export heatmap_ic
 #'
 #' @examples
 #' library(dplyr)
+#' library(biotmleData)
+#' library(SummarizedExperiment)
 #' data(illuminaData)
 #' data(biomarkertmleOut)
 #' "%ni%" = Negate("%in%")
 #'
-#' W <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %in% c("age", "sex", "smoking"))) %>%
-#'  dplyr::mutate(
-#'    age = as.numeric((age > quantile(age, 0.25))),
-#'    sex = I(sex),
-#'    smoking = I(smoking)
-#'  )
+#' colData(illuminaData) <- colData(illuminaData) %>%
+#'      data.frame %>%
+#'      dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'      DataFrame
 #'
-#' A <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %in% c("benzene")))
-#' A <- A[, 1]
+#' varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
+#' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
+#' design <- as.numeric(designVar == max(designVar))
 #'
-#' Y <- illuminaData %>%
-#'  dplyr::select(which(colnames(.) %ni% c("age", "sex", "smoking", "benzene",
-#'                                         "id")))
-#' geneIDs <- colnames(Y)
-#' design <- as.data.frame(cbind(rep(1, nrow(Y)),
-#'                              as.numeric(A == max(unique(A)))))
-#' colnames(design) <- c("intercept", "Tx")
-#' limmaTMLEout <- limmatmle(biotmle = biomarkerTMLEout, IDs = NULL,
-#'                           designMat = design)
-#' heatmap_biotmle(x = limmaTMLEout, designMat = design, FDRcutoff = 0.05,
-#'                 top = 25)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
+#'                            design = design)
+#'
+#' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05,
+#'            top = 25)
 #'
 
-heatmap_biotmle <- function(x, ..., designMat, tx = 2,
-                            FDRcutoff = 0.05, top = 25) {
+heatmap_ic <- function(x, ..., design, tx = 2, FDRcutoff = 0.05, top = 25) {
 
   stopifnot(class(x) == "biotmle")
 
@@ -235,7 +212,7 @@ heatmap_biotmle <- function(x, ..., designMat, tx = 2,
   biomarkerTMLEout_top <- x$tmleOut %>%
     dplyr::filter(rownames(x$tmleOut) %in% topbiomarkersFDR$IDs)
 
-  annot <- ifelse(designMat[, tx] == 0, "Control", "Treated")
+  annot <- ifelse(design == 0, "Control", "Treated")
 
   pal <- wes_palette("Zissou", 100, type = "continuous")
 

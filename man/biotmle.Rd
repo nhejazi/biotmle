@@ -24,4 +24,3 @@ S3 object of class \code{biotmle} for TMLE-based biomarker analysis.
 \description{
 S3 constructor for class \code{biotmle}
 }
-

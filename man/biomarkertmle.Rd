@@ -4,22 +4,19 @@
 \alias{biomarkertmle}
 \title{Biomarker Evaluation with Targeted Minimum Loss-Based Estimation (TMLE)}
 \usage{
-biomarkertmle(Y, W, A, type, parallel = TRUE, family = "gaussian",
-  g_lib = c("SL.glmnet", "SL.randomForest", "SL.nnet", "SL.polymars",
-  "SL.mean"), Q_lib = c("SL.glmnet", "SL.randomForest", "SL.nnet", "SL.mean"))
+biomarkertmle(se, varInt, type = c("exposure", "outcome"), parallel = TRUE,
+  family = "gaussian", g_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
+  "SL.polymars", "SL.mean"), Q_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
+  "SL.mean"))
 }
 \arguments{
-\item{Y}{(numeric vector) - a vector of expression values for a single
- biomarker (if type is "exposure"), or a vector of binarized outcomes
-(if type is "exposure").}
+\item{se}{(SummarizedExperiment) - containing expression or next-generation
+sequencing data in the "assays" slot and a matrix of phenotype-level
+data in the "colData" slot.}
 
-\item{W}{(numeric matrix) - a matrix of baseline covariates to be controlled
-in the estimation procedure.}
-
-\item{A}{(numeric vector) - if type is "exposure": a discretized exposure
- vector whose effect on biomarker expression is of interest; or, if
-type is "outcome": a vector of discretized biomarker expression values
-whose changes are thought to be related to the specified outcome.}
+\item{varInt}{(numeric) - indicating the column of the design matrix
+corresponding to the treatment or outcome of interest (in the
+"colData" slot of the "se" argument above).}
 
 \item{type}{(character) - choice of the type of TMLE to perform: "exposure"
 to identify biomarkers related to an exposure (input as A), or
@@ -50,36 +47,25 @@ treatment, using Targeted Minimum Loss-Based Estimation.
 }
 \examples{
 library(dplyr)
+library(biotmleData)
 data(illuminaData)
+library(SummarizedExperiment)
 "\%ni\%" = Negate("\%in\%")
 
-W <- illuminaData \%>\%
- dplyr::select(which(colnames(.) \%in\% c("age", "sex", "smoking"))) \%>\%
- dplyr::mutate(
-   age = as.numeric((age > quantile(age, 0.25))),
-   sex = I(sex),
-   smoking = I(smoking)
- )
+colData(illuminaData) <- colData(illuminaData) \%>\%
+     data.frame \%>\%
+     dplyr::mutate(age = as.numeric(age > median(age))) \%>\%
+     DataFrame
 
-A <- illuminaData \%>\%
- dplyr::select(which(colnames(.) \%in\% c("benzene")))
-A <- A[, 1]
+varInt_index <- which(names(colData(illuminaData)) \%in\% "benzene")
 
-Y <- illuminaData \%>\%
- dplyr::select(which(colnames(.) \%ni\% c("age", "sex", "smoking", "benzene",
-                                        "id")))
-geneIDs <- colnames(Y)
-Y <- as.data.frame(Y[, 1:4])
-
-biomarkerTMLEout <- biomarkertmle(Y = Y,
-                                  W = W,
-                                  A = A,
+biomarkerTMLEout <- biomarkertmle(se = illuminaData[1:10, ],
+                                  varInt = varInt_index,
                                   type = "exposure",
                                   parallel = 1,
                                   family = "gaussian",
-                                  g_lib = c("SL.mean"),
-                                  Q_lib = c("SL.mean")
+                                  g_lib = c("SL.mean", "SL.glm"),
+                                  Q_lib = c("SL.mean", "SL.glm")
                                  )
 
 }
-

@@ -1,5 +1,5 @@
 Package: biotmle
-Title: Targeted Learning for Biomarker Discovery with the Moderated T-Statistic
+Title: Targeted Learning for Biomarker Discovery with the Moderated Statistics
 Version: 0.99.3
 Authors@R: c(
     person("Nima", "Hejazi", email = "nhejazi@berkeley.edu",
@@ -32,6 +32,7 @@ Imports:
     wesanderson,
     magrittr,
     dplyr,
+    SummarizedExperiment,
     superheat,
     SuperLearner,
     Matrix,
@@ -47,7 +48,5 @@ RoxygenNote: 6.0.1
 biocViews:
     GeneExpression,
     DifferentialExpression,
-    Genetics,
     Microarray,
-    RNASeq,
-    Sequencing
+    RNASeq
