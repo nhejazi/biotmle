@@ -70,6 +70,13 @@ After using the `biotmle` R package, please cite it:
 
 ---
 
+## Related
+
+* [R/`biotmleData`](https://github.com/nhejazi/biotmleData) - R package with
+    example experimental data for use with this analysis package.
+
+---
+
 ## Principal References
 
 * [Nima S. Hejazi, Sara Kherad-Pajouh, Mark J. van der Laan, and Alan E.
