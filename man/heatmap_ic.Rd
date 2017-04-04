@@ -4,7 +4,7 @@
 \alias{heatmap_ic}
 \title{Heatmap for class biotmle}
 \usage{
-heatmap_ic(x, ..., design, tx = 2, FDRcutoff = 0.05, top = 25)
+heatmap_ic(x, ..., design, FDRcutoff = 0.05, top = 25)
 }
 \arguments{
 \item{x}{object of class \code{biotmle} as produced by an appropriate call to
@@ -13,11 +13,7 @@ heatmap_ic(x, ..., design, tx = 2, FDRcutoff = 0.05, top = 25)
 \item{...}{additional arguments passed to \code{superheat::superheat} as
 necessary}
 
-\item{design}{a design matrix providing the contrasts to be dispalyed in the
-heatmap (as would be passed to \code{limma::lmFit}).}
-
-\item{tx}{numeric value indicating the column of the design matrix that
-corresponds to the expression covariate of interest.}
+\item{design}{a vector providing the contrast to be displayed in the heatmap.}
 
 \item{FDRcutoff}{cutoff to be used in controlling the False Discovery Rate}
 

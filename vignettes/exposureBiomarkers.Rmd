@@ -174,3 +174,11 @@ be modified in place if stored properly. For our analysis:
 ```{r volcano_plot_limma_results}
 volcano_ic(biotmle = limmaTMLEout)
 ```
+
+---
+
+## Session Information
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
