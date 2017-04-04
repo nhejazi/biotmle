@@ -61,7 +61,7 @@ colData(illuminaData) <- colData(illuminaData) \%>\%
 
 varInt_index <- which(names(colData(illuminaData)) \%in\% "benzene")
 
-biomarkerTMLEout <- biomarkertmle(se = illuminaData[1:10, ],
+biomarkerTMLEout <- biomarkertmle(se = illuminaData[1:5, ],
                                   varInt = varInt_index,
                                   type = "exposure",
                                   parallel = 1,

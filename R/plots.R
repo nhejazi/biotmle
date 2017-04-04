@@ -1,12 +1,11 @@
-#' Plot utility for class biotmle
+#' Plot p-values from moderated statistical tests for class biotmle
 #'
 #' Histogram of raw or FDR-adjusted p-values from the moderated t-test.
 #'
-#' @param x object of class \code{biotmle} as produced by an appropriate call to
-#'        \code{biomarkertmle}
+#' @param biotmle object of class \code{biotmle} as produced by an appropriate
+#'        call to \code{biomarkertmle}
 #' @param type character describing whether to provide a plot of unadjusted or
 #'        adjusted p-values (adjustment performed via Benjamini-Hochberg)
-#' @param ... additional arguments passed \code{plot} as necessary
 #'
 #' @importFrom ggplot2 ggplot aes geom_histogram geom_point scale_fill_gradientn
 #'             scale_colour_manual guides guide_legend xlab ylab ggtitle
@@ -15,7 +14,7 @@
 #' @return object of class \code{ggplot} containing a histogram of the raw or
 #'         Benjamini-Hochberg corrected p-values (depending on user input).
 #'
-#' @export
+#' @export plot_mt
 #'
 #' @examples
 #' library(dplyr)
@@ -34,20 +33,19 @@
 #' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
 #' design <- as.numeric(designVar == max(designVar))
 #'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
-#'                            design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
 #'
-#' plot(x = limmaTMLEout, type = "pvals_adj")
+#' plot_mt(biotmle = limmaTMLEout, type = "pvals_adj")
 #'
-plot.biotmle <- function(x, ..., type = "pvals_adj") {
+plot_mt <- function(biotmle, type = "pvals_adj") {
 
-  stopifnot(class(x) == "biotmle")
+  stopifnot(class(biotmle) == "bioTMLE")
 
   pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
   pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
 
   if(type == "pvals_raw") {
-    p <- ggplot2::ggplot(x@topTable, ggplot2::aes(P.Value))
+    p <- ggplot2::ggplot(as.data.frame(biotmle@topTable), ggplot2::aes(P.Value))
     p <- p + ggplot2::geom_histogram(ggplot2::aes(y = ..count..,
       fill = ..count..), colour = "white", na.rm = TRUE, binwidth = 0.025)
     p <- p + ggplot2::ggtitle("Histogram of raw p-values")
@@ -57,7 +55,8 @@ plot.biotmle <- function(x, ..., type = "pvals_adj") {
   }
 
   if (type == "pvals_adj") {
-    p <- ggplot2::ggplot(x@topTable, ggplot2::aes(adj.P.Val))
+    p <- ggplot2::ggplot(as.data.frame(biotmle@topTable),
+                         ggplot2::aes(adj.P.Val))
     p <- p + ggplot2::geom_histogram(ggplot2::aes(y = ..count..,
       fill = ..count..), colour = "white", na.rm = TRUE, binwidth = 0.025)
     p <- p + ggplot2::ggtitle("Histogram of BH-corrected FDR p-values")
@@ -117,10 +116,12 @@ plot.biotmle <- function(x, ..., type = "pvals_adj") {
 #'
 volcano_ic <- function(biotmle) {
 
+  stopifnot(class(biotmle) == "bioTMLE")
+
   pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
   pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
 
-  tt_volcano <- biotmle@topTable %>%
+  tt_volcano <- as.data.frame(biotmle@topTable) %>%
     dplyr::arrange(adj.P.Val) %>%
     dplyr::mutate(
       logFC = I(logFC),
@@ -199,7 +200,7 @@ utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
 
 heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05, top = 25) {
 
-  stopifnot(class(x) == "biotmle")
+  stopifnot(class(x) == "bioTMLE")
 
   topbiomarkersFDR <- x@topTable %>%
     subset(adj.P.Val < FDRcutoff) %>%

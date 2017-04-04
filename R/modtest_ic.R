@@ -33,13 +33,12 @@
 #' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
 #' design <- as.numeric(designVar == max(designVar))
 #'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
-#'                           design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
 #'
 modtest_ic <- function(biotmle,
                        design,
                        ...) {
-
+  stopifnot(class(biotmle) == "bioTMLE")
   biomarkerTMLEout <- as.data.frame(biotmle@tmleOut)
 
   fit <- limma::lmFit(biomarkerTMLEout, design)

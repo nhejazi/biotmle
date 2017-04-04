@@ -40,7 +40,6 @@ varInt_index <- which(names(colData(illuminaData)) \%in\% "benzene")
 designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
 design <- as.numeric(designVar == max(designVar))
 
-limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
-                          design = design)
+limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
 
 }
