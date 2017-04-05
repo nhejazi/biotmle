@@ -17,9 +17,10 @@ the moderated t-statistic of Smyth for use with asymptotically linear target
 parameters. The set of methods implemented in this R package rely on the use of
 Targeted Minimum Loss-Based Estimation (TMLE) to transform biological sequencing
 data (e.g., microarray, RNA-seq) based on the influence curve representation of
-a particular statistical target parameter (e.g., the Average Treatment Effect).
-The transformed data is then used to test for group differences using the
-moderated t-statistic as implemented in the R package
+a particular causal target parameter (e.g., Average Treatment Effect). The
+transformed data are then used to test for differences between the statistical
+estimate of the target parameter and a hypothesized value of said parameter
+using the approach of moderated statistics implemented in the R package
 [`limma`](https://bioconductor.org/packages/release/bioc/html/limma.html).
 
 ---
@@ -77,7 +78,7 @@ After using the `biotmle` R package, please cite it:
 
 ---
 
-## Principal References
+## References
 
 * [Nima S. Hejazi, Sara Kherad-Pajouh, Mark J. van der Laan, and Alan E.
     Hubbard. "Generalized application of the moderated t-statistic to

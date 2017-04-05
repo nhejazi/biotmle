@@ -190,11 +190,10 @@ utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
 #' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
 #' design <- as.numeric(designVar == max(designVar))
 #'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
-#'                            design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
 #'
 #' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05,
-#'            top = 25)
+#'            top = 15)
 #'
 
 heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05, top = 25) {
