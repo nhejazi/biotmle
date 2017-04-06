@@ -13,7 +13,7 @@ call to \code{biomarkertmle}}
 \value{
 object of class \code{ggplot} containing a standard volcano plot of
         the log-fold change in the causal target parameter against the raw
-        log p-value computed from the moderated t-test in \code{limmatmle}.
+        log p-value computed from the moderated tests in \code{modtest_ic}.
 }
 \description{
 Volcano plot of the log-changes in the target causal paramter against the

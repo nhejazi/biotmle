@@ -6,7 +6,7 @@
 [![Project Status: WIP - Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](http://www.repostatus.org/badges/latest/wip.svg)](http://www.repostatus.org/#wip)
 [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
 
-> Targeted learning with the moderated t-statistic for biomarker discovery
+> Targeted Learning with moderated statistics for biomarker discovery
 
 ---
 
@@ -17,9 +17,10 @@ the moderated t-statistic of Smyth for use with asymptotically linear target
 parameters. The set of methods implemented in this R package rely on the use of
 Targeted Minimum Loss-Based Estimation (TMLE) to transform biological sequencing
 data (e.g., microarray, RNA-seq) based on the influence curve representation of
-a particular statistical target parameter (e.g., the Average Treatment Effect).
-The transformed data is then used to test for group differences using the
-moderated t-statistic as implemented in the R package
+a particular causal target parameter (e.g., Average Treatment Effect). The
+transformed data are then used to test for differences between the statistical
+estimate of the target parameter and a hypothesized value of said parameter
+using the approach of moderated statistics implemented in the R package
 [`limma`](https://bioconductor.org/packages/release/bioc/html/limma.html).
 
 ---
@@ -27,18 +28,18 @@ moderated t-statistic as implemented in the R package
 ## Installation
 
 - For standard use, install from [Bioconductor](https://bioconductor.org):
-  ```r
+  ```
   source("https://bioconductor.org/biocLite.R")
   biocLite("biotmle")
   ```
 
 - Install the most recent _stable release_ from GitHub:
-  ```r
+  ```
   devtools::install_github("nhejazi/biotmle")
   ```
 
 - To contribute, install the _development version_:
-  ```r
+  ```
   devtools::install_github("nhejazi/biotmle", ref = "develop")
   ```
 
@@ -70,7 +71,14 @@ After using the `biotmle` R package, please cite it:
 
 ---
 
-## Principal References
+## Related
+
+* [R/`biotmleData`](https://github.com/nhejazi/biotmleData) - R package with
+    example experimental data for use with this analysis package.
+
+---
+
+## References
 
 * [Nima S. Hejazi, Sara Kherad-Pajouh, Mark J. van der Laan, and Alan E.
     Hubbard. "Generalized application of the moderated t-statistic to

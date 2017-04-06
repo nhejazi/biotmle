@@ -33,22 +33,23 @@
 #' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
 #' design <- as.numeric(designVar == max(designVar))
 #'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
-#'                           design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
 #'
-modtest_ic <- function(biotmle, design, ...) {
+modtest_ic <- function(biotmle,
+                       design,
+                       ...) {
+  stopifnot(class(biotmle) == "bioTMLE")
+  biomarkerTMLEout <- as.data.frame(biotmle@tmleOut)
 
-  biomarkerTMLEout <- biotmle$tmleOut
-
-  fit <- limma::lmFit(as.data.frame(biomarkerTMLEout), design)
+  fit <- limma::lmFit(biomarkerTMLEout, design)
   fit <- limma::eBayes(fit)
 
   tt <- limma::topTable(fit, coef = 1, adjust.method = "BH", sort.by = "none",
                         number = Inf)
   tt$IDs <- rownames(biomarkerTMLEout)
 
-  biotmle$topTable <- tt
-  biotmle$limmaOut <- fit
+  biotmle@modtestOut <- as.data.frame(fit)
+  biotmle@topTable <- as.data.frame(tt)
 
   return(biotmle)
 }

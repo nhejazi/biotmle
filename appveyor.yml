@@ -16,9 +16,12 @@ cache:
 environment:
   global:
     WARNINGS_ARE_ERRORS: 1
+    USE_RTOOLS: true
 
 build_script:
   - travis-tool.sh install_deps
+  - travis-tool.sh install_github nhejazi/biotmleData
+  - travis-tool.sh install_bioc SummarizedExperiment
   - travis-tool.sh install_bioc limma
   - travis-tool.sh install_bioc_deps
 

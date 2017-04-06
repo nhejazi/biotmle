@@ -19,9 +19,11 @@ r:
 
 r_github_packages:
   - jimhester/covr
+  - nhejazi/biotmleData
 
 bioc_packages:
   - limma
+  - SummarizedExperiment
   - BiocCheck
 
 ## coverage

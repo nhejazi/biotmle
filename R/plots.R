@@ -1,4 +1,4 @@
-#' Plot utility for class biotmle
+#' Plot p-values from moderated statistical tests for class biotmle
 #'
 #' Histogram of raw or FDR-adjusted p-values from the moderated t-test.
 #'
@@ -34,20 +34,17 @@
 #' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
 #' design <- as.numeric(designVar == max(designVar))
 #'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
-#'                            design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
 #'
 #' plot(x = limmaTMLEout, type = "pvals_adj")
 #'
-plot.biotmle <- function(x, ..., type = "pvals_adj") {
-
-  stopifnot(class(x) == "biotmle")
+plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 
   pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
   pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
 
   if(type == "pvals_raw") {
-    p <- ggplot2::ggplot(x$topTable, ggplot2::aes(P.Value))
+    p <- ggplot2::ggplot(as.data.frame(x@topTable), ggplot2::aes(P.Value))
     p <- p + ggplot2::geom_histogram(ggplot2::aes(y = ..count..,
       fill = ..count..), colour = "white", na.rm = TRUE, binwidth = 0.025)
     p <- p + ggplot2::ggtitle("Histogram of raw p-values")
@@ -57,7 +54,8 @@ plot.biotmle <- function(x, ..., type = "pvals_adj") {
   }
 
   if (type == "pvals_adj") {
-    p <- ggplot2::ggplot(x$topTable, ggplot2::aes(adj.P.Val))
+    p <- ggplot2::ggplot(as.data.frame(x@topTable),
+                         ggplot2::aes(adj.P.Val))
     p <- p + ggplot2::geom_histogram(ggplot2::aes(y = ..count..,
       fill = ..count..), colour = "white", na.rm = TRUE, binwidth = 0.025)
     p <- p + ggplot2::ggtitle("Histogram of BH-corrected FDR p-values")
@@ -89,7 +87,7 @@ plot.biotmle <- function(x, ..., type = "pvals_adj") {
 #'
 #' @return object of class \code{ggplot} containing a standard volcano plot of
 #'         the log-fold change in the causal target parameter against the raw
-#'         log p-value computed from the moderated t-test in \code{limmatmle}.
+#'         log p-value computed from the moderated tests in \code{modtest_ic}.
 #'
 #' @export volcano_ic
 #'
@@ -117,10 +115,12 @@ plot.biotmle <- function(x, ..., type = "pvals_adj") {
 #'
 volcano_ic <- function(biotmle) {
 
+  stopifnot(class(biotmle) == "bioTMLE")
+
   pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
   pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
 
-  tt_volcano <- biotmle$topTable %>%
+  tt_volcano <- as.data.frame(biotmle@topTable) %>%
     dplyr::arrange(adj.P.Val) %>%
     dplyr::mutate(
       logFC = I(logFC),
@@ -156,10 +156,7 @@ utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
 #'
 #' @param x object of class \code{biotmle} as produced by an appropriate call to
 #'        \code{biomarkertmle}
-#' @param design a design matrix providing the contrasts to be dispalyed in the
-#'        heatmap (as would be passed to \code{limma::lmFit}).
-#' @param tx numeric value indicating the column of the design matrix that
-#'        corresponds to the expression covariate of interest.
+#' @param design a vector providing the contrast to be displayed in the heatmap.
 #' @param FDRcutoff cutoff to be used in controlling the False Discovery Rate
 #' @param top number of identified biomarkers to plot in the heatmap
 #' @param ... additional arguments passed to \code{superheat::superheat} as
@@ -193,24 +190,23 @@ utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
 #' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
 #' design <- as.numeric(designVar == max(designVar))
 #'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
-#'                            design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
 #'
 #' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05,
-#'            top = 25)
+#'            top = 15)
 #'
 
-heatmap_ic <- function(x, ..., design, tx = 2, FDRcutoff = 0.05, top = 25) {
+heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05, top = 25) {
 
-  stopifnot(class(x) == "biotmle")
+  stopifnot(class(x) == "bioTMLE")
 
-  topbiomarkersFDR <- x$topTable %>%
+  topbiomarkersFDR <- x@topTable %>%
     subset(adj.P.Val < FDRcutoff) %>%
     dplyr::arrange(adj.P.Val) %>%
     dplyr::slice(1:top)
 
-  biomarkerTMLEout_top <- x$tmleOut %>%
-    dplyr::filter(rownames(x$tmleOut) %in% topbiomarkersFDR$IDs)
+  biomarkerTMLEout_top <- x@tmleOut %>%
+    dplyr::filter(rownames(x@tmleOut) %in% topbiomarkersFDR$IDs)
 
   annot <- ifelse(design == 0, "Control", "Treated")
 
