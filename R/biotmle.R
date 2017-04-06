@@ -35,7 +35,7 @@ utils::globalVariables(c("new"))
 .biotmle <- setClass(
        Class = "bioTMLE",
        slots = list(call = "call",
-                    tmleOut = "data.frame",
+                    tmleOut = c("data.frame", "EList"),
                     modtestOut = "data.frame",
                     topTable = "data.frame"),
        contains = "SummarizedExperiment"

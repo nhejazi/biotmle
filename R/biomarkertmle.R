@@ -64,6 +64,7 @@ utils::globalVariables("gene")
 biomarkertmle <- function(se,
                           varInt,
                           type = c("exposure", "outcome"),
+                          ngsdata = FALSE,
                           parallel = TRUE,
                           family = "gaussian",
                           g_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
@@ -83,7 +84,7 @@ biomarkertmle <- function(se,
   type <- match.arg(type)
 
   # ============================================================================
-  # invoke S4 class constructor for "biotmle" object
+  # invoke S4 class constructor for "bioTMLE" object
   # ============================================================================
   biotmle <- .biotmle(
        SummarizedExperiment(
@@ -97,6 +98,15 @@ biomarkertmle <- function(se,
        topTable = as.data.frame(matrix(NA, 10, 10))
    )
 
+  # ============================================================================
+  # invoke the voom transform from LIMMA if next-generation sequencing data)
+  # ============================================================================
+  if (ngsdata) {
+    voom_out <- voom_rnaseq(biotmle)
+    voom_exp <- 2^(voom_out$E)
+    assay(se) <- voom_exp
+  }
+
   #=============================================================================
   # set up parallelization based on input
   # ============================================================================
@@ -109,8 +119,8 @@ biomarkertmle <- function(se,
       warning("option 'parallel' is set to TRUE but only 1 core detected.")
     }
     if (parallel == FALSE) {
-      warning("parallelization has been set to FALSE: the estimation procedure
-               will likely take on the order of days to run to completion.")
+      stop("parallelization set to FALSE: the estimation procedure will not
+           run to completion in any sort of timely fashion.")
     }
   }
   #=============================================================================
@@ -145,7 +155,13 @@ biomarkertmle <- function(se,
                                     family = family
                                    )
     }
-    biotmle@tmleOut <- as.data.frame(t(biomarkerTMLEout))
+
+    if (ngsdata) {
+      voom_out$E <- t(biomarkerTMLEout)
+      biotmle@tmleOut <- voom_out
+    } else {
+      biotmle@tmleOut <- as.data.frame(t(biomarkerTMLEout))
+    }
     return(biotmle)
 
   } else if (type == "outcome") {
@@ -180,7 +196,13 @@ biomarkertmle <- function(se,
                                    family = family
                                   )
     }
-    biotmle@tmleOut <- as.data.frame(biomarkerTMLEout)
+
+    if (ngsdata) {
+      voom_out$E <- t(biomarkerTMLEout)
+      biotmle@tmleOut <- voom_out
+    } else {
+      biotmle@tmleOut <- as.data.frame(t(biomarkerTMLEout))
+    }
     return(biotmle)
 
   } else {
