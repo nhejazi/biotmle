@@ -55,9 +55,9 @@
   <div class="col-md-9">
     <div class="page-header toc-ignore">
       <h1>Identifying Biomarkers from an Exposure Variable</h1>
-                        <h4 class="author">Nima S. Hejazi &amp; Alan E. Hubbard</h4>
+                        <h4 class="author">Nima Hejazi &amp; Alan Hubbard</h4>
             
-            <h4 class="date">2017-03-03</h4>
+            <h4 class="date">2017-04-05</h4>
           </div>
 
     
@@ -75,71 +75,103 @@
 <p>First, we load the <code>biotmle</code> package and the (included) <code>illuminaData</code> data set:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(dplyr)
 <span class="kw">library</span>(biotmle)
+<span class="kw">library</span>(biotmleData)
 <span class="kw">data</span>(illuminaData)
-<span class="st">"%ni%"</span> =<span class="st"> </span><span class="kw">Negate</span>(<span class="st">"%in%"</span>)
-subjIDs &lt;-<span class="st"> </span>illuminaData<span class="op">$</span>id</code></pre></div>
-<p>In order to perform Targeted Minimum Loss-Based Estimation, we need three separate data structures: (1) <em>W</em>, baseline covariates that could potentially confound the association of biomarkers with the exposure of interest; (2) <em>A</em>, the exposure of interest; and (3) <em>Y</em>, the biomarkers of interest. All values in <em>W</em> and <em>A</em> must be discretized. We demonstrate the process of creating these separate data structures with the <code>illuminaData</code> data set below:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># W - age, sex, smoking</span>
-W &lt;-<span class="st"> </span>illuminaData <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="kw">which</span>(<span class="kw">colnames</span>(.) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"smoking"</span>))) <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(
-    <span class="dt">age =</span> <span class="kw">as.numeric</span>((age <span class="op">&gt;</span><span class="st"> </span><span class="kw">quantile</span>(age, <span class="fl">0.25</span>))),
-    <span class="dt">sex =</span> <span class="kw">I</span>(sex),
-    <span class="dt">smoking =</span> <span class="kw">I</span>(smoking)
-  )
+<span class="kw">library</span>(SummarizedExperiment)
+<span class="st">"%ni%"</span> =<span class="st"> </span><span class="kw">Negate</span>(<span class="st">"%in%"</span>)</code></pre></div>
+<p>In order to perform Targeted Minimum Loss-Based Estimation, we need three separate data structures: (1) <em>W</em>, baseline covariates that could potentially confound the association of biomarkers with the exposure of interest; (2) <em>A</em>, the exposure of interest; and (3) <em>Y</em>, the biomarkers of interest. All values in <em>W</em> and <em>A</em> ought to be discretized, in order to avoid practical violations of the assumption of positivity. With the <code>illuminaData</code> data set below, we discretize the age variable in the phenotype-level data below (this can be accessed via the <code>colData</code> of the <code>SummarizedExperiment</code> object). To invoke the biomarker assessment function (<code>biomarkertmle</code>), we also need to specify a variable of interest (or the position of said variable in the design matrix). We do both in just a few lines below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># discretize "age" in the phenotype-level data</span>
+<span class="kw">colData</span>(illuminaData) &lt;-<span class="st"> </span><span class="kw">colData</span>(illuminaData) <span class="op">%&gt;%</span>
+<span class="st">  </span>data.frame <span class="op">%&gt;%</span>
+<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">mutate</span>(<span class="dt">age =</span> <span class="kw">as.numeric</span>(age <span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(age))) <span class="op">%&gt;%</span>
+<span class="st">  </span>DataFrame
 
-
-<span class="co"># A - benzene exposure (discretized)</span>
-A &lt;-<span class="st"> </span>illuminaData <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="kw">which</span>(<span class="kw">colnames</span>(.) <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"benzene"</span>)))
-A &lt;-<span class="st"> </span>A[, <span class="dv">1</span>]
-
-
-<span class="co"># Y - genes</span>
-Y &lt;-<span class="st"> </span>illuminaData <span class="op">%&gt;%</span>
-<span class="st">  </span>dplyr<span class="op">::</span><span class="kw">select</span>(<span class="kw">which</span>(<span class="kw">colnames</span>(.) <span class="op">%ni%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"smoking"</span>, <span class="st">"benzene"</span>,
-                                         <span class="st">"id"</span>)))
-geneIDs &lt;-<span class="st"> </span><span class="kw">colnames</span>(Y)</code></pre></div>
-<p>After creating <em>W</em>, <em>A</em>, and <em>Y</em>, the TMLE-based biomarker discovery process can be invoked using the <code>biomarkertmle</code> function. The procedure is quite resource-intensive because it evaluates the association of each individual potential biomarker (of which there are over 20,000 in the included data set) with exposure of interest <em>A</em>, while accounting for potential confounding based on the covariates included in <em>W</em>. We demonstrate the necessary syntax for calling <code>biomarkertmle</code> below:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">biomarkerTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/biomarkertmle.html">biomarkertmle</a></span>(<span class="dt">Y =</span> Y,
-                                  <span class="dt">W =</span> W,
-                                  <span class="dt">A =</span> A,
+<span class="co"># specify column index of treatment/exposure variable of interest</span>
+varInt_index &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(<span class="kw">colData</span>(illuminaData)) <span class="op">%in%</span><span class="st"> "benzene"</span>)</code></pre></div>
+<p>The TMLE-based biomarker discovery process can be invoked using the <code>biomarkertmle</code> function. The procedure is quite resource-intensive because it evaluates the association of each individual potential biomarker (of which there are over 20,000 in the included data set) with an exposure of interest, while accounting for potential confounding based on all other covariates included in the design matrix. We demonstrate the necessary syntax for calling <code>biomarkertmle</code> below:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">biomarkerTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/biomarkertmle.html">biomarkertmle</a></span>(<span class="dt">se =</span> illuminaData,
+                                  <span class="dt">varInt =</span> varInt_index,
                                   <span class="dt">type =</span> <span class="st">"exposure"</span>,
-                                  <span class="dt">parallel =</span> <span class="ot">TRUE</span>,
                                   <span class="dt">family =</span> <span class="st">"gaussian"</span>,
                                   <span class="dt">g_lib =</span> <span class="kw">c</span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,
                                             <span class="st">"SL.polymars"</span>, <span class="st">"SL.mean"</span>),
                                   <span class="dt">Q_lib =</span> <span class="kw">c</span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,
                                             <span class="st">"SL.nnet"</span>, <span class="st">"SL.mean"</span>)
                                  )</code></pre></div>
-<p>The output of <code><a href="../reference/biomarkertmle.html">biomarkertmle()</a></code> is an object of class <code>biotmle</code>, containing four objects: (1) <code>call</code>, the call to <code><a href="../reference/biomarkertmle.html">biomarkertmle()</a></code>; (2) <code>topTable</code>, an empty slot meant to hold the output of <code>limma::topTable()</code>, after a later call to <code><a href="../reference/limmatmle.html">limmatmle()</a></code>; (3) <code>limmaOut</code>, an empty slot meant to hold the output of <code>limma::lmFit()</code>, after a later call to <code><a href="../reference/limmatmle.html">limmatmle()</a></code>; and (4) <code>tmleOut</code>, a data frame containing the point estimates of the associations of each biomarker with the exposure of interest based on the influence curve represenation of the Average Treatment Effect parameter.</p>
-<p>The output of <code><a href="../reference/biomarkertmle.html">biomarkertmle()</a></code> can be directly fed to <code><a href="../reference/limmatmle.html">limmatmle()</a></code>, a wrapper around <code>limma::lmFit()</code> and <code>limma::topTable()</code> that outputs a <code>biotmle</code> object with the slots described above completely filled in. The <code><a href="../reference/limmatmle.html">limmatmle()</a></code> function requires as input a <code>biotmle</code> object containing a data frame in the <code>tmleOut</code> field as well as a design matrix indicating the groupwise difference to be tested. The design matrix should contain an intercept term and a term for the exposure of interest (with discretized exposure levels). <em>Based on the relevant statistical theory, it is not appropriate to include any further terms in the design matrix (n.b., this differs from standard calls to <code>limma::lmFit()</code>)</em>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">design &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(<span class="kw">rep</span>(<span class="dv">1</span>, <span class="kw">nrow</span>(Y)),
-                              <span class="kw">as.numeric</span>(A <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(<span class="kw">unique</span>(A)))))
-<span class="kw">colnames</span>(design) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"intercept"</span>, <span class="st">"Tx"</span>)
+<p>The output of <code>biomarkertmle</code> is an object of class <code>bioTMLE</code>, containing four objects: (1) <code>call</code>, the call to <code>biomarkertmle</code>; (2) <code>topTable</code>, an empty slot meant to hold the output of <code>limma::topTable</code>, after a later call to <code>modtest_ic</code>; (3) <code>limmaOut</code>, an empty slot meant to hold the output of <code>limma::lmFit</code>, after a later call to <code>modtest_ic</code>; and (4) <code>tmleOut</code>, a data frame containing the point estimates of the associations of each biomarker with the exposure of interest based on the influence curve representation of the Average Treatment Effect parameter.</p>
+<p>The output of <code>biomarkertmle</code> can be directly fed to <code>modtest_ic</code>, a wrapper around <code>limma::lmFit</code> and <code>limma::topTable</code> that outputs a <code>biotmle</code> object with the slots described above completely filled in. The <code>modtest_ic</code> function requires as input a <code>biotmle</code> object containing a data frame in the <code>tmleOut</code> field as well as a design matrix indicating the groupwise difference to be tested. The design matrix should contain an intercept term and a term for the exposure of interest (with discretized exposure levels). <em>Based on the relevant statistical theory, it is not appropriate to include any further terms in the design matrix (n.b., this differs from standard calls to <code>limma::lmFit</code>)</em>.</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">varInt_index &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(<span class="kw">colData</span>(illuminaData)) <span class="op">%in%</span><span class="st"> "benzene"</span>)
+designVar &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">colData</span>(illuminaData))[, varInt_index]
+design &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(designVar <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(designVar))
 
-limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/limmatmle.html">limmatmle</a></span>(<span class="dt">biotmle =</span> biomarkerTMLEout, <span class="dt">IDs =</span> <span class="ot">NULL</span>,
-                          <span class="dt">designMat =</span> design)</code></pre></div>
-<p>After invoking <code><a href="../reference/limmatmle.html">limmatmle()</a></code>, the resultant <code>biotmle</code> object will contain all information relevant to the analytic procedure for identifying biomarkers: that is, it will contain the origin call to <code><a href="../reference/biomarkertmle.html">biomarkertmle()</a></code>, the result of running <code>limma::topTable()</code>, the result of running <code>limma::lmFit()</code>, and the result of running <code><a href="../reference/biomarkertmle.html">biomarkertmle()</a></code>. The statistical results of this procedure can be extracted from the <code>topTable</code> object in the <code>biotmle</code> object produced by <code><a href="../reference/limmatmle.html">limmatmle()</a></code>.</p>
+limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/modtest_ic.html">modtest_ic</a></span>(<span class="dt">biotmle =</span> biomarkerTMLEout, <span class="dt">design =</span> design)</code></pre></div>
+<p>After invoking <code>modtest_ic</code>, the resultant <code>bioTMLE</code> object will contain all information relevant to the analytic procedure for identifying biomarkers: that is, it will contain the origin call to <code>biomarkertmle</code>, the result of running <code>limma::topTable</code>, the result of running <code>limma::lmFit</code>, and the result of running <code>biomarkertmle</code>. The statistical results of this procedure can be extracted from the <code>topTable</code> object in the <code>bioTMLE</code> object produced by <code>modtest_ic</code>.</p>
 <hr>
 </div>
 <div id="visualization-of-results" class="section level2">
 <h2 class="hasAnchor">
 <html><body><a href="#visualization-of-results" class="anchor"> </a></body></html>Visualization of Results</h2>
 <p>This package provides several plotting methods that can be used to visualize the results of the TMLE-based biomarker discovery process.</p>
-<p>The <code>plot()</code> method for a <code>biotmle</code> object will produce a histogram of the adjusted p-values of each biomarker (based on the Benjamini-Hochberg procedure for controlling the False Discovery Rate) as generated by <code>limma::topTable()</code>:</p>
+<p>The <code>plot</code> method for a <code>bioTMLE</code> object will produce a histogram of the adjusted p-values of each biomarker (based on the Benjamini-Hochberg procedure for controlling the False Discovery Rate) as generated by <code>limma::topTable</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_adj"</span>)</code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/pval_hist_limma_adjp-1.png" width="672"></p>
 <p>Setting the argument <code>type = "pvals_raw"</code> will instead produce a histogram of the raw p-values <em>(these are less informative and should, in general, not be used for inferential purposes, as the computation producing these p-values ignores the multiple testing nature of the biomarker discovery problem)</em>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_raw"</span>)</code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/pval_hist_limma_rawp-1.png" width="672"></p>
-<p>Heatmaps are useful graphics for visualizing the relationship between measures on genomic objects and covariates of interest. The <code><a href="../reference/heatmap_biotmle.html">heatmap_biotmle()</a></code> function provides this graphic for <code>biotmle</code> objects, allowing for the relationship between the exposure variable and some number of “top” biomarkers (as determined by the call to <code><a href="../reference/limmatmle.html">limmatmle()</a></code>) to be visualized. In general, the heatmap for <code>biotmle</code> objects expresses how the contributions of each biomarker to the Average Treatment Effect (ATE) vary across differences in the exposure variable (that is, there is a causal interpretation to the findings). The plot produced is a <code>ggplot2</code> object and can be modified in place if stored properly. For our analysis:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/heatmap_biotmle.html">heatmap_biotmle</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">designMat =</span> design, <span class="dt">FDRcutoff =</span> <span class="fl">0.05</span>,
-                <span class="dt">top =</span> <span class="dv">25</span>)</code></pre></div>
+<p>Heatmaps are useful graphics for visualizing the relationship between measures on genomic objects and covariates of interest. The <code>heatmap_ic</code> function provides this graphic for <code>bioTMLE</code> objects, allowing for the relationship between the exposure variable and some number of “top” biomarkers (as determined by the call to <code>modtest_ic</code>) to be visualized. In general, the heatmap for <code>bioTMLE</code> objects expresses how the contributions of each biomarker to the Average Treatment Effect (ATE) vary across differences in the exposure variable (that is, there is a causal interpretation to the findings). The plot produced is a <code>ggplot2</code> object and can be modified in place if stored properly. For our analysis:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">design =</span> design, <span class="dt">FDRcutoff =</span> <span class="fl">0.05</span>, <span class="dt">top =</span> <span class="dv">25</span>)</code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/heatmap_limma_results-1.png" width="672"></p>
-<p>The volcano plot is standard graphical tools for examining how changes in expression relate to the raw p-value. The utility of such plots lies in their providing a convenient way to identify and systematically ignore those genomic objects that have extremely low p-values due to extremely low variance between observations. The <code><a href="../reference/volcano_biotmle.html">volcano_biotmle()</a></code> function provides much of the same interpretation, except that the fold change values displayed in the x-axis refer to changes in the <em>contributions of each biomarker to the Average Treatment Effect</em> (in standard practice, for microarray technology, these would be fold changes in gene expression). The plot produced is a <code>ggplot2</code> object and can be modified in place if stored properly. For our analysis:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/volcano_biotmle.html">volcano_biotmle</a></span>(<span class="dt">biotmle =</span> limmaTMLEout)</code></pre></div>
+<p>The volcano plot is standard graphical tools for examining how changes in expression relate to the raw p-value. The utility of such plots lies in their providing a convenient way to identify and systematically ignore those genomic objects that have extremely low p-values due to extremely low variance between observations. The <code>volcano_ic</code> function provides much of the same interpretation, except that the fold change values displayed in the x-axis refer to changes in the <em>contributions of each biomarker to the Average Treatment Effect</em> (in standard practice, for microarray technology, these would be fold changes in gene expression). The plot produced is a <code>ggplot2</code> object and can be modified in place if stored properly. For our analysis:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/volcano_ic.html">volcano_ic</a></span>(<span class="dt">biotmle =</span> limmaTMLEout)</code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/volcano_plot_limma_results-1.png" width="672"></p>
+<hr>
+</div>
+<div id="session-information" class="section level2">
+<h2 class="hasAnchor">
+<html><body><a href="#session-information" class="anchor"> </a></body></html>Session Information</h2>
+<pre><code>## R version 3.3.3 (2017-03-06)
+## Platform: x86_64-apple-darwin16.4.0 (64-bit)
+## Running under: macOS Sierra 10.12.3
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+## [1] parallel  stats4    stats     graphics  grDevices datasets  utils    
+## [8] methods   base     
+## 
+## other attached packages:
+##  [1] nnls_1.4                   SummarizedExperiment_1.4.0
+##  [3] Biobase_2.34.0             GenomicRanges_1.26.4      
+##  [5] GenomeInfoDb_1.10.3        IRanges_2.8.2             
+##  [7] S4Vectors_0.12.2           BiocGenerics_0.20.0       
+##  [9] biotmleData_0.99.1         biotmle_0.99.85           
+## [11] dtplyr_0.0.1               data.table_1.10.4         
+## [13] dplyr_0.5.0                ggplot2_2.2.1             
+## [15] devtools_1.12.0            nima_0.4.0                
+## [17] colorout_1.1-2            
+## 
+## loaded via a namespace (and not attached):
+##  [1] ggdendro_0.1-20      pkgload_0.0.0.9000   foreach_1.4.3       
+##  [4] gtools_3.5.0         assertthat_0.1       superheat_0.1.0     
+##  [7] yaml_2.1.14          highlight_0.4.7.1    backports_1.0.5     
+## [10] lattice_0.20-35      limma_3.30.13        digest_0.6.12       
+## [13] XVector_0.14.1       colorspace_1.3-2     htmltools_0.3.5     
+## [16] Matrix_1.2-8         plyr_1.8.4           wesanderson_0.3.2   
+## [19] zlibbioc_1.20.0      purrr_0.2.2          scales_0.4.1        
+## [22] whisker_0.3-2        tibble_1.3.0         withr_1.0.2         
+## [25] lazyeval_0.2.0       magrittr_1.5         crayon_1.3.2        
+## [28] memoise_1.0.0        evaluate_0.10        doParallel_1.0.10   
+## [31] MASS_7.3-45          SuperLearner_2.0-22  xml2_1.1.1          
+## [34] ggthemes_3.4.0       tools_3.3.3          stringr_1.2.0       
+## [37] munsell_0.4.3        compiler_3.3.3       pkgdown_0.1.0.9000  
+## [40] grid_3.3.3           RCurl_1.95-4.8       iterators_1.0.8     
+## [43] labeling_0.3         bitops_1.0-6         rmarkdown_1.4.0.9000
+## [46] testthat_1.0.2.9000  gtable_0.2.0         codetools_0.2-15    
+## [49] DBI_0.6-1            roxygen2_6.0.1       R6_2.2.0            
+## [52] gridExtra_2.2.1      knitr_1.15.1         commonmark_1.2      
+## [55] rprojroot_1.2        desc_1.1.0           stringi_1.1.3       
+## [58] tmle_1.2.0-5         Rcpp_0.12.10</code></pre>
 </div>
 </div>
   </div>
@@ -151,6 +183,7 @@ limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../referenc
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#biomarker-identification">Biomarker Identification</a></li>
       <li><a href="#visualization-of-results">Visualization of Results</a></li>
+      <li><a href="#session-information">Session Information</a></li>
       </ul>
 </div>
       </div>

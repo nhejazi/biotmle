@@ -1,6 +1,6 @@
 ---
 title: "Identifying Biomarkers from an Exposure Variable"
-author: "Nima S. Hejazi & Alan E. Hubbard"
+author: "Nima Hejazi & Alan Hubbard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
