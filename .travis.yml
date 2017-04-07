@@ -1,0 +1,37 @@
+branches:
+  only:
+  - master
+  - develop
+
+env:
+  global:
+    - R_BUILD_ARGS="--no-build-vignettes --no-manual"
+    - R_CHECK_ARGS="--no-build-vignettes --no-manual"
+
+language: r
+sudo: required
+cache: packages
+warnings_are_errors: true
+
+r:
+  - release
+  - devel
+
+r_github_packages:
+  - jimhester/covr
+  - nhejazi/biotmleData
+
+bioc_packages:
+  - limma
+  - SummarizedExperiment
+  - BiocCheck
+
+## coverage
+after_success:
+  - Rscript -e 'covr::codecov()'
+  - R CMD BiocCheck .
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change

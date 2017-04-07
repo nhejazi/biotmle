@@ -1,0 +1,183 @@
+---
+title: "Identifying Biomarkers from an Exposure Variable"
+author: "Nima Hejazi & Alan Hubbard"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Identifying Biomarkers from an Exposure Variable}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+## Introduction
+
+The `biotmle` R package can be used to isolate biomarkers in two ways: based
+on the associations of genomic objects with (1) an exposure variable of interest
+and (2) an outcome variable of interest. In this vignette, we illustrate how to
+use `biotmle` to isolate and visualize genes associated with an __exposure__,
+using a data set containing microarray expression measures from an Illumina
+platform. In the analysis described below, Targeted Minimum Loss-Based
+Estimation (TMLE) is used to transform the microarray expression values based
+on the influence curve representation of the Average Treatment Effect (ATE).
+Following this transformation, the moderated t-statistic of Smyth is used to
+test for a binary groupwise difference (based on the exposure variable), using
+the tools provided by the R package `limma`.
+
+---
+
+## Biomarker Identification
+
+First, we load the `biotmle` package and the (included) `illuminaData` data set:
+
+```{r setup_data}
+library(dplyr)
+library(biotmle)
+library(biotmleData)
+data(illuminaData)
+library(SummarizedExperiment)
+"%ni%" = Negate("%in%")
+```
+
+In order to perform Targeted Minimum Loss-Based Estimation, we need three
+separate data structures: (1) _W_, baseline covariates that could potentially
+confound the association of biomarkers with the exposure of interest; (2) _A_,
+the exposure of interest; and (3) _Y_, the biomarkers of interest. All values in
+_W_ and _A_ ought to be discretized, in order to avoid practical violations of
+the assumption of positivity. With the `illuminaData` data set below, we
+discretize the age variable in the phenotype-level data below (this can be
+accessed via the `colData` of the `SummarizedExperiment` object). To invoke the
+biomarker assessment function (`biomarkertmle`), we also need to specify a
+variable of interest (or the position of said variable in the design matrix). We
+do both in just a few lines below:
+
+```{r clean_data}
+# discretize "age" in the phenotype-level data
+colData(illuminaData) <- colData(illuminaData) %>%
+  data.frame %>%
+  dplyr::mutate(age = as.numeric(age > median(age))) %>%
+  DataFrame
+
+# specify column index of treatment/exposure variable of interest
+varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
+```
+
+The TMLE-based biomarker discovery process can be invoked using the
+`biomarkertmle` function. The procedure is quite resource-intensive because it
+evaluates the association of each individual potential biomarker (of which there
+are over 20,000 in the included data set) with an exposure of interest, while
+accounting for potential confounding based on all other covariates included in
+the design matrix. We demonstrate the necessary syntax for calling
+`biomarkertmle` below:
+
+```{r biomarkerTMLE_eval, eval=FALSE}
+biomarkerTMLEout <- biomarkertmle(se = illuminaData,
+                                  varInt = varInt_index,
+                                  type = "exposure",
+                                  family = "gaussian",
+                                  g_lib = c("SL.glmnet", "SL.randomForest",
+                                            "SL.polymars", "SL.mean"),
+                                  Q_lib = c("SL.glmnet", "SL.randomForest",
+                                            "SL.nnet", "SL.mean")
+                                 )
+```
+
+```{r load_biomarkerTMLE_result, echo=FALSE}
+data(biomarkertmleOut)
+```
+
+The output of `biomarkertmle` is an object of class `bioTMLE`, containing four
+objects: (1) `call`, the call to `biomarkertmle`; (2) `topTable`, an empty
+slot meant to hold the output of `limma::topTable`, after a later call to
+`modtest_ic`; (3) `limmaOut`, an empty slot meant to hold the output of
+`limma::lmFit`, after a later call to `modtest_ic`; and (4) `tmleOut`, a data
+frame containing the point estimates of the associations of each biomarker with
+the exposure of interest based on the influence curve representation of the
+Average Treatment Effect parameter.
+
+The output of `biomarkertmle` can be directly fed to `modtest_ic`, a wrapper
+around `limma::lmFit` and `limma::topTable` that outputs a `biotmle` object
+with the slots described above completely filled in. The `modtest_ic` function
+requires as input a `biotmle` object containing a data frame in the `tmleOut`
+field as well as a design matrix indicating the groupwise difference to be
+tested. The design matrix should contain an intercept term and a term for the
+exposure of interest (with discretized exposure levels). _Based on the relevant
+statistical theory, it is not appropriate to include any further terms in the
+design matrix (n.b., this differs from standard calls to `limma::lmFit`)_.
+
+```{r limmaTMLE_eval}
+varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
+designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
+design <- as.numeric(designVar == max(designVar))
+
+limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
+```
+
+After invoking `modtest_ic`, the resultant `bioTMLE` object will contain all
+information relevant to the analytic procedure for identifying biomarkers: that
+is, it will contain the origin call to `biomarkertmle`, the result of running
+`limma::topTable`, the result of running `limma::lmFit`, and the result of
+running `biomarkertmle`. The statistical results of this procedure can be
+extracted from the `topTable` object in the `bioTMLE` object produced by
+`modtest_ic`.
+
+---
+
+## Visualization of Results
+
+This package provides several plotting methods that can be used to visualize
+the results of the TMLE-based biomarker discovery process.
+
+The `plot` method for a `bioTMLE` object will produce a histogram of the
+adjusted p-values of each biomarker (based on the Benjamini-Hochberg procedure
+for controlling the False Discovery Rate) as generated by `limma::topTable`:
+
+```{r pval_hist_limma_adjp}
+plot(x = limmaTMLEout, type = "pvals_adj")
+```
+
+Setting the argument `type = "pvals_raw"` will instead produce a histogram of
+the raw p-values _(these are less informative and should, in general, not be
+used for inferential purposes, as the computation producing these p-values
+ignores the multiple testing nature of the biomarker discovery problem)_:
+
+```{r pval_hist_limma_rawp}
+plot(x = limmaTMLEout, type = "pvals_raw")
+```
+
+Heatmaps are useful graphics for visualizing the relationship between measures
+on genomic objects and covariates of interest. The `heatmap_ic` function
+provides this graphic for `bioTMLE` objects, allowing for the relationship
+between the exposure variable and some number of "top" biomarkers (as
+determined by the call to `modtest_ic`) to be visualized. In general, the
+heatmap for `bioTMLE` objects expresses how the contributions of each biomarker
+to the Average Treatment Effect (ATE) vary across differences in the exposure
+variable (that is, there is a causal interpretation to the findings). The plot
+produced is a `ggplot2` object and can be modified in place if stored properly.
+For our analysis:
+
+```{r heatmap_limma_results}
+heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 25)
+```
+
+The volcano plot is standard graphical tools for examining how changes in
+expression relate to the raw p-value. The utility of such plots lies in their
+providing a convenient way to identify and systematically ignore those genomic
+objects that have extremely low p-values due to extremely low variance between
+observations. The `volcano_ic` function provides much of the same
+interpretation, except that the fold change values displayed in the x-axis refer
+to changes in the _contributions of each biomarker to the Average Treatment
+Effect_ (in standard practice, for microarray technology, these would be fold
+changes in gene expression). The plot produced is a `ggplot2` object and can
+be modified in place if stored properly. For our analysis:
+
+```{r volcano_plot_limma_results}
+volcano_ic(biotmle = limmaTMLEout)
+```
+
+---
+
+## Session Information
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```

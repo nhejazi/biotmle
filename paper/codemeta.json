@@ -1,0 +1,37 @@
+{
+  "@context": "https://raw.githubusercontent.com/mbjones/codemeta/master/codemeta.jsonld",
+  "@type": "Code",
+  "author": [
+    {
+      "@id": "0000-0002-7127-2789",
+      "@type": "Person",
+      "email": "nhejazi@berkeley.edu",
+      "name": "Nima S. Hejazi",
+      "affiliation": "University of California, Berkeley"
+    },
+    {
+      "@id": "0000-0002-3769-0127",
+      "@type": "Person",
+      "email": "hubbard@berkeley.edu",
+      "name": "Alan E. Hubbard",
+      "affiliation": "University of California, Berkeley"
+    },
+    {
+      "@id": "0000-0003-2680-3066",
+      "@type": "Person",
+      "email": "wcai@berkeley.edu",
+      "name": "Weixin Cai",
+      "affiliation": "University of California, Berkeley"
+    }
+  ],
+  "identifier": "",
+  "codeRepository": "https://github.com/nhejazi/biotmle",
+  "datePublished": "2017-01-08",
+  "dateModified": "2017-01-08",
+  "dateCreated": "2017-01-08",
+  "description": "R package facilitating biomarker discovery by generalizing the moderated t-statistic of Smyth for use with statistical target parameters",
+  "keywords": "targeted learning, variable importance, causal inference, bioinformatics, genomics, R",
+  "license": "MIT",
+  "title": "biotmle: Targeted Learning for Biomarker Discovery",
+  "version": "v0.1.0"
+}

@@ -1,0 +1,12 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.travis\.yml$
+^appveyor\.yml$
+^codecov\.yml$
+^README\.md$
+^\.git$
+^\.gitignore$
+^\.gitattributes$
+^data-raw$
+^paper$
+^docs$
