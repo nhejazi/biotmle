@@ -10,6 +10,10 @@ vignette: >
 ---
 
 ```{r setup, echo=FALSE}
+library(dplyr)
+library(biotmle)
+library(SummarizedExperiment)
+"%ni%" = Negate("%in%")
 ```
 
 ## Introduction
@@ -28,7 +32,7 @@ cases_pois <- 25
 controls_pois <- 10
 
 ngs_cases <- as.data.frame(matrix(replicate(n, rpois(g, cases_pois)), g))
-ngs_control <- as.data.frame(matrix(replicate(n, rpois(g, controls_pois)), g))
+ngs_controls <- as.data.frame(matrix(replicate(n, rpois(g, controls_pois)), g))
 
 ngs_data <- as.data.frame(cbind(ngs_cases, ngs_controls))
 design <- c(rep(1, n), rep(0, n))
@@ -43,8 +47,8 @@ head(ngs_data[, 1:7])
 ## Processing: Data Transformation
 
 ```{r data_proc}
-se <- SummarizedExperiment(rowData = ngs_data)
-assays(se) <- design
+se <- SummarizedExperiment(assays = list(counts = DataFrame(ngs_data)),
+                           colData = DataFrame(design))
 se
 ```
 

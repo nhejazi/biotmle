@@ -13,11 +13,13 @@
 #' @importFrom limma voom voomWithQualityWeights
 #' @importFrom SummarizedExperiment assay
 #'
+#' @export rnaseq_ic
+#'
 #' @return \code{EList} object containing voom-transformed "expression" measures
 #'         of count data (actually, the mean-variance trend) in the "E" slot, to
 #'         be passed into the biomarker TMLE procedure.
 #'
-voom_rnaseq <- function(biotmle, weights = TRUE, ...) {
+rnaseq_ic <- function(biotmle, weights = TRUE, ...) {
 
   # check arguments
   stopifnot(class(biotmle) == "bioTMLE")

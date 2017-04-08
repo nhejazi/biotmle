@@ -65,6 +65,10 @@ biomarkerTMLE_exposure <- function(Y,
   EY_diff = EY[2:n_a] - EY[1]
   IC_diff = IC[, 2:n_a] - IC[, 1]
 
-  output = IC_diff[, ncol(IC_diff)] + EY_diff[length(EY_diff)]
+  if(class(IC_diff) != "numeric") {
+    output = IC_diff[, ncol(IC_diff)] + EY_diff[length(EY_diff)]
+  } else {
+    output = IC_diff + EY_diff
+  }
   return(output)
 }

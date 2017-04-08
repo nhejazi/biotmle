@@ -88,7 +88,7 @@ biomarkertmle <- function(se,
   # ============================================================================
   biotmle <- .biotmle(
        SummarizedExperiment(
-          assays = assay(se),
+          assays = list(expMeasures = assay(se)),
           rowData = rowData(se),
           colData = colData(se)
        ),
@@ -102,7 +102,7 @@ biomarkertmle <- function(se,
   # invoke the voom transform from LIMMA if next-generation sequencing data)
   # ============================================================================
   if (ngsdata) {
-    voom_out <- voom_rnaseq(biotmle)
+    voom_out <- rnaseq_ic(biotmle)
     voom_exp <- 2^(voom_out$E)
     assay(se) <- voom_exp
   }
@@ -129,11 +129,15 @@ biomarkertmle <- function(se,
   if (type == "exposure") {
 
     # median normalization
-    Y <- as.data.frame(t(limma::normalizeBetweenArrays(assay(se),
-                                                       method = "scale")))
+    if (!ngsdata) {
+      Y <- as.data.frame(t(limma::normalizeBetweenArrays(assay(se),
+                                                         method = "scale")))
+    } else {
+      Y <- as.data.frame(t(assay(se)))
+    }
     # simple sanity check of whether Y includes array values
     if(unique(lapply(Y, class)) != "numeric") {
-      print("Warning - values in Y do not appear to be numeric...")
+      stop("Warning - values in Y do not appear to be numeric...")
     }
 
     # exposure / treatment
@@ -141,6 +145,9 @@ biomarkertmle <- function(se,
 
     # baseline covariates
     W <- as.data.frame(colData(se)[, -varInt])
+    if(dim(W)[2] == 0) {
+      W <- as.numeric(rep(1, length(A)))
+    }
 
     # perform multi-level TMLE-based estimation for genes as Y
     biomarkerTMLEout <- foreach::foreach(gene = seq_len(ncol(Y)),
@@ -149,7 +156,7 @@ biomarkertmle <- function(se,
       out <- biomarkerTMLE_exposure(Y = Y[, gene],
                                     W = W,
                                     A = A,
-                                    a = 1:length(unique(A)),
+                                    a = unique(A),
                                     g_lib = g_lib,
                                     Q_lib = Q_lib,
                                     family = family
@@ -170,11 +177,15 @@ biomarkertmle <- function(se,
   #=============================================================================
 
     # median normalization
-    A <- as.data.frame(t(limma::normalizeBetweenArrays(assay(se),
-                                                       method = "scale")))
+    if (!ngsdata) {
+      A <- as.data.frame(t(limma::normalizeBetweenArrays(assay(se),
+                                                         method = "scale")))
+    } else {
+      A <- as.data.frame(t(assay(se)))
+    }
     # simple sanity check of whether A includes array values
     if(unique(lapply(A, class)) != "numeric") {
-      print("Warning - values in A do not appear to be numeric...")
+      stop("Warning - values in A do not appear to be numeric...")
     }
 
     # exposure / treatment
@@ -182,6 +193,9 @@ biomarkertmle <- function(se,
 
     # baseline covariates
     W <- as.data.frame(colData(se)[, -varInt])
+    if(dim(W)[2] == 0) {
+      W <- as.numeric(rep(1, length(Y)))
+    }
 
     # perform multi-level TMLE-bases estimation for genes as A
     biomarkerTMLEout <- foreach::foreach(gene = seq_len(ncol(A)),
@@ -190,7 +204,7 @@ biomarkertmle <- function(se,
       out <- biomarkerTMLE_outcome(Y = Y,
                                    W = W,
                                    A = A[, gene],
-                                   a = 1:length(unique(A)),
+                                   a = unique(A),
                                    g_lib = g_lib,
                                    Q_lib = Q_lib,
                                    family = family
