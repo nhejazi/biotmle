@@ -1,0 +1,82 @@
+---
+title: "Processing and Analyzing RNA-Seq Data with `biotmle`"
+author: "Nima Hejazi & Alan Hubbard"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Processing and Analyzing RNA-Seq Data with `biotmle`}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r setup, echo=FALSE}
+```
+
+## Introduction
+
+...
+
+---
+
+## Simulation: Data Structure
+
+```{r simNGS}
+set.seed(642370)
+n <- 50
+g <- 1500
+cases_pois <- 25
+controls_pois <- 10
+
+ngs_cases <- as.data.frame(matrix(replicate(n, rpois(g, cases_pois)), g))
+ngs_control <- as.data.frame(matrix(replicate(n, rpois(g, controls_pois)), g))
+
+ngs_data <- as.data.frame(cbind(ngs_cases, ngs_controls))
+design <- c(rep(1, n), rep(0, n))
+
+head(ngs_data[, 1:7])
+```
+
+...
+
+---
+
+## Processing: Data Transformation
+
+```{r data_proc}
+se <- SummarizedExperiment(rowData = ngs_data)
+assays(se) <- design
+se
+```
+
+...
+
+---
+
+## Analysis: Assessing the Effect of Exposure
+
+```{r biomarkertmle}
+
+```
+
+...
+
+```{r modtest_ic}
+
+```
+
+...
+
+---
+
+## Results: Data Visualization
+
+```{r}
+```
+
+---
+
+## Session Information
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
