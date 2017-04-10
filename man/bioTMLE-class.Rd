@@ -4,12 +4,12 @@
 \name{bioTMLE-class}
 \alias{bioTMLE-class}
 \alias{.biotmle}
-\title{Constructor for class biotmle}
+\title{Constructor for class bioTMLE}
 \value{
 class \code{biotmle} object, sub-classed from SummarizedExperiment.
 }
 \description{
-Constructor for class biotmle
+Constructor for class bioTMLE
 }
 \examples{
 library(biotmleData)

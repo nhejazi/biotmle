@@ -1,5 +1,3 @@
-utils::globalVariables("gene")
-
 #' Biomarker Evaluation with Targeted Minimum Loss-Based Estimation (TMLE)
 #'
 #' Computes the causal target parameter defined as the difference between the
@@ -154,10 +152,10 @@ biomarkertmle <- function(se,
     }
 
     # perform multi-level TMLE-based estimation for genes as Y
-    biomarkerTMLEout <- foreach::foreach(gene = seq_len(ncol(Y)),
+    biomarkerTMLEout <- foreach::foreach(g = seq_len(ncol(Y)),
                                          .combine = cbind) %dopar% {
       print(paste("Estimating target parameter for", gene, "of", ncol(Y)))
-      out <- biomarkerTMLE_exposure(Y = Y[, gene],
+      out <- biomarkerTMLE_exposure(Y = Y[, g],
                                     W = W,
                                     A = A,
                                     a = unique(A),
@@ -202,12 +200,12 @@ biomarkertmle <- function(se,
     }
 
     # perform multi-level TMLE-bases estimation for genes as A
-    biomarkerTMLEout <- foreach::foreach(gene = seq_len(ncol(A)),
+    biomarkerTMLEout <- foreach::foreach(g = seq_len(ncol(A)),
                                          .combine = rbind) %dopar% {
       print(paste("Estimating causal effect for", gene, "of", ncol(A)))
       out <- biomarkerTMLE_outcome(Y = Y,
                                    W = W,
-                                   A = A[, gene],
+                                   A = A[, g],
                                    a = unique(A),
                                    g_lib = g_lib,
                                    Q_lib = Q_lib,

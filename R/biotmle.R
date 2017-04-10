@@ -1,10 +1,22 @@
 utils::globalVariables(c("new"))
-#' Constructor for class biotmle
+
+#' Constructor for class union data.frame_OR_EList
+#'
+#' @return fusion of classes \code{data.frame} and \code{EList}, used within
+#'         \code{.biotmle} by class \code{bioTMLE} to handle uncertainty in the
+#'         object passed to slot "tmleOut".
+#'
+#' @importClassesFrom limma EList
+#'
+#' @exportClass data.frame_OR_EList
+#'
+setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
+
+#' Constructor for class bioTMLE
 #'
 #' @return class \code{biotmle} object, sub-classed from SummarizedExperiment.
 #'
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
-#' @importClassesFrom limma EList
 #'
 #' @export .biotmle
 #' @exportClass bioTMLE
@@ -21,7 +33,6 @@ utils::globalVariables(c("new"))
 #'           SummarizedExperiment(
 #'              assays = assay(se),
 #'              rowData = rowData(se),
-#'              rowRanges = rowRanges(se),
 #'              colData = colData(se)
 #'           ),
 #'           call = call,
@@ -34,12 +45,9 @@ utils::globalVariables(c("new"))
 #'
 #' example_class <- example_biotmle_class(se = illuminaData)
 #'
-setClassUnion("call_char", c("call", "character"))
-setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
-
 .biotmle <- setClass(
        Class = "bioTMLE",
-       slots = list(call = "call_char",
+       slots = list(call = "call",
                     tmleOut = "data.frame_OR_EList",
                     modtestOut = "data.frame",
                     topTable = "data.frame"),
