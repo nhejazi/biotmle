@@ -27,15 +27,18 @@ library(SummarizedExperiment)
 ```{r simNGS}
 set.seed(6423709)
 n <- 50
-g <- 1500
-cases_pois <- 25
+g <- 2500
+cases_pois <- 50
 controls_pois <- 10
 
 ngs_cases <- as.data.frame(matrix(replicate(n, rpois(g, cases_pois)), g))
 ngs_controls <- as.data.frame(matrix(replicate(n, rpois(g, controls_pois)), g))
 
 ngs_data <- as.data.frame(cbind(ngs_cases, ngs_controls))
-design <- c(rep(1, n), rep(0, n))
+exp_var <- c(rep(1, n), rep(0, n))
+batch <- rep(1:2, n)
+covar <- rep(1, n * 2)
+design <- as.data.frame(cbind(exp_var, batch, covar))
 
 head(ngs_data[, 1:7])
 ```
@@ -58,21 +61,35 @@ se
 
 ## Analysis: Assessing the Effect of Exposure
 
-```{r biomarkertmle}
-biomarkerTMLEout <- biomarkertmle(se = se,
-                                  varInt = 1,
-                                  type = "exposure",
-                                  ngscounts = TRUE,
-                                  family = "gaussian",
-                                  g_lib = c("SL.mean"),
-                                  Q_lib = c("SL.mean")
-                                 )
+```{r biomarkertmle, eval=FALSE}
+rnaseqTMLEout <- biomarkertmle(se = se,
+                               varInt = 1,
+                               type = "exposure",
+                               ngscounts = TRUE,
+                               parallel = TRUE,
+                               family = "gaussian",
+                               g_lib = c("SL.mean", "SL.glm", "SL.randomForest"),
+                               Q_lib = c("SL.mean", "SL.glm", "SL.randomForest",
+                                         "SL.nnet")
+                              )
+
+head(rnaseqTMLEout@tmleOut$E[,1:6])
+```
+
+```{r load_biomarkerTMLE_result, echo=FALSE}
+data(rnaseqtmleOut)
+head(rnaseqTMLEout@tmleOut$E[,1:6])
 ```
 
 ...
 
 ```{r modtest_ic}
+varInt_index <- which(names(colData(se)) %in% "exp_var")
+designVar <- as.data.frame(colData(se))[, varInt_index]
+design <- as.numeric(designVar == max(designVar))
 
+limmaTMLEout <- modtest_ic(biotmle = rnaseqTMLEout, design = design)
+head(limmaTMLEout@topTable)
 ```
 
 ...
@@ -81,7 +98,20 @@ biomarkerTMLEout <- biomarkertmle(se = se,
 
 ## Results: Data Visualization
 
-```{r}
+```{r pval_hist_limma_adjp}
+plot(x = limmaTMLEout, type = "pvals_adj")
+```
+
+```{r pval_hist_limma_rawp}
+plot(x = limmaTMLEout, type = "pvals_raw")
+```
+
+```{r heatmap_limma_results}
+heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 25)
+```
+
+```{r volcano_plot_limma_results}
+volcano_ic(biotmle = limmaTMLEout)
 ```
 
 ---
