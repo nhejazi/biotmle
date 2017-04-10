@@ -4,6 +4,7 @@ utils::globalVariables(c("new"))
 #' @return class \code{biotmle} object, sub-classed from SummarizedExperiment.
 #'
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
+#' @importClassesFrom limma EList
 #'
 #' @export .biotmle
 #' @exportClass bioTMLE
@@ -33,8 +34,8 @@ utils::globalVariables(c("new"))
 #'
 #' example_class <- example_biotmle_class(se = illuminaData)
 #'
-setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
 setClassUnion("call_char", c("call", "character"))
+setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
 
 .biotmle <- setClass(
        Class = "bioTMLE",

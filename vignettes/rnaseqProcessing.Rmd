@@ -25,7 +25,7 @@ library(SummarizedExperiment)
 ## Simulation: Data Structure
 
 ```{r simNGS}
-set.seed(642370)
+set.seed(6423709)
 n <- 50
 g <- 1500
 cases_pois <- 25
@@ -59,7 +59,14 @@ se
 ## Analysis: Assessing the Effect of Exposure
 
 ```{r biomarkertmle}
-
+biomarkerTMLEout <- biomarkertmle(se = se,
+                                  varInt = 1,
+                                  type = "exposure",
+                                  ngscounts = TRUE,
+                                  family = "gaussian",
+                                  g_lib = c("SL.mean"),
+                                  Q_lib = c("SL.mean")
+                                 )
 ```
 
 ...
