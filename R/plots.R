@@ -205,8 +205,14 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05, top = 25) {
     dplyr::arrange(adj.P.Val) %>%
     dplyr::slice(1:top)
 
-  biomarkerTMLEout_top <- x@tmleOut %>%
-    dplyr::filter(rownames(x@tmleOut) %in% topbiomarkersFDR$IDs)
+  if (class(x@tmleOut) == "EList") {
+    biomarkerTMLEout_top <- x@tmleOut$E %>%
+      data.frame %>%
+      dplyr::filter(rownames(x@tmleOut) %in% topbiomarkersFDR$IDs)
+  } else {
+    biomarkerTMLEout_top <- x@tmleOut %>%
+      dplyr::filter(rownames(x@tmleOut) %in% topbiomarkersFDR$IDs)
+  }
 
   annot <- ifelse(design == 0, "Control", "Treated")
 
