@@ -1,4 +1,4 @@
-utils::globalVariables(c("gene"))
+utils::globalVariables(c("gene","assay<-"))
 
 #' Biomarker Evaluation with Targeted Minimum Loss-Based Estimation (TMLE)
 #'
@@ -222,7 +222,6 @@ biomarkertmle <- function(se,
       biotmle@tmleOut <- as.data.frame(t(biomarkerTMLEout))
     }
     return(biotmle)
-
   } else {
     warning("improper input for 'type': choices are 'exposure' and 'outcome'.")
   }
