@@ -23,6 +23,10 @@ utils::globalVariables(c("gene","assay<-"))
 #'        be used when the TMLE-based estimation procedure is parallelized.
 #' @param family (character) - specification of error family: "binomial" or
 #'        "gaussian".
+#' @param subj_ids (numeric vector) - subject IDs to be passed directly to
+#         \code{tmle::tmle} when there are repeated measures; measurements on
+#'        the same subject should have the exact same numerical identifier;
+#'        coerced to numeric if not provided in the appropriate form.
 #' @param g_lib (char vector) - library of learning algorithms to be used in
 #'        fitting the "g" step of the standard TMLE procedure.
 #' @param Q_lib (char vector) - library of learning algorithms to be used in
@@ -71,6 +75,7 @@ biomarkertmle <- function(se,
                           ngscounts = FALSE,
                           parallel = TRUE,
                           family = "gaussian",
+                          subj_ids = NULL,
                           g_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
                                     "SL.polymars", "SL.mean"),
                           Q_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
@@ -162,7 +167,8 @@ biomarkertmle <- function(se,
                                     a = unique(A),
                                     g_lib = g_lib,
                                     Q_lib = Q_lib,
-                                    family = family
+                                    family = family,
+                                    subj_ids = subj_ids
                                    )
     }
 
@@ -210,7 +216,8 @@ biomarkertmle <- function(se,
                                    a = unique(A),
                                    g_lib = g_lib,
                                    Q_lib = Q_lib,
-                                   family = family
+                                   family = family,
+                                   subj_ids = subj_ids
                                   )
     }
 
