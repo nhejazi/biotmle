@@ -79,7 +79,8 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #'        call to \code{biomarkertmle}
 #' @param fc_bound (numeric) - indicates the highest magnitude of the fold
 #'        to be colored along the x-axis of the volcano plot; this limits the
-#'        observations to be considered differentially expressed to those in a #'        user-specified interval.
+#'        observations to be considered differentially expressed to those in a
+#'        user-specified interval.
 #' @param pval_bound (numeric) - indicates the largest corrected p-value to be
 #'        colored along the y-axis of the volcano plot; this limits observations
 #'        considered as differentially expressed to those in a user-specified
