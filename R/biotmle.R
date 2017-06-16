@@ -12,6 +12,8 @@ utils::globalVariables(c("new"))
 #'
 setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
 
+################################################################################
+
 #' Constructor for class bioTMLE
 #'
 #' @return class \code{biotmle} object, sub-classed from SummarizedExperiment.
@@ -37,7 +39,6 @@ setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
 #'           ),
 #'           call = call,
 #'           tmleOut = as.data.frame(matrix(NA, 10, 10)),
-#'           modtestOut = as.data.frame(matrix(NA, 10, 10)),
 #'           topTable = as.data.frame(matrix(NA, 10, 10))
 #'     )
 #'     return(biotmle)
@@ -49,7 +50,6 @@ setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
        Class = "bioTMLE",
        slots = list(call = "call",
                     tmleOut = "data.frame_OR_EList",
-                    modtestOut = "data.frame",
                     topTable = "data.frame"),
        contains = "SummarizedExperiment"
 )
