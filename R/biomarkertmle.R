@@ -98,7 +98,6 @@ biomarkertmle <- function(se,
        ),
        call = call,
        tmleOut = as.data.frame(matrix(NA, 10, 10)),
-       modtestOut = as.data.frame(matrix(NA, 10, 10)),
        topTable = as.data.frame(matrix(NA, 10, 10))
    )
 
