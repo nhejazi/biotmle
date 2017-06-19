@@ -215,6 +215,10 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05, top = 25) {
     dplyr::arrange(adj.P.Val) %>%
     dplyr::slice(1:top)
 
+  if (nrow(topbiomarkersFDR) < top) {
+    stop(paste(top, "biomarkers not found below the specified FDR cutoff."))
+  }
+
   if (class(x@tmleOut) == "EList") {
     biomarkerTMLEout_top <- x@tmleOut$E %>%
       data.frame %>%

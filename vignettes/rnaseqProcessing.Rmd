@@ -84,11 +84,7 @@ head(rnaseqTMLEout@tmleOut$E[,1:6])
 ...
 
 ```{r modtest_ic}
-varInt_index <- which(names(colData(se)) %in% "exp_var")
-designVar <- as.data.frame(colData(se))[, varInt_index]
-design <- as.numeric(designVar == max(designVar))
-
-limmaTMLEout <- modtest_ic(biotmle = rnaseqTMLEout, design = design)
+limmaTMLEout <- modtest_ic(biotmle = rnaseqTMLEout)
 head(limmaTMLEout@topTable)
 ```
 
@@ -107,6 +103,10 @@ plot(x = limmaTMLEout, type = "pvals_raw")
 ```
 
 ```{r heatmap_limma_results}
+varInt_index <- which(names(colData(se)) %in% "exp_var")
+designVar <- as.data.frame(colData(se))[, varInt_index]
+design <- as.numeric(designVar == max(designVar))
+
 heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 25)
 ```
 

@@ -13,6 +13,11 @@ cache:
   - C:\RLibrary
 
 # Adapt as necessary starting from here
+branches:
+  only:
+    - master
+    - develop
+
 environment:
   global:
     WARNINGS_ARE_ERRORS: 1
