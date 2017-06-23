@@ -6,8 +6,9 @@
 \usage{
 biomarkertmle(se, varInt, type = c("exposure", "outcome"),
   ngscounts = FALSE, parallel = TRUE, family = "gaussian",
-  g_lib = c("SL.glm", "SL.randomForest", "SL.nnet", "SL.polymars", "SL.mean"),
-  Q_lib = c("SL.glm", "SL.randomForest", "SL.nnet", "SL.mean"))
+  subj_ids = NULL, g_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
+  "SL.polymars", "SL.mean"), Q_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
+  "SL.mean"))
 }
 \arguments{
 \item{se}{(SummarizedExperiment) - containing expression or next-generation
@@ -32,6 +33,10 @@ be used when the TMLE-based estimation procedure is parallelized.}
 
 \item{family}{(character) - specification of error family: "binomial" or
 "gaussian".}
+
+\item{subj_ids}{(numeric vector) - subject IDs to be passed directly to
+the same subject should have the exact same numerical identifier;
+coerced to numeric if not provided in the appropriate form.}
 
 \item{g_lib}{(char vector) - library of learning algorithms to be used in
 fitting the "g" step of the standard TMLE procedure.}

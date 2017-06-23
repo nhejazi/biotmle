@@ -1,6 +1,6 @@
 Package: biotmle
 Title: Targeted Learning for Biomarker Discovery with Moderated Statistics
-Version: 0.99.91
+Version: 1.1.1
 Authors@R: c(
     person("Nima", "Hejazi", email = "nhejazi@berkeley.edu",
            role = c("aut", "cre", "cph")),
@@ -32,18 +32,20 @@ Imports:
     wesanderson,
     magrittr,
     stats,
+    Matrix,
+    methods,
     dplyr,
     SummarizedExperiment,
     superheat,
     SuperLearner,
-    biotmleData,
-    Matrix
+    biotmleData
 Suggests:
     testthat,
     rmarkdown,
     knitr
 Remotes:
-    nhejazi/biotmleData
+    nhejazi/biotmleData,
+    karthik/wesanderson
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 biocViews:

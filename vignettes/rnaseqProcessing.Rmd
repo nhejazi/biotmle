@@ -107,7 +107,7 @@ varInt_index <- which(names(colData(se)) %in% "exp_var")
 designVar <- as.data.frame(colData(se))[, varInt_index]
 design <- as.numeric(designVar == max(designVar))
 
-heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 25)
+heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 1.0, top = 10)
 ```
 
 ```{r volcano_plot_limma_results}

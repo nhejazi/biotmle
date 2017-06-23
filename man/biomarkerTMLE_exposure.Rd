@@ -4,7 +4,8 @@
 \alias{biomarkerTMLE_exposure}
 \title{TMLE procedure for Biomarker Identication from Exposure}
 \usage{
-biomarkerTMLE_exposure(Y, W, A, a, family = "gaussian", g_lib, Q_lib)
+biomarkerTMLE_exposure(Y, W, A, a, subj_ids = NULL, family = "gaussian",
+  g_lib, Q_lib)
 }
 \arguments{
 \item{Y}{(numeric vector) - a vector of expression values for a single
@@ -18,6 +19,10 @@ design matrix whose effect on expression values is of interest.}
 
 \item{a}{(numeric vector) - the levels of A against which comparisons are to
 be made.}
+
+\item{subj_ids}{(numeric vector) - subject IDs to be passed directly to
+the same subject should have the exact same numerical identifier.
+coerced to numeric if not provided in the appropriate form.}
 
 \item{family}{(character) - specification of error family: "binomial" or
 "gaussian"}

@@ -6,11 +6,15 @@ utils::globalVariables(c("new"))
 #'         \code{.biotmle} by class \code{bioTMLE} to handle uncertainty in the
 #'         object passed to slot "tmleOut".
 #'
+#' @importFrom methods setClassUnion
 #' @importClassesFrom limma EList
 #'
 #' @exportClass data.frame_OR_EList
 #'
-setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
+#' @rdname bioTMLE-class
+#' @aliases data.frame_OR_EList, bioTMLE-class
+#'
+methods::setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
 
 ################################################################################
 
@@ -18,15 +22,18 @@ setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
 #'
 #' @return class \code{biotmle} object, sub-classed from SummarizedExperiment.
 #'
+#' @importFrom methods setClass
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #'
 #' @export .biotmle
 #' @exportClass bioTMLE
 #'
+#' @rdname bioTMLE-class
+#'
 #' @examples
+#' library(SummarizedExperiment)
 #' library(biotmleData)
 #' data(illuminaData)
-#' library(SummarizedExperiment)
 #'
 #' example_biotmle_class <- function(se) {
 #'
@@ -46,7 +53,7 @@ setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
 #'
 #' example_class <- example_biotmle_class(se = illuminaData)
 #'
-.biotmle <- setClass(
+.biotmle <- methods::setClass(
        Class = "bioTMLE",
        slots = list(call = "call",
                     tmleOut = "data.frame_OR_EList",

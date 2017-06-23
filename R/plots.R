@@ -25,16 +25,7 @@
 #' data(biomarkertmleOut)
 #' "%ni%" = Negate("%in%")
 #'
-#' colData(illuminaData) <- colData(illuminaData) %>%
-#'      data.frame %>%
-#'      dplyr::mutate(age = as.numeric(age > median(age))) %>%
-#'      DataFrame
-#'
-#' varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
-#' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
-#' design <- as.numeric(designVar == max(designVar))
-#'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
 #' plot(x = limmaTMLEout, type = "pvals_adj")
 #'
@@ -107,17 +98,7 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #' data(biomarkertmleOut)
 #' "%ni%" = Negate("%in%")
 #'
-#' colData(illuminaData) <- colData(illuminaData) %>%
-#'      data.frame %>%
-#'      dplyr::mutate(age = as.numeric(age > median(age))) %>%
-#'      DataFrame
-#'
-#' varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
-#' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
-#' design <- as.numeric(designVar == max(designVar))
-#'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
-#'                            design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
 #' volcano_ic(biotmle = limmaTMLEout)
 #'
@@ -200,10 +181,9 @@ utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
 #' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
 #' design <- as.numeric(designVar == max(designVar))
 #'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
-#' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05,
-#'            top = 15)
+#' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 15)
 #'
 
 heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05, top = 25) {

@@ -2,6 +2,7 @@ library(biotmle)
 library(SummarizedExperiment)
 library(biotmleData)
 data(illuminaData)
+
 context("Utilities for next-generation / RNA-seq data.")
 
 ################################################################################
@@ -25,7 +26,8 @@ design <- as.data.frame(cbind(exp_var, batch, covar))
 
 se <- SummarizedExperiment(assays = list(counts = DataFrame(ngs_data)),
                            colData = DataFrame(design))
-call <- match.call(expand.dots = TRUE)
+call <- "testing"  # dumb workaround to failure of match.call() for now...
+class(call) <- "call"  # force class to be what biotmle expects...
 
 biotmle <- .biotmle(
      SummarizedExperiment(

@@ -2,6 +2,7 @@ library(biotmle)
 library(SummarizedExperiment)
 library(biotmleData)
 data(illuminaData)
+
 context("biotmle S4 class.")
 
 ################################################################################
