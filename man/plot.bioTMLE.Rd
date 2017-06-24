@@ -4,7 +4,7 @@
 \alias{plot.bioTMLE}
 \title{Plot p-values from moderated statistical tests for class biotmle}
 \usage{
-\method{plot}{bioTMLE}(x, ..., type = "pvals_adj")
+plot.bioTMLE(x, ..., type = "pvals_adj")
 }
 \arguments{
 \item{x}{object of class \code{biotmle} as produced by an appropriate call to

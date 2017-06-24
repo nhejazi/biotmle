@@ -40,7 +40,7 @@ test_that("biomarkertmle object is of appropriate custom class", {
 })
 
 test_that("biomarkertmle output is consistent using example data", {
-  expect_equal(assay(biomarkerTMLEout)[, c(17,83,117)],
+  expect_equal(assay(biomarkerTMLEout)[, c(17, 83, 117)],
                c(360.7073, 375.9316, 319.3649))
 })
 
