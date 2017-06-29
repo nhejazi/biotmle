@@ -9,10 +9,7 @@ utils::globalVariables(c("new"))
 #' @importFrom methods setClassUnion
 #' @importClassesFrom limma EList
 #'
-#' @exportClass data.frame_OR_EList
-#'
-#' @rdname bioTMLE-class
-#' @aliases data.frame_OR_EList, bioTMLE-class
+#' @export
 #'
 methods::setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
 
@@ -25,10 +22,7 @@ methods::setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
 #' @importFrom methods setClass
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #'
-#' @export .biotmle
-#' @exportClass bioTMLE
-#'
-#' @rdname bioTMLE-class
+#' @export
 #'
 #' @examples
 #' library(SummarizedExperiment)
