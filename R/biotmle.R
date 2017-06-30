@@ -22,7 +22,8 @@ methods::setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
 #' @importFrom methods setClass
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #'
-#' @export
+#' @export .biotmle
+#' @exportClass bioTMLE
 #'
 #' @examples
 #' library(SummarizedExperiment)

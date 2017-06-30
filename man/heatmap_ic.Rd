@@ -35,7 +35,6 @@ library(biotmleData)
 library(SummarizedExperiment)
 data(illuminaData)
 data(biomarkertmleOut)
-"\%ni\%" = Negate("\%in\%")
 
 colData(illuminaData) <- colData(illuminaData) \%>\%
      data.frame \%>\%

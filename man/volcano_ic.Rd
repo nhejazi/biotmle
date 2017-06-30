@@ -33,9 +33,7 @@ log raw p-values from the moderated t-test.
 library(dplyr)
 library(biotmleData)
 library(SummarizedExperiment)
-data(illuminaData)
 data(biomarkertmleOut)
-"\%ni\%" = Negate("\%in\%")
 
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 

@@ -4,7 +4,7 @@
 \alias{plot.bioTMLE}
 \title{Plot p-values from moderated statistical tests for class biotmle}
 \usage{
-plot.bioTMLE(x, ..., type = "pvals_adj")
+\method{plot}{bioTMLE}(x, ..., type = "pvals_adj")
 }
 \arguments{
 \item{x}{object of class \code{biotmle} as produced by an appropriate call to
@@ -26,9 +26,7 @@ Histogram of raw or FDR-adjusted p-values from the moderated t-test.
 library(dplyr)
 library(biotmleData)
 library(SummarizedExperiment)
-data(illuminaData)
 data(biomarkertmleOut)
-"\%ni\%" = Negate("\%in\%")
 
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 

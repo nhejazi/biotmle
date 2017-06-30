@@ -17,13 +17,13 @@
 #'
 #' @export
 #'
+#' @method plot bioTMLE
+#'
 #' @examples
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SummarizedExperiment)
-#' data(illuminaData)
 #' data(biomarkertmleOut)
-#' "%ni%" = Negate("%in%")
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
@@ -94,9 +94,7 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SummarizedExperiment)
-#' data(illuminaData)
 #' data(biomarkertmleOut)
-#' "%ni%" = Negate("%in%")
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
@@ -170,7 +168,6 @@ utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
 #' library(SummarizedExperiment)
 #' data(illuminaData)
 #' data(biomarkertmleOut)
-#' "%ni%" = Negate("%in%")
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
 #'      data.frame %>%
