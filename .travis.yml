@@ -20,6 +20,7 @@ r:
 r_github_packages:
   - jimhester/covr
   - nhejazi/biotmleData
+  - karthik/wesanderson
 
 bioc_packages:
   - limma
@@ -28,7 +29,8 @@ bioc_packages:
 
 ## coverage
 after_success:
-  - Rscript -e "covr::codecov(line_exclusions = list('R/plots.R'))"
+  - Rscript -e "covr::codecov(line_exclusions = list('R/plots.R'),
+                              function_exclusions = '\\.onLoad')"
   - R CMD BiocCheck .
 
 notifications:
