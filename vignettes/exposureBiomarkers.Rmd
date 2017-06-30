@@ -105,11 +105,7 @@ statistical theory, it is not appropriate to include any further terms in the
 design matrix (n.b., this differs from standard calls to `limma::lmFit`)_.
 
 ```{r limmaTMLE_eval}
-varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
-designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
-design <- as.numeric(designVar == max(designVar))
-
-limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
+limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 ```
 
 After invoking `modtest_ic`, the resultant `bioTMLE` object will contain all
@@ -156,7 +152,11 @@ produced is a `ggplot2` object and can be modified in place if stored properly.
 For our analysis:
 
 ```{r heatmap_limma_results}
-heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 25)
+varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
+designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
+designVar <- as.numeric(designVar == max(designVar))
+
+heatmap_ic(x = limmaTMLEout, design = designVar, FDRcutoff = 0.05, top = 25)
 ```
 
 The volcano plot is standard graphical tools for examining how changes in

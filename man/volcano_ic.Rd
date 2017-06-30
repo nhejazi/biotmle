@@ -4,11 +4,21 @@
 \alias{volcano_ic}
 \title{Volcano plot for class biotmle}
 \usage{
-volcano_ic(biotmle)
+volcano_ic(biotmle, fc_bound = 3, pval_bound = 0.2)
 }
 \arguments{
 \item{biotmle}{object of class \code{biotmle} as produced by an appropriate
 call to \code{biomarkertmle}}
+
+\item{fc_bound}{(numeric) - indicates the highest magnitude of the fold
+to be colored along the x-axis of the volcano plot; this limits the
+observations to be considered differentially expressed to those in a
+user-specified interval.}
+
+\item{pval_bound}{(numeric) - indicates the largest corrected p-value to be
+colored along the y-axis of the volcano plot; this limits observations
+considered as differentially expressed to those in a user-specified
+interval.}
 }
 \value{
 object of class \code{ggplot} containing a standard volcano plot of
@@ -23,21 +33,9 @@ log raw p-values from the moderated t-test.
 library(dplyr)
 library(biotmleData)
 library(SummarizedExperiment)
-data(illuminaData)
 data(biomarkertmleOut)
-"\%ni\%" = Negate("\%in\%")
 
-colData(illuminaData) <- colData(illuminaData) \%>\%
-     data.frame \%>\%
-     dplyr::mutate(age = as.numeric(age > median(age))) \%>\%
-     DataFrame
-
-varInt_index <- which(names(colData(illuminaData)) \%in\% "benzene")
-designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
-design <- as.numeric(designVar == max(designVar))
-
-limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
-                           design = design)
+limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
 volcano_ic(biotmle = limmaTMLEout)
 

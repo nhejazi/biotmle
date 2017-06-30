@@ -1,4 +1,4 @@
 library(testthat)
 library(biotmle)
 
-#test_check("biotmle")
+test_check("biotmle")

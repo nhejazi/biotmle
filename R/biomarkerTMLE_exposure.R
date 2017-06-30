@@ -12,6 +12,10 @@
 #'        design matrix whose effect on expression values is of interest.
 #' @param a (numeric vector) - the levels of A against which comparisons are to
 #'        be made.
+#' @param subj_ids (numeric vector) - subject IDs to be passed directly to
+#         \code{tmle::tmle} when there are repeated measures; measurements on
+#'        the same subject should have the exact same numerical identifier.
+#'        coerced to numeric if not provided in the appropriate form.
 #' @param g_lib (char vector) - library of learning algorithms to be used in
 #'        fitting the "g" step of the standard TMLE procedure.
 #' @param Q_lib (char vector) - library of learning algorithms to be used in
@@ -30,6 +34,7 @@ biomarkerTMLE_exposure <- function(Y,
                                    W,
                                    A,
                                    a,
+                                   subj_ids = NULL,
                                    family = "gaussian",
                                    g_lib,
                                    Q_lib) {
@@ -45,6 +50,10 @@ biomarkerTMLE_exposure <- function(Y,
   IC = NULL
   EY = NULL
 
+  if(!is.null(subj_ids)) {
+    subj_ids <- as.numeric(subj_ids)
+  }
+
   for(i in 1:n_a) {
     A_star = as.numeric(A == a[i])
     fit_tmle = tmle::tmle(Y = Y,
@@ -53,6 +62,7 @@ biomarkerTMLE_exposure <- function(Y,
                           g.SL.library = g_lib,
                           Q.SL.library = Q_lib,
                           family = family,
+                          id = subj_ids,
                           verbose = FALSE
                          )
     g_0 = fit_tmle$g$g1W
@@ -65,6 +75,10 @@ biomarkerTMLE_exposure <- function(Y,
   EY_diff = EY[2:n_a] - EY[1]
   IC_diff = IC[, 2:n_a] - IC[, 1]
 
-  output = IC_diff[, ncol(IC_diff)] + EY_diff[length(EY_diff)]
+  if(class(IC_diff) != "numeric") {
+    output = IC_diff[, ncol(IC_diff)] + EY_diff[length(EY_diff)]
+  } else {
+    output = IC_diff + EY_diff
+  }
   return(output)
 }

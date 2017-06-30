@@ -3,6 +3,7 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^codecov\.yml$
+^coverage\.R$
 ^README\.md$
 ^\.git$
 ^\.gitignore$

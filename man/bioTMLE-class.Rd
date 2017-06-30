@@ -4,17 +4,17 @@
 \name{bioTMLE-class}
 \alias{bioTMLE-class}
 \alias{.biotmle}
-\title{Constructor for class biotmle}
+\title{Constructor for class bioTMLE}
 \value{
 class \code{biotmle} object, sub-classed from SummarizedExperiment.
 }
 \description{
-Constructor for class biotmle
+Constructor for class bioTMLE
 }
 \examples{
+library(SummarizedExperiment)
 library(biotmleData)
 data(illuminaData)
-library(SummarizedExperiment)
 
 example_biotmle_class <- function(se) {
 
@@ -27,7 +27,6 @@ example_biotmle_class <- function(se) {
           ),
           call = call,
           tmleOut = as.data.frame(matrix(NA, 10, 10)),
-          modtestOut = as.data.frame(matrix(NA, 10, 10)),
           topTable = as.data.frame(matrix(NA, 10, 10))
     )
     return(biotmle)

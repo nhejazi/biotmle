@@ -17,31 +17,22 @@
 #'
 #' @export
 #'
+#' @method plot bioTMLE
+#'
 #' @examples
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SummarizedExperiment)
-#' data(illuminaData)
 #' data(biomarkertmleOut)
-#' "%ni%" = Negate("%in%")
 #'
-#' colData(illuminaData) <- colData(illuminaData) %>%
-#'      data.frame %>%
-#'      dplyr::mutate(age = as.numeric(age > median(age))) %>%
-#'      DataFrame
-#'
-#' varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
-#' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
-#' design <- as.numeric(designVar == max(designVar))
-#'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
 #' plot(x = limmaTMLEout, type = "pvals_adj")
 #'
 plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 
-  pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
-  pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
+  pal1 <- wesanderson::wes_palette("Rushmore1", 100, type = "continuous")
+  pal2 <- wesanderson::wes_palette("Darjeeling1", type = "continuous")
 
   if(type == "pvals_raw") {
     p <- ggplot2::ggplot(as.data.frame(x@topTable), ggplot2::aes(P.Value))
@@ -77,6 +68,14 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #'
 #' @param biotmle object of class \code{biotmle} as produced by an appropriate
 #'        call to \code{biomarkertmle}
+#' @param fc_bound (numeric) - indicates the highest magnitude of the fold
+#'        to be colored along the x-axis of the volcano plot; this limits the
+#'        observations to be considered differentially expressed to those in a
+#'        user-specified interval.
+#' @param pval_bound (numeric) - indicates the largest corrected p-value to be
+#'        colored along the y-axis of the volcano plot; this limits observations
+#'        considered as differentially expressed to those in a user-specified
+#'        interval.
 #'
 #' @importFrom magrittr "%>%"
 #' @importFrom dplyr arrange mutate select filter
@@ -95,42 +94,31 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SummarizedExperiment)
-#' data(illuminaData)
 #' data(biomarkertmleOut)
-#' "%ni%" = Negate("%in%")
 #'
-#' colData(illuminaData) <- colData(illuminaData) %>%
-#'      data.frame %>%
-#'      dplyr::mutate(age = as.numeric(age > median(age))) %>%
-#'      DataFrame
-#'
-#' varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
-#' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
-#' design <- as.numeric(designVar == max(designVar))
-#'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, IDs = NULL,
-#'                            design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
 #' volcano_ic(biotmle = limmaTMLEout)
 #'
-volcano_ic <- function(biotmle) {
+volcano_ic <- function(biotmle, fc_bound = 3.0, pval_bound = 0.2) {
 
   stopifnot(class(biotmle) == "bioTMLE")
 
-  pal1 <- wesanderson::wes_palette("Rushmore", 100, type = "continuous")
-  pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
+  pal1 <- wesanderson::wes_palette("Rushmore1", 100, type = "continuous")
+  pal2 <- wesanderson::wes_palette("Darjeeling1", type = "continuous")
 
   tt_volcano <- as.data.frame(biotmle@topTable) %>%
     dplyr::arrange(adj.P.Val) %>%
     dplyr::mutate(
       logFC = I(logFC),
       logPval = -log10(P.Value),
-      color = ifelse((logFC > 3.0) & (adj.P.Val < 0.2), "1",
-                      ifelse((logFC < -3.0) & (adj.P.Val < 0.2), "-1", "0"))
+      color = ifelse((logFC > fc_bound) & (adj.P.Val < pval_bound), "1",
+                      ifelse((logFC < -fc_bound) & (adj.P.Val < pval_bound),
+                             "-1", "0"))
     ) %>%
     dplyr::select(which(colnames(.) %in% c("logFC", "logPval", "color"))) %>%
-    dplyr::filter((logFC > stats::quantile(logFC, probs = 0.1)) &
-                   logFC < stats::quantile(logFC, probs = 0.9))
+    dplyr::filter((logFC > stats::quantile(logFC, probs = 0.05)) &
+                   logFC < stats::quantile(logFC, probs = 0.95))
 
   p <- ggplot2::ggplot(tt_volcano, ggplot2::aes(x = logFC, y = logPval))
   p <- p + ggplot2::geom_point(aes(colour = color))
@@ -145,6 +133,7 @@ volcano_ic <- function(biotmle) {
 #==============================================================================#
 ## NEXT FUNCTION ===============================================================
 #==============================================================================#
+
 utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
                          "logFC", "logPval"))
 
@@ -179,7 +168,6 @@ utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
 #' library(SummarizedExperiment)
 #' data(illuminaData)
 #' data(biomarkertmleOut)
-#' "%ni%" = Negate("%in%")
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
 #'      data.frame %>%
@@ -190,10 +178,9 @@ utils::globalVariables(c("adj.P.Val", ".", "..count..", "P.Value", "color",
 #' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
 #' design <- as.numeric(designVar == max(designVar))
 #'
-#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout, design = design)
+#' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
-#' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05,
-#'            top = 15)
+#' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 15)
 #'
 
 heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05, top = 25) {
@@ -205,12 +192,22 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05, top = 25) {
     dplyr::arrange(adj.P.Val) %>%
     dplyr::slice(1:top)
 
-  biomarkerTMLEout_top <- x@tmleOut %>%
-    dplyr::filter(rownames(x@tmleOut) %in% topbiomarkersFDR$IDs)
+  if (nrow(topbiomarkersFDR) < top) {
+    stop(paste(top, "biomarkers not found below the specified FDR cutoff."))
+  }
+
+  if (class(x@tmleOut) == "EList") {
+    biomarkerTMLEout_top <- x@tmleOut$E %>%
+      data.frame %>%
+      dplyr::filter(rownames(x@tmleOut) %in% topbiomarkersFDR$IDs)
+  } else {
+    biomarkerTMLEout_top <- x@tmleOut %>%
+      dplyr::filter(rownames(x@tmleOut) %in% topbiomarkersFDR$IDs)
+  }
 
   annot <- ifelse(design == 0, "Control", "Treated")
 
-  pal <- wes_palette("Zissou", 100, type = "continuous")
+  pal <- wes_palette("Zissou1", 100, type = "continuous")
 
   superheat::superheat(as.matrix(biomarkerTMLEout_top), row.dendrogram = TRUE,
                        grid.hline.col = "white", force.grid.hline = TRUE,
