@@ -29,8 +29,7 @@ bioc_packages:
 
 ## coverage
 after_success:
-  - Rscript -e "covr::codecov(line_exclusions = list('R/plots.R'),
-                              function_exclusions = '\\.onLoad')"
+  - Rscript -e "covr::codecov(line_exclusions = list('R/plots.R'))"
   - R CMD BiocCheck .
 
 notifications:

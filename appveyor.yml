@@ -22,6 +22,8 @@ environment:
   global:
     WARNINGS_ARE_ERRORS: 1
     USE_RTOOLS: true
+    GITHUB_PAT:
+      secure: 40bfd73dc47ea857b546ec142871a4993c2ef9b8
 
 build_script:
   - travis-tool.sh install_deps
