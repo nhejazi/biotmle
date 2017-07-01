@@ -4,6 +4,7 @@
 ^appveyor\.yml$
 ^codecov\.yml$
 ^coverage\.R$
+^CONTRIBUTING\.md$
 ^README\.md$
 ^\.git$
 ^\.gitignore$
