@@ -8,6 +8,8 @@ init:
         Import-Module '..\appveyor-tool.ps1'
 install:
   ps: Bootstrap
+  - nuget install secure-file -ExcludeVersion
+  - secure-file\tools\secure-file -decrypt path-to\encrypted-filename.ext.enc -secret %GITHUB_PAT%
 
 cache:
   - C:\RLibrary
