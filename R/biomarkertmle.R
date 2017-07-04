@@ -185,13 +185,9 @@ biomarkertmle <- function(se,
   # TMLE procedure to identify biomarkers based on an OUTCOME
   #=============================================================================
 
-    # median normalization
-    if (!ngscounts) {
-      A <- as.data.frame(t(limma::normalizeBetweenArrays(assay(se),
-                                                         method = "scale")))
-    } else {
-      A <- as.data.frame(t(assay(se)))
-    }
+    # no normalization since expression values / counts must be discrete:
+    A <- as.data.frame(t(as.matrix(assay(se))))
+
     # simple sanity check of whether A includes array values
     if(unique(lapply(A, class)) != "numeric") {
       stop("Warning - values in A do not appear to be numeric...")
