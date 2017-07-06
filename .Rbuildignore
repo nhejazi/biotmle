@@ -3,12 +3,15 @@
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^codecov\.yml$
-^coverage\.R$
 ^CONTRIBUTING\.md$
-^README\.md$
+^Makefile$
 ^\.git$
 ^\.gitignore$
 ^\.gitattributes$
 ^data-raw$
 ^paper$
 ^docs$
+^README\.md$
+^README\.Rmd$
+^README\.html$
+^README-.*\.png$

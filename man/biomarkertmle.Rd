@@ -4,11 +4,10 @@
 \alias{biomarkertmle}
 \title{Biomarker Evaluation with Targeted Minimum Loss-Based Estimation (TMLE)}
 \usage{
-biomarkertmle(se, varInt, type = c("exposure", "outcome"),
-  ngscounts = FALSE, parallel = TRUE, family = "gaussian",
-  subj_ids = NULL, g_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
-  "SL.polymars", "SL.mean"), Q_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
-  "SL.mean"))
+biomarkertmle(se, varInt, ngscounts = FALSE, parallel = TRUE,
+  family = "gaussian", subj_ids = NULL, g_lib = c("SL.glm",
+  "SL.randomForest", "SL.nnet", "SL.polymars", "SL.mean"), Q_lib = c("SL.glm",
+  "SL.randomForest", "SL.nnet", "SL.mean"))
 }
 \arguments{
 \item{se}{(SummarizedExperiment) - containing expression or next-generation
@@ -18,10 +17,6 @@ data in the "colData" slot.}
 \item{varInt}{(numeric) - indicating the column of the design matrix
 corresponding to the treatment or outcome of interest (in the
 "colData" slot of the "se" argument above).}
-
-\item{type}{(character) - choice of the type of TMLE to perform: "exposure"
-to identify biomarkers related to an exposure (input as A), or
-"outcome" to identify biomarkers related to an outcome (input as Y).}
 
 \item{ngscounts}{(logical) - whether the data are counts generated from a
 next-generation sequencing (NGS) experiment (e.g., RNA-seq). The
@@ -73,7 +68,6 @@ varInt_index <- which(names(colData(illuminaData)) \%in\% "benzene")
 
 biomarkerTMLEout <- biomarkertmle(se = illuminaData[1, ],
                                   varInt = varInt_index,
-                                  type = "exposure",
                                   parallel = 1,
                                   family = "gaussian",
                                   g_lib = c("SL.mean"),

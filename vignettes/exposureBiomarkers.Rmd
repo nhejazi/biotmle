@@ -12,16 +12,15 @@ vignette: >
 ## Introduction
 
 The `biotmle` R package can be used to isolate biomarkers in two ways: based
-on the associations of genomic objects with (1) an exposure variable of interest
-and (2) an outcome variable of interest. In this vignette, we illustrate how to
-use `biotmle` to isolate and visualize genes associated with an __exposure__,
-using a data set containing microarray expression measures from an Illumina
-platform. In the analysis described below, Targeted Minimum Loss-Based
-Estimation (TMLE) is used to transform the microarray expression values based
-on the influence curve representation of the Average Treatment Effect (ATE).
-Following this transformation, the moderated t-statistic of Smyth is used to
-test for a binary groupwise difference (based on the exposure variable), using
-the tools provided by the R package `limma`.
+on the associations of genomic objects with an exposure variable of interest.
+In this vignette, we illustrate how to use `biotmle` to isolate and visualize
+genes associated with an __exposure__, using a data set containing microarray
+expression measures from an Illumina platform. In the analysis described below,
+Targeted Minimum Loss-Based Estimation (TMLE) is used to transform the
+microarray expression values based on the influence curve representation of the
+Average Treatment Effect (ATE). Following this transformation, the moderated
+t-statistic of Smyth is used to test for a binary groupwise difference (based
+on the exposure variable), using the tools provided by the R package `limma`.
 
 ---
 
@@ -72,7 +71,6 @@ the design matrix. We demonstrate the necessary syntax for calling
 ```{r biomarkerTMLE_eval, eval=FALSE}
 biomarkerTMLEout <- biomarkertmle(se = illuminaData,
                                   varInt = varInt_index,
-                                  type = "exposure",
                                   family = "gaussian",
                                   g_lib = c("SL.glmnet", "SL.randomForest",
                                             "SL.polymars", "SL.mean"),
