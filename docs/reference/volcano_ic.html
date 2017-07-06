@@ -82,13 +82,23 @@
 log raw p-values from the moderated t-test.</p>
     
 
-    <pre><span class='fu'>volcano_ic</span>(<span class='no'>biotmle</span>)</pre>
+    <pre><span class='fu'>volcano_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>fc_bound</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>pval_bound</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>biotmle</dt>
       <dd>object of class <code>biotmle</code> as produced by an appropriate
 call to <code>biomarkertmle</code></dd>
+      <dt>fc_bound</dt>
+      <dd>(numeric) - indicates the highest magnitude of the fold
+to be colored along the x-axis of the volcano plot; this limits the
+observations to be considered differentially expressed to those in a
+user-specified interval.</dd>
+      <dt>pval_bound</dt>
+      <dd>(numeric) - indicates the largest corrected p-value to be
+colored along the y-axis of the volcano plot; this limits observations
+considered as differentially expressed to those in a user-specified
+interval.</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -102,21 +112,9 @@ call to <code>biomarkertmle</code></dd>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)
 <span class='fu'>library</span>(<span class='no'>biotmleData</span>)
 <span class='fu'>library</span>(<span class='no'>SummarizedExperiment</span>)
-<span class='fu'>data</span>(<span class='no'>illuminaData</span>)
 <span class='fu'>data</span>(<span class='no'>biomarkertmleOut</span>)
-<span class='st'>"%ni%"</span> <span class='kw'>=</span> <span class='fu'>Negate</span>(<span class='st'>"%in%"</span>)
 
-<span class='fu'>colData</span>(<span class='no'>illuminaData</span>) <span class='kw'>&lt;-</span> <span class='fu'>colData</span>(<span class='no'>illuminaData</span>) <span class='kw'>%&gt;%</span>
-     <span class='no'>data.frame</span> <span class='kw'>%&gt;%</span>
-     <span class='kw'>dplyr</span><span class='kw'>::</span><span class='fu'>mutate</span>(<span class='kw'>age</span> <span class='kw'>=</span> <span class='fu'>as.numeric</span>(<span class='no'>age</span> <span class='kw'>&gt;</span> <span class='fu'>median</span>(<span class='no'>age</span>))) <span class='kw'>%&gt;%</span>
-     <span class='no'>DataFrame</span>
-
-<span class='no'>varInt_index</span> <span class='kw'>&lt;-</span> <span class='fu'>which</span>(<span class='fu'>names</span>(<span class='fu'>colData</span>(<span class='no'>illuminaData</span>)) <span class='kw'>%in%</span> <span class='st'>"benzene"</span>)
-<span class='no'>designVar</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.frame</span>(<span class='fu'>colData</span>(<span class='no'>illuminaData</span>))[, <span class='no'>varInt_index</span>]
-<span class='no'>design</span> <span class='kw'>&lt;-</span> <span class='fu'>as.numeric</span>(<span class='no'>designVar</span> <span class='kw'>==</span> <span class='fu'>max</span>(<span class='no'>designVar</span>))
-
-<span class='no'>limmaTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='modtest_ic.html'>modtest_ic</a></span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>biomarkerTMLEout</span>, <span class='kw'>IDs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-                           <span class='kw'>design</span> <span class='kw'>=</span> <span class='no'>design</span>)
+<span class='no'>limmaTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='modtest_ic.html'>modtest_ic</a></span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>biomarkerTMLEout</span>)
 
 <span class='fu'>volcano_ic</span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>limmaTMLEout</span>)</div><img src='volcano_ic-2.png' alt='' width='540' height='400' /><div class='input'>
 </div></pre>

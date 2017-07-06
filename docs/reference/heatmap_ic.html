@@ -114,7 +114,6 @@ necessary</dd>
 <span class='fu'>library</span>(<span class='no'>SummarizedExperiment</span>)
 <span class='fu'>data</span>(<span class='no'>illuminaData</span>)
 <span class='fu'>data</span>(<span class='no'>biomarkertmleOut</span>)
-<span class='st'>"%ni%"</span> <span class='kw'>=</span> <span class='fu'>Negate</span>(<span class='st'>"%in%"</span>)
 
 <span class='fu'>colData</span>(<span class='no'>illuminaData</span>) <span class='kw'>&lt;-</span> <span class='fu'>colData</span>(<span class='no'>illuminaData</span>) <span class='kw'>%&gt;%</span>
      <span class='no'>data.frame</span> <span class='kw'>%&gt;%</span>
@@ -125,10 +124,9 @@ necessary</dd>
 <span class='no'>designVar</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.frame</span>(<span class='fu'>colData</span>(<span class='no'>illuminaData</span>))[, <span class='no'>varInt_index</span>]
 <span class='no'>design</span> <span class='kw'>&lt;-</span> <span class='fu'>as.numeric</span>(<span class='no'>designVar</span> <span class='kw'>==</span> <span class='fu'>max</span>(<span class='no'>designVar</span>))
 
-<span class='no'>limmaTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='modtest_ic.html'>modtest_ic</a></span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>biomarkerTMLEout</span>, <span class='kw'>design</span> <span class='kw'>=</span> <span class='no'>design</span>)
+<span class='no'>limmaTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='modtest_ic.html'>modtest_ic</a></span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>biomarkerTMLEout</span>)
 
-<span class='fu'>heatmap_ic</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>limmaTMLEout</span>, <span class='kw'>design</span> <span class='kw'>=</span> <span class='no'>design</span>, <span class='kw'>FDRcutoff</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-           <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><img src='heatmap_ic-2.png' alt='' width='540' height='400' /><div class='input'>
+<span class='fu'>heatmap_ic</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>limmaTMLEout</span>, <span class='kw'>design</span> <span class='kw'>=</span> <span class='no'>design</span>, <span class='kw'>FDRcutoff</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><img src='heatmap_ic-2.png' alt='' width='540' height='400' /><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

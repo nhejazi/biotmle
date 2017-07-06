@@ -83,7 +83,8 @@ exposure on biological expression values associated with a given biomarker,
 controlling for a user-specified set of baseline covariates</p>
     
 
-    <pre><span class='fu'>biomarkerTMLE_exposure</span>(<span class='no'>Y</span>, <span class='no'>W</span>, <span class='no'>A</span>, <span class='no'>a</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>, <span class='no'>g_lib</span>, <span class='no'>Q_lib</span>)</pre>
+    <pre><span class='fu'>biomarkerTMLE_exposure</span>(<span class='no'>Y</span>, <span class='no'>W</span>, <span class='no'>A</span>, <span class='no'>a</span>, <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>,
+  <span class='no'>g_lib</span>, <span class='no'>Q_lib</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -99,6 +100,10 @@ design matrix whose effect on expression values is of interest.</dd>
       <dt>a</dt>
       <dd>(numeric vector) - the levels of A against which comparisons are to
 be made.</dd>
+      <dt>subj_ids</dt>
+      <dd>(numeric vector) - subject IDs to be passed directly to
+the same subject should have the exact same numerical identifier.
+coerced to numeric if not provided in the appropriate form.</dd>
       <dt>family</dt>
       <dd>(character) - specification of error family: &quot;binomial&quot; or
 &quot;gaussian&quot;</dd>

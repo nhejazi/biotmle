@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Constructor for class bioTMLE — bioTMLE-class • biotmle</title>
+<title>Transformation utility for using &quot;voom&quot; with biomarker TMLE procedure — rnaseq_ic • biotmle</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,50 +74,44 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Constructor for class bioTMLE</h1>
+    <h1>Transformation utility for using &quot;voom&quot; with biomarker TMLE procedure</h1>
     </div>
 
     
-    <p>Constructor for class bioTMLE</p>
+    <p>This function prepares next-generation sequencing data (counts) for use with
+the biomarker TMLE procedure by invoking the voom transform of <code>limma</code>.</p>
     
 
-        
+    <pre><span class='fu'>rnaseq_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <dl class="dl-horizontal">
+      <dt>biotmle</dt>
+      <dd>(bioTMLE) - subclass of <code>SummarizedExperiment</code> containing
+next-generation sequencing (NGS) count data in the &quot;assays&quot; slot.</dd>
+      <dt>weights</dt>
+      <dd>(logical) - whether to return quality weights of samples in
+the output object.</dd>
+      <dt>...</dt>
+      <dd>- other arguments to be passed to functions <code>limma::voom</code> or
+<code>limma::voomWithQualityWeights</code> as appropriate.</dd>
+    </dl>
+    
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>class <code>biotmle</code> object, sub-classed from SummarizedExperiment.</p>
+    <p><code>EList</code> object containing voom-transformed &quot;expression&quot; measures
+        of count data (actually, the mean-variance trend) in the &quot;E&quot; slot, to
+        be passed into the biomarker TMLE procedure.</p>
     
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>SummarizedExperiment</span>)
-<span class='fu'>library</span>(<span class='no'>biotmleData</span>)
-<span class='fu'>data</span>(<span class='no'>illuminaData</span>)
-
-<span class='no'>example_biotmle_class</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>se</span>) {
-
-    <span class='no'>call</span> <span class='kw'>&lt;-</span> <span class='fu'>match.call</span>(<span class='kw'>expand.dots</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-    <span class='no'>biotmle</span> <span class='kw'>&lt;-</span> <span class='fu'>.biotmle</span>(
-          <span class='fu'>SummarizedExperiment</span>(
-             <span class='kw'>assays</span> <span class='kw'>=</span> <span class='fu'>assay</span>(<span class='no'>se</span>),
-             <span class='kw'>rowData</span> <span class='kw'>=</span> <span class='fu'>rowData</span>(<span class='no'>se</span>),
-             <span class='kw'>colData</span> <span class='kw'>=</span> <span class='fu'>colData</span>(<span class='no'>se</span>)
-          ),
-          <span class='kw'>call</span> <span class='kw'>=</span> <span class='no'>call</span>,
-          <span class='kw'>tmleOut</span> <span class='kw'>=</span> <span class='fu'>as.data.frame</span>(<span class='fu'>matrix</span>(<span class='fl'>NA</span>, <span class='fl'>10</span>, <span class='fl'>10</span>)),
-          <span class='kw'>topTable</span> <span class='kw'>=</span> <span class='fu'>as.data.frame</span>(<span class='fu'>matrix</span>(<span class='fl'>NA</span>, <span class='fl'>10</span>, <span class='fl'>10</span>))
-    )
-    <span class='fu'>return</span>(<span class='no'>biotmle</span>)
-}
-
-<span class='no'>example_class</span> <span class='kw'>&lt;-</span> <span class='fu'>example_biotmle_class</span>(<span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>illuminaData</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+          </ul>
 
   </div>
 </div>
