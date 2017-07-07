@@ -21,10 +21,10 @@ branches:
 
 environment:
   global:
-    WARNINGS_ARE_ERRORS: 1
+    WARNINGS_ARE_ERRORS: 0
     USE_RTOOLS: true
     GITHUB_PAT:
-      secure: /UYaF9og6UOapF39AW8t+pG/mJ4cyuAehh7K3lR0oMt9NJE4MaGSJKbIkTO+nCH0
+      secure: NOkWY7zLKevHO11BcijFIDC95MS6o0J+Oh1rCsnUFEmjIR26uW9JKy/HMwasCi7x
 
 build_script:
   - travis-tool.sh install_deps

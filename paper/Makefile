@@ -2,4 +2,4 @@ TITLE = paper
 .PHONY : pdf
 
 pdf:
-	pandoc $(TITLE).md -o $(TITLE).pdf --bibliography $(TITLE).bib
+	Rscript -e "rmarkdown::render('$(TITLE).Rmd', output_format = c('md_document', 'pdf_document'))"

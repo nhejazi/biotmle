@@ -21,15 +21,7 @@ example reproducible: required packages, data, code.
     see which ones the example needs.
 
 2.  The easiest way to include **data** is to use `dput()` to generate the R
-    code to recreate it. For example, to recreate the `mtcars` dataset in R,
-    I'd perform the following steps:
-
-       1. Run `dput(mtcars)` in R
-       2. Copy the output
-       3. In my reproducible script, type `mtcars <- ` then paste.
-
-    But even better is if you can create a `data.frame()` with just a handful
-    of rows and columns that still illustrates the problem.
+    code to recreate it.
 
 3.  Spend a little bit of time ensuring that your **code** is easy for others to
     read:
@@ -71,7 +63,7 @@ Pull requests will be evaluated against the a checklist:
    how your pull request solves it as concisely as possible.
 
    Also include this motivation in `NEWS` so that when a new release of
-   ggplot2 comes out it's easy for users to see what's changed. Add your
+   `biotmle` comes out it's easy for users to see what's changed. Add your
    item at the top of the file and use markdown for formatting. The
    news item should end with `(@yourGithubUsername, #the_issue_number)`.
 
@@ -86,7 +78,7 @@ Pull requests will be evaluated against the a checklist:
     and don't submit any others until the first one has been processed.
 
 3.  __Use `biotmle` coding style__. Please follow the
-    [official ggplot2 style](http://adv-r.had.co.nz/Style.html). Maintaing
+    [official ggplot2 style](http://adv-r.had.co.nz/Style.html). Maintaining
     a consistent style across the whole code base makes it much easier to
     jump into the code. If you're modifying existing ggplot2 code that
     doesn't follow the style guide, a separate pull request to fix the
