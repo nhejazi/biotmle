@@ -1,97 +1,122 @@
 ---
-title: "Identifying Biomarkers from an Exposure Variable"
-author: "Nima Hejazi & Alan Hubbard"
+title: "Identifying Biomarkers Impacting an Outcome Variable"
+author: "Nima S. Hejazi & Alan E. Hubbard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Identifying Biomarkers from an Exposure Variable}
+  %\VignetteIndexEntry{Identifying Biomarkers Impacting an Outcome Variable}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
 
-## Introduction
+```{r core_reqs, echo=FALSE}
+library(parallel)
+library(doParallel)
+library(foreach)
+```
 
-The `biotmle` R package can be used to isolate biomarkers in two ways: based
-on the associations of genomic objects with an exposure variable of interest.
-In this vignette, we illustrate how to use `biotmle` to isolate and visualize
-genes associated with an __exposure__, using a data set containing microarray
-expression measures from an Illumina platform. In the analysis described below,
-Targeted Minimum Loss-Based Estimation (TMLE) is used to transform the
-microarray expression values based on the influence curve representation of the
-Average Treatment Effect (ATE). Following this transformation, the moderated
-t-statistic of Smyth is used to test for a binary groupwise difference (based
-on the exposure variable), using the tools provided by the R package `limma`.
+## Data Structure
 
----
+```{r sim_data}
+# specify key simulation parameters
+set.seed(6423709)
+n <- 100
+g <- 2500
+
+# generate outcome data
+outcome <- rnorm(n = n, mean = 1000, sd = 50)
+
+# generate expression measures related to outcome and those not
+biomarkers_outcome <- replicate(n = n, rnorm(n = g/2, mean = sqrt(outcome), sd = 25))
+biomarkers_unrelated <- replicate(n = n, rnorm(n = g/2, mean = 100, sd = 20))
+biomarkers <- as.data.frame(rbind(biomarkers_outcome, biomarkers_unrelated))
+
+# design matrix (of phenotype-level data) -- no relation to outcomes/biomarkers
+design <- as.data.frame(replicate(4, rnorm(n = n, mean = 10, sd = 5)))
+```
 
 ## Biomarker Identification
 
-First, we load the `biotmle` package and the (included) `illuminaData` data set:
+First, we load the `biotmle` package and some convenience dependencies:
 
 ```{r setup_data}
 library(dplyr)
 library(biotmle)
-library(biotmleData)
-data(illuminaData)
 library(SummarizedExperiment)
-"%ni%" = Negate("%in%")
 ```
 
-In order to perform Targeted Minimum Loss-Based Estimation, we need three
-separate data structures: (1) _W_, baseline covariates that could potentially
-confound the association of biomarkers with the exposure of interest; (2) _A_,
-the exposure of interest; and (3) _Y_, the biomarkers of interest. All values in
-_W_ and _A_ ought to be discretized, in order to avoid practical violations of
-the assumption of positivity. With the `illuminaData` data set below, we
-discretize the age variable in the phenotype-level data below (this can be
-accessed via the `colData` of the `SummarizedExperiment` object). To invoke the
-biomarker assessment function (`biomarkertmle`), we also need to specify a
-variable of interest (or the position of said variable in the design matrix). We
-do both in just a few lines below:
+In order to use Targeted Minimum Loss-Based Estimation to identify those
+biomarkers related to the outcome, based on the Averate Treatment Effect (ATE)
+parameter, we need three separate data structures: (1) _W_, baseline covariates
+that could potentially confound the association of biomarkers with the outcome;
+(2) _A_, a matrix of biomarkers, some associated with the outcome of interest
+and others not; and (3) _Y_, the outcome of interest. All values in _W_ and _A_
+ought to be discretized, in order to avoid practical violations of the
+assumption of positivity. To illustrate, we discretize the phenotype-level data
+below:
 
-```{r clean_data}
-# discretize "age" in the phenotype-level data
-colData(illuminaData) <- colData(illuminaData) %>%
-  data.frame %>%
-  dplyr::mutate(age = as.numeric(age > median(age))) %>%
+```{r discrete_W}
+# discretize the phenotype-level data
+W <- design %>%
+  dplyr::mutate(V1 = as.numeric(V1 > median(V1)),
+                V2 = as.numeric(V2 > quantile(V2)[2]),
+                V3 = as.numeric(V3 < quantile(V3)[4]),
+                V4 = as.numeric(V4 > quantile(V4)[1])) %>%
   DataFrame
+```
 
-# specify column index of treatment/exposure variable of interest
-varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
+To invoke the biomarker identification function (`biomarkertmle`), we also need
+to discretize the biomarkers (again, this ensures that we do not violate the
+assumption of positivity when assessing our target causal parameters, the ATE).
+
+We'll use the following function to assign each of the expression measures in
+the `data.frame` of biomarkers to the quartile of values, doing this over the
+columns (subjects) of the `biomarkers` `data.frame`.
+
+```{r discrete_by_quantile}
+discrete_by_quantile <- function(x) {
+  if( class(x) != "factor" ) {
+    as.numeric(gtools::quantcut(x))
+  } else {
+    as.numeric(x)
+  }
+}
+```
+
+```{r discrete_A}
+biomarkers_discrete <- as.data.frame(sapply(biomarkers, discrete_by_quantile))
+```
+
+```{r make_SE}
+se <- SummarizedExperiment(assays = list(expMeasures = DataFrame(biomarkers_discrete)),
+                           colData = DataFrame(cbind(outcome, design)))
+se
 ```
 
 The TMLE-based biomarker discovery process can be invoked using the
 `biomarkertmle` function. The procedure is quite resource-intensive because it
-evaluates the association of each individual potential biomarker (of which there
-are over 20,000 in the included data set) with an exposure of interest, while
-accounting for potential confounding based on all other covariates included in
-the design matrix. We demonstrate the necessary syntax for calling
-`biomarkertmle` below:
+evaluates the association of each individual potential biomarker with an
+outcome of interest, while accounting for potential confounding based on all
+other covariates included in the design matrix. We demonstrate the necessary
+syntax for calling `biomarkertmle` below by applying to just a handful of
+biomarkers:
 
-```{r biomarkerTMLE_eval, eval=FALSE}
-biomarkerTMLEout <- biomarkertmle(se = illuminaData,
-                                  varInt = varInt_index,
-                                  type = "exposure",
+```{r biomarkerTMLE_eval}
+biomarkerTMLEout <- biomarkertmle(se = se[, seq_len(10)],
+                                  varInt = 1,  # outcome: 1st "colData" variable
+                                  type = "outcome",
                                   family = "gaussian",
-                                  g_lib = c("SL.glmnet", "SL.randomForest",
-                                            "SL.polymars", "SL.mean"),
-                                  Q_lib = c("SL.glmnet", "SL.randomForest",
-                                            "SL.nnet", "SL.mean")
+                                  g_lib = c("SL.mean"),
+                                  Q_lib = c("SL.mean")
                                  )
 ```
 
-```{r load_biomarkerTMLE_result, echo=FALSE}
-data(biomarkertmleOut)
-```
-
-The output of `biomarkertmle` is an object of class `bioTMLE`, containing four
+The output of `biomarkertmle` is an object of class `bioTMLE`, containing three
 objects: (1) `call`, the call to `biomarkertmle`; (2) `topTable`, an empty
 slot meant to hold the output of `limma::topTable`, after a later call to
-`modtest_ic`; (3) `limmaOut`, an empty slot meant to hold the output of
-`limma::lmFit`, after a later call to `modtest_ic`; and (4) `tmleOut`, a data
-frame containing the point estimates of the associations of each biomarker with
-the exposure of interest based on the influence curve representation of the
-Average Treatment Effect parameter.
+`modtest_ic`; and (3) `tmleOut`, a data frame containing the point estimates of
+the associations of each biomarker with the exposure of interest based on the
+influence curve representation of the Average Treatment Effect parameter.
 
 The output of `biomarkertmle` can be directly fed to `modtest_ic`, a wrapper
 around `limma::lmFit` and `limma::topTable` that outputs a `biotmle` object
