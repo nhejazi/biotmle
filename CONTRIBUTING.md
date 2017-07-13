@@ -77,10 +77,10 @@ Pull requests will be evaluated against the a checklist:
     multiple changes that depend on each other, start with the first one
     and don't submit any others until the first one has been processed.
 
-3.  __Use `biotmle` coding style__. Please follow the
+3.  __Use `biotmle` coding style__. To do so, please follow the
     [official ggplot2 style](http://adv-r.had.co.nz/Style.html). Maintaining
     a consistent style across the whole code base makes it much easier to
-    jump into the code. If you're modifying existing ggplot2 code that
+    jump into the code. If you're modifying existing `biotmle` code that
     doesn't follow the style guide, a separate pull request to fix the
     style would be greatly appreciated.
 
