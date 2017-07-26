@@ -20,14 +20,9 @@ authors:
 affiliations:
   - name: Division of Biostatistics, University of California, Berkeley
     index: 1
-date: 08 January 2017
+date: 26 July 2017
 bibliography: paper.bib
 ---
-
-```{r setup, echo=FALSE}
-library(dplyr)
-suppressMessages(library(SummarizedExperiment))
-```
 
 # Summary
 
@@ -53,51 +48,12 @@ with a well-studied causal interpretation (see @vdl2011targeted for extended
 discussions), making the `biotmle` R package well-suited for applications in
 bioinformatics, epidemiology, and genomics.
 
-Let's take a look at an example data set and clean it up for use with this R
-package:
-
-```{r clean_data}
-library(biotmle)
-library(biotmleData)
-data(illuminaData)
-
-# discretize "age" in the phenotype-level data
-colData(illuminaData) <- colData(illuminaData) %>%
-  data.frame %>%
-  dplyr::mutate(age = as.numeric(age > median(age))) %>%
-  DataFrame
-
-# specify column index of treatment/exposure variable of interest
-varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
-```
-
-We would call the principal function of this R package (`biomarkertmle`) with
-the following syntax:
-
-```{r biomarkerTMLE_eval, eval=FALSE}
-biomarkerTMLEout <- biomarkertmle(se = illuminaData,
-                                  varInt = varInt_index,
-                                  family = "gaussian",
-                                  g_lib = c("SL.glmnet", "SL.randomForest",
-                                            "SL.polymars", "SL.mean"),
-                                  Q_lib = c("SL.glmnet", "SL.randomForest",
-                                            "SL.nnet", "SL.mean")
-                                 )
-```
-
-```{r load_biomarkerTMLE_result, echo=FALSE}
-data(biomarkertmleOut)
-```
-
-Note that the above call is not executed, as the estimation procedure is both
-time- and resource-intensive.
+After adjusting our data set to be consistent with the expect input format --
+please consult the vignette accompanying the R package for details -- we would
+call the principal function of this R package: `biomarkertmle`.
 
 We would perform a moderated test on the output of the `biomarkertmle` function
-using the function `modtest_ic`:
-
-```{r limmaTMLE_eval}
-limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
-```
+using the function `modtest_ic`.
 
 While the principal table of results produced by this R package matches those
 produced by the well-known `limma` R package [@smyth2005limma], there are also
@@ -106,20 +62,12 @@ from the popular `SummarizedExperiment` class -- introduced by this package
 [@huber2015orchestrating]. For illustrative purposes, we demonstrate the ouput
 of two such functions on anonymized experimental data below:
 
-```{r plot_heatmap, fig.align='center'}
-varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
-designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
-designVar <- as.numeric(designVar == max(designVar))
+![Heatmap visualizing the Average Treatment Effect contribution of a change in
+exposure to each biomarker of interest](figs/heatmap_biotmle.png)
 
-heatmap_ic(x = limmaTMLEout, design = designVar, FDRcutoff = 0.05, top = 25)
-```
-
-The above heatmap displays the results for the top $25$ biomarkers. The package
-also provides conveniences for generating volcano plots:
-
-```{r plot_volcano, fig.align='center'}
-volcano_ic(biotmle = limmaTMLEout)
-```
+![Volcano plot visualizing the log fold change in the Average Treatment Effect
+against the raw p-value from the moderated t-test performed on each
+biomarker](figs/volcanoplot_biotmle.png)
 
 \newpage
 
