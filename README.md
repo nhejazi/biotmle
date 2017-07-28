@@ -3,7 +3,7 @@
 R/`biotmle`
 ===========
 
-[![Travis-CI Build Status](https://travis-ci.org/nhejazi/biotmle.svg?branch=master)](https://travis-ci.org/nhejazi/biotmle) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=master&svg=true)](https://ci.appveyor.com/project/nhejazi/biotmle/) [![Coverage Status](https://img.shields.io/codecov/c/github/nhejazi/biotmle/master.svg)](https://codecov.io/github/nhejazi/biotmle?branch=master) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Bioc Time](http://bioconductor.org/shields/years-in-bioc/biotmle.svg)](https://bioconductor.org/packages/release/bioc/html/biotmle.html) [![JOSS Status](http://joss.theoj.org/papers/02be843d9bab1b598187bfbb08ce3949/status.svg)](http://joss.theoj.org/papers/02be843d9bab1b598187bfbb08ce3949) [![DOI](https://zenodo.org/badge/65854775.svg)](https://zenodo.org/badge/latestdoi/65854775) [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT)
+[![Travis-CI Build Status](https://travis-ci.org/nhejazi/biotmle.svg?branch=master)](https://travis-ci.org/nhejazi/biotmle) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=master&svg=true)](https://ci.appveyor.com/project/nhejazi/biotmle/) [![Coverage Status](https://img.shields.io/codecov/c/github/nhejazi/biotmle/master.svg)](https://codecov.io/github/nhejazi/biotmle?branch=master) [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active) [![Bioc Time](http://bioconductor.org/shields/years-in-bioc/biotmle.svg)](https://bioconductor.org/packages/release/bioc/html/biotmle.html) [![Bioc Downloads](http://bioconductor.org/shields/downloads/biotmle.svg)](https://bioconductor.org/packages/release/bioc/html/biotmle.html) [![MIT license](http://img.shields.io/badge/license-MIT-brightgreen.svg)](http://opensource.org/licenses/MIT) [![DOI](https://zenodo.org/badge/65854775.svg)](https://zenodo.org/badge/latestdoi/65854775) [![JOSS Status](http://joss.theoj.org/papers/02be843d9bab1b598187bfbb08ce3949/status.svg)](http://joss.theoj.org/papers/02be843d9bab1b598187bfbb08ce3949)
 
 > Targeted Learning with moderated statistics for biomarker discovery
 
@@ -62,16 +62,16 @@ Citation
 After using the `biotmle` R package, please cite it:
 
         @article{hejazi2017biotmle,
-          doi = {},
-          url = {},
-          year  = {2017},
-          month = {},
-          publisher = {The Open Journal},
-          volume = {},
-          number = {},
-          author = {Hejazi, Nima S and Cai, Weixin and Hubbard, Alan E},
+          author = {Hejazi, Nima S. and Cai, Weixin and Hubbard, Alan E.},
           title = {biotmle: Targeted Learning for Biomarker Discovery},
-          journal = {The Journal of Open Source Software}
+          journal = {The Journal of Open Source Software},
+          volume = {2},
+          number = {15},
+          month = {July},
+          year  = {2017},
+          publisher = {The Open Journal},
+          doi = {10.21105/joss.00295},
+          url = {https://doi.org/10.21105/joss.00295}
         }
 
 ------------------------------------------------------------------------
