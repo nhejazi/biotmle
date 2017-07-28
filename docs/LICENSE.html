@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transformation utility for using "voom" with biomarker TMLE procedure — rnaseq_ic • biotmle</title>
+<title>License • biotmle</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -20,9 +20,9 @@
 
 
 <!-- pkgdown -->
-<link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
-<script src="../pkgdown.js"></script>
+<link href="pkgdown.css" rel="stylesheet">
+<script src="jquery.sticky-kit.min.js"></script>
+<script src="pkgdown.js"></script>
   
   
 <!-- mathjax -->
@@ -37,7 +37,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-topic">
+    <div class="container template-license">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -47,18 +47,18 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">biotmle</a>
+      <a class="navbar-brand" href="index.html">biotmle</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="/index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable</a>
+      <a href="articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable</a>
     </li>
     <li>
-      <a href="../articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data</a>
+      <a href="articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data</a>
     </li>
   </ul>
 </li>
@@ -93,56 +93,38 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9 contents">
+  <div class="contents col-md-12">
     <div class="page-header">
-    <h1>Transformation utility for using "voom" with biomarker TMLE procedure</h1>
+      <h1>License</h1>
     </div>
 
-    
-    <p>This function prepares next-generation sequencing data (counts) for use with
-the biomarker TMLE procedure by invoking the voom transform of <code>limma</code>.</p>
-    
+<pre>MIT License
 
-    <pre class="usage"><span class='fu'>rnaseq_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>biotmle</th>
-      <td><p>(bioTMLE) - subclass of <code>SummarizedExperiment</code> containing
-next-generation sequencing (NGS) count data in the "assays" slot.</p></td>
-    </tr>
-    <tr>
-      <th>weights</th>
-      <td><p>(logical) - whether to return quality weights of samples in
-the output object.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>- other arguments to be passed to functions <code><a href='http://www.rdocumentation.org/packages/limma/topics/voom'>limma::voom</a></code> or
-<code><a href='http://www.rdocumentation.org/packages/limma/topics/voomWithQualityWeights'>limma::voomWithQualityWeights</a></code> as appropriate.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+Copyright (c) 2016-2017 Nima S. Hejazi
 
-    <p><code>EList</code> object containing voom-transformed "expression" measures
-        of count data (actually, the mean-variance trend) in the "E" slot, to
-        be passed into the biomarker TMLE procedure.</p>
-    
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+</pre>
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-          </ul>
 
-  </div>
 </div>
+
 
       <footer>
       <div class="copyright">

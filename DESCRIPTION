@@ -12,8 +12,8 @@ Maintainer: Nima Hejazi <nhejazi@berkeley.edu>
 Description: This package facilitates the discovery of biomarkers from
     biological sequencing data (e.g., microarrays, RNA-seq) based on the
     associations of potential biomarkers with exposure and outcome variables by
-    implementing an estimation procedure that combines a generalization of the
-    moderated t-statistic with asymptotically linear statistical parameters
+    implementing an estimation procedure that combines a generalization of
+    moderated statistics with asymptotically linear statistical parameters
     estimated via targeted minimum loss-based estimation (TMLE).
 Depends:
     R (>= 3.3)

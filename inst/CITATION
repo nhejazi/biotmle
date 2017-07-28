@@ -2,18 +2,18 @@ citHeader("To cite 'biotmle' in publications, please use:")
 
 citEntry(
     entry        = "Article",
-    doi          = "NA",
-    url          = "NA",
+    doi          = "10.21105/joss.00295",
+    url          = "https://doi.org/10.21105/joss.00295",
     year         = "2017",
-    month        = "NA",
+    month        = "July",
     publisher    = "The Open Journal",
-    volume       = "X",
-    number       = "Y",
-    author       = "Nima S Hejazi, Weixin Cai, Alan E Hubbard",
+    volume       = "2",
+    number       = "15",
+    author       = "Nima S. Hejazi, Weixin Cai, Alan E. Hubbard",
     title        = "biotmle: Targeted Learning for Biomarker Discovery",
     journal      = "The Journal of Open Source Software",
     textVersion  = paste("Hejazi, NS, Cai, W, and Hubbard, AE (2017).",
                          "biotmle: Targeted Learning for Biomarker Discovery.",
-                         "The Journal of Open Source Software, X(Y).",
-                         "Y")
+                         "The Journal of Open Source Software, 2(15).",
+                         "15")
 )
