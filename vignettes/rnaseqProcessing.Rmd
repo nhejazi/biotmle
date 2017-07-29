@@ -12,6 +12,7 @@ vignette: >
 ```{r setup, echo=FALSE}
 library(dplyr)
 library(biotmle)
+library(biotmleData)
 library(SummarizedExperiment)
 "%ni%" = Negate("%in%")
 ```
@@ -70,13 +71,12 @@ rnaseqTMLEout <- biomarkertmle(se = se,
                                Q_lib = c("SL.mean", "SL.glm", "SL.randomForest",
                                          "SL.nnet")
                               )
-
-head(rnaseqTMLEout@tmleOut$E[,1:6])
+head(rnaseqTMLEout@tmleOut$E[, seq_len(6)])
 ```
 
 ```{r load_biomarkerTMLE_result, echo=FALSE}
 data(rnaseqtmleOut)
-head(rnaseqTMLEout@tmleOut$E[,1:6])
+head(rnaseqTMLEout@tmleOut$E[, seq_len(6)])
 ```
 
 ```{r modtest_ic}
