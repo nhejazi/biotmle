@@ -14,7 +14,7 @@ R/`biotmle`
 Description
 -----------
 
-`biotmle` is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic of Smyth for use with asymptotically linear target parameters. The set of methods implemented in this R package rely on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform biological sequencing data (e.g., microarray, RNA-seq) based on the influence curve representation of a particular causal target parameter (e.g., Average Treatment Effect). The transformed data are then used to test for differences between the statistical estimate of the target parameter and a hypothesized value of said parameter using the approach of moderated statistics.
+`biotmle` is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic (Smyth 2004) for use with target parameters that have asymptotically linear representations (van der Laan and Rose 2011). The set of methods implemented in this R package rely on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform biological sequencing data (e.g., microarray, RNA-seq) based on the influence curve representation of a particular causal target parameter (e.g., Average Treatment Effect). The transformed data (rotated into influence curve space) may then be subjected to a moderated test for differences between the statistical estimate of the target parameter and a hypothesized value of said parameter (usually a null value defined in relation to the parameter itself). Such an approach provides a valid statistical hypothesis test of a statistically estimable causal parameter while controlling the variance such that the error rate (of the test) is more strongly controlled relative to testing procedures that do not moderate the variance estimate (Hejazi et al. 2017).
 
 ------------------------------------------------------------------------
 
@@ -83,18 +83,20 @@ Related
 
 ------------------------------------------------------------------------
 
-References
-----------
-
--   [Nima S. Hejazi, Sara Kherad-Pajouh, Mark J. van der Laan, and Alan E. Hubbard. "Generalized application of the moderated t-statistic to asymptotically linear target parameters." **in preparation**, 2017.]()
-
--   [Gordon K. Smyth. "Linear models and empirical Bayes methods for assessing differential expression in microarray experiments." *Statistical Applications in Genetics and Molecular Biology*, 3(1), 2004.](http://www.statsci.org/smyth/pubs/ebayes.pdf)
-
-------------------------------------------------------------------------
-
 License
 -------
 
 © 2016-2017 [Nima S. Hejazi](http://nimahejazi.org) & [Alan E. Hubbard](http://hubbard.berkeley.edu/)
 
 The contents of this repository are distributed under the MIT license. See file `LICENSE` for details.
+
+------------------------------------------------------------------------
+
+References
+----------
+
+Hejazi, Nima S., Sara Kherad-Pajouh, Mark J. van der Laan, and Alan E. Hubbard. 2017. “A Generalized Testing Procedure for Asymptotically Linear Parameters Using Moderated Statistics,” in preparation.
+
+Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for Assessing Differential Expression in Microarray Experiments.” *Statistical Applications in Genetics and Molecular Biology* 3 (1). Walter de Gruyter: 1–25. doi:[10.2202/1544-6115.1027](https://doi.org/10.2202/1544-6115.1027).
+
+van der Laan, Mark J., and Sherri Rose. 2011. *Targeted Learning: Causal Inference for Observational and Experimental Data*. Springer Science & Business Media.
