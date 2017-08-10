@@ -17,14 +17,12 @@ cache:
 branches:
   only:
     - master
-    - develop
+    - /*/-dev
 
 environment:
   global:
     WARNINGS_ARE_ERRORS: 0
     USE_RTOOLS: true
-    GITHUB_PAT:
-      secure: NOkWY7zLKevHO11BcijFIDC95MS6o0J+Oh1rCsnUFEmjIR26uW9JKy/HMwasCi7x
 
 build_script:
   - travis-tool.sh install_deps
