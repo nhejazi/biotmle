@@ -67,7 +67,7 @@ utils::globalVariables(c("gene","assay<-"))
 #'
 #' varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
 #'
-#' biomarkerTMLEout <- biomarkertmle(se = illuminaData[1, ],
+#' biomarkerTMLEout <- biomarkertmle(se = illuminaData[1:2, ],
 #'                                   varInt = varInt_index,
 #'                                   parallel = FALSE,
 #'                                   family = "gaussian",
