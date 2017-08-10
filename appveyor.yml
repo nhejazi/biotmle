@@ -28,6 +28,7 @@ build_script:
   - travis-tool.sh install_deps
   - travis-tool.sh install_github nhejazi/biotmleData
   - travis-tool.sh install_bioc SummarizedExperiment
+  - travis-tool.sh install_bioc BiocParallel
   - travis-tool.sh install_bioc BiocStyle
   - travis-tool.sh install_bioc limma
   - travis-tool.sh install_bioc_deps
