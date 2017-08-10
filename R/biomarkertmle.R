@@ -119,20 +119,19 @@ biomarkertmle <- function(se,
   #=============================================================================
   # set up parallelization based on input
   # ============================================================================
+  doFuture::registerDoFuture()
   if (parallel == TRUE) {
-    doFuture::registerDoFuture()
     if (!is.null(future_param)) {
       future::plan(eval(paste0("future::", future_param)))
     } else {
       future::plan(future::multiprocess)
     }
-    BiocParallel::register(BiocParallel::DoparParam(), default = TRUE)
   } else if (parallel == FALSE) {
-    doFuture::registerDoFuture()
+    warning(paste("Sequential evaluation is strongly discouraged.",
+                  "\n Proceed with caution."))
     future::plan(future::sequential)
-    BiocParallel::register(BiocParallel::DoparParam(), default = TRUE)
-    warning("Sequential evaluation is generally not recommended.")
   }
+  BiocParallel::register(BiocParallel::DoparParam(), default = TRUE)
 
   #=============================================================================
   # TMLE procedure to identify biomarkers based on an EXPOSURE
