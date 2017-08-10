@@ -45,7 +45,7 @@ utils::globalVariables(c("gene","assay<-"))
 #'        fitting the "Q" step of the standard TMLE procedure.
 #'
 #' @importFrom SummarizedExperiment assay colData rowData SummarizedExperiment
-#' @importFrom BiocParallel register bplapply DoparParam
+#' @importFrom BiocParallel register bplapply bpprogressbar DoparParam
 #' @importFrom future plan multiprocess sequential
 #' @importFrom doFuture registerDoFuture
 #'
@@ -142,7 +142,7 @@ biomarkertmle <- function(se,
   } else {
     bp_type <- BiocParallel::DoparParam()
   }
-  bpprogressbar(bp_type) <- TRUE
+  BiocParallel::bpprogressbar(bp_type) <- TRUE
   BiocParallel::register(bp_type, default = TRUE)
 
   #=============================================================================
