@@ -5,9 +5,10 @@
 \title{Biomarker Evaluation with Targeted Minimum Loss-Based Estimation (TMLE)}
 \usage{
 biomarkertmle(se, varInt, ngscounts = FALSE, parallel = TRUE,
-  future_param = NULL, family = "gaussian", subj_ids = NULL,
-  g_lib = c("SL.glm", "SL.randomForest", "SL.nnet", "SL.polymars", "SL.mean"),
-  Q_lib = c("SL.glm", "SL.randomForest", "SL.nnet", "SL.mean"))
+  bppar_type = NULL, future_param = NULL, family = "gaussian",
+  subj_ids = NULL, g_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
+  "SL.polymars", "SL.mean"), Q_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
+  "SL.mean"))
 }
 \arguments{
 \item{se}{(SummarizedExperiment) - containing expression or next-generation
@@ -30,6 +31,12 @@ argument is set to \code{TRUE}, \code{future::multiprocess} is used,
 and if \code{FALSE}, \code{future::sequential} is used, alongside
 \code{BiocParallel::bplapply}. Other options for evaluation through
 futures may be invoked by setting the argument \code{future_param}.}
+
+\item{bppar_type}{(character) - specifies the type of backend to be used with
+the parallelization invoked by \code{BiocParallel}. Consult the manual
+page for \code{BiocParallel::BiocParallelParam} for possible types and
+descriptions on their appropriate uses. The default for this argument
+is \code{NULL}, which silently uses \code{BiocParallel::DoparParam}.}
 
 \item{future_param}{(character) - specifies the type of parallelization to be
 invoked when using futures for evaluation. For a list of the available

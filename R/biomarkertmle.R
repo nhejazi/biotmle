@@ -23,6 +23,11 @@ utils::globalVariables(c("gene","assay<-"))
 #'        and if \code{FALSE}, \code{future::sequential} is used, alongside
 #'        \code{BiocParallel::bplapply}. Other options for evaluation through
 #'        futures may be invoked by setting the argument \code{future_param}.
+#' @param bppar_type (character) - specifies the type of backend to be used with
+#'        the parallelization invoked by \code{BiocParallel}. Consult the manual
+#'        page for \code{BiocParallel::BiocParallelParam} for possible types and
+#'        descriptions on their appropriate uses. The default for this argument
+#'        is \code{NULL}, which silently uses \code{BiocParallel::DoparParam}.
 #' @param future_param (character) - specifies the type of parallelization to be
 #'        invoked when using futures for evaluation. For a list of the available
 #'        types, please consult the documentation for \code{future::plan}. The
@@ -40,7 +45,7 @@ utils::globalVariables(c("gene","assay<-"))
 #'        fitting the "Q" step of the standard TMLE procedure.
 #'
 #' @importFrom SummarizedExperiment assay colData rowData SummarizedExperiment
-#' @importFrom BiocParallel register DoparParam bplapply
+#' @importFrom BiocParallel register bplapply bpprogressbar DoparParam
 #' @importFrom future plan multiprocess sequential
 #' @importFrom doFuture registerDoFuture
 #'
@@ -79,6 +84,7 @@ biomarkertmle <- function(se,
                           varInt,
                           ngscounts = FALSE,
                           parallel = TRUE,
+                          bppar_type = NULL,
                           future_param = NULL,
                           family = "gaussian",
                           subj_ids = NULL,
@@ -131,7 +137,13 @@ biomarkertmle <- function(se,
                   "\n Proceed with caution."))
     future::plan(future::sequential)
   }
-  BiocParallel::register(BiocParallel::DoparParam(), default = TRUE)
+  if (!is.null(bppar_type)) {
+    bp_type <- eval(paste0("BiocParallel::", bppar_type))
+  } else {
+    bp_type <- BiocParallel::DoparParam()
+  }
+  BiocParallel::bpprogressbar(bp_type) <- TRUE
+  BiocParallel::register(bp_type, default = TRUE)
 
   #=============================================================================
   # TMLE procedure to identify biomarkers based on an EXPOSURE
