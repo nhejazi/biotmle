@@ -46,7 +46,7 @@ Suggests:
     rmarkdown,
     BiocStyle
 Remotes:
-    nhejazi/biotmleData,
+    nhejazi/biotmleData
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 biocViews:

@@ -1,6 +1,10 @@
 utils::globalVariables(c("new"))
 
-#' Constructor for class union data.frame_OR_EList
+#' @title S4 class union data.frame_OR_EList
+#'
+#' @description Class union contaning \code{data.frame} and \code{limma::Elist},
+#'              used internally to handle situations when a returned object has
+#'              a type that cannot be guessed from the function call.
 #'
 #' @return fusion of classes \code{data.frame} and \code{EList}, used within
 #'         \code{.biotmle} by class \code{bioTMLE} to handle uncertainty in the
@@ -11,7 +15,7 @@ utils::globalVariables(c("new"))
 #'
 #' @export
 #'
-methods::setClassUnion("data.frame_OR_EList", c("data.frame", "EList"))
+setClassUnion(name = "data.frame_OR_EList", members = c("data.frame", "EList"))
 
 ################################################################################
 

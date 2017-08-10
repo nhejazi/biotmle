@@ -31,8 +31,8 @@
 #'
 plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 
-  pal1 <- wesanderson::wes_palette("GrandBudapest", 100, type = "continuous")
-  pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
+  pal1 <- wesanderson::wes_palette("Royal2", 100, type = "continuous")
+  pal2 <- wesanderson::wes_palette("Darjeeling2", type = "continuous")
 
   if(type == "pvals_raw") {
     p <- ggplot2::ggplot(as.data.frame(x@topTable), ggplot2::aes(P.Value))
@@ -104,8 +104,8 @@ volcano_ic <- function(biotmle, fc_bound = 3.0, pval_bound = 0.2) {
 
   stopifnot(class(biotmle) == "bioTMLE")
 
-  pal1 <- wesanderson::wes_palette("GrandBudapest", 100, type = "continuous")
-  pal2 <- wesanderson::wes_palette("Darjeeling", type = "continuous")
+  pal1 <- wesanderson::wes_palette("Royal2", 100, type = "continuous")
+  pal2 <- wesanderson::wes_palette("Darjeeling2", type = "continuous")
 
   tt_volcano <- as.data.frame(biotmle@topTable) %>%
     dplyr::arrange(adj.P.Val) %>%
@@ -207,7 +207,7 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05, top = 25) {
 
   annot <- ifelse(design == 0, "Control", "Treated")
 
-  pal <- wes_palette("Zissou", 100, type = "continuous")
+  pal <- wes_palette("Moonrise3", 100, type = "continuous")
 
   superheat::superheat(as.matrix(biomarkerTMLEout_top), row.dendrogram = TRUE,
                        grid.hline.col = "white", force.grid.hline = TRUE,
