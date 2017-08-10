@@ -169,8 +169,7 @@ biomarkertmle <- function(se,
                                              family = family,
                                              subj_ids = subj_ids
                                             )
-  biomarkerTMLEout <- as.data.frame(matrix(unlist(biomarkerTMLEout),
-                                           nrow = ncol(Y), byrow = TRUE))
+  biomarkerTMLEout <- do.call(rbind.data.frame, biomarkerTMLEout)
 
   if (ngscounts) {
     voom_out$E <- t(biomarkerTMLEout)
