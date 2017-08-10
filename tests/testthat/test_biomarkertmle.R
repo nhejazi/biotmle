@@ -18,12 +18,12 @@ colData(illuminaData) <- colData(illuminaData) %>%
 
 varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
 
-biomarkerTMLEout <- biomarkertmle(se = illuminaData[1, ],
+biomarkerTMLEout <- biomarkertmle(se = illuminaData[1:2, ],
                                   varInt = varInt_index,
-                                  parallel = 1,
+                                  parallel = FALSE,
                                   family = "gaussian",
-                                  g_lib = c("SL.mean"),
-                                  Q_lib = c("SL.mean")
+                                  g_lib = c("SL.mean", "SL.glm"),
+                                  Q_lib = "SL.mean"
                                  )
 
 ################################################################################
@@ -39,7 +39,7 @@ test_that("biomarkertmle object is of appropriate custom class", {
 })
 
 test_that("biomarkertmle output is consistent using example data", {
-  expect_equal(assay(biomarkerTMLEout)[, c(17, 83, 117)],
+  expect_equal(assay(biomarkerTMLEout)[1, c(17, 83, 117)],
                c(360.7073, 375.9316, 319.3649))
 })
 

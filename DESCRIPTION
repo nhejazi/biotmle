@@ -2,56 +2,56 @@ Package: biotmle
 Title: Targeted Learning for Biomarker Discovery with Moderated Statistics
 Version: 1.1.0
 Authors@R: c(
-    person("Nima", "Hejazi", email = "nhejazi@berkeley.edu",
-           role = c("aut", "cre", "cph")),
-    person("Alan", "Hubbard", email = "hubbard@berkeley.edu", role = "aut"),
-    person("Weixin", "Cai", email = "wcai@berkeley.edu", role = "ctb")
-    )
+  person("Nima", "Hejazi", email = "nhejazi@berkeley.edu",
+         role = c("aut", "cre", "cph")),
+  person("Alan", "Hubbard", email = "hubbard@berkeley.edu", role = "aut"),
+  person("Weixin", "Cai", email = "wcai@berkeley.edu", role = "ctb")
+  )
 Author: Nima Hejazi [aut, cre, cph]
 Maintainer: Nima Hejazi <nhejazi@berkeley.edu>
 Description: This package facilitates the discovery of biomarkers from
-    biological sequencing data (e.g., microarrays, RNA-seq) based on the
-    associations of potential biomarkers with exposure and outcome variables by
-    implementing an estimation procedure that combines a generalization of
-    moderated statistics with asymptotically linear statistical parameters
-    estimated via targeted minimum loss-based estimation (TMLE).
+  biological sequencing data (e.g., microarrays, RNA-seq) based on the
+  associations of potential biomarkers with exposure and outcome variables by
+  implementing an estimation procedure that combines a generalization of
+  moderated statistics with asymptotically linear statistical parameters
+  estimated via targeted minimum loss-based estimation (TMLE).
 Depends:
-    R (>= 3.3)
+  R (>= 3.3)
 License: file LICENSE
 URL: https://github.com/nhejazi/biotmle
 BugReports: https://github.com/nhejazi/biotmle/issues
 Encoding: UTF-8
 LazyData: true
 Imports:
-    tmle,
-    limma,
-    foreach,
-    parallel,
-    doParallel,
-    ggplot2,
-    wesanderson,
-    magrittr,
-    stats,
-    Matrix,
-    methods,
-    DBI,
-    dplyr,
-    SummarizedExperiment,
-    superheat,
-    SuperLearner,
-    biotmleData
+  dplyr,
+  magrittr,
+  ggplot2,
+  superheat,
+  wesanderson,
+  doFuture,
+  future,
+  stats,
+  Matrix,
+  methods,
+  DBI,
+  limma,
+  BiocParallel,
+  SummarizedExperiment,
+  biotmleData,
+  SuperLearner,
+  tmle
 Suggests:
-    testthat,
-    knitr,
-    rmarkdown,
-    BiocStyle
+  testthat,
+  knitr,
+  rmarkdown,
+  BiocStyle
 Remotes:
-    nhejazi/biotmleData
+  nhejazi/biotmleData
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 biocViews:
-    GeneExpression,
-    DifferentialExpression,
-    Sequencing,
-    Microarray,
-    RNASeq
+  GeneExpression,
+  DifferentialExpression,
+  Sequencing,
+  Microarray,
+  RNASeq
