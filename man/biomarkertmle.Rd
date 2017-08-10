@@ -81,8 +81,8 @@ biomarkerTMLEout <- biomarkertmle(se = illuminaData[1, ],
                                   varInt = varInt_index,
                                   parallel = FALSE,
                                   family = "gaussian",
-                                  g_lib = c("SL.mean"),
-                                  Q_lib = c("SL.mean")
+                                  g_lib = c("SL.mean", "SL.glm"),
+                                  Q_lib = "SL.mean"
                                  )
 
 }
