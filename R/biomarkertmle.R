@@ -71,8 +71,8 @@ utils::globalVariables(c("gene","assay<-"))
 #'                                   varInt = varInt_index,
 #'                                   parallel = FALSE,
 #'                                   family = "gaussian",
-#'                                   g_lib = c("SL.mean"),
-#'                                   Q_lib = c("SL.mean")
+#'                                   g_lib = c("SL.mean", "SL.glm"),
+#'                                   Q_lib = "SL.mean"
 #'                                  )
 #'
 biomarkertmle <- function(se,
@@ -158,6 +158,11 @@ biomarkertmle <- function(se,
     W <- as.numeric(rep(1, length(A)))
   }
 
+  # coerce matrix of baseline covariates to numeric
+  if (!all(unique(sapply(W, class)) == "numeric")) {
+    W <- as.data.frame(sapply(W, as.numeric))
+  }
+
   # perform multi-level TMLE (of the ATE) for genes as Y
   biomarkerTMLEout <- BiocParallel::bplapply(Y[, seq_along(Y)],
                                              biomarkerTMLE_exposure,
@@ -169,7 +174,7 @@ biomarkertmle <- function(se,
                                              family = family,
                                              subj_ids = subj_ids
                                             )
-  biomarkerTMLEout <- do.call(rbind.data.frame, biomarkerTMLEout)
+  biomarkerTMLEout <- do.call(cbind.data.frame, biomarkerTMLEout)
 
   if (ngscounts) {
     voom_out$E <- t(biomarkerTMLEout)
