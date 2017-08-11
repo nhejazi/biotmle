@@ -128,7 +128,8 @@ biomarkertmle <- function(se,
   doFuture::registerDoFuture()
   if (parallel == TRUE) {
     if (!is.null(future_param)) {
-      future::plan(eval(paste0("future::", future_param)))
+      set_future_param <- parse(text = paste0("future", "::", future_param))
+      future::plan(eval(set_future_param))
     } else {
       future::plan(future::multiprocess)
     }
@@ -138,7 +139,8 @@ biomarkertmle <- function(se,
     future::plan(future::sequential)
   }
   if (!is.null(bppar_type)) {
-    bp_type <- eval(paste0("BiocParallel::", bppar_type))
+    bp_type <- eval(parse(text = paste0("BiocParallel", "::",
+                                        bppar_type, "()")))
   } else {
     bp_type <- BiocParallel::DoparParam()
   }
