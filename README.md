@@ -1,4 +1,14 @@
 
+-   [R/`biotmle`](#rbiotmle)
+    -   [Description](#description)
+    -   [Installation](#installation)
+    -   [Issues](#issues)
+    -   [Contributions](#contributions)
+    -   [Citation](#citation)
+    -   [Related](#related)
+    -   [License](#license)
+    -   [References](#references)
+
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 R/`biotmle`
 ===========

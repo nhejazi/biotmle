@@ -1,6 +1,9 @@
 ---
-output: github_document
-bibliography: refs.bib
+output:
+  rmarkdown::github_document:
+    toc: true
+    toc_depth: 2
+bibliography: README-refs.bib
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -132,3 +135,4 @@ The contents of this repository are distributed under the MIT license. See file
 ---
 
 ## References
+
