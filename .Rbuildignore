@@ -11,8 +11,8 @@
 ^data-raw$
 ^paper$
 ^docs$
-^refs\.bib$
 ^README\.md$
 ^README\.Rmd$
 ^README\.html$
 ^README-.*\.png$
+^README-refs\.bib$

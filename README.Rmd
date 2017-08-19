@@ -1,8 +1,6 @@
 ---
 output:
-  rmarkdown::github_document:
-    toc: true
-    toc_depth: 2
+  rmarkdown::github_document
 bibliography: README-refs.bib
 ---
 
