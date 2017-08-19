@@ -32,7 +32,7 @@ __Author:__ [Nima Hejazi](http://nimahejazi.org)
 
 ---
 
-## Description
+## What's `biotmle`?
 
 `biotmle` is an R package that facilitates biomarker discovery by generalizing
 the moderated t-statistic [@smyth2004linear] for use with target parameters that
@@ -101,7 +101,7 @@ prior to submitting a pull request.
 After using the `biotmle` R package, please cite it:
 
         @article{hejazi2017biotmle,
-          author = {Hejazi, Nima S. and Cai, Weixin and Hubbard, Alan E.},
+          author = {Hejazi, Nima S and Cai, Weixin and Hubbard, Alan E},
           title = {biotmle: Targeted Learning for Biomarker Discovery},
           journal = {The Journal of Open Source Software},
           volume = {2},
