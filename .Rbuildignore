@@ -5,10 +5,8 @@
 ^codecov\.yml$
 ^CONTRIBUTING\.md$
 ^Makefile$
-^\.git$
 ^\.gitignore$
 ^\.gitattributes$
-^data-raw$
 ^paper$
 ^docs$
 ^README\.md$

@@ -3,3 +3,4 @@ TITLE = paper
 
 pdf:
 	pandoc $(TITLE).md -o $(TITLE).pdf --bibliography $(TITLE).bib
+

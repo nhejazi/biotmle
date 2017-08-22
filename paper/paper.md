@@ -27,7 +27,7 @@ bibliography: paper.bib
 # Summary
 
 The `biotmle` package provides an implementation of a biomarker discovery
-methodology based on targeted minimum loss-Based estimation (TMLE)
+methodology based on targeted minimum loss-based estimation (TMLE)
 [@vdl2011targeted] and a generalization of the moderated t-statistic of
 [@smyth2004linear], designed for use with biological sequencing data (e.g.,
 microarrays, RNA-seq). The statistical approach made available in this package
@@ -72,3 +72,4 @@ biomarker](figs/volcanoplot_biotmle.png)
 \newpage
 
 # References
+

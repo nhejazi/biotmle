@@ -33,5 +33,6 @@
   "keywords": "targeted learning, variable importance, causal inference, bioinformatics, genomics, R",
   "license": "MIT",
   "title": "biotmle: Targeted Learning for Biomarker Discovery",
-  "version": "v1.1.2"
+  "version": "v1.1.0"
 }
+

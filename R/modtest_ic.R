@@ -40,3 +40,4 @@ modtest_ic <- function(biotmle,
   biotmle@topTable <- as.data.frame(tt)
   return(biotmle)
 }
+

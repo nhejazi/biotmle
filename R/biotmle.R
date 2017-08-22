@@ -59,3 +59,4 @@ setClassUnion(name = "data.frame_OR_EList", members = c("data.frame", "EList"))
                     topTable = "data.frame"),
        contains = "SummarizedExperiment"
 )
+

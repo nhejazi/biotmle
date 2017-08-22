@@ -217,3 +217,4 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05, top = 25) {
                        ...
                       )
 }
+
