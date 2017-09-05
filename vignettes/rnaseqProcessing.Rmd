@@ -3,7 +3,7 @@ title: "Processing and Analyzing RNA-Seq Data"
 author: "Nima Hejazi & Alan Hubbard"
 date: "`r Sys.Date()`"
 output:
-  BiocStyle::html_document2
+  BiocStyle::html_document
 vignette: >
   %\VignetteIndexEntry{Processing and Analyzing RNA-Seq Data}
   %\VignetteEngine{knitr::rmarkdown}

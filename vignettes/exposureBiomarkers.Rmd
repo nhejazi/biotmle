@@ -3,7 +3,7 @@ title: "Identifying Biomarkers from an Exposure Variable"
 author: "Nima Hejazi & Alan Hubbard"
 date: "`r Sys.Date()`"
 output:
-  BiocStyle::html_document2
+  BiocStyle::html_document
 vignette: >
   %\VignetteIndexEntry{Identifying Biomarkers from an Exposure Variable}
   %\VignetteEngine{knitr::rmarkdown}
