@@ -25,7 +25,6 @@ Imports: tmle, limma, foreach, parallel, doParallel, ggplot2,
         wesanderson, magrittr, stats, dplyr, SummarizedExperiment,
         superheat, SuperLearner, biotmleData, Matrix
 Suggests: testthat, rmarkdown, knitr
-Remotes: nhejazi/biotmleData
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
 biocViews: GeneExpression, DifferentialExpression, Sequencing,
