@@ -3,6 +3,7 @@ utils::globalVariables(c("new"))
 #'
 #' @return class \code{biotmle} object, sub-classed from SummarizedExperiment.
 #'
+#' @importFrom methods setClass
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
 #'
 #' @export .biotmle
@@ -32,7 +33,7 @@ utils::globalVariables(c("new"))
 #'
 #' example_class <- example_biotmle_class(se = illuminaData)
 #'
-.biotmle <- setClass(
+.biotmle <- methods::setClass(
        Class = "bioTMLE",
        slots = list(call = "call",
                     tmleOut = "data.frame",
@@ -40,3 +41,4 @@ utils::globalVariables(c("new"))
                     topTable = "data.frame"),
        contains = "SummarizedExperiment"
 )
+
