@@ -1,6 +1,10 @@
 ---
 title: "Processing and Analyzing RNA-Seq Data"
-author: "Nima Hejazi & Alan Hubbard"
+author: |
+  | [Nima Hejazi](http://nimahejazi.org)
+  | Division of Biostatistics
+  | University of California, Berkeley
+  | Berkeley, CA, 94720, USA
 date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document
@@ -10,11 +14,11 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r setup, echo=FALSE}
+```{r setup}
 library(dplyr)
 library(biotmle)
 library(biotmleData)
-library(SummarizedExperiment)
+suppressMessages(library(SummarizedExperiment))
 "%ni%" = Negate("%in%")
 ```
 

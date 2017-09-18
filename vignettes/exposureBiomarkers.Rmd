@@ -1,6 +1,10 @@
 ---
 title: "Identifying Biomarkers from an Exposure Variable"
-author: "Nima Hejazi & Alan Hubbard"
+author: |
+  | [Nima Hejazi](http://nimahejazi.org)
+  | Division of Biostatistics
+  | University of California, Berkeley
+  | Berkeley, CA, 94720, USA
 date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document
@@ -34,7 +38,7 @@ library(dplyr)
 library(biotmle)
 library(biotmleData)
 data(illuminaData)
-library(SummarizedExperiment)
+suppressMessages(library(SummarizedExperiment))
 "%ni%" = Negate("%in%")
 ```
 
