@@ -1,2 +1,24 @@
-April 2017
-* The first working releast of package `biotmle` is available.
+biotmle 1.1.5:
+- An option for applying this methodology to next-generation sequencing data has
+  been added, based on the popular "voom" transform of the limma R package.
+- Facilities for parallelized computation have been completely re-implemented:
+  current routines favor a combination of future and BiocParallel.
+- The method for estimating biomarkers based on an observed outcome has been
+  removed (temporarily). Inference based on this method requires re-thinking.
+- A full suite of unit tests have been added, covering most package functions.
+
+biotmle 1.0.0:
+- The first release of this package was made as part of Bioconductor 3.5, in
+   2016.
+
+The biotmle R package provides routines for the method first described in the
+the technical manuscript [1] and the software paper [2]:
+
+1. Nima S. Hejazi, Sara Kherad-Pajouh, Mark J. van der Laan, Alan E. Hubbard.
+   Variance Stabilization of Targeted Estimators of Causal Parameters in
+   High-Dimensional Settings. https://arxiv.org/abs/1710.05451
+
+2. Nima S. Hejazi, Weixin Cai, Alan E. Hubbard. biotmle: Targeted Learning for
+   Biomarker Discovery. The Journal of Open Source Software, 2(15), 2017.
+   https://dx.doi.org/10.21105/joss.00295
+

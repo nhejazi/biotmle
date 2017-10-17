@@ -1,4 +1,6 @@
-citHeader("To cite 'biotmle' in publications, please use:")
+citHeader("Please cite the paper below for the 'biotmle' software package
+           itself. Please also make sure to cite the appropriate methodology
+           articles describing the statistical techniques being relied upon.")
 
 citEntry(
     entry        = "Article",
