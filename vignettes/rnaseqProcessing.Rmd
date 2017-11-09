@@ -1,10 +1,6 @@
 ---
 title: "Processing and Analyzing RNA-Seq Data"
-author: |
-  | [Nima Hejazi](http://nimahejazi.org)
-  | Division of Biostatistics
-  | University of California, Berkeley
-  | Berkeley, CA, 94720, USA
+author: "[Nima Hejazi](http://nimahejazi.org)"
 date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document

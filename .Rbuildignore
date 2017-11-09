@@ -11,6 +11,8 @@
 ^docs$
 ^README\.md$
 ^README\.Rmd$
+^README-withrefs\.Rmd$
 ^README\.html$
 ^README-.*\.png$
 ^README-refs\.bib$
+
