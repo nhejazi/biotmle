@@ -32,20 +32,20 @@ Status](http://joss.theoj.org/papers/02be843d9bab1b598187bfbb08ce3949/status.svg
 
 `biotmle` is an R package that facilitates biomarker discovery by
 generalizing the moderated t-statistic (Smyth 2004) for use with target
-parameters that have asymptotically linear representations (van der Laan
-and Rose 2011). The set of methods implemented in this R package rely on
-the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform
-biological sequencing data (e.g., microarray, RNA-seq) based on the
-influence curve representation of a particular causal target parameter
-(e.g., Average Treatment Effect). The transformed data (rotated into
-influence curve space) may then be subjected to a moderated test for
-differences between the statistical estimate of the target parameter and
-a hypothesized value of said parameter (usually a null value defined in
-relation to the parameter itself). Such an approach provides a valid
-statistical hypothesis test of a statistically estimable causal
-parameter while controlling the variance such that the error rate (of
-the test) is more strongly controlled relative to testing procedures
-that do not moderate the variance estimate (**???**).
+parameters that have asymptotically linear representations (M. J. van
+der Laan and Rose 2011). The set of methods implemented in this R
+package rely on the use of Targeted Minimum Loss-Based Estimation (TMLE)
+to transform biological sequencing data (e.g., microarray, RNA-seq)
+based on the influence curve representation of a particular causal
+target parameter (e.g., Average Treatment Effect). The transformed data
+(rotated into influence curve space) may then be subjected to a
+moderated test for differences between the statistical estimate of the
+target parameter and a hypothesized value of said parameter (usually a
+null value defined in relation to the parameter itself). Such an
+approach provides a valid statistical hypothesis test of a statistically
+estimable causal parameter while controlling the variance such that the
+error rate (of the test) is more strongly controlled relative to testing
+procedures that do not moderate the variance estimate (Hejazi et al.).
 
 -----
 
@@ -136,6 +136,11 @@ See file `LICENSE` for details.
 -----
 
 ## References
+
+Hejazi, Nima S, Sara Kherad-Pajouh, Mark J van der Laan, and Alan E
+Hubbard. “Variance Stabilization of Targeted Estimators of Causal
+Parameters in High-Dimensional Settings.”
+<https://arxiv.org/abs/1710.05451>.
 
 Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for
 Assessing Differential Expression in Microarray Experiments.”
