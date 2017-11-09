@@ -48,7 +48,7 @@ to the parameter itself). Such an approach provides a valid statistical
 hypothesis test of a statistically estimable causal parameter while controlling
 the variance such that the error rate (of the test) is more strongly controlled
 relative to testing procedures that do not moderate the variance estimate
-[@hejazi2017generalized].
+[@hejazi2017variance].
 
 ---
 

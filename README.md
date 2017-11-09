@@ -45,7 +45,7 @@ relation to the parameter itself). Such an approach provides a valid
 statistical hypothesis test of a statistically estimable causal
 parameter while controlling the variance such that the error rate (of
 the test) is more strongly controlled relative to testing procedures
-that do not moderate the variance estimate (Hejazi et al. 2017).
+that do not moderate the variance estimate (**???**).
 
 -----
 
@@ -136,10 +136,6 @@ See file `LICENSE` for details.
 -----
 
 ## References
-
-Hejazi, Nima S., Sara Kherad-Pajouh, Mark J. van der Laan, and Alan E.
-Hubbard. 2017. “A Generalized Testing Procedure for Asymptotically
-Linear Parameters Using Moderated Statistics,” in preparation.
 
 Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for
 Assessing Differential Expression in Microarray Experiments.”
