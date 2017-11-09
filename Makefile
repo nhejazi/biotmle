@@ -1,17 +1,27 @@
 md:
-	r -e "rmarkdown::render('README.Rmd')"
+	Rscript -e "rmarkdown::render('README.Rmd')"
+
+mdrefs:
+	Rscript -e "rmarkdown::render('README-withrefs.Rmd', output_file = 'README.md')"
 
 site:
-	r -e "pkgdown::build_site()"
+	Rscript -e "pkgdown::build_site()"
 
 check:
-	r -e "devtools::check()"
+	Rscript -e "devtools::check()"
+
+bioc:
+	Rscript -e "BiocCheck::BiocCheck('.')"
 
 test:
-	r -e "devtools::test()"
+	Rscript -e "devtools::test()"
 
 doc:
-	r -e "devtools::document()"
+	Rscript -e "devtools::document()"
+
+build:
+	Rscript -e "devtools::build()"
 
 cov:
 	r -e "covr::package_coverage(type = 'all', combine_types = FALSE, line_exclusions = list('R/plots.R'))"
+
