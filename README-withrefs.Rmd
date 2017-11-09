@@ -61,18 +61,19 @@ source("https://bioconductor.org/biocLite.R")
 biocLite("biotmle")
 ```
 
-Install the most recent _stable release_ from GitHub via
+To contribute, install the bleeding-edge _development version_ from GitHub via
 [`devtools`](https://www.rstudio.com/products/rpackages/devtools/):
 
 ```{r gh-master-installation, eval = FALSE}
 devtools::install_github("nhejazi/biotmle")
 ```
 
-To contribute, install the _development version_ from GitHub via
-[`devtools`](https://www.rstudio.com/products/rpackages/devtools/):
+Current and prior [Bioconductor](https://bioconductor.org) releases are
+available under branches with numbers prefixed by "RELEASE_". For example, to
+install the version of this package available via Bioconductor 3.6, use
 
 ```{r gh-develop-installation, eval = FALSE}
-devtools::install_github("nhejazi/biotmle", ref = "develop")
+devtools::install_github("nhejazi/biotmle", ref = "RELEASE_3_6")
 ```
 
 ---
