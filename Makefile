@@ -1,10 +1,8 @@
 md:
-	Rscript -e "rmarkdown::render('README.Rmd')"
-
-mdrefs:
-	Rscript -e "rmarkdown::render('README-withrefs.Rmd', output_file = 'README.md')"
+	Rscript -e "rmarkdown::render('README.Rmd', output_file = 'README.md')"
 
 site:
+	Rscript -e "rmarkdown::render('README-norefs.Rmd', output_file = 'README.md')"
 	Rscript -e "pkgdown::build_site()"
 
 check:
@@ -23,5 +21,8 @@ build:
 	Rscript -e "devtools::build()"
 
 cov:
-	r -e "covr::package_coverage(type = 'all', combine_types = FALSE, line_exclusions = list('R/plots.R'))"
+	Rscript -e "covr::package_coverage(type = 'all', combine_types = FALSE, line_exclusions = list('R/plots.R'))"
+
+style:
+	Rscript -e "styler::style_pkg()"
 

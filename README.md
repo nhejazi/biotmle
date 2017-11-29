@@ -125,6 +125,13 @@ After using the `biotmle` R package, please cite it:
 
 -----
 
+## Funding
+
+The development of this software was supported in part through a grant
+from the National Library of Medicine of the NIH (T32 LM012417).
+
+-----
+
 ## License
 
 © 2016-2017 [Nima S. Hejazi](http://nimahejazi.org) & [Alan E.
@@ -145,8 +152,7 @@ Parameters in High-Dimensional Settings.”
 Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for
 Assessing Differential Expression in Microarray Experiments.”
 *Statistical Applications in Genetics and Molecular Biology* 3 (1).
-Walter de Gruyter: 1–25.
-doi:[10.2202/1544-6115.1027](https://doi.org/10.2202/1544-6115.1027).
+Walter de Gruyter:1–25. <https://doi.org/10.2202/1544-6115.1027>.
 
 van der Laan, Mark J., and Sherri Rose. 2011. *Targeted Learning: Causal
 Inference for Observational and Experimental Data*. Springer Science &
