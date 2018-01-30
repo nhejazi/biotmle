@@ -125,15 +125,14 @@ After using the `biotmle` R package, please cite it:
 
 ## Funding
 
-The development of this software was supported in part through a grant from the
-National Institutes of Health: [P42 ES004705-29](https://projectreporter.nih.gov/project_info_details.cfm?aid=9260357&map=y).
+The development of this software was supported in part through grants from the
+National Institutes of Health: [P42 ES004705-29](https://projectreporter.nih.gov/project_info_details.cfm?aid=9260357&map=y) and [R01 ES021369-05](https://projectreporter.nih.gov/project_info_description.cfm?aid=9210551&icde=37849782&ddparam=&ddvalue=&ddsub=&cr=1&csb=default&cs=ASC&pball=).
 
 ---
 
 ## License
 
-&copy; 2016-2018 [Nima S. Hejazi](https://nimahejazi.org) & [Alan E.
-Hubbard](http://hubbard.berkeley.edu/)
+&copy; 2016-2018 [Nima S. Hejazi](https://nimahejazi.org)
 
 The contents of this repository are distributed under the MIT license. See file
 `LICENSE` for details.
