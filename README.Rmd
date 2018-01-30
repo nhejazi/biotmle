@@ -1,7 +1,7 @@
 ---
 output:
   rmarkdown::github_document
-bibliography: README-refs.bib
+bibliography: "`r here::here('README-refs.bib')`"
 ---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
@@ -125,8 +125,8 @@ After using the `biotmle` R package, please cite it:
 
 ## Funding
 
-The development of this software was supported in part through a grant from the
-National Library of Medicine of the NIH (T32 LM012417).
+The development of this software was supported in part through grants from the
+National Institutes of Health: [T32 LM012417](https://projectreporter.nih.gov/project_info_description.cfm?aid=9248418&icde=37849831&ddparam=&ddvalue=&ddsub=&cr=1&csb=default&cs=ASC&pball=) and [P42 ES004705-29](https://projectreporter.nih.gov/project_info_details.cfm?aid=9260357&map=y).
 
 ---
 

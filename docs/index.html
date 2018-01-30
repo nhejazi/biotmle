@@ -86,17 +86,15 @@
 <p><strong>Author:</strong> <a href="http://nimahejazi.org">Nima Hejazi</a></p>
 <hr>
 <section id="whats-biotmle" class="level2"><h2>What’s <code>biotmle</code>?</h2>
-<p><code>biotmle</code> is an R package that facilitates biomarker discovery by generalizing the moderated statistics for use with target parameters that have asymptotically linear representations. The set of methods implemented in this R package rely on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform biological sequencing data (e.g., microarray, RNA-seq) based on the influence curve representation of a particular causal target parameter (e.g., Average Treatment Effect). The transformed data (rotated into influence curve space) may then be subjected to a moderated test for differences between the statistical estimate of the target parameter and a hypothesized value of said parameter (usually a null value defined in relation to the parameter itself). Such an approach provides a valid statistical hypothesis test of a statistically estimable causal parameter while controlling the variance such that the error rate (of the test) is more strongly controlled relative to testing procedures that do not moderate the variance estimate.</p>
+<p><code>biotmle</code> is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic <span class="citation" data-cites="smyth2004linear">(Smyth 2004)</span> for use with target parameters that have asymptotically linear representations <span class="citation" data-cites="vdl2011targeted">(M. J. van der Laan and Rose 2011)</span>. The set of methods implemented in this R package rely on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform biological sequencing data (e.g., microarray, RNA-seq) based on the influence curve representation of a particular causal target parameter (e.g., Average Treatment Effect). The transformed data (rotated into influence curve space) may then be subjected to a moderated test for differences between the statistical estimate of the target parameter and a hypothesized value of said parameter (usually a null value defined in relation to the parameter itself). Such an approach provides a valid statistical hypothesis test of a statistically estimable causal parameter while controlling the variance such that the error rate (of the test) is more strongly controlled relative to testing procedures that do not moderate the variance estimate <span class="citation" data-cites="hejazi2018variance">(Hejazi et al.)</span>.</p>
 <hr></section><section id="installation" class="level2"><h2>Installation</h2>
 <p>For standard use, install from <a href="https://bioconductor.org">Bioconductor</a>:</p>
-<pre class="sourceCode r" id="cb1"><code class="sourceCode r"><div class="sourceLine" id="cb1-1" data-line-number="1">
-<span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)</div>
-<div class="sourceLine" id="cb1-2" data-line-number="2">
-<span class="kw">biocLite</span>(<span class="st">"biotmle"</span>)</div></code></pre>
-<p>Install the most recent <em>stable release</em> from GitHub via <a href="https://www.rstudio.com/products/rpackages/devtools/"><code>devtools</code></a>:</p>
-<pre class="sourceCode r" id="cb2"><code class="sourceCode r"><div class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"nhejazi/biotmle"</span>)</div></code></pre>
-<p>To contribute, install the <em>development version</em> from GitHub via <a href="https://www.rstudio.com/products/rpackages/devtools/"><code>devtools</code></a>:</p>
-<pre class="sourceCode r" id="cb3"><code class="sourceCode r"><div class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"nhejazi/biotmle"</span>, <span class="dt">ref =</span> <span class="st">"develop"</span>)</div></code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">biocLite</span>(<span class="st">"biotmle"</span>)</a></code></pre></div>
+<p>To contribute, install the bleeding-edge <em>development version</em> from GitHub via <a href="https://www.rstudio.com/products/rpackages/devtools/"><code>devtools</code></a>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"nhejazi/biotmle"</span>)</a></code></pre></div>
+<p>Current and prior <a href="https://bioconductor.org">Bioconductor</a> releases are available under branches with numbers prefixed by “RELEASE_”. For example, to install the version of this package available via Bioconductor 3.6, use</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"nhejazi/biotmle"</span>, <span class="dt">ref =</span> <span class="st">"RELEASE_3_6"</span>)</a></code></pre></div>
 <hr></section><section id="issues" class="level2"><h2>Issues</h2>
 <p>If you encounter any bugs or have any specific feature requests, please <a href="https://github.com/nhejazi/biotmle/issues">file an issue</a>.</p>
 <hr></section><section id="contributions" class="level2"><h2>Contributions</h2>
@@ -120,9 +118,23 @@
 <li>
 <a href="https://github.com/nhejazi/biotmleData">R/<code>biotmleData</code></a> - R package with example experimental data for use with this analysis package.</li>
 </ul>
+<hr></section><section id="funding" class="level2"><h2>Funding</h2>
+<p>The development of this software was supported in part through a grant from the National Library of Medicine of the NIH (T32 LM012417).</p>
 <hr></section><section id="license" class="level2"><h2>License</h2>
 <p>© 2016-2017 <a href="http://nimahejazi.org">Nima S. Hejazi</a> &amp; <a href="http://hubbard.berkeley.edu/">Alan E. Hubbard</a></p>
 <p>The contents of this repository are distributed under the MIT license. See file <code>LICENSE</code> for details.</p>
+<hr></section><section id="references" class="level2 unnumbered"><h2>References</h2>
+<div id="refs" class="references">
+<div id="ref-hejazi2018variance">
+<p>Hejazi, Nima S, Sara Kherad-Pajouh, Mark J van der Laan, and Alan E Hubbard. “Variance Stabilization of Targeted Estimators of Causal Parameters in High-Dimensional Settings.” <a href="https://arxiv.org/abs/1710.05451" class="uri">https://arxiv.org/abs/1710.05451</a>.</p>
+</div>
+<div id="ref-smyth2004linear">
+<p>Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for Assessing Differential Expression in Microarray Experiments.” <em>Statistical Applications in Genetics and Molecular Biology</em> 3 (1). Walter de Gruyter:1–25. <a href="https://doi.org/10.2202/1544-6115.1027" class="uri">https://doi.org/10.2202/1544-6115.1027</a>.</p>
+</div>
+<div id="ref-vdl2011targeted">
+<p>van der Laan, Mark J., and Sherri Rose. 2011. <em>Targeted Learning: Causal Inference for Observational and Experimental Data</em>. Springer Science &amp; Business Media.</p>
+</div>
+</div>
 </section></section>
 </div>
   </div>
