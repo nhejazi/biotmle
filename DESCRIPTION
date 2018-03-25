@@ -1,25 +1,25 @@
 Package: biotmle
-Title: Targeted Learning for Biomarker Discovery with Moderated Statistics
+Title: Moderated and Targeted Statistical Learning for Biomarker Discovery
 Version: 1.3.0
 Authors@R: c(
-    person("Nima", "Hejazi", email = "nhejazi@berkeley.edu",
+    person("Nima", "Hejazi", email = "nh@nimahejazi.org",
            role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0002-7127-2789")),
     person("Alan", "Hubbard", email = "hubbard@berkeley.edu",
-           role = "aut",
+           role = c("aut", "ths"),
            comment = c(ORCID = "0000-0002-3769-0127")),
     person("Weixin", "Cai", email = "wcai@berkeley.edu",
            role = "ctb",
            comment = c(ORCID = "0000-0003-2680-3066"))
     )
-Author: Nima Hejazi [aut, cre, cph], Alan Hubbard [aut], Weixin Cai [ctb]
 Maintainer: Nima Hejazi <nhejazi@berkeley.edu>
 Description: This package facilitates the discovery of biomarkers from
     biological sequencing data (e.g., microarrays, RNA-seq) based on the
     associations of potential biomarkers with exposure and outcome variables by
     implementing an estimation procedure that combines a generalization of
-    moderated statistics with asymptotically linear statistical parameters
-    estimated via targeted minimum loss-based estimation (TMLE).
+    moderated statistics with targeted minimum loss-based estimates (TMLE) of
+    parameters defined via causal inference (e.g., Average Treatment Effect)
+    whose estimators admit asymptotically linear representations.
 Depends: R (>= 3.4)
 License: file LICENSE
 URL: https://github.com/nhejazi/biotmle

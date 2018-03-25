@@ -1,6 +1,6 @@
 .onAttach <- function(...) {
-  packageStartupMessage(paste("biotmle: Moderated Statistics and Targeted",
-                              "Learning\n for Biomarker Discovery"))
-  packageStartupMessage("Version: ",
-                        utils::packageDescription("biotmle")$Version)
+  packageStartupMessage(paste0("biotmle v:",
+                               utils::packageDescription("biotmle")$Version,
+                               ": Moderated and Targeted Statistical Learning ",
+                               "for Biomarker Discovery"))
 }

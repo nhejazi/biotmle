@@ -1,6 +1,6 @@
 utils::globalVariables(c("new"))
 
-#' @title S4 class union data.frame_OR_EList
+#' S4 class union data.frame_OR_EList
 #'
 #' @description Class union contaning \code{data.frame} and \code{limma::Elist},
 #'              used internally to handle situations when a returned object has
@@ -15,7 +15,8 @@ utils::globalVariables(c("new"))
 #'
 #' @export
 #'
-setClassUnion(name = "data.frame_OR_EList", members = c("data.frame", "EList"))
+setClassUnion(name = "data.frame_OR_EList",
+              members = c("data.frame", "EList"))
 
 ################################################################################
 
