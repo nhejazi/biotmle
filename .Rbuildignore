@@ -5,13 +5,11 @@
 ^codecov\.yml$
 ^CONTRIBUTING\.md$
 ^Makefile$
-^\.gitignore$
-^\.gitattributes$
 ^paper$
 ^docs$
 ^README\.md$
 ^README\.Rmd$
-^README-withrefs\.Rmd$
 ^README\.html$
 ^README-.*\.png$
 ^README-refs\.bib$
+

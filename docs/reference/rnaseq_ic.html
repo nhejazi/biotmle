@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Citation and Authors • biotmle</title>
+<title>Transformation utility for using "voom" with biomarker TMLE procedure — rnaseq_ic • biotmle</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -22,12 +22,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script>
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
+<script src="../pkgdown.js"></script>
   
   
-<meta property="og:title" content="Citation and Authors" />
+<meta property="og:title" content="Transformation utility for using "voom" with biomarker TMLE procedure — rnaseq_ic" />
+
+<meta property="og:description" content="This function prepares next-generation sequencing data (counts) for use with
+the biomarker TMLE procedure by invoking the voom transform of limma." />
+<meta name="twitter:card" content="summary" />
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -40,7 +44,7 @@
   </head>
 
   <body>
-    <div class="container template-citation-authors">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -50,18 +54,18 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">biotmle</a>
+      <a class="navbar-brand" href="../index.html">biotmle</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -71,10 +75,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable</a>
+      <a href="../articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable</a>
     </li>
     <li>
-      <a href="articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data</a>
+      <a href="../articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data</a>
     </li>
   </ul>
 </li>
@@ -96,52 +100,56 @@
       </header>
 
       <div class="row">
-  <div class="contents col-md-9">
-
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Citation</h1>
+    <h1>Transformation utility for using "voom" with biomarker TMLE procedure</h1>
     </div>
 
-    <p>Hejazi NS, Cai W and Hubbard AE (2017).
-&ldquo;biotmle: Targeted Learning for Biomarker Discovery.&rdquo;
-<em>The Journal of Open Source Software</em>, <b>2</b>(15).
-doi: <a href="http://doi.org/10.21105/joss.00295">10.21105/joss.00295</a>, <a href="https://doi.org/10.21105/joss.00295">https://doi.org/10.21105/joss.00295</a>. 
-</p>
-    <pre>@Article{,
-  doi = {10.21105/joss.00295},
-  url = {https://doi.org/10.21105/joss.00295},
-  year = {2017},
-  month = {July},
-  publisher = {The Open Journal},
-  volume = {2},
-  number = {15},
-  author = {Nima S. Hejazi and Weixin Cai and Alan E. Hubbard},
-  title = {biotmle: Targeted Learning for Biomarker Discovery},
-  journal = {The Journal of Open Source Software},
-}</pre>
-    <div class="page-header">
-      <h1>Authors</h1>
-    </div>
+    
+    <p>This function prepares next-generation sequencing data (counts) for use with
+the biomarker TMLE procedure by invoking the voom transform of <code>limma</code>.</p>
+    
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong>Nima Hejazi</strong>. Author, maintainer, copyright holder. <a href='https://orcid.org/0000-0002-7127-2789' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid'></a>
-        </p>
-      </li>
-      <li>
-        <p><strong>Alan Hubbard</strong>. Author, thesis advisor. <a href='https://orcid.org/0000-0002-3769-0127' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid'></a>
-        </p>
-      </li>
-      <li>
-        <p><strong>Weixin Cai</strong>. Contributor. <a href='https://orcid.org/0000-0003-2680-3066' target='orcid.widget'><img src='https://members.orcid.org/sites/default/files/vector_iD_icon.svg' class='orcid'></a>
-        </p>
-      </li>
-    </ul>
+    <pre class="usage"><span class='fu'>rnaseq_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>weights</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>biotmle</th>
+      <td><p>(bioTMLE) - subclass of <code>SummarizedExperiment</code> containing
+next-generation sequencing (NGS) count data in the "assays" slot.</p></td>
+    </tr>
+    <tr>
+      <th>weights</th>
+      <td><p>(logical) - whether to return quality weights of samples in
+the output object.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>- other arguments to be passed to functions <code><a href='http://www.rdocumentation.org/packages/limma/topics/voom'>limma::voom</a></code> or
+<code><a href='http://www.rdocumentation.org/packages/limma/topics/voomWithQualityWeights'>limma::voomWithQualityWeights</a></code> as appropriate.</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p><code>EList</code> object containing voom-transformed "expression" measures
+        of count data (actually, the mean-variance trend) in the "E" slot, to
+        be passed into the biomarker TMLE procedure.</p>
+    
 
   </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#value">Value</a></li>
+          </ul>
 
+  </div>
 </div>
-
 
       <footer>
       <div class="copyright">
