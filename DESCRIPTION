@@ -35,20 +35,20 @@ Imports:
     doFuture,
     future,
     stats,
-    Matrix,
     methods,
-    DBI,
     limma,
     BiocParallel,
     SummarizedExperiment,
-    biotmleData (>= 1.1.1),
-    SuperLearner,
     tmle
 Suggests:
     testthat,
     knitr,
     rmarkdown,
-    BiocStyle
+    BiocStyle,
+    SuperLearner,
+    Matrix,
+    DBI,
+    biotmleData (>= 1.1.1)
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1.9000
 biocViews:

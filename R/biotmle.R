@@ -11,6 +11,7 @@ utils::globalVariables(c("new"))
 #'         object passed to slot "tmleOut".
 #'
 #' @importFrom methods setClassUnion
+#' @importClassesFrom base data.frame
 #' @importClassesFrom limma EList
 #'
 #' @export
