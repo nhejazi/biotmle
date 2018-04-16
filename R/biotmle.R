@@ -15,8 +15,10 @@ utils::globalVariables(c("new"))
 #'
 #' @export
 #'
-setClassUnion(name = "data.frame_OR_EList",
-              members = c("data.frame", "EList"))
+setClassUnion(
+  name = "data.frame_OR_EList",
+  members = c("data.frame", "EList")
+)
 
 ################################################################################
 
@@ -54,10 +56,11 @@ setClassUnion(name = "data.frame_OR_EList",
 #' example_class <- example_biotmle_class(se = illuminaData)
 #'
 .biotmle <- methods::setClass(
-       Class = "bioTMLE",
-       slots = list(call = "call",
-                    tmleOut = "data.frame_OR_EList",
-                    topTable = "data.frame"),
-       contains = "SummarizedExperiment"
+  Class = "bioTMLE",
+  slots = list(
+    call = "call",
+    tmleOut = "data.frame_OR_EList",
+    topTable = "data.frame"
+  ),
+  contains = "SummarizedExperiment"
 )
-

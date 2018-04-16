@@ -10,10 +10,10 @@ volcano_ic(biotmle, fc_bound = 3, pval_bound = 0.2)
 \item{biotmle}{object of class \code{biotmle} as produced by an appropriate
 call to \code{biomarkertmle}}
 
-\item{fc_bound}{(numeric) - indicates the highest magnitude of the fold
-to be colored along the x-axis of the volcano plot; this limits the
-observations to be considered differentially expressed to those in a
-user-specified interval.}
+\item{fc_bound}{(numeric) - indicates the highest magnitude of the fold to be
+colored along the x-axis of the volcano plot; this limits the observations
+to be considered differentially expressed to those in a user-specified
+interval.}
 
 \item{pval_bound}{(numeric) - indicates the largest corrected p-value to be
 colored along the y-axis of the volcano plot; this limits observations
@@ -22,8 +22,8 @@ interval.}
 }
 \value{
 object of class \code{ggplot} containing a standard volcano plot of
-        the log-fold change in the causal target parameter against the raw
-        log p-value computed from the moderated tests in \code{modtest_ic}.
+ the log-fold change in the causal target parameter against the raw log
+ p-value computed from the moderated tests in \code{modtest_ic}.
 }
 \description{
 Volcano plot of the log-changes in the target causal paramter against the

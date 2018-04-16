@@ -1,4 +1,4 @@
-utils::globalVariables(c("gene","assay<-"))
+utils::globalVariables(c("gene", "assay<-"))
 
 #' Biomarker Evaluation with Targeted Minimum Loss-Based Estimation (TMLE)
 #'
@@ -88,11 +88,14 @@ biomarkertmle <- function(se,
                           future_param = NULL,
                           family = "gaussian",
                           subj_ids = NULL,
-                          g_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
-                                    "SL.polymars", "SL.mean"),
-                          Q_lib = c("SL.glm", "SL.randomForest", "SL.nnet",
-                                    "SL.mean")
-                          ) {
+                          g_lib = c(
+                            "SL.glm", "SL.randomForest", "SL.nnet",
+                            "SL.polymars", "SL.mean"
+                          ),
+                          Q_lib = c(
+                            "SL.glm", "SL.randomForest", "SL.nnet",
+                            "SL.mean"
+                          )) {
 
   # ============================================================================
   # catch input and return in output object for user convenience
@@ -103,15 +106,15 @@ biomarkertmle <- function(se,
   # invoke S4 class constructor for "bioTMLE" object
   # ============================================================================
   biotmle <- .biotmle(
-       SummarizedExperiment(
-          assays = list(expMeasures = assay(se)),
-          rowData = rowData(se),
-          colData = colData(se)
-       ),
-       call = call,
-       tmleOut = as.data.frame(matrix(NA, 10, 10)),
-       topTable = as.data.frame(matrix(NA, 10, 10))
-   )
+    SummarizedExperiment(
+      assays = list(expMeasures = assay(se)),
+      rowData = rowData(se),
+      colData = colData(se)
+    ),
+    call = call,
+    tmleOut = as.data.frame(matrix(NA, 10, 10)),
+    topTable = as.data.frame(matrix(NA, 10, 10))
+  )
 
   # ============================================================================
   # invoke the voom transform from LIMMA if next-generation sequencing data)
@@ -122,7 +125,7 @@ biomarkertmle <- function(se,
     assay(se) <- voom_exp
   }
 
-  #=============================================================================
+  # =============================================================================
   # set up parallelization based on input
   # ============================================================================
   doFuture::registerDoFuture()
@@ -134,32 +137,37 @@ biomarkertmle <- function(se,
       future::plan(future::multiprocess)
     }
   } else if (parallel == FALSE) {
-    warning(paste("Sequential evaluation is strongly discouraged.",
-                  "\n Proceed with caution."))
+    warning(paste(
+      "Sequential evaluation is strongly discouraged.",
+      "\n Proceed with caution."
+    ))
     future::plan(future::sequential)
   }
   if (!is.null(bppar_type)) {
-    bp_type <- eval(parse(text = paste0("BiocParallel", "::",
-                                        bppar_type, "()")))
+    bp_type <- eval(parse(text = paste0(
+      "BiocParallel", "::",
+      bppar_type, "()"
+    )))
   } else {
     bp_type <- BiocParallel::DoparParam()
   }
   BiocParallel::bpprogressbar(bp_type) <- TRUE
   BiocParallel::register(bp_type, default = TRUE)
 
-  #=============================================================================
+  # =============================================================================
   # TMLE procedure to identify biomarkers based on an EXPOSURE
   # ============================================================================
 
   # median normalization
   if (!ngscounts) {
     Y <- as.data.frame(t(limma::normalizeBetweenArrays(assay(se),
-                                                       method = "scale")))
+      method = "scale"
+    )))
   } else {
     Y <- as.data.frame(t(assay(se)))
   }
   # simple sanity check of whether Y includes array values
-  if(unique(lapply(Y, class)) != "numeric") {
+  if (unique(lapply(Y, class)) != "numeric") {
     stop("Warning - values in Y do not appear to be numeric...")
   }
 
@@ -168,7 +176,7 @@ biomarkertmle <- function(se,
 
   # baseline covariates
   W <- as.data.frame(colData(se)[, -varInt])
-  if(dim(W)[2] == 0) {
+  if (dim(W)[2] == 0) {
     W <- as.numeric(rep(1, length(A)))
   }
 
@@ -179,15 +187,15 @@ biomarkertmle <- function(se,
 
   # perform multi-level TMLE (of the ATE) for genes as Y
   biomarkerTMLEout <- BiocParallel::bplapply(Y[, seq_along(Y)],
-                                             biomarkerTMLE_exposure,
-                                             W = W,
-                                             A = A,
-                                             a = unique(A),
-                                             g_lib = g_lib,
-                                             Q_lib = Q_lib,
-                                             family = family,
-                                             subj_ids = subj_ids
-                                            )
+    biomarkerTMLE_exposure,
+    W = W,
+    A = A,
+    a = unique(A),
+    g_lib = g_lib,
+    Q_lib = Q_lib,
+    family = family,
+    subj_ids = subj_ids
+  )
   biomarkerTMLEout <- do.call(cbind.data.frame, biomarkerTMLEout)
 
   if (ngscounts) {
@@ -198,4 +206,3 @@ biomarkertmle <- function(se,
   }
   return(biotmle)
 }
-

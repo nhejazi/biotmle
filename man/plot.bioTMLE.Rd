@@ -17,7 +17,7 @@ adjusted p-values (adjustment performed via Benjamini-Hochberg)}
 }
 \value{
 object of class \code{ggplot} containing a histogram of the raw or
-        Benjamini-Hochberg corrected p-values (depending on user input).
+ Benjamini-Hochberg corrected p-values (depending on user input).
 }
 \description{
 Histogram of raw or FDR-adjusted p-values from the moderated t-test.
