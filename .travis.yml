@@ -13,12 +13,14 @@ cache: packages
 warnings_are_errors: true
 r_check_args: ''
 
-before_install:
-  - Rscript -e 'update.packages(ask = FALSE)'
-
 r:
   - release
   - devel
+
+before_install:
+  - Rscript -e 'update.packages(ask = FALSE)'
+
+bioc_required: true
 
 r_packages:
   - devtools
@@ -29,10 +31,10 @@ r_github_packages:
   - nhejazi/biotmleData
 
 bioc_packages:
-  - limma
-  - SummarizedExperiment
   - BiocStyle
   - BiocCheck
+  - SummarizedExperiment
+  - limma
 
 ## coverage
 after_success:
