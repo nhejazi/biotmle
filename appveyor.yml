@@ -17,7 +17,6 @@ cache:
 branches:
   only:
     - master
-    - /*/-dev
 
 environment:
   global:
@@ -25,13 +24,16 @@ environment:
     USE_RTOOLS: true
 
 build_script:
+  - Rscript -e "source('http://bioconductor.org/biocLite.R')"
   - travis-tool.sh install_deps
-  - travis-tool.sh install_github nhejazi/biotmleData
   - travis-tool.sh install_bioc SummarizedExperiment
   - travis-tool.sh install_bioc BiocParallel
   - travis-tool.sh install_bioc BiocStyle
   - travis-tool.sh install_bioc limma
   - travis-tool.sh install_bioc_deps
+  - Rscript -e "source('http://bioconductor.org/biocLite.R'); biocLite(ask = FALSE)"
+  - travis-tool.sh install_github jimhester/covr
+  - travis-tool.sh install_github nhejazi/biotmleData
 
 test_script:
   - travis-tool.sh run_tests
@@ -39,6 +41,9 @@ test_script:
 on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
+
+on_success:
+  - Rscript -e "covr::codecov()"
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
@@ -68,3 +73,4 @@ notifications:
    on_build_success: true
    on_build_failure: true
    on_build_status_changed: true
+

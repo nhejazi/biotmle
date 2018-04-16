@@ -1,7 +1,6 @@
 branches:
   only:
   - master
-  - /.*/-dev
 
 env:
   global:
@@ -12,10 +11,18 @@ language: r
 sudo: required
 cache: packages
 warnings_are_errors: true
+r_check_args: ''
+
+before_install:
+  - Rscript -e 'update.packages(ask = FALSE)'
 
 r:
   - release
   - devel
+
+r_packages:
+  - devtools
+  - covr
 
 r_github_packages:
   - jimhester/covr
@@ -29,10 +36,11 @@ bioc_packages:
 
 ## coverage
 after_success:
-  - Rscript -e "covr::codecov(line_exclusions = list('R/plots.R'))"
+  - travis_wait Rscript -e "covr::codecov(line_exclusions = list('R/plots.R'))"
   - R CMD BiocCheck .
 
 notifications:
   email:
     on_success: change
     on_failure: change
+
