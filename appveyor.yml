@@ -24,19 +24,18 @@ environment:
     R_ARCH: x64
     USE_RTOOLS: true
 
+  matrix:
+    - R_VERSION: release
+
 build_script:
-  - Rscript -e "source('http://bioconductor.org/biocLite.R')"
   - travis-tool.sh install_deps
+  - travis-tool.sh install_github jimhester/covr
+  - travis-tool.sh install_github nhejazi/biotmleData
   - travis-tool.sh install_bioc BiocStyle
   - travis-tool.sh install_bioc BiocCheck
-  - travis-tool.sh install_bioc BiocGenerics
-  - travis-tool.sh install_bioc BiocParallel
   - travis-tool.sh install_bioc SummarizedExperiment
   - travis-tool.sh install_bioc limma
   - travis-tool.sh install_bioc_deps
-  - Rscript -e "source('http://bioconductor.org/biocLite.R'); biocLite(ask = FALSE)"
-  - travis-tool.sh install_github jimhester/covr
-  - travis-tool.sh install_github nhejazi/biotmleData
 
 test_script:
   - travis-tool.sh run_tests
