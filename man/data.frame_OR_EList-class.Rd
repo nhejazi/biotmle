@@ -6,11 +6,11 @@
 \title{S4 class union data.frame_OR_EList}
 \value{
 fusion of classes \code{data.frame} and \code{EList}, used within
-        \code{.biotmle} by class \code{bioTMLE} to handle uncertainty in the
-        object passed to slot "tmleOut".
+ \code{.biotmle} by class \code{bioTMLE} to handle uncertainty in the object
+ passed to slot "tmleOut".
 }
 \description{
-Class union contaning \code{data.frame} and \code{limma::Elist},
-             used internally to handle situations when a returned object has
-             a type that cannot be guessed from the function call.
+Virtual class union containing members of both \code{data.frame}
+ and \code{limma::Elist}, used internally to handle situations when a
+ returned object has a type that cannot be guessed from the function call.
 }

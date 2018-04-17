@@ -33,5 +33,4 @@ example_biotmle_class <- function(se) {
 }
 
 example_class <- example_biotmle_class(se = illuminaData)
-
 }

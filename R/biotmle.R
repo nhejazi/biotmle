@@ -1,21 +1,19 @@
-utils::globalVariables(c("new"))
-
 #' S4 class union data.frame_OR_EList
 #'
-#' @description Class union contaning \code{data.frame} and \code{limma::Elist},
-#'              used internally to handle situations when a returned object has
-#'              a type that cannot be guessed from the function call.
+#' @description Virtual class union containing members of both \code{data.frame}
+#'  and \code{limma::Elist}, used internally to handle situations when a
+#'  returned object has a type that cannot be guessed from the function call.
 #'
 #' @return fusion of classes \code{data.frame} and \code{EList}, used within
-#'         \code{.biotmle} by class \code{bioTMLE} to handle uncertainty in the
-#'         object passed to slot "tmleOut".
+#'  \code{.biotmle} by class \code{bioTMLE} to handle uncertainty in the object
+#'  passed to slot "tmleOut".
 #'
 #' @importFrom methods setClassUnion
-#' @importClassesFrom base data.frame
+#' @importClassesFrom methods data.frame
 #' @importClassesFrom limma EList
 #'
 #' @export
-#'
+#
 setClassUnion(
   name = "data.frame_OR_EList",
   members = c("data.frame", "EList")
@@ -55,7 +53,7 @@ setClassUnion(
 #' }
 #'
 #' example_class <- example_biotmle_class(se = illuminaData)
-#'
+#
 .biotmle <- methods::setClass(
   Class = "bioTMLE",
   slots = list(
