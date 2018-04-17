@@ -21,8 +21,8 @@ necessary}
 }
 \value{
 heatmap (from the superheat package) using hierarchical clustering to
-        plot the changes in the variable importance measure for all subjects
-        across a specified top number of biomarkers.
+ plot the changes in the variable importance measure for all subjects across
+ a specified top number of biomarkers.
 }
 \description{
 Heatmap of the contributions of a select subset of biomarkers to the variable

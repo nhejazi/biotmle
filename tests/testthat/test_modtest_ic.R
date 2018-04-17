@@ -11,19 +11,20 @@ context("moderated testing of influence curve-based estimates.")
 ################################################################################
 
 colData(illuminaData) <- colData(illuminaData) %>%
-  data.frame %>%
+  data.frame() %>%
   dplyr::mutate(age = as.numeric(age > median(age))) %>%
-  DataFrame
+  DataFrame()
 
 varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
 
-biomarkerTMLEout <- biomarkertmle(se = illuminaData[1:2, ],
-                                  varInt = varInt_index,
-                                  parallel = FALSE,
-                                  family = "gaussian",
-                                  g_lib = c("SL.mean", "SL.glm"),
-                                  Q_lib = "SL.mean"
-                                 )
+biomarkerTMLEout <- biomarkertmle(
+  se = illuminaData[1:2, ],
+  varInt = varInt_index,
+  parallel = FALSE,
+  family = "gaussian",
+  g_lib = c("SL.mean", "SL.glm"),
+  Q_lib = "SL.mean"
+)
 
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
@@ -44,6 +45,8 @@ test_that("modtest_ic output contains data frame in topTable slot", {
 })
 
 test_that("topTable slot has column names produced by limma::topTable", {
-  expect_named(limmaTMLEout@topTable,
-               c("logFC", "AveExpr", "t", "P.Value", "adj.P.Val", "B", "IDs"))
+  expect_named(
+    limmaTMLEout@topTable,
+    c("logFC", "AveExpr", "t", "P.Value", "adj.P.Val", "B", "IDs")
+  )
 })

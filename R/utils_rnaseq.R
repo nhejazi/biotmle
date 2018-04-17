@@ -31,7 +31,8 @@ rnaseq_ic <- function(biotmle, weights = TRUE, ...) {
   # invoke the "voom" transform from LIMMA
   if (weights) {
     voom_data <- limma::voomWithQualityWeights(ngs_data,
-                                               normalize.method = "scale")
+      normalize.method = "scale"
+    )
   } else {
     voom_data <- limma::voom(ngs_data, normalize.method = "scale")
   }

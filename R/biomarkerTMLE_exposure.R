@@ -46,39 +46,40 @@ biomarkerTMLE_exposure <- function(Y,
     warning("Comparisons should be made against a particular level of A.")
   }
 
-  n_a = length(a)
-  IC = NULL
-  EY = NULL
+  n_a <- length(a)
+  IC <- NULL
+  EY <- NULL
 
-  if(!is.null(subj_ids)) {
+  if (!is.null(subj_ids)) {
     subj_ids <- as.numeric(subj_ids)
   }
 
-  for(i in 1:n_a) {
-    A_star = as.numeric(A == a[i])
-    fit_tmle = tmle::tmle(Y = Y,
-                          A = A_star,
-                          W = W,
-                          g.SL.library = g_lib,
-                          Q.SL.library = Q_lib,
-                          family = family,
-                          id = subj_ids,
-                          verbose = FALSE
-                         )
-    g_0 = fit_tmle$g$g1W
-    Qst_0 = fit_tmle$Qstar[, 2]
-    EY_0 = mean(Qst_0)
-    EY = c(EY, EY_0)
-    IC = cbind(IC, (A_star / g_0) * (Y - Qst_0) + Qst_0 - EY_0)
+  for (i in 1:n_a) {
+    A_star <- as.numeric(A == a[i])
+    fit_tmle <- tmle::tmle(
+      Y = Y,
+      A = A_star,
+      W = W,
+      g.SL.library = g_lib,
+      Q.SL.library = Q_lib,
+      family = family,
+      id = subj_ids,
+      verbose = FALSE
+    )
+    g_0 <- fit_tmle$g$g1W
+    Qst_0 <- fit_tmle$Qstar[, 2]
+    EY_0 <- mean(Qst_0)
+    EY <- c(EY, EY_0)
+    IC <- cbind(IC, (A_star / g_0) * (Y - Qst_0) + Qst_0 - EY_0)
   }
 
-  EY_diff = EY[2:n_a] - EY[1]
-  IC_diff = IC[, 2:n_a] - IC[, 1]
+  EY_diff <- EY[2:n_a] - EY[1]
+  IC_diff <- IC[, 2:n_a] - IC[, 1]
 
-  if(class(IC_diff) != "numeric") {
-    output = IC_diff[, ncol(IC_diff)] + EY_diff[length(EY_diff)]
+  if (class(IC_diff) != "numeric") {
+    output <- IC_diff[, ncol(IC_diff)] + EY_diff[length(EY_diff)]
   } else {
-    output = IC_diff + EY_diff
+    output <- IC_diff + EY_diff
   }
   return(output)
 }

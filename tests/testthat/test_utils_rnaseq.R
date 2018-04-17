@@ -24,20 +24,22 @@ batch <- rep(1:2, n)
 covar <- rep(1, n * 2)
 design <- as.data.frame(cbind(exp_var, batch, covar))
 
-se <- SummarizedExperiment(assays = list(counts = DataFrame(ngs_data)),
-                           colData = DataFrame(design))
-call <- "testing"  # dumb workaround to failure of match.call() for now...
-class(call) <- "call"  # force class to be what biotmle expects...
+se <- SummarizedExperiment(
+  assays = list(counts = DataFrame(ngs_data)),
+  colData = DataFrame(design)
+)
+call <- "testing" # dumb workaround to failure of match.call() for now...
+class(call) <- "call" # force class to be what biotmle expects...
 
 biotmle <- .biotmle(
-     SummarizedExperiment(
-        assays = list(expMeasures = assay(se)),
-        rowData = rowData(se),
-        colData = colData(se)
-     ),
-     call = call,
-     tmleOut = as.data.frame(matrix(NA, 10, 10)),
-     topTable = as.data.frame(matrix(NA, 10, 10))
+  SummarizedExperiment(
+    assays = list(expMeasures = assay(se)),
+    rowData = rowData(se),
+    colData = colData(se)
+  ),
+  call = call,
+  tmleOut = as.data.frame(matrix(NA, 10, 10)),
+  topTable = as.data.frame(matrix(NA, 10, 10))
 )
 
 voom_out <- rnaseq_ic(biotmle)

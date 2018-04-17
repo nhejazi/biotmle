@@ -1,6 +1,6 @@
 Package: biotmle
 Title: Moderated and Targeted Statistical Learning for Biomarker Discovery
-Version: 1.3.0
+Version: 1.3.5
 Authors@R: c(
     person("Nima", "Hejazi", email = "nh@nimahejazi.org",
            role = c("aut", "cre", "cph"),
@@ -29,27 +29,26 @@ Encoding: UTF-8
 LazyData: true
 Imports:
     dplyr,
-    magrittr,
     ggplot2,
+    ggsci,
     superheat,
-    wesanderson,
     doFuture,
     future,
     stats,
-    Matrix,
     methods,
-    DBI,
     limma,
     BiocParallel,
     SummarizedExperiment,
-    biotmleData (>= 1.1.1),
-    SuperLearner,
     tmle
 Suggests:
     testthat,
     knitr,
     rmarkdown,
-    BiocStyle
+    BiocStyle,
+    SuperLearner,
+    Matrix,
+    DBI,
+    biotmleData (>= 1.1.1)
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1.9000
 biocViews:

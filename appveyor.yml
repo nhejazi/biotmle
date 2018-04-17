@@ -11,25 +11,29 @@ install:
   ps: Bootstrap
 
 cache:
-  - C:\RLibrary
+  - C:\RLibrary -> appveyor.yml
 
 # Adapt as necessary starting from here
 branches:
   only:
     - master
-    - /*/-dev
 
 environment:
   global:
     WARNINGS_ARE_ERRORS: 0
+    R_ARCH: x64
     USE_RTOOLS: true
+
+  matrix:
+    - R_VERSION: release
 
 build_script:
   - travis-tool.sh install_deps
+  - travis-tool.sh install_github jimhester/covr
   - travis-tool.sh install_github nhejazi/biotmleData
-  - travis-tool.sh install_bioc SummarizedExperiment
-  - travis-tool.sh install_bioc BiocParallel
   - travis-tool.sh install_bioc BiocStyle
+  - travis-tool.sh install_bioc BiocCheck
+  - travis-tool.sh install_bioc SummarizedExperiment
   - travis-tool.sh install_bioc limma
   - travis-tool.sh install_bioc_deps
 
@@ -39,6 +43,9 @@ test_script:
 on_failure:
   - 7z a failure.zip *.Rcheck\*
   - appveyor PushArtifact failure.zip
+
+on_success:
+  - Rscript -e "covr::codecov(line_exclusions = list('R/plots.R'))"
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
@@ -68,3 +75,4 @@ notifications:
    on_build_success: true
    on_build_failure: true
    on_build_status_changed: true
+

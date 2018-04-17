@@ -92,26 +92,32 @@
 </h1></div>
 
 <blockquote>
-<p>Targeted Learning with moderated statistics for biomarker discovery</p>
+<p>Targeted Learning with Moderated Statistics for Biomarker Discovery</p>
 </blockquote>
-<p><strong>Author:</strong> <a href="http://nimahejazi.org">Nima Hejazi</a></p>
+<p><strong>Author:</strong> <a href="https://nimahejazi.org">Nima Hejazi</a></p>
 <hr>
 <div id="whats-biotmle" class="section level2">
 <h2 class="hasAnchor">
 <a href="#whats-biotmle" class="anchor"></a>What’s <code>biotmle</code>?</h2>
-<p><code>biotmle</code> is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic <span class="citation">(Smyth 2004)</span> for use with target parameters that have asymptotically linear representations <span class="citation">(van der Laan and Rose 2011)</span>. The set of methods implemented in this R package rely on the use of Targeted Minimum Loss-Based Estimation (TMLE) to transform biological sequencing data (e.g., microarray, RNA-seq) based on the influence curve representation of a particular causal target parameter (e.g., Average Treatment Effect). The transformed data (rotated into influence curve space) may then be subjected to a moderated test for differences between the statistical estimate of the target parameter and a hypothesized value of said parameter (usually a null value defined in relation to the parameter itself). Such an approach provides a valid statistical hypothesis test of a statistically estimable causal parameter while controlling the variance such that the error rate (of the test) is more strongly controlled relative to testing procedures that do not moderate the variance estimate <span class="citation">(Hejazi et al., n.d.)</span>.</p>
+<p><code>biotmle</code> is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic <span class="citation">(Smyth 2004)</span> for use with target parameters that have asymptotically linear representations <span class="citation">(van der Laan and Rose 2011)</span>. The set of methods implemented in this R package rely on the use of targeted minimum loss-based estimates (TMLE) to transform biological sequencing data (e.g., microarray, RNA-seq) based on the influence curve representation of a particular causal target parameter (e.g., average treatment effect). The transformed data (rotated into influence curve space) may then be subjected to a moderated test for differences between the statistical estimate of the target parameter and a hypothesized value of said parameter (usually a null value defined in relation to the parameter itself). Such an approach provides a valid statistical hypothesis test of a statistically estimable causal parameter while controlling the variance such that the error rate (of the test) is more strongly controlled relative to testing procedures that do not moderate the variance estimate <span class="citation">(Hejazi et al., n.d.)</span>.</p>
 <hr>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>For standard use, install from <a href="https://bioconductor.org">Bioconductor</a>:</p>
+<p>For standard use, install from <a href="https://bioconductor.org/packages/biotmle">Bioconductor</a>:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">source</span>(<span class="st">"https://bioconductor.org/biocLite.R"</span>)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">biocLite</span>(<span class="st">"biotmle"</span>)</a></code></pre></div>
 <p>To contribute, install the bleeding-edge <em>development version</em> from GitHub via <a href="https://www.rstudio.com/products/rpackages/devtools/"><code>devtools</code></a>:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"nhejazi/biotmle"</span>)</a></code></pre></div>
 <p>Current and prior <a href="https://bioconductor.org">Bioconductor</a> releases are available under branches with numbers prefixed by “RELEASE_”. For example, to install the version of this package available via Bioconductor 3.6, use</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"nhejazi/biotmle"</span>, <span class="dt">ref =</span> <span class="st">"RELEASE_3_6"</span>)</a></code></pre></div>
+<hr>
+</div>
+<div id="example" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example" class="anchor"></a>Example</h2>
+<p>For details on how to best use the <code>biotmle</code> R package, please consult the most recent <a href="https://bioconductor.org/packages/release/bioc/vignettes/biotmle/inst/doc/exposureBiomarkers.html">package vignette</a> available through the <a href="https://bioconductor.org/packages/biotmle">Bioconductor project</a>.</p>
 <hr>
 </div>
 <div id="issues" class="section level2">
@@ -123,7 +129,7 @@
 <div id="contributions" class="section level2">
 <h2 class="hasAnchor">
 <a href="#contributions" class="anchor"></a>Contributions</h2>
-<p>It is our hope that <code>biotmle</code> will grow to be widely adopted as a tool for the nonparametric assessment of variable importance in a variety of settings involving data generated by experiments in computational biology. To that end, contributions are very welcome, though we ask that interested contributors consult our <a href="https://github.com/nhejazi/biotmle/blob/master/CONTRIBUTING.md"><code>contribution guidelines</code></a> prior to submitting a pull request.</p>
+<p>Contributions are very welcome. Interested contributors should consult our <a href="https://github.com/nhejazi/biotmle/blob/master/CONTRIBUTING.md">contribution guidelines</a> prior to submitting a pull request.</p>
 <hr>
 </div>
 <div id="citation" class="section level2">

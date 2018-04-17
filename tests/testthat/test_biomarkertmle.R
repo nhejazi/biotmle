@@ -3,7 +3,7 @@ library(biotmle)
 library(biotmleData)
 library(SummarizedExperiment)
 data(illuminaData)
-"%ni%" = Negate("%in%")
+"%ni%" <- Negate("%in%")
 
 context("biomarkertmle estimation function.")
 
@@ -12,19 +12,20 @@ context("biomarkertmle estimation function.")
 ################################################################################
 
 colData(illuminaData) <- colData(illuminaData) %>%
-  data.frame %>%
+  data.frame() %>%
   dplyr::mutate(age = as.numeric(age > median(age))) %>%
-  DataFrame
+  DataFrame()
 
 varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
 
-biomarkerTMLEout <- biomarkertmle(se = illuminaData[1:2, ],
-                                  varInt = varInt_index,
-                                  parallel = FALSE,
-                                  family = "gaussian",
-                                  g_lib = c("SL.mean", "SL.glm"),
-                                  Q_lib = "SL.mean"
-                                 )
+biomarkerTMLEout <- biomarkertmle(
+  se = illuminaData[1:2, ],
+  varInt = varInt_index,
+  parallel = FALSE,
+  family = "gaussian",
+  g_lib = c("SL.mean", "SL.glm"),
+  Q_lib = "SL.mean"
+)
 
 ################################################################################
 ## BEGIN TESTS #################################################################
@@ -39,8 +40,10 @@ test_that("biomarkertmle object is of appropriate custom class", {
 })
 
 test_that("biomarkertmle output is consistent using example data", {
-  expect_equal(assay(biomarkerTMLEout)[1, c(17, 83, 117)],
-               c(360.7073, 375.9316, 319.3649))
+  expect_equal(
+    assay(biomarkerTMLEout)[1, c(17, 83, 117)],
+    c(360.7073, 375.9316, 319.3649)
+  )
 })
 
 test_that("biomarkertmle output returns IC estimate for each subject", {

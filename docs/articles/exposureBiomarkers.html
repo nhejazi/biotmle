@@ -78,7 +78,7 @@
       <h1>Identifying Biomarkers from an Exposure Variable</h1>
                         <h4 class="author">Nima Hejazi</h4>
             
-            <h4 class="date">2018-04-10</h4>
+            <h4 class="date">2018-04-15</h4>
           </div>
 
     
@@ -104,33 +104,32 @@
 ## 
 ##     intersect, setdiff, setequal, union</code></pre>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(biotmle)</a></code></pre></div>
-<pre><code>## biotmle: Moderated Statistics and Targeted Learning for Biomarker Discovery</code></pre>
-<pre><code>## Version: 1.3.0</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">library</span>(biotmleData)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">data</span>(illuminaData)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">suppressMessages</span>(<span class="kw">library</span>(SummarizedExperiment))</a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">"%ni%"</span> =<span class="st"> </span><span class="kw">Negate</span>(<span class="st">"%in%"</span>)</a></code></pre></div>
+<pre><code>## biotmle v:1.3.0: Moderated and Targeted Statistical Learning for Biomarker Discovery</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(biotmleData)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">data</span>(illuminaData)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">suppressMessages</span>(<span class="kw">library</span>(SummarizedExperiment))</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">"%ni%"</span> =<span class="st"> </span><span class="kw">Negate</span>(<span class="st">"%in%"</span>)</a></code></pre></div>
 <p>In order to perform Targeted Minimum Loss-Based Estimation, we need three separate data structures: (1) <em>W</em>, baseline covariates that could potentially confound the association of biomarkers with the exposure of interest; (2) <em>A</em>, the exposure of interest; and (3) <em>Y</em>, the biomarkers of interest. All values in <em>W</em> and <em>A</em> ought to be discretized, in order to avoid practical violations of the assumption of positivity. With the <code>illuminaData</code> data set below, we discretize the age variable in the phenotype-level data below (this can be accessed via the <code>colData</code> of the <code>SummarizedExperiment</code> object). To invoke the biomarker assessment function (<code>biomarkertmle</code>), we also need to specify a variable of interest (or the position of said variable in the design matrix). We do both in just a few lines below:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># discretize "age" in the phenotype-level data</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(illuminaData) &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(illuminaData) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span>data.frame <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">age =</span> <span class="kw">as.numeric</span>(age <span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(age))) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span>DataFrame</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co"># specify column index of treatment/exposure variable of interest</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">varInt_index &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(illuminaData)) <span class="op">%in%</span><span class="st"> "benzene"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># discretize "age" in the phenotype-level data</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(illuminaData) &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(illuminaData) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span>data.frame <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">age =</span> <span class="kw">as.numeric</span>(age <span class="op">&gt;</span><span class="st"> </span><span class="kw">median</span>(age))) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span>DataFrame</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co"># specify column index of treatment/exposure variable of interest</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">varInt_index &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(illuminaData)) <span class="op">%in%</span><span class="st"> "benzene"</span>)</a></code></pre></div>
 <p>The TMLE-based biomarker discovery process can be invoked using the <code>biomarkertmle</code> function. The procedure is quite resource-intensive because it evaluates the association of each individual potential biomarker (of which there are over 20,000 in the included data set) with an exposure of interest, while accounting for potential confounding based on all other covariates included in the design matrix. We demonstrate the necessary syntax for calling <code>biomarkertmle</code> below:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">biomarkerTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/biomarkertmle.html">biomarkertmle</a></span>(<span class="dt">se =</span> illuminaData,</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">                                  <span class="dt">varInt =</span> varInt_index,</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">                                  <span class="dt">family =</span> <span class="st">"gaussian"</span>,</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">                                  <span class="dt">g_lib =</span> <span class="kw">c</span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,</a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">                                            <span class="st">"SL.polymars"</span>, <span class="st">"SL.mean"</span>),</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">                                  <span class="dt">Q_lib =</span> <span class="kw">c</span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">                                            <span class="st">"SL.nnet"</span>, <span class="st">"SL.mean"</span>)</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">                                 )</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">biomarkerTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/biomarkertmle.html">biomarkertmle</a></span>(<span class="dt">se =</span> illuminaData,</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">                                  <span class="dt">varInt =</span> varInt_index,</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">                                  <span class="dt">family =</span> <span class="st">"gaussian"</span>,</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">                                  <span class="dt">g_lib =</span> <span class="kw">c</span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">                                            <span class="st">"SL.polymars"</span>, <span class="st">"SL.mean"</span>),</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">                                  <span class="dt">Q_lib =</span> <span class="kw">c</span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">                                            <span class="st">"SL.nnet"</span>, <span class="st">"SL.mean"</span>)</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">                                 )</a></code></pre></div>
 <p>The output of <code>biomarkertmle</code> is an object of class <code>bioTMLE</code>, containing four objects: (1) <code>call</code>, the call to <code>biomarkertmle</code>; (2) <code>topTable</code>, an empty slot meant to hold the output of <code><a href="http://www.rdocumentation.org/packages/limma/topics/toptable">limma::topTable</a></code>, after a later call to <code>modtest_ic</code>; (3) <code>limmaOut</code>, an empty slot meant to hold the output of <code><a href="http://www.rdocumentation.org/packages/limma/topics/lmFit">limma::lmFit</a></code>, after a later call to <code>modtest_ic</code>; and (4) <code>tmleOut</code>, a data frame containing the point estimates of the associations of each biomarker with the exposure of interest based on the influence curve representation of the Average Treatment Effect parameter.</p>
 <p>The output of <code>biomarkertmle</code> can be directly fed to <code>modtest_ic</code>, a wrapper around <code><a href="http://www.rdocumentation.org/packages/limma/topics/lmFit">limma::lmFit</a></code> and <code><a href="http://www.rdocumentation.org/packages/limma/topics/toptable">limma::topTable</a></code> that outputs a <code>biotmle</code> object with the slots described above completely filled in. The <code>modtest_ic</code> function requires as input a <code>biotmle</code> object containing a data frame in the <code>tmleOut</code> field as well as a design matrix indicating the groupwise difference to be tested. The design matrix should contain an intercept term and a term for the exposure of interest (with discretized exposure levels). <em>Based on the relevant statistical theory, it is not appropriate to include any further terms in the design matrix (n.b., this differs from standard calls to <code><a href="http://www.rdocumentation.org/packages/limma/topics/lmFit">limma::lmFit</a></code>)</em>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/modtest_ic.html">modtest_ic</a></span>(<span class="dt">biotmle =</span> biomarkerTMLEout)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/modtest_ic.html">modtest_ic</a></span>(<span class="dt">biotmle =</span> biomarkerTMLEout)</a></code></pre></div>
 <p>After invoking <code>modtest_ic</code>, the resultant <code>bioTMLE</code> object will contain all information relevant to the analytic procedure for identifying biomarkers: that is, it will contain the origin call to <code>biomarkertmle</code>, the result of running <code><a href="http://www.rdocumentation.org/packages/limma/topics/toptable">limma::topTable</a></code>, the result of running <code><a href="http://www.rdocumentation.org/packages/limma/topics/lmFit">limma::lmFit</a></code>, and the result of running <code>biomarkertmle</code>. The statistical results of this procedure can be extracted from the <code>topTable</code> object in the <code>bioTMLE</code> object produced by <code>modtest_ic</code>.</p>
 <hr>
 </div>
@@ -139,20 +138,20 @@
 <a href="#visualization-of-results" class="anchor"></a>Visualization of Results</h2>
 <p>This package provides several plotting methods that can be used to visualize the results of the TMLE-based biomarker discovery process.</p>
 <p>The <code>plot</code> method for a <code>bioTMLE</code> object will produce a histogram of the adjusted p-values of each biomarker (based on the Benjamini-Hochberg procedure for controlling the False Discovery Rate) as generated by <code><a href="http://www.rdocumentation.org/packages/limma/topics/toptable">limma::topTable</a></code>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_adj"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_adj"</span>)</a></code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/pval_hist_limma_adjp-1.png" width="672"></p>
 <p>Setting the argument <code>type = "pvals_raw"</code> will instead produce a histogram of the raw p-values <em>(these are less informative and should, in general, not be used for inferential purposes, as the computation producing these p-values ignores the multiple testing nature of the biomarker discovery problem)</em>:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_raw"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_raw"</span>)</a></code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/pval_hist_limma_rawp-1.png" width="672"></p>
 <p>Heatmaps are useful graphics for visualizing the relationship between measures on genomic objects and covariates of interest. The <code>heatmap_ic</code> function provides this graphic for <code>bioTMLE</code> objects, allowing for the relationship between the exposure variable and some number of “top” biomarkers (as determined by the call to <code>modtest_ic</code>) to be visualized. In general, the heatmap for <code>bioTMLE</code> objects expresses how the contributions of each biomarker to the Average Treatment Effect (ATE) vary across differences in the exposure variable (that is, there is a causal interpretation to the findings). The plot produced is a <code>ggplot2</code> object and can be modified in place if stored properly. For our analysis:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">varInt_index &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(illuminaData)) <span class="op">%in%</span><span class="st"> "benzene"</span>)</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">designVar &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(illuminaData))[, varInt_index]</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">designVar &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(designVar <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(designVar))</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">design =</span> designVar, <span class="dt">FDRcutoff =</span> <span class="fl">0.05</span>, <span class="dt">top =</span> <span class="dv">25</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">varInt_index &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(illuminaData)) <span class="op">%in%</span><span class="st"> "benzene"</span>)</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">designVar &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(illuminaData))[, varInt_index]</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3">designVar &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(designVar <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(designVar))</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">design =</span> designVar, <span class="dt">FDRcutoff =</span> <span class="fl">0.05</span>, <span class="dt">top =</span> <span class="dv">25</span>)</a></code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/heatmap_limma_results-1.png" width="672"></p>
 <p>The volcano plot is standard graphical tools for examining how changes in expression relate to the raw p-value. The utility of such plots lies in their providing a convenient way to identify and systematically ignore those genomic objects that have extremely low p-values due to extremely low variance between observations. The <code>volcano_ic</code> function provides much of the same interpretation, except that the fold change values displayed in the x-axis refer to changes in the <em>contributions of each biomarker to the Average Treatment Effect</em> (in standard practice, for microarray technology, these would be fold changes in gene expression). The plot produced is a <code>ggplot2</code> object and can be modified in place if stored properly. For our analysis:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="../reference/volcano_ic.html">volcano_ic</a></span>(<span class="dt">biotmle =</span> limmaTMLEout)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="../reference/volcano_ic.html">volcano_ic</a></span>(<span class="dt">biotmle =</span> limmaTMLEout)</a></code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/volcano_plot_limma_results-1.png" width="672"></p>
 <hr>
 </div>
@@ -188,25 +187,25 @@
 ##  [3] listenv_0.7.0            assertthat_0.2.0        
 ##  [5] rprojroot_1.3-2          digest_0.6.15           
 ##  [7] foreach_1.4.4            R6_2.2.2                
-##  [9] wesanderson_0.3.2        plyr_1.8.4              
-## [11] nnls_1.4                 backports_1.1.2         
-## [13] evaluate_0.10.1          ggplot2_2.2.1           
-## [15] pillar_1.2.1             zlibbioc_1.24.0         
-## [17] rlang_0.2.0.9000         lazyeval_0.2.1          
-## [19] Matrix_1.2-13            rmarkdown_1.9.4         
-## [21] labeling_0.3             BiocParallel_1.12.0     
-## [23] stringr_1.3.0            RCurl_1.95-4.10         
-## [25] munsell_0.4.3            compiler_3.4.4          
-## [27] pkgconfig_2.0.1          superheat_0.1.0         
-## [29] globals_0.11.0           htmltools_0.3.6         
-## [31] tibble_1.4.2             GenomeInfoDbData_1.0.0  
-## [33] codetools_0.2-15         doFuture_0.6.0          
-## [35] future_1.8.0             tmle_1.3.0-1            
-## [37] MASS_7.3-49              bitops_1.0-6            
-## [39] grid_3.4.4               gtable_0.2.0            
-## [41] magrittr_1.5             scales_0.5.0.9000       
-## [43] stringi_1.1.7            XVector_0.18.0          
-## [45] limma_3.34.9             ggdendro_0.1-20         
+##  [9] plyr_1.8.4               nnls_1.4                
+## [11] backports_1.1.2          evaluate_0.10.1         
+## [13] ggplot2_2.2.1            pillar_1.2.1            
+## [15] zlibbioc_1.24.0          rlang_0.2.0.9000        
+## [17] lazyeval_0.2.1           Matrix_1.2-13           
+## [19] rmarkdown_1.9.4          labeling_0.3            
+## [21] BiocParallel_1.12.0      stringr_1.3.0           
+## [23] RCurl_1.95-4.10          munsell_0.4.3           
+## [25] compiler_3.4.4           pkgconfig_2.0.1         
+## [27] superheat_0.1.0          globals_0.11.0          
+## [29] htmltools_0.3.6          tibble_1.4.2            
+## [31] GenomeInfoDbData_1.0.0   codetools_0.2-15        
+## [33] doFuture_0.6.0           future_1.8.0            
+## [35] tmle_1.3.0-1             MASS_7.3-49             
+## [37] bitops_1.0-6             grid_3.4.4              
+## [39] gtable_0.2.0             magrittr_1.5            
+## [41] scales_0.5.0.9000        stringi_1.1.7           
+## [43] XVector_0.18.0           limma_3.34.9            
+## [45] ggdendro_0.1-20          ggsci_2.8               
 ## [47] iterators_1.0.9          tools_3.4.4             
 ## [49] glue_1.2.0               yaml_2.1.18             
 ## [51] colorspace_1.3-2         SuperLearner_2.0-23-9000

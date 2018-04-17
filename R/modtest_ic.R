@@ -33,11 +33,12 @@ modtest_ic <- function(biotmle,
   fit <- limma::lmFit(object = biomarkerTMLEout, design = design)
   fit <- limma::eBayes(fit = fit)
 
-  tt <- limma::topTable(fit = fit, coef = 1, adjust.method = "BH",
-                        sort.by = "none", number = Inf)
+  tt <- limma::topTable(
+    fit = fit, coef = 1, adjust.method = "BH",
+    sort.by = "none", number = Inf
+  )
   tt$IDs <- rownames(biomarkerTMLEout)
 
   biotmle@topTable <- as.data.frame(tt)
   return(biotmle)
 }
-
