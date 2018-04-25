@@ -1,11 +1,13 @@
 biotmle 1.4.0 (BioC 3.7):
 - An updated release of this package for Bioconductor 3.7, released April 2018.
-- This release includes minor changes, including the use of colors in the plots
-  produced by the visualization methods.
+- This release primarily implements minor changes, including the use of colors
+  in the plots produced by the visualization methods.
 
 ---
 
 biotmle 1.3.0 (BioC 3.6):
+- An updated release of this package for Bioconductor 3.6, released in October
+  2017.
 - An option for applying this methodology to next-generation sequencing data has
   been added, based on the popular "voom" transform of the limma R package.
 - Facilities for parallelized computation have been completely re-implemented:
@@ -22,13 +24,12 @@ biotmle 1.0.0 (BioC 3.5):
 
 ---
 
-The biotmle R package provides routines for the statistical methodology first
-described in the technical manuscript [1] using the implementation described in
-the software paper [2]:
+The biotmle R package provides routines for statistical methodology first
+described in the technical manuscript [1] and the software paper [2]:
 
 1. Nima S. Hejazi, Sara Kherad-Pajouh, Mark J. van der Laan, Alan E. Hubbard.
-   Variance Stabilization of Targeted Estimators of Causal Parameters in
-   High-Dimensional Settings. https://arxiv.org/abs/1710.05451
+   Variance stabilization of targeted sstimators of causal parameters in
+   high-dimensional settings. https://arxiv.org/abs/1710.05451
 
 2. Nima S. Hejazi, Weixin Cai, Alan E. Hubbard. biotmle: Targeted Learning for
    Biomarker Discovery. The Journal of Open Source Software, 2(15), 2017.
