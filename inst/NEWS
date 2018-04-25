@@ -1,6 +1,7 @@
 biotmle 1.4.0 (BioC 3.7):
-- ...
-- ...
+- An updated release of this package for Bioconductor 3.7, released April 2018.
+- This release includes minor changes, including the use of colors in the plots
+  produced by the visualization methods.
 
 ---
 
