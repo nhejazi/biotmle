@@ -20,8 +20,6 @@ r:
 before_install:
   - Rscript -e 'update.packages(ask = FALSE)'
 
-bioc_required: true
-
 r_packages:
   - devtools
   - covr
