@@ -2,10 +2,6 @@ branches:
   only:
   - master
 
-env:
-  global:
-  - RGL_USE_NULL=TRUE
-
 language: r
 sudo: required
 cache: packages
