@@ -11,7 +11,7 @@ sudo: required
 cache: packages
 
 warnings_are_errors: true
-r_build_args: '--no-build-vignettes --no-manual'
+r_build_args: '--no-manual'
 r_check_args: '--no-build-vignettes --no-manual'
 
 r:
