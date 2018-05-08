@@ -2,12 +2,16 @@ branches:
   only:
   - master
 
+env:
+  global:
+  - RGL_USE_NULL=TRUE
+
 language: r
 sudo: required
 cache: packages
 
 warnings_are_errors: true
-r_build_args: '--no-build-vignettes --no-manual'
+r_build_args: '--no-manual'
 r_check_args: '--no-build-vignettes --no-manual'
 
 r:
@@ -22,6 +26,7 @@ r_packages:
   - covr
 
 r_github_packages:
+  - r-lib/devtools
   - jimhester/covr
   - nhejazi/biotmleData
 
