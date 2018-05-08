@@ -8,7 +8,7 @@
 #'  \code{.biotmle} by class \code{bioTMLE} to handle uncertainty in the object
 #'  passed to slot "tmleOut".
 #'
-#' @importFrom methods setClassUnion
+#' @importFrom methods setClassUnion new
 #' @importClassesFrom methods data.frame
 #' @importClassesFrom limma EList
 #'
