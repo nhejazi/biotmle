@@ -30,7 +30,6 @@
 #' plot(x = limmaTMLEout, type = "pvals_adj")
 #'
 plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
-
   if (type == "pvals_raw") {
     p <- ggplot2::ggplot(as.data.frame(x@topTable), ggplot2::aes(P.Value)) +
       ggplot2::geom_histogram(ggplot2::aes(
@@ -47,15 +46,15 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
       as.data.frame(x@topTable),
       ggplot2::aes(adj.P.Val)
     ) +
-    ggplot2::geom_histogram(ggplot2::aes(
-      y = ..count..,
-      fill = ..count..
-    ), colour = "white", na.rm = TRUE, binwidth = 0.025) +
-    ggplot2::ggtitle("Histogram of BH-corrected FDR p-values") +
-    ggplot2::xlab("magnitude of BH-corrected p-values") +
-    ggsci::scale_fill_gsea() +
-    ggplot2::guides(fill = ggplot2::guide_legend(title = NULL)) +
-    ggplot2::theme_bw()
+      ggplot2::geom_histogram(ggplot2::aes(
+        y = ..count..,
+        fill = ..count..
+      ), colour = "white", na.rm = TRUE, binwidth = 0.025) +
+      ggplot2::ggtitle("Histogram of BH-corrected FDR p-values") +
+      ggplot2::xlab("magnitude of BH-corrected p-values") +
+      ggsci::scale_fill_gsea() +
+      ggplot2::guides(fill = ggplot2::guide_legend(title = NULL)) +
+      ggplot2::theme_bw()
   }
   return(p)
 }
@@ -127,7 +126,7 @@ volcano_ic <- function(biotmle, fc_bound = 3.0, pval_bound = 0.2) {
     ggplot2::ggtitle("Volcano Plot: Average Treatment Effect") +
     ggsci::scale_fill_gsea() +
     ggplot2::guides(color = ggplot2::guide_legend(title = NULL)) +
-    #ggplot2::guides(color = FALSE) +
+    # ggplot2::guides(color = FALSE) +
     ggplot2::theme_bw()
   return(p)
 }
@@ -217,4 +216,3 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05, top = 25) {
     ...
   )
 }
-

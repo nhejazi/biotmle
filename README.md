@@ -170,7 +170,7 @@ Parameters in High-Dimensional Settings.”
 Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for
 Assessing Differential Expression in Microarray Experiments.”
 *Statistical Applications in Genetics and Molecular Biology* 3 (1).
-Walter de Gruyter:1–25. <https://doi.org/10.2202/1544-6115.1027>.
+Walter de Gruyter: 1–25. <https://doi.org/10.2202/1544-6115.1027>.
 
 </div>
 
