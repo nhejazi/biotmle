@@ -64,13 +64,13 @@ se
 ```{r biomarkertmle, eval=FALSE}
 rnaseqTMLEout <- biomarkertmle(se = se,
                                varInt = 1,
-                               type = "exposure",
                                ngscounts = TRUE,
                                parallel = TRUE,
                                family = "gaussian",
-                               g_lib = c("SL.mean", "SL.glm", "SL.randomForest"),
-                               Q_lib = c("SL.mean", "SL.glm", "SL.randomForest",
-                                         "SL.nnet")
+                               g_lib = c("SL.mean", "SL.glm",
+                                         "SL.randomForest"),
+                               Q_lib = c("SL.mean", "SL.glm",
+                                         "SL.randomForest", "SL.nnet")
                               )
 head(rnaseqTMLEout@tmleOut$E[, seq_len(6)])
 ```
