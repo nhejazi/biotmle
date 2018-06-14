@@ -8,8 +8,8 @@
 <title>Processing and Analyzing RNA-Seq Data • biotmle</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script><script src="../pkgdown.js"></script><meta property="og:title" content="Processing and Analyzing RNA-Seq Data">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Processing and Analyzing RNA-Seq Data">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!--[if lt IE 9]>
@@ -18,7 +18,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-vignette">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -27,8 +27,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">biotmle</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">biotmle</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
@@ -73,31 +77,25 @@
 
       
       </header><div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Processing and Analyzing RNA-Seq Data</h1>
                         <h4 class="author">Nima Hejazi</h4>
             
-            <h4 class="date">2018-04-15</h4>
-          </div>
+            <h4 class="date">2018-06-14</h4>
+      
+      <small class="dont-index">Source: <a href="https://github.com/nhejazi/biotmle/blob/master/vignettes/rnaseqProcessing.Rmd"><code>vignettes/rnaseqProcessing.Rmd</code></a></small>
+      <div class="hidden name"><code>rnaseqProcessing.Rmd</code></div>
+
+    </div>
 
     
     
-<div class="contents">
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a></code></pre></div>
-<pre><code>## 
-## Attaching package: 'dplyr'</code></pre>
-<pre><code>## The following objects are masked from 'package:stats':
-## 
-##     filter, lag</code></pre>
-<pre><code>## The following objects are masked from 'package:base':
-## 
-##     intersect, setdiff, setequal, union</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">library</span>(biotmle)</a></code></pre></div>
-<pre><code>## biotmle v:1.3.0: Moderated and Targeted Statistical Learning for Biomarker Discovery</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(biotmleData)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">suppressMessages</span>(<span class="kw">library</span>(SummarizedExperiment))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">"%ni%"</span> =<span class="st"> </span><span class="kw">Negate</span>(<span class="st">"%in%"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(biotmle)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(biotmleData)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">suppressMessages</span>(<span class="kw">library</span>(SummarizedExperiment))</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="st">"%ni%"</span> =<span class="st"> </span><span class="kw">Negate</span>(<span class="st">"%in%"</span>)</a></code></pre></div>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
@@ -107,22 +105,22 @@
 <div id="simulation-data-structure" class="section level2">
 <h2 class="hasAnchor">
 <a href="#simulation-data-structure" class="anchor"></a>Simulation: Data Structure</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">6423709</span>)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="dv">50</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">g &lt;-<span class="st"> </span><span class="dv">2500</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">cases_pois &lt;-<span class="st"> </span><span class="dv">50</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">controls_pois &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">ngs_cases &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">replicate</span>(n, <span class="kw">rpois</span>(g, cases_pois)), g))</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">ngs_controls &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">replicate</span>(n, <span class="kw">rpois</span>(g, controls_pois)), g))</a>
-<a class="sourceLine" id="cb8-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb8-10" data-line-number="10">ngs_data &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(ngs_cases, ngs_controls))</a>
-<a class="sourceLine" id="cb8-11" data-line-number="11">exp_var &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, n), <span class="kw">rep</span>(<span class="dv">0</span>, n))</a>
-<a class="sourceLine" id="cb8-12" data-line-number="12">batch &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, n)</a>
-<a class="sourceLine" id="cb8-13" data-line-number="13">covar &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, n <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb8-14" data-line-number="14">design &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(exp_var, batch, covar))</a>
-<a class="sourceLine" id="cb8-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb8-16" data-line-number="16"><span class="kw">head</span>(ngs_data[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">set.seed</span>(<span class="dv">6423709</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">n &lt;-<span class="st"> </span><span class="dv">50</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">g &lt;-<span class="st"> </span><span class="dv">2500</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">cases_pois &lt;-<span class="st"> </span><span class="dv">50</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">controls_pois &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">ngs_cases &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">replicate</span>(n, <span class="kw">rpois</span>(g, cases_pois)), g))</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">ngs_controls &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">matrix</span>(<span class="kw">replicate</span>(n, <span class="kw">rpois</span>(g, controls_pois)), g))</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">ngs_data &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(ngs_cases, ngs_controls))</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">exp_var &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="kw">rep</span>(<span class="dv">1</span>, n), <span class="kw">rep</span>(<span class="dv">0</span>, n))</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">batch &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span><span class="op">:</span><span class="dv">2</span>, n)</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">covar &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">1</span>, n <span class="op">*</span><span class="st"> </span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">design &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw">cbind</span>(exp_var, batch, covar))</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="kw">head</span>(ngs_data[, <span class="dv">1</span><span class="op">:</span><span class="dv">7</span>])</a></code></pre></div>
 <pre><code>##   V1 V2 V3 V4 V5 V6 V7
 ## 1 69 61 39 46 50 57 43
 ## 2 42 59 50 54 44 53 54
@@ -135,9 +133,9 @@
 <div id="processing-data-transformation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#processing-data-transformation" class="anchor"></a>Processing: Data Transformation</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">se &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/RangedSummarizedExperiment-class">SummarizedExperiment</a></span>(<span class="dt">assays =</span> <span class="kw">list</span>(<span class="dt">counts =</span> <span class="kw">DataFrame</span>(ngs_data)),</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">                           <span class="dt">colData =</span> <span class="kw">DataFrame</span>(design))</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">se</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">se &lt;-<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/RangedSummarizedExperiment-class">SummarizedExperiment</a></span>(<span class="dt">assays =</span> <span class="kw">list</span>(<span class="dt">counts =</span> <span class="kw">DataFrame</span>(ngs_data)),</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">                           <span class="dt">colData =</span> <span class="kw">DataFrame</span>(design))</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">se</a></code></pre></div>
 <pre><code>## class: SummarizedExperiment 
 ## dim: 2500 100 
 ## metadata(0):
@@ -151,17 +149,17 @@
 <div id="analysis-assessing-the-effect-of-exposure" class="section level2">
 <h2 class="hasAnchor">
 <a href="#analysis-assessing-the-effect-of-exposure" class="anchor"></a>Analysis: Assessing the Effect of Exposure</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">rnaseqTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/biomarkertmle.html">biomarkertmle</a></span>(<span class="dt">se =</span> se,</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">                               <span class="dt">varInt =</span> <span class="dv">1</span>,</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">                               <span class="dt">type =</span> <span class="st">"exposure"</span>,</a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">                               <span class="dt">ngscounts =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">                               <span class="dt">parallel =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb12-6" data-line-number="6">                               <span class="dt">family =</span> <span class="st">"gaussian"</span>,</a>
-<a class="sourceLine" id="cb12-7" data-line-number="7">                               <span class="dt">g_lib =</span> <span class="kw">c</span>(<span class="st">"SL.mean"</span>, <span class="st">"SL.glm"</span>, <span class="st">"SL.randomForest"</span>),</a>
-<a class="sourceLine" id="cb12-8" data-line-number="8">                               <span class="dt">Q_lib =</span> <span class="kw">c</span>(<span class="st">"SL.mean"</span>, <span class="st">"SL.glm"</span>, <span class="st">"SL.randomForest"</span>,</a>
-<a class="sourceLine" id="cb12-9" data-line-number="9">                                         <span class="st">"SL.nnet"</span>)</a>
-<a class="sourceLine" id="cb12-10" data-line-number="10">                              )</a>
-<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="kw">head</span>(rnaseqTMLEout<span class="op">@</span>tmleOut<span class="op">$</span>E[, <span class="kw">seq_len</span>(<span class="dv">6</span>)])</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">rnaseqTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/biomarkertmle.html">biomarkertmle</a></span>(<span class="dt">se =</span> se,</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">                               <span class="dt">varInt =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">                               <span class="dt">ngscounts =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">                               <span class="dt">parallel =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">                               <span class="dt">family =</span> <span class="st">"gaussian"</span>,</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">                               <span class="dt">g_lib =</span> <span class="kw">c</span>(<span class="st">"SL.mean"</span>, <span class="st">"SL.glm"</span>,</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">                                         <span class="st">"SL.randomForest"</span>),</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">                               <span class="dt">Q_lib =</span> <span class="kw">c</span>(<span class="st">"SL.mean"</span>, <span class="st">"SL.glm"</span>,</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">                                         <span class="st">"SL.randomForest"</span>, <span class="st">"SL.nnet"</span>)</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">                              )</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="kw">head</span>(rnaseqTMLEout<span class="op">@</span>tmleOut<span class="op">$</span>E[, <span class="kw">seq_len</span>(<span class="dv">6</span>)])</a></code></pre></div>
 <pre><code>##                [,1]       [,2]      [,3]       [,4]      [,5]       [,6]
 ## result.1 -329.83655 -212.28070 160.39144   32.96832 -36.05786 -146.77124
 ## result.2   91.43805 -129.00196 -39.20680  -47.18052  44.29473  -30.83862
@@ -169,8 +167,8 @@
 ## result.4  323.94443   93.76761  13.80324   93.71017  47.56326  224.33603
 ## result.5   11.71456 -148.33216  93.43461   47.79556  61.82086 -229.99698
 ## result.6 -183.73280   -4.00971  45.02578  -53.02987  -4.00971  -69.37162</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/modtest_ic.html">modtest_ic</a></span>(<span class="dt">biotmle =</span> rnaseqTMLEout)</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw">head</span>(limmaTMLEout<span class="op">@</span>topTable)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/modtest_ic.html">modtest_ic</a></span>(<span class="dt">biotmle =</span> rnaseqTMLEout)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">head</span>(limmaTMLEout<span class="op">@</span>topTable)</a></code></pre></div>
 <pre><code>##               logFC    AveExpr          t    P.Value adj.P.Val         B
 ## result.1 -32.072167 -32.072167 -1.7430776 0.08297431 0.9303074 -4.595093
 ## result.2 -25.903359 -25.903359 -1.4289259 0.15470453 0.9342061 -4.595106
@@ -190,26 +188,26 @@
 <div id="results-data-visualization" class="section level2">
 <h2 class="hasAnchor">
 <a href="#results-data-visualization" class="anchor"></a>Results: Data Visualization</h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_adj"</span>)</a></code></pre></div>
-<p><img src="rnaseqProcessing_files/figure-html/pval_hist_limma_adjp-1.png" width="672"></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_raw"</span>)</a></code></pre></div>
-<p><img src="rnaseqProcessing_files/figure-html/pval_hist_limma_rawp-1.png" width="672"></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">varInt_index &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(se)) <span class="op">%in%</span><span class="st"> "exp_var"</span>)</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">designVar &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(se))[, varInt_index]</a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">design &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(designVar <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(designVar))</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">design =</span> design, <span class="dt">FDRcutoff =</span> <span class="fl">1.0</span>, <span class="dt">top =</span> <span class="dv">10</span>)</a></code></pre></div>
-<p><img src="rnaseqProcessing_files/figure-html/heatmap_limma_results-1.png" width="672"></p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="../reference/volcano_ic.html">volcano_ic</a></span>(<span class="dt">biotmle =</span> limmaTMLEout)</a></code></pre></div>
-<p><img src="rnaseqProcessing_files/figure-html/volcano_plot_limma_results-1.png" width="672"></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_adj"</span>)</a></code></pre></div>
+<p><img src="rnaseqProcessing_files/figure-html/pval_hist_limma_adjp-1.png" width="700"></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">plot</span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_raw"</span>)</a></code></pre></div>
+<p><img src="rnaseqProcessing_files/figure-html/pval_hist_limma_rawp-1.png" width="700"></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">varInt_index &lt;-<span class="st"> </span><span class="kw">which</span>(<span class="kw">names</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(se)) <span class="op">%in%</span><span class="st"> "exp_var"</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">designVar &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(se))[, varInt_index]</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">design &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(designVar <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(designVar))</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">design =</span> design, <span class="dt">FDRcutoff =</span> <span class="fl">1.0</span>, <span class="dt">top =</span> <span class="dv">10</span>)</a></code></pre></div>
+<p><img src="rnaseqProcessing_files/figure-html/heatmap_limma_results-1.png" width="700"></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../reference/volcano_ic.html">volcano_ic</a></span>(<span class="dt">biotmle =</span> limmaTMLEout)</a></code></pre></div>
+<p><img src="rnaseqProcessing_files/figure-html/volcano_plot_limma_results-1.png" width="700"></p>
 <hr>
 </div>
 <div id="session-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session Information</h2>
-<pre><code>## R version 3.4.4 (2018-03-15)
-## Platform: x86_64-apple-darwin17.3.0 (64-bit)
-## Running under: macOS High Sierra 10.13.3
+<pre><code>## R version 3.5.0 (2018-04-23)
+## Platform: x86_64-apple-darwin17.5.0 (64-bit)
+## Running under: macOS High Sierra 10.13.5
 ## 
 ## Matrix products: default
 ## BLAS: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
@@ -219,47 +217,42 @@
 ## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
 ## 
 ## attached base packages:
-## [1] parallel  stats4    methods   stats     graphics  grDevices utils    
-## [8] datasets  base     
+## [1] parallel  stats4    stats     graphics  grDevices utils     datasets 
+## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] bindrcpp_0.2.2             SummarizedExperiment_1.8.1
-##  [3] DelayedArray_0.4.1         matrixStats_0.53.1        
-##  [5] Biobase_2.38.0             GenomicRanges_1.30.3      
-##  [7] GenomeInfoDb_1.14.0        IRanges_2.12.0            
-##  [9] S4Vectors_0.16.0           BiocGenerics_0.24.0       
-## [11] biotmleData_1.2.0          biotmle_1.3.0             
-## [13] dplyr_0.7.4               
+##  [1] bindrcpp_0.2.2              SummarizedExperiment_1.10.1
+##  [3] DelayedArray_0.6.0          BiocParallel_1.14.1        
+##  [5] matrixStats_0.53.1          Biobase_2.40.0             
+##  [7] GenomicRanges_1.32.3        GenomeInfoDb_1.16.0        
+##  [9] IRanges_2.14.10             S4Vectors_0.18.2           
+## [11] BiocGenerics_0.26.0         biotmleData_1.4.0          
+## [13] biotmle_1.5.1               dplyr_0.7.5                
+## [15] BiocStyle_2.8.1            
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_0.12.16             lattice_0.20-35         
-##  [3] listenv_0.7.0            assertthat_0.2.0        
-##  [5] rprojroot_1.3-2          digest_0.6.15           
-##  [7] foreach_1.4.4            R6_2.2.2                
-##  [9] plyr_1.8.4               nnls_1.4                
-## [11] backports_1.1.2          evaluate_0.10.1         
-## [13] ggplot2_2.2.1            pillar_1.2.1            
-## [15] zlibbioc_1.24.0          rlang_0.2.0.9000        
-## [17] lazyeval_0.2.1           Matrix_1.2-13           
-## [19] rmarkdown_1.9.4          labeling_0.3            
-## [21] BiocParallel_1.12.0      stringr_1.3.0           
-## [23] RCurl_1.95-4.10          munsell_0.4.3           
-## [25] compiler_3.4.4           pkgconfig_2.0.1         
-## [27] superheat_0.1.0          globals_0.11.0          
-## [29] htmltools_0.3.6          tibble_1.4.2            
-## [31] GenomeInfoDbData_1.0.0   codetools_0.2-15        
-## [33] doFuture_0.6.0           future_1.8.0            
-## [35] tmle_1.3.0-1             MASS_7.3-49             
-## [37] bitops_1.0-6             grid_3.4.4              
-## [39] gtable_0.2.0             magrittr_1.5            
-## [41] scales_0.5.0.9000        stringi_1.1.7           
-## [43] XVector_0.18.0           limma_3.34.9            
-## [45] ggdendro_0.1-20          ggsci_2.8               
-## [47] iterators_1.0.9          tools_3.4.4             
-## [49] glue_1.2.0               yaml_2.1.18             
-## [51] colorspace_1.3-2         SuperLearner_2.0-23-9000
-## [53] knitr_1.20               bindr_0.1.1</code></pre>
-</div>
+##  [1] ggdendro_0.1-20        foreach_1.4.4          assertthat_0.2.0      
+##  [4] GenomeInfoDbData_1.1.0 superheat_0.1.0        yaml_2.1.19           
+##  [7] globals_0.12.0         pillar_1.2.3           backports_1.1.2       
+## [10] lattice_0.20-35        glue_1.2.0             limma_3.36.1          
+## [13] digest_0.6.15          XVector_0.20.0         colorspace_1.3-2      
+## [16] htmltools_0.3.6        Matrix_1.2-14          plyr_1.8.4            
+## [19] pkgconfig_2.0.1        listenv_0.7.0          bookdown_0.7          
+## [22] zlibbioc_1.26.0        purrr_0.2.5            scales_0.5.0          
+## [25] tibble_1.4.2           ggplot2_2.2.1.9000     lazyeval_0.2.1        
+## [28] magrittr_1.5           crayon_1.3.4           memoise_1.1.0         
+## [31] evaluate_0.10.1        fs_1.2.3               future_1.8.1          
+## [34] MASS_7.3-50            SuperLearner_2.0-23    xml2_1.2.0            
+## [37] tools_3.5.0            stringr_1.3.1          munsell_0.5.0         
+## [40] ggsci_2.9              compiler_3.5.0         pkgdown_1.1.0         
+## [43] rlang_0.2.1            grid_3.5.0             RCurl_1.95-4.10       
+## [46] iterators_1.0.9        bitops_1.0-6           labeling_0.3          
+## [49] rmarkdown_1.10         gtable_0.2.0           codetools_0.2-15      
+## [52] roxygen2_6.0.1.9000    R6_2.2.2.9000          nnls_1.4              
+## [55] knitr_1.20             doFuture_0.6.0         bindr_0.1.1           
+## [58] commonmark_1.5         rprojroot_1.3-2        desc_1.2.0            
+## [61] stringi_1.2.3          tmle_1.3.0-1           Rcpp_0.12.17          
+## [64] tidyselect_0.2.4       xfun_0.1</code></pre>
 </div>
   </div>
 
@@ -291,6 +284,8 @@
 
       </footer>
 </div>
+
+  
 
   </body>
 </html>

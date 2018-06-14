@@ -31,5 +31,4 @@ data(biomarkertmleOut)
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
 plot(x = limmaTMLEout, type = "pvals_adj")
-
 }

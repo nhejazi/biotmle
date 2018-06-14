@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TMLE procedure for Biomarker Identication from Exposure — biomarkerTMLE_exposure • biotmle</title>
+<title>TMLE procedure using ATE for Biomarker Identication from Exposure — biomarkerTMLE_exposure • biotmle</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -21,18 +21,24 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="TMLE procedure for Biomarker Identication from Exposure — biomarkerTMLE_exposure" />
+
+
+
+<meta property="og:title" content="TMLE procedure using ATE for Biomarker Identication from Exposure — biomarkerTMLE_exposure" />
 
 <meta property="og:description" content="This function performs influence curve-based estimation of the effect of an
 exposure on biological expression values associated with a given biomarker,
-controlling for a user-specified set of baseline covariates" />
+controlling for a user-specified set of baseline covariates." />
 <meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -55,8 +61,12 @@ controlling for a user-specified set of baseline covariates" />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">biotmle</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">biotmle</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -93,6 +103,7 @@ controlling for a user-specified set of baseline covariates" />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -100,49 +111,55 @@ controlling for a user-specified set of baseline covariates" />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>TMLE procedure for Biomarker Identication from Exposure</h1>
+    <h1>TMLE procedure using ATE for Biomarker Identication from Exposure</h1>
+    <small class="dont-index">Source: <a href='https://github.com/nhejazi/biotmle/blob/master/R/exposure_biomarkertmle.R'><code>R/exposure_biomarkertmle.R</code></a></small>
+    <div class="hidden name"><code>biomarkerTMLE_exposure.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>This function performs influence curve-based estimation of the effect of an
 exposure on biological expression values associated with a given biomarker,
-controlling for a user-specified set of baseline covariates</p>
+controlling for a user-specified set of baseline covariates.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>biomarkerTMLE_exposure</span>(<span class='no'>Y</span>, <span class='no'>W</span>, <span class='no'>A</span>, <span class='no'>a</span>, <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>,
   <span class='no'>g_lib</span>, <span class='no'>Q_lib</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>Y</th>
-      <td><p>(numeric vector) - a vector of expression values for a single
-biomarker.</p></td>
+      <td><p>A <code>numeric</code> vector of expression values for a single biomarker.</p></td>
     </tr>
     <tr>
       <th>W</th>
-      <td><p>(numeric matrix) - a matrix of baseline covariates to be controlled
-in the estimation process.</p></td>
+      <td><p>A <code>Matrix</code> of <code>numeric</code> values corresponding to baseline
+covariates to be marginalized over in the estimation process.</p></td>
     </tr>
     <tr>
       <th>A</th>
-      <td><p>(numeric vector) - a discretized exposure vector (e.g., from a
+      <td><p>A <code>numeric</code> vector of discretized exposure vector (e.g., from a
 design matrix whose effect on expression values is of interest.</p></td>
     </tr>
     <tr>
       <th>a</th>
-      <td><p>(numeric vector) - the levels of A against which comparisons are to
-be made.</p></td>
+      <td><p>The <code>numeric</code> value indicating levels of <code>A</code> above against
+which comparisons are to be made.</p></td>
     </tr>
     <tr>
       <th>subj_ids</th>
-      <td><p>(numeric vector) - subject IDs to be passed directly to
-the same subject should have the exact same numerical identifier.
-coerced to numeric if not provided in the appropriate form.</p></td>
+      <td><p>A <code>numeric</code> vector of subject IDs to be passed directly
+to <code><a href='http://www.rdocumentation.org/packages/tmle/topics/tmle'>tmle::tmle</a></code> when there are repeated measures; measurements on the
+same subject should have the exact same numerical identifier. These values
+will be coerced to numeric if not provided in the appropriate form (e.g., as
+<code>character</code>). The call to <code><a href='http://www.rdocumentation.org/packages/tmle/topics/tmle'>tmle::tmle</a></code> will utilized a corrected
+version of the variance estimate from the efficient influence function.</p></td>
     </tr>
     <tr>
       <th>family</th>
@@ -164,8 +181,8 @@ fitting the "Q" step of the standard TMLE procedure.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>TMLE-based estimate of the relationship between biomarker expression
-        and changes in an exposure variable, computed iteratively and saved
-        in the <code>tmleOut</code> slot in a <code>biotmle</code> object.</p>
+ and changes in an exposure variable, computed iteratively and saved in the
+ <code>tmleOut</code> slot in a <code>biotmle</code> object.</p>
     
 
   </div>
@@ -191,6 +208,8 @@ fitting the "Q" step of the standard TMLE procedure.</p></td>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>

@@ -29,7 +29,7 @@ on the exposure variable), using the tools provided by the R package `limma`.
 
 First, we load the `biotmle` package and the (included) `illuminaData` data set:
 
-```{r setup_data}
+```{r setup_data, message=FALSE, warning=FALSE}
 library(dplyr)
 library(biotmle)
 library(biotmleData)

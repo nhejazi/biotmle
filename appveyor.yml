@@ -35,6 +35,7 @@ build_script:
   - travis-tool.sh install_bioc BiocCheck
   - travis-tool.sh install_bioc BiocStyle
   - travis-tool.sh install_bioc BiocGenerics
+  - travis-tool.sh install_bioc S4Vectors
   - travis-tool.sh install_bioc SummarizedExperiment
   - travis-tool.sh install_bioc limma
   - travis-tool.sh install_bioc_deps

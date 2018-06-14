@@ -38,5 +38,4 @@ data(biomarkertmleOut)
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
 volcano_ic(biotmle = limmaTMLEout)
-
 }

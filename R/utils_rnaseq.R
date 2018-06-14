@@ -4,11 +4,11 @@
 #' the biomarker TMLE procedure by invoking the voom transform of \code{limma}.
 #'
 #' @param biotmle (bioTMLE) - subclass of \code{SummarizedExperiment} containing
-#'        next-generation sequencing (NGS) count data in the "assays" slot.
+#'  next-generation sequencing (NGS) count data in the "assays" slot.
 #' @param weights (logical) - whether to return quality weights of samples in
-#'        the output object.
+#'  the output object.
 #' @param ... - other arguments to be passed to functions \code{limma::voom} or
-#'        \code{limma::voomWithQualityWeights} as appropriate.
+#'  \code{limma::voomWithQualityWeights} as appropriate.
 #'
 #' @importFrom limma voom voomWithQualityWeights
 #' @importFrom SummarizedExperiment assay
@@ -16,9 +16,9 @@
 #' @export rnaseq_ic
 #'
 #' @return \code{EList} object containing voom-transformed "expression" measures
-#'         of count data (actually, the mean-variance trend) in the "E" slot, to
-#'         be passed into the biomarker TMLE procedure.
-#'
+#'  of count data (actually, the mean-variance trend) in the "E" slot, to be
+#'  passed into the biomarker TMLE procedure.
+#
 rnaseq_ic <- function(biotmle, weights = TRUE, ...) {
 
   # check arguments
