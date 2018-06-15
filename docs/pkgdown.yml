@@ -4,4 +4,7 @@ pkgdown_sha: ~
 articles:
   exposureBiomarkers: exposureBiomarkers.html
   rnaseqProcessing: rnaseqProcessing.html
+urls:
+  reference: https://code.nimahejazi.org/biotmle/reference
+  article: https://code.nimahejazi.org/biotmle/articles
 
