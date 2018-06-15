@@ -18,8 +18,8 @@ the output object.}
 }
 \value{
 \code{EList} object containing voom-transformed "expression" measures
-        of count data (actually, the mean-variance trend) in the "E" slot, to
-        be passed into the biomarker TMLE procedure.
+ of count data (actually, the mean-variance trend) in the "E" slot, to be
+ passed into the biomarker TMLE procedure.
 }
 \description{
 This function prepares next-generation sequencing data (counts) for use with

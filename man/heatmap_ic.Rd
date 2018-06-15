@@ -48,5 +48,4 @@ design <- as.numeric(designVar == max(designVar))
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
 heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 15)
-
 }

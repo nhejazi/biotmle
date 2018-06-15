@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Moderated Statistical Tests for Influence Curves — modtest_ic • biotmle</title>
+<title>Moderated Statistical Tests for Influence Functions — modtest_ic • biotmle</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -21,18 +21,24 @@
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
 
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
-<meta property="og:title" content="Moderated Statistical Tests for Influence Curves — modtest_ic" />
+
+
+
+<meta property="og:title" content="Moderated Statistical Tests for Influence Functions — modtest_ic" />
 
 <meta property="og:description" content="Performs variance shrinkage via the empirical Bayes procedure of LIMMA on the
-observed data after a transformation moving the data to influence curve
+observed data after a transformation moving the data to influence function
 space, based on the average treatment effect parameter." />
 <meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -55,8 +61,12 @@ space, based on the average treatment effect parameter." />
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">biotmle</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">biotmle</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
@@ -93,6 +103,7 @@ space, based on the average treatment effect parameter." />
   </a>
 </li>
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -100,21 +111,25 @@ space, based on the average treatment effect parameter." />
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Moderated Statistical Tests for Influence Curves</h1>
+    <h1>Moderated Statistical Tests for Influence Functions</h1>
+    <small class="dont-index">Source: <a href='https://github.com/nhejazi/biotmle/blob/master/R/moderatetest_eif.R'><code>R/moderatetest_eif.R</code></a></small>
+    <div class="hidden name"><code>modtest_ic.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Performs variance shrinkage via the empirical Bayes procedure of LIMMA on the
-observed data after a transformation moving the data to influence curve
+observed data after a transformation moving the data to influence function
 space, based on the average treatment effect parameter.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>modtest_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"BH"</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -124,16 +139,16 @@ space, based on the average treatment effect parameter.</p>
     <tr>
       <th>adjust</th>
       <td><p>the multiple testing correction to be applied to p-values that
-are generated from the moderated tests. The recommended (and default)
-method is that of Benjamini and Hochberg. See <a href='http://www.rdocumentation.org/packages/limma/topics/toptable'>topTable</a>
-for a list of appropriate methods.</p></td>
+are generated from the moderated tests. The recommended (and default) method
+is that of Benjamini and Hochberg. See <a href='http://www.rdocumentation.org/packages/limma/topics/toptable'>topTable</a> for a list of
+appropriate methods.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>biotmle</code> object containing output from <code><a href='http://www.rdocumentation.org/packages/limma/topics/lmFit'>limma::lmFit</a></code> and
-        <code><a href='http://www.rdocumentation.org/packages/limma/topics/toptable'>limma::topTable</a></code></p>
+ <code><a href='http://www.rdocumentation.org/packages/limma/topics/toptable'>limma::topTable</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -167,6 +182,8 @@ for a list of appropriate methods.</p></td>
 
       </footer>
    </div>
+
+  
 
   </body>
 </html>
