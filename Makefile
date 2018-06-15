@@ -3,7 +3,7 @@ md:
 
 site:
 	Rscript -e "rmarkdown::render('README.Rmd', output_file = 'README.md')"
-	Rscript -e "require(SummarizedExperiment); pkgdown::build_site()"
+	Rscript -e "pkgdown::build_site()"
 
 check:
 	Rscript -e "devtools::check()"
