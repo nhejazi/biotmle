@@ -36,8 +36,9 @@ Imports:
     future,
     stats,
     methods,
-    S4Vectors,
     limma,
+    S4Vectors,
+    BiocGenerics,
     BiocParallel,
     SummarizedExperiment,
     tmle

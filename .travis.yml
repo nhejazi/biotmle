@@ -33,6 +33,7 @@ r_github_packages:
 bioc_packages:
   - BiocStyle
   - BiocCheck
+  - BiocGenerics
   - S4Vectors
   - SummarizedExperiment
   - limma
