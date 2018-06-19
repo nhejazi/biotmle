@@ -85,13 +85,11 @@ data(biomarkertmleOut)
 ```
 
 The output of `biomarkertmle` is an object of class `bioTMLE`, containing four
-objects: (1) `call`, the call to `biomarkertmle`; (2) `topTable`, an empty
+new slots: (1) `call`, the call to `biomarkertmle`; (2) `topTable`, an empty
 slot meant to hold the output of `limma::topTable`, after a later call to
-`modtest_ic`; (3) `limmaOut`, an empty slot meant to hold the output of
-`limma::lmFit`, after a later call to `modtest_ic`; and (4) `tmleOut`, a data
-frame containing the point estimates of the associations of each biomarker with
-the exposure of interest based on the influence curve representation of the
-Average Treatment Effect parameter.
+`modtest_ic`; and (3) `tmleOut`, a `data.frame` containing the point estimates
+of the associations of each biomarker with the exposure of interest based on the
+influence curve representation of the Average Treatment Effect.
 
 The output of `biomarkertmle` can be directly fed to `modtest_ic`, a wrapper
 around `limma::lmFit` and `limma::topTable` that outputs a `biotmle` object
@@ -109,11 +107,10 @@ limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
 After invoking `modtest_ic`, the resultant `bioTMLE` object will contain all
 information relevant to the analytic procedure for identifying biomarkers: that
-is, it will contain the origin call to `biomarkertmle`, the result of running
-`limma::topTable`, the result of running `limma::lmFit`, and the result of
-running `biomarkertmle`. The statistical results of this procedure can be
-extracted from the `topTable` object in the `bioTMLE` object produced by
-`modtest_ic`.
+is, it will contain the original call to `biomarkertmle`, the result of running
+`limma::topTable`, and the result of running `biomarkertmle`. The statistical
+results of this procedure can be extracted from the `topTable` object in the
+`bioTMLE` object produced by `modtest_ic`.
 
 ---
 
