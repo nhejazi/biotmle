@@ -41,7 +41,7 @@ Imports:
     BiocGenerics,
     BiocParallel,
     SummarizedExperiment,
-    tmle
+    drtmle
 Suggests:
     testthat,
     knitr,

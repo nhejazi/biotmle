@@ -24,7 +24,7 @@
 #' @param family (character) - specification of error family: "binomial" or
 #'  "gaussian"
 #'
-#' @importFrom tmle tmle
+#' @importFrom drtmle drtmle
 #'
 #' @return TMLE-based estimate of the relationship between biomarker expression
 #'  and changes in an exposure variable, computed iteratively and saved in the
@@ -55,7 +55,7 @@ biomarkerTMLE_exposure <- function(Y,
 
   for (i in seq_along(a)) {
     A_star <- as.numeric(A == a[i])
-    fit_tmle <- tmle::tmle(
+    fit_tmle <- drtmle::drtmle(
       Y = Y,
       A = A_star,
       W = W,
