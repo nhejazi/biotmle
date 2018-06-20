@@ -11,7 +11,7 @@
 #' @importFrom methods setClassUnion new
 #' @importClassesFrom methods data.frame
 #' @importClassesFrom limma EList
-#' @import S4Vectors
+#' @importClassesFrom S4Vectors Vector Annotated
 #'
 #' @export
 #

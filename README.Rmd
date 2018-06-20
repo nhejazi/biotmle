@@ -55,11 +55,14 @@ relative to testing procedures that do not moderate the variance estimate
 ## Installation
 
 For standard use, install from
-[Bioconductor](https://bioconductor.org/packages/biotmle):
+[Bioconductor](https://bioconductor.org/packages/biotmle) using
+[`BiocManager`](https://CRAN.R-project.org/package=BiocManager):
 
 ```{r bioc-installation, eval = FALSE}
-source("https://bioconductor.org/biocLite.R")
-biocLite("biotmle")
+if (!("BiocManager" %in% installed.packages())) {
+  install.packages("BiocManager")
+}
+BiocManager::install("biotmle")
 ```
 
 To contribute, install the bleeding-edge _development version_ from GitHub via
