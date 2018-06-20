@@ -82,7 +82,7 @@
       <h1>Identifying Biomarkers from an Exposure Variable</h1>
                         <h4 class="author">Nima Hejazi</h4>
             
-            <h4 class="date">2018-06-15</h4>
+            <h4 class="date">2018-06-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nhejazi/biotmle/blob/master/vignettes/exposureBiomarkers.Rmd"><code>vignettes/exposureBiomarkers.Rmd</code></a></small>
       <div class="hidden name"><code>exposureBiomarkers.Rmd</code></div>
@@ -125,10 +125,10 @@
 <a class="sourceLine" id="cb3-6" data-line-number="6">                                  <span class="dt">Q_lib =</span> <span class="kw">c</span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,</a>
 <a class="sourceLine" id="cb3-7" data-line-number="7">                                            <span class="st">"SL.nnet"</span>, <span class="st">"SL.mean"</span>)</a>
 <a class="sourceLine" id="cb3-8" data-line-number="8">                                 )</a></code></pre></div>
-<p>The output of <code>biomarkertmle</code> is an object of class <code>bioTMLE</code>, containing four objects: (1) <code>call</code>, the call to <code>biomarkertmle</code>; (2) <code>topTable</code>, an empty slot meant to hold the output of <code><a href="http://www.rdocumentation.org/packages/limma/topics/toptable">limma::topTable</a></code>, after a later call to <code>modtest_ic</code>; (3) <code>limmaOut</code>, an empty slot meant to hold the output of <code><a href="http://www.rdocumentation.org/packages/limma/topics/lmFit">limma::lmFit</a></code>, after a later call to <code>modtest_ic</code>; and (4) <code>tmleOut</code>, a data frame containing the point estimates of the associations of each biomarker with the exposure of interest based on the influence curve representation of the Average Treatment Effect parameter.</p>
+<p>The output of <code>biomarkertmle</code> is an object of class <code>bioTMLE</code>, containing four new slots: (1) <code>call</code>, the call to <code>biomarkertmle</code>; (2) <code>topTable</code>, an empty slot meant to hold the output of <code><a href="http://www.rdocumentation.org/packages/limma/topics/toptable">limma::topTable</a></code>, after a later call to <code>modtest_ic</code>; and (3) <code>tmleOut</code>, a <code>data.frame</code> containing the point estimates of the associations of each biomarker with the exposure of interest based on the influence curve representation of the Average Treatment Effect.</p>
 <p>The output of <code>biomarkertmle</code> can be directly fed to <code>modtest_ic</code>, a wrapper around <code><a href="http://www.rdocumentation.org/packages/limma/topics/lmFit">limma::lmFit</a></code> and <code><a href="http://www.rdocumentation.org/packages/limma/topics/toptable">limma::topTable</a></code> that outputs a <code>biotmle</code> object with the slots described above completely filled in. The <code>modtest_ic</code> function requires as input a <code>biotmle</code> object containing a data frame in the <code>tmleOut</code> field as well as a design matrix indicating the groupwise difference to be tested. The design matrix should contain an intercept term and a term for the exposure of interest (with discretized exposure levels). <em>Based on the relevant statistical theory, it is not appropriate to include any further terms in the design matrix (n.b., this differs from standard calls to <code><a href="http://www.rdocumentation.org/packages/limma/topics/lmFit">limma::lmFit</a></code>)</em>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/modtest_ic.html">modtest_ic</a></span>(<span class="dt">biotmle =</span> biomarkerTMLEout)</a></code></pre></div>
-<p>After invoking <code>modtest_ic</code>, the resultant <code>bioTMLE</code> object will contain all information relevant to the analytic procedure for identifying biomarkers: that is, it will contain the origin call to <code>biomarkertmle</code>, the result of running <code><a href="http://www.rdocumentation.org/packages/limma/topics/toptable">limma::topTable</a></code>, the result of running <code><a href="http://www.rdocumentation.org/packages/limma/topics/lmFit">limma::lmFit</a></code>, and the result of running <code>biomarkertmle</code>. The statistical results of this procedure can be extracted from the <code>topTable</code> object in the <code>bioTMLE</code> object produced by <code>modtest_ic</code>.</p>
+<p>After invoking <code>modtest_ic</code>, the resultant <code>bioTMLE</code> object will contain all information relevant to the analytic procedure for identifying biomarkers: that is, it will contain the original call to <code>biomarkertmle</code>, the result of running <code><a href="http://www.rdocumentation.org/packages/limma/topics/toptable">limma::topTable</a></code>, and the result of running <code>biomarkertmle</code>. The statistical results of this procedure can be extracted from the <code>topTable</code> object in the <code>bioTMLE</code> object produced by <code>modtest_ic</code>.</p>
 <hr>
 </div>
 <div id="visualization-of-results" class="section level2">
@@ -203,7 +203,7 @@
 ## [55] knitr_1.20             doFuture_0.6.0         bindr_0.1.1           
 ## [58] commonmark_1.5         rprojroot_1.3-2        desc_1.2.0            
 ## [61] stringi_1.2.3          tmle_1.3.0-1           Rcpp_0.12.17          
-## [64] tidyselect_0.2.4       xfun_0.1</code></pre>
+## [64] tidyselect_0.2.4       xfun_0.2.1</code></pre>
 </div>
   </div>
 
