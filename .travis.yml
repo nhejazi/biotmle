@@ -24,6 +24,7 @@ before_install:
 r_packages:
   - devtools
   - covr
+  - BiocManager
 
 r_github_packages:
   - r-lib/devtools
