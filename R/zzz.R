@@ -2,6 +2,6 @@
   packageStartupMessage(paste0(
     "biotmle v",
     utils::packageDescription("biotmle")$Version,
-    ": Moderated Targeted Learning for Biomarker Discovery"
+    ": Targeted Learning with Moderated Statistics for Biomarker Discovery"
   ))
 }

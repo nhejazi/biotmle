@@ -4,8 +4,8 @@
 \alias{biomarkerTMLE_exposure}
 \title{TMLE procedure using ATE for Biomarker Identication from Exposure}
 \usage{
-biomarkerTMLE_exposure(Y, W, A, a, subj_ids = NULL, family = "gaussian",
-  g_lib, Q_lib)
+biomarkerTMLE_exposure(Y, W, A, a, subj_ids = NULL,
+  family = "gaussian", g_lib, Q_lib)
 }
 \arguments{
 \item{Y}{A \code{numeric} vector of expression values for a single biomarker.}

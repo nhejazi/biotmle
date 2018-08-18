@@ -26,8 +26,9 @@ setClassUnion(
 #'
 #' @return class \code{biotmle} object, sub-classed from SummarizedExperiment.
 #'
-#' @importFrom methods setClass
+#' @import BiocGenerics
 #' @importClassesFrom SummarizedExperiment SummarizedExperiment
+#' @importFrom methods setClass
 #'
 #' @export .biotmle
 #' @exportClass bioTMLE

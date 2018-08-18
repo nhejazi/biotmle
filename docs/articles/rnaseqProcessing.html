@@ -82,7 +82,7 @@
       <h1>Processing and Analyzing RNA-Seq Data</h1>
                         <h4 class="author">Nima Hejazi</h4>
             
-            <h4 class="date">2018-06-20</h4>
+            <h4 class="date">2018-08-18</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nhejazi/biotmle/blob/master/vignettes/rnaseqProcessing.Rmd"><code>vignettes/rnaseqProcessing.Rmd</code></a></small>
       <div class="hidden name"><code>rnaseqProcessing.Rmd</code></div>
@@ -205,16 +205,21 @@
 <div id="session-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session Information</h2>
-<pre><code>## R version 3.5.0 (2018-04-23)
-## Platform: x86_64-apple-darwin17.5.0 (64-bit)
-## Running under: macOS High Sierra 10.13.5
+<pre><code>## R version 3.5.1 (2018-07-02)
+## Platform: x86_64-pc-linux-gnu (64-bit)
+## Running under: Ubuntu 18.04.1 LTS
 ## 
 ## Matrix products: default
-## BLAS: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
-## LAPACK: /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libLAPACK.dylib
+## BLAS: /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
+## LAPACK: /usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so
 ## 
 ## locale:
-## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
 ## 
 ## attached base packages:
 ## [1] parallel  stats4    stats     graphics  grDevices utils     datasets 
@@ -222,37 +227,37 @@
 ## 
 ## other attached packages:
 ##  [1] bindrcpp_0.2.2              SummarizedExperiment_1.10.1
-##  [3] DelayedArray_0.6.1          BiocParallel_1.14.1        
-##  [5] matrixStats_0.53.1          Biobase_2.40.0             
-##  [7] GenomicRanges_1.32.3        GenomeInfoDb_1.16.0        
+##  [3] DelayedArray_0.6.5          BiocParallel_1.14.2        
+##  [5] matrixStats_0.54.0          Biobase_2.40.0             
+##  [7] GenomicRanges_1.32.6        GenomeInfoDb_1.16.0        
 ##  [9] IRanges_2.14.10             S4Vectors_0.18.3           
 ## [11] BiocGenerics_0.26.0         biotmleData_1.4.0          
-## [13] biotmle_1.5.1               dplyr_0.7.5                
-## [15] BiocStyle_2.8.1            
+## [13] biotmle_1.5.1               dplyr_0.7.6                
+## [15] BiocStyle_2.8.2            
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] ggdendro_0.1-20        foreach_1.4.4          assertthat_0.2.0      
-##  [4] GenomeInfoDbData_1.1.0 superheat_0.1.0        yaml_2.1.19           
-##  [7] globals_0.12.0         pillar_1.2.3           backports_1.1.2       
-## [10] lattice_0.20-35        glue_1.2.0             limma_3.36.1          
+##  [4] GenomeInfoDbData_1.1.0 superheat_1.0.0        yaml_2.2.0            
+##  [7] globals_0.12.1         pillar_1.3.0           backports_1.1.2       
+## [10] lattice_0.20-35        glue_1.3.0             limma_3.36.2          
 ## [13] digest_0.6.15          XVector_0.20.0         colorspace_1.3-2      
 ## [16] htmltools_0.3.6        Matrix_1.2-14          plyr_1.8.4            
-## [19] pkgconfig_2.0.1        listenv_0.7.0          bookdown_0.7          
-## [22] zlibbioc_1.26.0        purrr_0.2.5            scales_0.5.0          
-## [25] tibble_1.4.2           ggplot2_2.2.1.9000     lazyeval_0.2.1        
+## [19] pkgconfig_2.0.2        listenv_0.7.0          bookdown_0.7          
+## [22] zlibbioc_1.26.0        purrr_0.2.5            scales_1.0.0          
+## [25] tibble_1.4.2           ggplot2_3.0.0          lazyeval_0.2.1        
 ## [28] magrittr_1.5           crayon_1.3.4           memoise_1.1.0         
-## [31] evaluate_0.10.1        fs_1.2.3               future_1.8.1          
-## [34] MASS_7.3-50            SuperLearner_2.0-23    xml2_1.2.0            
-## [37] tools_3.5.0            stringr_1.3.1          munsell_0.5.0         
-## [40] ggsci_2.9              compiler_3.5.0         pkgdown_1.1.0.9000    
-## [43] rlang_0.2.1            grid_3.5.0             RCurl_1.95-4.10       
-## [46] iterators_1.0.9        bitops_1.0-6           labeling_0.3          
+## [31] evaluate_0.11          fs_1.2.5               future_1.9.0          
+## [34] MASS_7.3-50            SuperLearner_2.0-24    xml2_1.2.0            
+## [37] tools_3.5.1            stringr_1.3.1          munsell_0.5.0         
+## [40] ggsci_2.9              compiler_3.5.1         pkgdown_1.1.0         
+## [43] rlang_0.2.2            grid_3.5.1             RCurl_1.95-4.11       
+## [46] iterators_1.0.10       labeling_0.3           bitops_1.0-6          
 ## [49] rmarkdown_1.10         gtable_0.2.0           codetools_0.2-15      
-## [52] roxygen2_6.0.1.9000    R6_2.2.2.9000          nnls_1.4              
+## [52] roxygen2_6.1.0.9000    R6_2.2.2               nnls_1.4              
 ## [55] knitr_1.20             doFuture_0.6.0         bindr_0.1.1           
 ## [58] commonmark_1.5         rprojroot_1.3-2        desc_1.2.0            
-## [61] stringi_1.2.3          tmle_1.3.0-1           Rcpp_0.12.17          
-## [64] tidyselect_0.2.4       xfun_0.2.1</code></pre>
+## [61] stringi_1.2.4          tmle_1.3.0-1           Rcpp_0.12.18          
+## [64] tidyselect_0.2.4       xfun_0.3</code></pre>
 </div>
   </div>
 

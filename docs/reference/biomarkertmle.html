@@ -130,8 +130,8 @@ treatment, using Targeted Minimum Loss-Based Estimation.</p>
     <pre class="usage"><span class='fu'>biomarkertmle</span>(<span class='no'>se</span>, <span class='no'>varInt</span>, <span class='kw'>ngscounts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>bppar_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>future_param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>,
   <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"SL.glm"</span>, <span class='st'>"SL.randomForest"</span>, <span class='st'>"SL.nnet"</span>,
-  <span class='st'>"SL.polymars"</span>, <span class='st'>"SL.mean"</span>), <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"SL.glm"</span>, <span class='st'>"SL.randomForest"</span>, <span class='st'>"SL.nnet"</span>,
-  <span class='st'>"SL.mean"</span>))</pre>
+  <span class='st'>"SL.polymars"</span>, <span class='st'>"SL.mean"</span>), <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"SL.glm"</span>, <span class='st'>"SL.randomForest"</span>,
+  <span class='st'>"SL.nnet"</span>, <span class='st'>"SL.mean"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -219,9 +219,9 @@ literature on targeted minimum loss-based estimation).</p></td>
     <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘dplyr’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:matrixStats’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    count</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:Biobase’:</span>
+#&gt; <span class='message'>    count</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:Biobase’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    combine, exprs</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:GenomicRanges’:</span>
+#&gt; <span class='message'>    combine</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:GenomicRanges’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    intersect, setdiff, union</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:GenomeInfoDb’:</span>
 #&gt; <span class='message'></span>

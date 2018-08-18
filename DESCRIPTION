@@ -1,5 +1,5 @@
 Package: biotmle
-Title: Moderated Targeted Learning for Biomarker Discovery
+Title: Targeted Learning with Moderated Statistics for Biomarker Discovery
 Version: 1.5.1
 Authors@R: c(
     person("Nima", "Hejazi", email = "nh@nimahejazi.org",
@@ -52,7 +52,7 @@ Suggests:
     DBI,
     biotmleData (>= 1.1.1)
 VignetteBuilder: knitr
-RoxygenNote: 6.0.1.9000
+RoxygenNote: 6.1.0.9000
 biocViews:
     GeneExpression,
     DifferentialExpression,
