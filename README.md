@@ -12,6 +12,8 @@ Status](https://img.shields.io/codecov/c/github/nhejazi/biotmle/master.svg)](htt
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](http://www.repostatus.org/badges/latest/active.svg)](http://www.repostatus.org/#active)
+[![BioC
+status](http://www.bioconductor.org/shields/build/release/bioc/biotmle.svg)](https://bioconductor.org/checkResults/release/bioc-LATEST/biotmle)
 [![Bioc
 Time](http://bioconductor.org/shields/years-in-bioc/biotmle.svg)](https://bioconductor.org/packages/release/bioc/html/biotmle.html)
 [![Bioc
