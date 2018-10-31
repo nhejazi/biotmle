@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">biotmle</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.0</span>
       </span>
     </div>
 
@@ -102,21 +102,21 @@
 <div id="whats-biotmle" class="section level2">
 <h2 class="hasAnchor">
 <a href="#whats-biotmle" class="anchor"></a>What’s <code>biotmle</code>?</h2>
-<p><code>biotmle</code> is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic <span class="citation">(Smyth 2004)</span> for use with target parameters that have asymptotically linear representations <span class="citation">(van der Laan and Rose 2011)</span>. The set of methods implemented in this R package rely on the use of targeted minimum loss-based estimates (TMLE) to transform biological sequencing data (e.g., microarray, RNA-seq) based on the influence curve representation of a particular causal target parameter (e.g., average treatment effect). The transformed data (rotated into influence curve space) may then be subjected to a moderated test for differences between the statistical estimate of the target parameter and a hypothesized value of said parameter (usually a null value defined in relation to the parameter itself). Such an approach provides a valid statistical hypothesis test of a statistically estimable causal parameter while controlling the variance such that the error rate (of the test) is more strongly controlled relative to testing procedures that do not moderate the variance estimate <span class="citation">(Hejazi et al., n.d.)</span>.</p>
+<p><code>biotmle</code> is an R package that facilitates biomarker discovery by generalizing the moderated t-statistic <span class="citation">(Smyth 2004)</span> for use with target parameters that have asymptotically linear representations <span class="citation">(van der Laan and Rose 2011)</span>. The set of methods implemented rely on the use of targeted maximum likelihood (TML) estimation to transform biological sequencing data (e.g., microarray, RNA-seq) based on the (efficient) influence function (EIF) representation of a particular causal target parameter (e.g., average treatment effect). The transformed data (rotated into influence function space) are then be subjected to a moderated test for differences between the statistical estimate of the target parameter and a hypothesized value of said parameter (usually a null value defined in relation to the parameter itself). Such an approach provides a valid and conservative statistical hypothesis test of a statistically estimable target parameter while controlling the standard error (derived from the variance of the EIF) such that the error rate of the test is more strongly controlled relative to testing procedures that do fail moderate the variance estimate <span class="citation">(<span class="citeproc-not-found" data-reference-id="hejazi2018variance"><strong>???</strong></span>)</span> while simultaneously avoiding many of the pitfalls that plague analogous procedures predicated upon correctly specifying linear models <span class="citation">(Smyth 2004)</span>. Utilities are also provided for performing clustering based on <em>supervised distance matrices</em>, using the EIF-based estimates to draw out underlying contributions of biomarkers to the target parameter of interest <span class="citation">(Pollard and van der Laan 2008)</span>.</p>
 <hr>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>For standard use, install from <a href="https://bioconductor.org/packages/biotmle">Bioconductor</a> using <a href="https://CRAN.R-project.org/package=BiocManager"><code>BiocManager</code></a>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span>(<span class="st">"BiocManager"</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">installed.packages</span>())) {</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw">requireNamespace</span>(<span class="st">"BiocManager"</span>, <span class="dt">quietly=</span><span class="ot">TRUE</span>)) {</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">  <span class="kw">install.packages</span>(<span class="st">"BiocManager"</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">}</a>
 <a class="sourceLine" id="cb1-4" data-line-number="4">BiocManager<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"biotmle"</span>)</a></code></pre></div>
 <p>To contribute, install the bleeding-edge <em>development version</em> from GitHub via <a href="https://www.rstudio.com/products/rpackages/devtools/"><code>devtools</code></a>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"nhejazi/biotmle"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"nhejazi/biotmle"</span>)</a></code></pre></div>
 <p>Current and prior <a href="https://bioconductor.org">Bioconductor</a> releases are available under branches with numbers prefixed by “RELEASE_”. For example, to install the version of this package available via Bioconductor 3.6, use</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"nhejazi/biotmle"</span>, <span class="dt">ref =</span> <span class="st">"RELEASE_3_6"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"nhejazi/biotmle"</span>, <span class="dt">ref =</span> <span class="st">"RELEASE_3_6"</span>)</a></code></pre></div>
 <hr>
 </div>
 <div id="example" class="section level2">
@@ -140,7 +140,7 @@
 <div id="citation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#citation" class="anchor"></a>Citation</h2>
-<p>After using the <code>biotmle</code> R package, please cite it:</p>
+<p>After using the <code>biotmle</code> R package, please cite both of the following:</p>
 <pre><code>    @article{hejazi2017biotmle,
       author = {Hejazi, Nima S and Cai, Weixin and Hubbard, Alan E},
       title = {biotmle: Targeted Learning for Biomarker Discovery},
@@ -152,6 +152,15 @@
       publisher = {The Open Journal},
       doi = {10.21105/joss.00295},
       url = {https://doi.org/10.21105/joss.00295}
+    }
+
+    @article{hejazi2018+variance,
+      url = {https://arxiv.org/abs/1710.05451},
+      year = {2018+},
+      author = {Hejazi, Nima S and {Kherad-Pajouh}, Sara and {van der
+        Laan}, Mark J and Hubbard, Alan E},
+      title = {Variance moderation of locally efficient estimators in
+        high-dimensional biology}
     }</code></pre>
 <hr>
 </div>
@@ -181,8 +190,8 @@
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <div id="refs" class="references">
-<div id="ref-hejazi2018variance">
-<p>Hejazi, Nima S, Sara Kherad-Pajouh, Mark J van der Laan, and Alan E Hubbard. n.d. “Variance Stabilization of Targeted Estimators of Causal Parameters in High-Dimensional Settings.” <a href="https://arxiv.org/abs/1710.05451" class="uri">https://arxiv.org/abs/1710.05451</a>.</p>
+<div id="ref-pollard2008supervised">
+<p>Pollard, Katherine S, and Mark J van der Laan. 2008. “Supervised Distance Matrices.” <em>Statistical Applications in Genetics and Molecular Biology</em> 7 (1). De Gruyter.</p>
 </div>
 <div id="ref-smyth2004linear">
 <p>Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for Assessing Differential Expression in Microarray Experiments.” <em>Statistical Applications in Genetics and Molecular Biology</em> 3 (1). Walter de Gruyter: 1–25. <a href="https://doi.org/10.2202/1544-6115.1027" class="uri">https://doi.org/10.2202/1544-6115.1027</a>.</p>

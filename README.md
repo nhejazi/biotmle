@@ -35,19 +35,27 @@ Status](http://joss.theoj.org/papers/02be843d9bab1b598187bfbb08ce3949/status.svg
 `biotmle` is an R package that facilitates biomarker discovery by
 generalizing the moderated t-statistic (Smyth 2004) for use with target
 parameters that have asymptotically linear representations (van der Laan
-and Rose 2011). The set of methods implemented in this R package rely on
-the use of targeted minimum loss-based estimates (TMLE) to transform
-biological sequencing data (e.g., microarray, RNA-seq) based on the
-influence curve representation of a particular causal target parameter
-(e.g., average treatment effect). The transformed data (rotated into
-influence curve space) may then be subjected to a moderated test for
-differences between the statistical estimate of the target parameter and
-a hypothesized value of said parameter (usually a null value defined in
-relation to the parameter itself). Such an approach provides a valid
-statistical hypothesis test of a statistically estimable causal
-parameter while controlling the variance such that the error rate (of
-the test) is more strongly controlled relative to testing procedures
-that do not moderate the variance estimate (Hejazi et al., n.d.).
+and Rose 2011). The set of methods implemented rely on the use of
+targeted maximum likelihood (TML) estimation to transform biological
+sequencing data (e.g., microarray, RNA-seq) based on the (efficient)
+influence function (EIF) representation of a particular causal target
+parameter (e.g., average treatment effect). The transformed data
+(rotated into influence function space) are then be subjected to a
+moderated test for differences between the statistical estimate of the
+target parameter and a hypothesized value of said parameter (usually a
+null value defined in relation to the parameter itself). Such an
+approach provides a valid and conservative statistical hypothesis test
+of a statistically estimable target parameter while controlling the
+standard error (derived from the variance of the EIF) such that the
+error rate of the test is more strongly controlled relative to testing
+procedures that do fail moderate the variance estimate
+(<span class="citeproc-not-found" data-reference-id="hejazi2018variance">**???**</span>)
+while simultaneously avoiding many of the pitfalls that plague analogous
+procedures predicated upon correctly specifying linear models (Smyth
+2004). Utilities are also provided for performing clustering based on
+*supervised distance matrices*, using the EIF-based estimates to draw
+out underlying contributions of biomarkers to the target parameter of
+interest (Pollard and van der Laan 2008).
 
 -----
 
@@ -58,7 +66,7 @@ For standard use, install from
 [`BiocManager`](https://CRAN.R-project.org/package=BiocManager):
 
 ``` r
-if (!("BiocManager" %in% installed.packages())) {
+if (!requireNamespace("BiocManager", quietly=TRUE)) {
   install.packages("BiocManager")
 }
 BiocManager::install("biotmle")
@@ -111,7 +119,7 @@ prior to submitting a pull request.
 
 ## Citation
 
-After using the `biotmle` R package, please cite it:
+After using the `biotmle` R package, please cite both of the following:
 
 ``` 
     @article{hejazi2017biotmle,
@@ -125,6 +133,15 @@ After using the `biotmle` R package, please cite it:
       publisher = {The Open Journal},
       doi = {10.21105/joss.00295},
       url = {https://doi.org/10.21105/joss.00295}
+    }
+
+    @article{hejazi2018+variance,
+      url = {https://arxiv.org/abs/1710.05451},
+      year = {2018+},
+      author = {Hejazi, Nima S and {Kherad-Pajouh}, Sara and {van der
+        Laan}, Mark J and Hubbard, Alan E},
+      title = {Variance moderation of locally efficient estimators in
+        high-dimensional biology}
     }
 ```
 
@@ -161,12 +178,11 @@ See file `LICENSE` for details.
 
 <div id="refs" class="references">
 
-<div id="ref-hejazi2018variance">
+<div id="ref-pollard2008supervised">
 
-Hejazi, Nima S, Sara Kherad-Pajouh, Mark J van der Laan, and Alan E
-Hubbard. n.d. “Variance Stabilization of Targeted Estimators of Causal
-Parameters in High-Dimensional Settings.”
-<https://arxiv.org/abs/1710.05451>.
+Pollard, Katherine S, and Mark J van der Laan. 2008. “Supervised
+Distance Matrices.” *Statistical Applications in Genetics and Molecular
+Biology* 7 (1). De Gruyter.
 
 </div>
 

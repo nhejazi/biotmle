@@ -4,20 +4,24 @@
 \alias{heatmap_ic}
 \title{Heatmap for class biotmle}
 \usage{
-heatmap_ic(x, ..., design, FDRcutoff = 0.05, top = 25)
+heatmap_ic(x, ..., design, FDRcutoff = 0.05, type = c("top", "all"),
+  top = 25)
 }
 \arguments{
-\item{x}{object of class \code{biotmle} as produced by an appropriate call to
+\item{x}{Object of class \code{biotmle} as produced by an appropriate call to
 \code{biomarkertmle}}
 
 \item{...}{additional arguments passed to \code{superheat::superheat} as
 necessary}
 
-\item{design}{a vector providing the contrast to be displayed in the heatmap.}
+\item{design}{A vector providing the contrast to be displayed in the heatmap.}
 
-\item{FDRcutoff}{cutoff to be used in controlling the False Discovery Rate}
+\item{FDRcutoff}{Cutoff to be used in controlling the False Discovery Rate.}
 
-\item{top}{number of identified biomarkers to plot in the heatmap}
+\item{type}{A \code{character} describing whether to plot only a top number
+(as defined by FDR-corrected p-value) of biomarkers or all biomarkers.}
+
+\item{top}{Number of identified biomarkers to plot in the heatmap.}
 }
 \value{
 heatmap (from the superheat package) using hierarchical clustering to
@@ -27,7 +31,9 @@ heatmap (from the superheat package) using hierarchical clustering to
 \description{
 Heatmap of the contributions of a select subset of biomarkers to the variable
 importance measure changes as assessed by influence curve-based estimation,
-across all subjects.
+across all subjects. The heatmap produced performs supervised clustering, in
+the sense first described in Pollard & van der Laan (2008)
+<doi:10.2202/1544-6115.1404>.
 }
 \examples{
 library(dplyr)
