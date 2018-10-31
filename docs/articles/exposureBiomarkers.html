@@ -94,7 +94,8 @@
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h2>
-<p>The <code>biotmle</code> R package can be used to isolate biomarkers in two ways: based on the associations of genomic objects with an exposure variable of interest. In this vignette, we illustrate how to use <code>biotmle</code> to isolate and visualize genes associated with an <strong>exposure</strong>, using a data set containing microarray expression measures from an Illumina platform. In the analysis described below, Targeted Minimum Loss-Based Estimation (TMLE) is used to transform the microarray expression values based on the influence curve representation of the Average Treatment Effect (ATE). Following this transformation, the moderated t-statistic of Smyth is used to test for a binary groupwise difference (based on the exposure variable), using the tools provided by the R package <code>limma</code>.</p>
+<p>The <code>biotmle</code> R package can be used to isolate biomarkers in two ways: based on the associations of genomic objects with an exposure variable of interest. In this vignette, we illustrate how to use <code>biotmle</code> to isolate and visualize genes associated with an <strong>exposure</strong>, using a data set containing microarray expression measures from an Illumina platform. In the analysis described below, targeted maximum likelihood estimation (TMLE) is used to transform the microarray expression values based on the influence curve representation of the Average Treatment Effect (ATE). Following this transformation, the moderated t-statistic of Smyth <span class="citation">(Smyth 2004)</span> is used to test for a binary group-wise difference (based on the exposure variable), using the tools provided by the R package <a href="https://bioconductor.org/packages/limma"><code>limma</code></a>).</p>
+<p>For a general discussion of the framework of targeted maximum likelihood estimation and the role this approach plays in statistical causal inference, the interested reader is invited to consult <span class="citation">van der Laan and Rose (2011)</span> and <span class="citation">van der Laan and Rose (2018)</span>. For a more general introduction to the principles of statistical causal inference, <span class="citation">Pearl (2000)</span> serves well.</p>
 <hr>
 </div>
 <div id="biomarker-identification" class="section level2">
@@ -148,6 +149,7 @@
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">design =</span> designVar, <span class="dt">FDRcutoff =</span> <span class="fl">0.05</span>, <span class="dt">top =</span> <span class="dv">25</span>)</a></code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/heatmap_limma_results-1.png" width="700"></p>
+<p>The heatmap produced in this way is actually a form of <em>supervised clustering</em>, as described more generally (“supervised distance matrices”) by <span class="citation">Pollard and van der Laan (2008)</span>, wherein the notion of deriving clustering procedures from the results of supervised learning methods is formulated. Since the heatmap is based on the contributions of observations to the efficient influence function (EIF) of the target parameter, it directly visualizes the degree to which each biomarker informs the difference (due to the treatment effect) represented by the average treatment effect.</p>
 <p>The volcano plot is standard graphical tools for examining how changes in expression relate to the raw p-value. The utility of such plots lies in their providing a convenient way to identify and systematically ignore those genomic objects that have extremely low p-values due to extremely low variance between observations. The <code>volcano_ic</code> function provides much of the same interpretation, except that the fold change values displayed in the x-axis refer to changes in the <em>contributions of each biomarker to the Average Treatment Effect</em> (in standard practice, for microarray technology, these would be fold changes in gene expression). The plot produced is a <code>ggplot2</code> object and can be modified in place if stored properly. For our analysis:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/volcano_ic.html">volcano_ic</a></span>(<span class="dt">biotmle =</span> limmaTMLEout)</a></code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/volcano_plot_limma_results-1.png" width="700"></p>
@@ -198,17 +200,34 @@
 ## [25] tibble_1.4.2           ggplot2_3.1.0          lazyeval_0.2.1        
 ## [28] magrittr_1.5           crayon_1.3.4           memoise_1.1.0         
 ## [31] evaluate_0.12          fs_1.2.6               future_1.10.0         
-## [34] MASS_7.3-51            SuperLearner_2.0-24    xml2_1.2.0            
-## [37] tools_3.5.1            stringr_1.3.1          munsell_0.5.0         
-## [40] ggsci_2.9              compiler_3.5.1         pkgdown_1.1.0         
-## [43] rlang_0.3.0.1          grid_3.5.1             RCurl_1.95-4.11       
-## [46] iterators_1.0.10       labeling_0.3           bitops_1.0-6          
-## [49] rmarkdown_1.10         gtable_0.2.0           codetools_0.2-15      
-## [52] roxygen2_6.1.0.9000    R6_2.3.0               nnls_1.4              
-## [55] knitr_1.20             doFuture_0.6.0         bindr_0.1.1           
-## [58] commonmark_1.6         rprojroot_1.3-2        desc_1.2.0            
-## [61] stringi_1.2.4          tmle_1.3.0-1           Rcpp_0.12.19          
-## [64] tidyselect_0.2.5       xfun_0.4</code></pre>
+## [34] MASS_7.3-51            forcats_0.3.0          SuperLearner_2.0-24   
+## [37] xml2_1.2.0             tools_3.5.1            stringr_1.3.1         
+## [40] munsell_0.5.0          ggsci_2.9              compiler_3.5.1        
+## [43] pkgdown_1.1.0          rlang_0.3.0.1          grid_3.5.1            
+## [46] RCurl_1.95-4.11        iterators_1.0.10       labeling_0.3          
+## [49] bitops_1.0-6           rmarkdown_1.10         gtable_0.2.0          
+## [52] codetools_0.2-15       roxygen2_6.1.0.9000    R6_2.3.0              
+## [55] nnls_1.4               knitr_1.20             doFuture_0.6.0        
+## [58] bindr_0.1.1            commonmark_1.6         rprojroot_1.3-2       
+## [61] desc_1.2.0             stringi_1.2.4          tmle_1.3.0-1          
+## [64] Rcpp_0.12.19           tidyselect_0.2.5       xfun_0.4</code></pre>
+<div id="refs" class="references">
+<div id="ref-pearl2000causality">
+<p>Pearl, Judea. 2000. <em>Causality: Models, Reasoning, and Inference</em>. Cambridge University Press.</p>
+</div>
+<div id="ref-pollard2008supervised">
+<p>Pollard, Katherine S, and Mark J van der Laan. 2008. “Supervised Distance Matrices.” <em>Statistical Applications in Genetics and Molecular Biology</em> 7 (1). De Gruyter.</p>
+</div>
+<div id="ref-smyth2004linear">
+<p>Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for Assessing Differential Expression in Microarray Experiments.” <em>Statistical Applications in Genetics and Molecular Biology</em> 3 (1). Walter de Gruyter: 1–25. <a href="https://doi.org/10.2202/1544-6115.1027" class="uri">https://doi.org/10.2202/1544-6115.1027</a>.</p>
+</div>
+<div id="ref-vdl2011targeted">
+<p>van der Laan, Mark J., and Sherri Rose. 2011. <em>Targeted Learning: Causal Inference for Observational and Experimental Data</em>. Springer Science &amp; Business Media.</p>
+</div>
+<div id="ref-vdl2018targeted">
+<p>van der Laan, Mark J, and Sherri Rose. 2018. <em>Targeted Learning in Data Science: Causal Inference for Complex Longitudinal Studies</em>. Springer Science &amp; Business Media.</p>
+</div>
+</div>
 </div>
   </div>
 
