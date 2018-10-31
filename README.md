@@ -48,14 +48,13 @@ approach provides a valid and conservative statistical hypothesis test
 of a statistically estimable target parameter while controlling the
 standard error (derived from the variance of the EIF) such that the
 error rate of the test is more strongly controlled relative to testing
-procedures that do fail moderate the variance estimate
-(<span class="citeproc-not-found" data-reference-id="hejazi2018variance">**???**</span>)
-while simultaneously avoiding many of the pitfalls that plague analogous
-procedures predicated upon correctly specifying linear models (Smyth
-2004). Utilities are also provided for performing clustering based on
-*supervised distance matrices*, using the EIF-based estimates to draw
-out underlying contributions of biomarkers to the target parameter of
-interest (Pollard and van der Laan 2008).
+procedures that do fail moderate the variance estimate (Hejazi et al.,
+n.d.) while simultaneously avoiding many of the pitfalls that plague
+analogous procedures predicated upon correctly specifying linear models
+(Smyth 2004). Utilities are also provided for performing clustering
+based on *supervised distance matrices*, using the EIF-based estimates
+to draw out underlying contributions of biomarkers to the target
+parameter of interest (Pollard and van der Laan 2008).
 
 -----
 
@@ -177,6 +176,14 @@ See file `LICENSE` for details.
 ## References
 
 <div id="refs" class="references">
+
+<div id="ref-hejazi2018+variance">
+
+Hejazi, Nima S, Sara Kherad-Pajouh, Mark J van der Laan, and Alan E
+Hubbard. n.d. “Variance Moderation of Locally Efficient Estimators in
+High-Dimensional Biology.” <https://arxiv.org/abs/1710.05451>.
+
+</div>
 
 <div id="ref-pollard2008supervised">
 

@@ -8,6 +8,9 @@ Authors@R: c(
     person("Alan", "Hubbard", email = "hubbard@berkeley.edu",
            role = c("aut", "ths"),
            comment = c(ORCID = "0000-0002-3769-0127")),
+  person("Mark", "van der Laan", email = "laan@stat.berkeley.edu",
+         role = c("ctb", "ths"),
+         comment = c(ORCID = "0000-0003-1432-5511")),
     person("Weixin", "Cai", email = "wcai@berkeley.edu",
            role = "ctb",
            comment = c(ORCID = "0000-0003-2680-3066"))
