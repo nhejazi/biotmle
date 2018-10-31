@@ -148,11 +148,13 @@ utils::globalVariables(c(
 #' the sense first described in Pollard & van der Laan (2008)
 #' <doi:10.2202/1544-6115.1404>.
 #'
-#' @param x object of class \code{biotmle} as produced by an appropriate call to
+#' @param x Object of class \code{biotmle} as produced by an appropriate call to
 #'  \code{biomarkertmle}
-#' @param design a vector providing the contrast to be displayed in the heatmap.
-#' @param FDRcutoff cutoff to be used in controlling the False Discovery Rate
-#' @param top number of identified biomarkers to plot in the heatmap
+#' @param design A vector providing the contrast to be displayed in the heatmap.
+#' @param FDR cutoff cutoff to be used in controlling the False Discovery Rate.
+#' @param type A \code{character} describing whether to plot only a top number
+#'  (as defined by FDR-corrected p-value) of biomarkers or all biomarkers.
+#' @param top Number of identified biomarkers to plot in the heatmap.
 #' @param ... additional arguments passed to \code{superheat::superheat} as
 #'  necessary
 #'
@@ -186,11 +188,11 @@ utils::globalVariables(c(
 #' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 15)
 #
 heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05,
-                       type = c("top_hits", "complete"), top = 25) {
+                       type = c("top", "all"), top = 25) {
   stopifnot(class(x) == "bioTMLE")
   type <- match.arg(type)
 
-  if (type == "top_hits") {
+  if (type == "top") {
     topbiomarkersFDR <- x@topTable %>%
       subset(adj.P.Val < FDRcutoff) %>%
       dplyr::arrange(adj.P.Val) %>%

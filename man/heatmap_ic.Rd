@@ -4,21 +4,24 @@
 \alias{heatmap_ic}
 \title{Heatmap for class biotmle}
 \usage{
-heatmap_ic(x, ..., design, FDRcutoff = 0.05, type = c("top_hits",
-  "complete"), top = 25)
+heatmap_ic(x, ..., design, FDRcutoff = 0.05, type = c("top", "all"),
+  top = 25)
 }
 \arguments{
-\item{x}{object of class \code{biotmle} as produced by an appropriate call to
+\item{x}{Object of class \code{biotmle} as produced by an appropriate call to
 \code{biomarkertmle}}
 
 \item{...}{additional arguments passed to \code{superheat::superheat} as
 necessary}
 
-\item{design}{a vector providing the contrast to be displayed in the heatmap.}
+\item{design}{A vector providing the contrast to be displayed in the heatmap.}
 
-\item{FDRcutoff}{cutoff to be used in controlling the False Discovery Rate}
+\item{type}{A \code{character} describing whether to plot only a top number
+(as defined by FDR-corrected p-value) of biomarkers or all biomarkers.}
 
-\item{top}{number of identified biomarkers to plot in the heatmap}
+\item{top}{Number of identified biomarkers to plot in the heatmap.}
+
+\item{FDR}{cutoff cutoff to be used in controlling the False Discovery Rate.}
 }
 \value{
 heatmap (from the superheat package) using hierarchical clustering to
