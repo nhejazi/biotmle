@@ -16,12 +16,12 @@ necessary}
 
 \item{design}{A vector providing the contrast to be displayed in the heatmap.}
 
+\item{FDRcutoff}{Cutoff to be used in controlling the False Discovery Rate.}
+
 \item{type}{A \code{character} describing whether to plot only a top number
 (as defined by FDR-corrected p-value) of biomarkers or all biomarkers.}
 
 \item{top}{Number of identified biomarkers to plot in the heatmap.}
-
-\item{FDR}{cutoff cutoff to be used in controlling the False Discovery Rate.}
 }
 \value{
 heatmap (from the superheat package) using hierarchical clustering to

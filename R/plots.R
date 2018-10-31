@@ -151,7 +151,7 @@ utils::globalVariables(c(
 #' @param x Object of class \code{biotmle} as produced by an appropriate call to
 #'  \code{biomarkertmle}
 #' @param design A vector providing the contrast to be displayed in the heatmap.
-#' @param FDR cutoff cutoff to be used in controlling the False Discovery Rate.
+#' @param FDRcutoff Cutoff to be used in controlling the False Discovery Rate.
 #' @param type A \code{character} describing whether to plot only a top number
 #'  (as defined by FDR-corrected p-value) of biomarkers or all biomarkers.
 #' @param top Number of identified biomarkers to plot in the heatmap.
@@ -201,7 +201,7 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05,
     if (nrow(topbiomarkersFDR) < top) {
       message(paste(top, "biomarkers not found below specified FDR cutoff."))
     }
- 
+
     if (class(x@tmleOut) == "EList") {
       biomarkerTMLEout_top <- x@tmleOut$E %>%
         data.frame() %>%
