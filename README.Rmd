@@ -60,7 +60,7 @@ For standard use, install from
 [`BiocManager`](https://CRAN.R-project.org/package=BiocManager):
 
 ```{r bioc-installation, eval = FALSE}
-if (!("BiocManager" %in% installed.packages())) {
+if (!requireNamespace("BiocManager", quietly=TRUE)) {
   install.packages("BiocManager")
 }
 BiocManager::install("biotmle")
@@ -111,7 +111,7 @@ prior to submitting a pull request.
 
 ## Citation
 
-After using the `biotmle` R package, please cite it:
+After using the `biotmle` R package, please cite both of the following:
 
         @article{hejazi2017biotmle,
           author = {Hejazi, Nima S and Cai, Weixin and Hubbard, Alan E},
@@ -124,6 +124,15 @@ After using the `biotmle` R package, please cite it:
           publisher = {The Open Journal},
           doi = {10.21105/joss.00295},
           url = {https://doi.org/10.21105/joss.00295}
+        }
+
+        @article{hejazi2018+variance,
+          url = {https://arxiv.org/abs/1710.05451},
+          year = {2018+},
+          author = {Hejazi, Nima S and {Kherad-Pajouh}, Sara and {van der
+            Laan}, Mark J and Hubbard, Alan E},
+          title = {Variance moderation of locally efficient estimators in
+            high-dimensional biology}
         }
 
 ---

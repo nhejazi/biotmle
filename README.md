@@ -47,7 +47,8 @@ relation to the parameter itself). Such an approach provides a valid
 statistical hypothesis test of a statistically estimable causal
 parameter while controlling the variance such that the error rate (of
 the test) is more strongly controlled relative to testing procedures
-that do not moderate the variance estimate (Hejazi et al., n.d.).
+that do not moderate the variance estimate
+(<span class="citeproc-not-found" data-reference-id="hejazi2018variance">**???**</span>).
 
 -----
 
@@ -58,7 +59,7 @@ For standard use, install from
 [`BiocManager`](https://CRAN.R-project.org/package=BiocManager):
 
 ``` r
-if (!("BiocManager" %in% installed.packages())) {
+if (!requireNamespace("BiocManager", quietly=TRUE)) {
   install.packages("BiocManager")
 }
 BiocManager::install("biotmle")
@@ -111,7 +112,7 @@ prior to submitting a pull request.
 
 ## Citation
 
-After using the `biotmle` R package, please cite it:
+After using the `biotmle` R package, please cite both of the following:
 
 ``` 
     @article{hejazi2017biotmle,
@@ -125,6 +126,15 @@ After using the `biotmle` R package, please cite it:
       publisher = {The Open Journal},
       doi = {10.21105/joss.00295},
       url = {https://doi.org/10.21105/joss.00295}
+    }
+
+    @article{hejazi2018+variance,
+      url = {https://arxiv.org/abs/1710.05451},
+      year = {2018+},
+      author = {Hejazi, Nima S and {Kherad-Pajouh}, Sara and {van der
+        Laan}, Mark J and Hubbard, Alan E},
+      title = {Variance moderation of locally efficient estimators in
+        high-dimensional biology}
     }
 ```
 
@@ -160,15 +170,6 @@ See file `LICENSE` for details.
 ## References
 
 <div id="refs" class="references">
-
-<div id="ref-hejazi2018variance">
-
-Hejazi, Nima S, Sara Kherad-Pajouh, Mark J van der Laan, and Alan E
-Hubbard. n.d. “Variance Stabilization of Targeted Estimators of Causal
-Parameters in High-Dimensional Settings.”
-<https://arxiv.org/abs/1710.05451>.
-
-</div>
 
 <div id="ref-smyth2004linear">
 
