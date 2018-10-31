@@ -4,6 +4,7 @@ author: "Nima Hejazi"
 date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document
+bibliography: vignette-refs.bib
 vignette: >
   %\VignetteIndexEntry{Identifying Biomarkers from an Exposure Variable}
   %\VignetteEngine{knitr::rmarkdown}
@@ -17,11 +18,18 @@ on the associations of genomic objects with an exposure variable of interest.
 In this vignette, we illustrate how to use `biotmle` to isolate and visualize
 genes associated with an __exposure__, using a data set containing microarray
 expression measures from an Illumina platform. In the analysis described below,
-Targeted Minimum Loss-Based Estimation (TMLE) is used to transform the
+targeted maximum likelihood estimation (TMLE) is used to transform the
 microarray expression values based on the influence curve representation of the
 Average Treatment Effect (ATE). Following this transformation, the moderated
-t-statistic of Smyth is used to test for a binary groupwise difference (based
-on the exposure variable), using the tools provided by the R package `limma`.
+t-statistic of Smyth [@smyth2004linear] is used to test for a binary group-wise
+difference (based on the exposure variable), using the tools provided by the R
+package [`limma`](https://bioconductor.org/packages/limma)).
+
+For a general discussion of the framework of targeted maximum likelihood
+estimation and the role this approach plays in statistical causal inference, the
+interested reader is invited to consult @vdl2011targeted and @vdl2018targeted.
+For a more general introduction to the principles of statistical causal
+inference, @pearl2000causality serves well.
 
 ---
 
@@ -154,6 +162,15 @@ designVar <- as.numeric(designVar == max(designVar))
 
 heatmap_ic(x = limmaTMLEout, design = designVar, FDRcutoff = 0.05, top = 25)
 ```
+
+The heatmap produced in this way is actually a form of _supervised clustering_,
+as described more generally ("supervised distance matrices") by
+@pollard2008supervised, wherein the notion of deriving clustering procedures
+from the results of supervised learning methods is formulated. Since the heatmap
+is based on the contributions of observations to the efficient influence
+function (EIF) of the target parameter, it directly visualizes the degree to
+which each biomarker informs the difference (due to the treatment effect)
+represented by the average treatment effect.
 
 The volcano plot is standard graphical tools for examining how changes in
 expression relate to the raw p-value. The utility of such plots lies in their

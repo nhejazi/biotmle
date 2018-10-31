@@ -34,7 +34,9 @@
 
 <meta property="og:description" content="Heatmap of the contributions of a select subset of biomarkers to the variable
 importance measure changes as assessed by influence curve-based estimation,
-across all subjects." />
+across all subjects. The heatmap produced performs supervised clustering, in
+the sense first described in Pollard &amp;amp; van der Laan (2008)
+&amp;lt;doi:10.2202/1544-6115.1404&amp;gt;." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -63,7 +65,7 @@ across all subjects." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.0</span>
       </span>
     </div>
 
@@ -123,18 +125,21 @@ across all subjects." />
     
     <p>Heatmap of the contributions of a select subset of biomarkers to the variable
 importance measure changes as assessed by influence curve-based estimation,
-across all subjects.</p>
+across all subjects. The heatmap produced performs supervised clustering, in
+the sense first described in Pollard &amp; van der Laan (2008)
+&lt;doi:10.2202/1544-6115.1404&gt;.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>heatmap_ic</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>design</span>, <span class='kw'>FDRcutoff</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>25</span>)</pre>
+    <pre class="usage"><span class='fu'>heatmap_ic</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>design</span>, <span class='kw'>FDRcutoff</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"top"</span>, <span class='st'>"all"</span>),
+  <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>25</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>object of class <code>biotmle</code> as produced by an appropriate call to
+      <td><p>Object of class <code>biotmle</code> as produced by an appropriate call to
 <code>biomarkertmle</code></p></td>
     </tr>
     <tr>
@@ -144,15 +149,20 @@ necessary</p></td>
     </tr>
     <tr>
       <th>design</th>
-      <td><p>a vector providing the contrast to be displayed in the heatmap.</p></td>
+      <td><p>A vector providing the contrast to be displayed in the heatmap.</p></td>
     </tr>
     <tr>
       <th>FDRcutoff</th>
-      <td><p>cutoff to be used in controlling the False Discovery Rate</p></td>
+      <td><p>Cutoff to be used in controlling the False Discovery Rate.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>A <code>character</code> describing whether to plot only a top number
+(as defined by FDR-corrected p-value) of biomarkers or all biomarkers.</p></td>
     </tr>
     <tr>
       <th>top</th>
-      <td><p>number of identified biomarkers to plot in the heatmap</p></td>
+      <td><p>Number of identified biomarkers to plot in the heatmap.</p></td>
     </tr>
     </table>
     

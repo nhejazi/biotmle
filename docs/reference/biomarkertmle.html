@@ -63,7 +63,7 @@ treatment, using Targeted Minimum Loss-Based Estimation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.5.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.0</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@ treatment, using Targeted Minimum Loss-Based Estimation." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Biomarker Evaluation with Targeted Minimum Loss-Based Estimation of the ATE</h1>
-    <small class="dont-index">Source: <a href='https://github.com/nhejazi/biotmle/blob/master/R/biomarkertmle.R'><code>R/biomarkertmle.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/nhejazi/biotmle/blob/master/R/biomarkertmle-wrapper.R'><code>R/biomarkertmle-wrapper.R</code></a></small>
     <div class="hidden name"><code>biomarkertmle.Rd</code></div>
     </div>
 
@@ -127,11 +127,11 @@ treatment, using Targeted Minimum Loss-Based Estimation.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>biomarkertmle</span>(<span class='no'>se</span>, <span class='no'>varInt</span>, <span class='kw'>ngscounts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>bppar_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>future_param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>,
-  <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"SL.glm"</span>, <span class='st'>"SL.randomForest"</span>, <span class='st'>"SL.nnet"</span>,
-  <span class='st'>"SL.polymars"</span>, <span class='st'>"SL.mean"</span>), <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"SL.glm"</span>, <span class='st'>"SL.randomForest"</span>,
-  <span class='st'>"SL.nnet"</span>, <span class='st'>"SL.mean"</span>))</pre>
+    <pre class="usage"><span class='fu'>biomarkertmle</span>(<span class='no'>se</span>, <span class='no'>varInt</span>, <span class='kw'>normalized</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ngscounts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bppar_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>future_param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>, <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"SL.glm"</span>,
+  <span class='st'>"SL.randomForest"</span>, <span class='st'>"SL.nnet"</span>, <span class='st'>"SL.polymars"</span>, <span class='st'>"SL.mean"</span>),
+  <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"SL.glm"</span>, <span class='st'>"SL.randomForest"</span>, <span class='st'>"SL.nnet"</span>, <span class='st'>"SL.mean"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -147,6 +147,15 @@ in the "colData" slot.</p></td>
       <td><p>(numeric) - indicating the column of the design matrix
 corresponding to the treatment or outcome of interest (in the
 <code>colData</code> slot of the <code>SummarizedExperiment</code> argument "se").</p></td>
+    </tr>
+    <tr>
+      <th>normalized</th>
+      <td><p>(logical) - whether the data included in the <code>assay</code>
+slot of the input <code>SummarizedExperiment</code> object has been normalized
+already. The default is set to <code>TRUE</code> since it is expected that most
+practitioners would apply normalization methods appropriate to the type of
+assay being analyzed. If set to <code>FALSE</code>, median normalization is
+performed for microarray (i.e., non-RNA-seq) data.</p></td>
     </tr>
     <tr>
       <th>ngscounts</th>
@@ -231,7 +240,11 @@ literature on targeted minimum loss-based estimation).</p></td>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    first, intersect, rename, setdiff, setequal, union</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:BiocGenerics’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    combine, intersect, setdiff, union</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
+#&gt; <span class='message'>    combine, intersect, setdiff, union</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:biotmle’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    combine, intersect, setdiff, union</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:testthat’:</span>
+#&gt; <span class='message'></span>
+#&gt; <span class='message'>    matches</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:stats’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
