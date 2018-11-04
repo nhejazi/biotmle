@@ -11,6 +11,7 @@
 #'  appropriate methods.
 #' @param ... Other arguments to be passed directly to \code{limma::topTable}.
 #'
+#' @importFrom tibble as_tibble
 #' @importFrom limma lmFit eBayes topTable
 #'
 #' @return \code{biotmle} object containing output from \code{limma::lmFit} and
@@ -38,11 +39,11 @@ modtest_ic <- function(biotmle,
   tt <- limma::topTable(
     fit = fit,
     coef = 1,
+    number = Inf,
     adjust.method = adjust,
     ...
   )
-  tt$IDs <- rownames(biomarkerTMLEout)
-
-  biotmle@topTable <- as.data.frame(tt)
+  tt$ID <- rownames(tt)
+  biotmle@topTable <- tibble::as_tibble(tt)
   return(biotmle)
 }

@@ -134,7 +134,7 @@ After using the `biotmle` R package, please cite both of the following:
       url = {https://doi.org/10.21105/joss.00295}
     }
 
-    @article{hejazi2018+variance,
+    @article{hejazi2018+supervised,
       url = {https://arxiv.org/abs/1710.05451},
       year = {2018+},
       author = {Hejazi, Nima S and {Kherad-Pajouh}, Sara and {van der

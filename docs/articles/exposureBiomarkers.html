@@ -82,7 +82,7 @@
       <h1>Identifying Biomarkers from an Exposure Variable</h1>
                         <h4 class="author">Nima Hejazi</h4>
             
-            <h4 class="date">2018-11-03</h4>
+            <h4 class="date">2018-11-04</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/nhejazi/biotmle/blob/master/vignettes/exposureBiomarkers.Rmd"><code>vignettes/exposureBiomarkers.Rmd</code></a></small>
       <div class="hidden name"><code>exposureBiomarkers.Rmd</code></div>
@@ -147,7 +147,8 @@
 <a class="sourceLine" id="cb7-2" data-line-number="2">designVar &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(illuminaData))[, varInt_index]</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">designVar &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(designVar <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(designVar))</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">design =</span> designVar, <span class="dt">FDRcutoff =</span> <span class="fl">0.05</span>, <span class="dt">top =</span> <span class="dv">25</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># build heatmap</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">design =</span> designVar, <span class="dt">FDRcutoff =</span> <span class="fl">0.05</span>, <span class="dt">top =</span> <span class="dv">25</span>)</a></code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/heatmap_limma_results-1.png" width="700"></p>
 <p>The heatmap produced in this way is actually a form of <em>supervised clustering</em>, as described more generally (“supervised distance matrices”) by <span class="citation">Pollard and van der Laan (2008)</span>, wherein the notion of deriving clustering procedures from the results of supervised learning methods is formulated. Since the heatmap is based on the contributions of observations to the efficient influence function (EIF) of the target parameter, it directly visualizes the degree to which each biomarker informs the difference (due to the treatment effect) represented by the average treatment effect.</p>
 <p>The volcano plot is standard graphical tools for examining how changes in expression relate to the raw p-value. The utility of such plots lies in their providing a convenient way to identify and systematically ignore those genomic objects that have extremely low p-values due to extremely low variance between observations. The <code>volcano_ic</code> function provides much of the same interpretation, except that the fold change values displayed in the x-axis refer to changes in the <em>contributions of each biomarker to the Average Treatment Effect</em> (in standard practice, for microarray technology, these would be fold changes in gene expression). The plot produced is a <code>ggplot2</code> object and can be modified in place if stored properly. For our analysis:</p>
