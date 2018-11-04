@@ -39,9 +39,9 @@ target parameters (Tsiatis 2007). The set of methods implemented modify
 targeted maximum likelihood (TML) estimators of statistical (or causal)
 target parameters (e.g., average treatment effect) to apply variance
 moderation to the efficient influence function (EIF) representation of
-the target parameter (van der Laan and Rose 2011,@vdl2018targeted). The
-influence function-based representation of the data are then subjected
-to a moderated hypothesis test of the statistical estimate of the target
+the target parameter (van der Laan and Rose 2011, 2018). The influence
+function-based representation of the data are then subjected to a
+moderated hypothesis test of the statistical estimate of the target
 parameter, effectively stabilizing the standard error estimates (derived
 directly from the relevant efficient influence function) and allowing
 such estimators to be employed in smaller sample sizes, such as those

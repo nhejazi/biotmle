@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.1</span>
       </span>
     </div>
 
@@ -169,20 +169,15 @@
 ## result.6 -183.73280   -4.00971  45.02578  -53.02987  -4.00971  -69.37162</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/modtest_ic.html">modtest_ic</a></span>(<span class="dt">biotmle =</span> rnaseqTMLEout)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">head</span>(limmaTMLEout<span class="op">@</span>topTable)</a></code></pre></div>
-<pre><code>##               logFC    AveExpr          t    P.Value adj.P.Val         B
-## result.1 -32.072167 -32.072167 -1.7430776 0.08297431 0.9303074 -4.595093
-## result.2 -25.903359 -25.903359 -1.4289259 0.15470453 0.9342061 -4.595106
-## result.3 -15.865179 -15.865179 -0.6675294 0.50526227 0.9731485 -4.595127
-## result.4  20.394523  20.394523  0.9768991 0.32988929 0.9401033 -4.595120
-## result.5 -23.932669 -23.932669 -1.2276717 0.22112330 0.9401033 -4.595113
-## result.6  -8.540187  -8.540187 -0.4839883 0.62896415 0.9746949 -4.595130
-##               IDs
-## result.1 result.1
-## result.2 result.2
-## result.3 result.3
-## result.4 result.4
-## result.5 result.5
-## result.6 result.6</code></pre>
+<pre><code>## # A tibble: 6 x 7
+##   logFC AveExpr     t P.Value adj.P.Val     B ID         
+##   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      
+## 1 -57.8   -57.8 -3.29 0.00121     0.930 -4.59 result.673 
+## 2 -55.9   -55.9 -3.20 0.00160     0.930 -4.60 result.1091
+## 3  62.4    62.4  3.19 0.00168     0.930 -4.60 result.482 
+## 4 -59.7   -59.7 -3.10 0.00221     0.930 -4.60 result.1774
+## 5 -57.6   -57.6 -3.06 0.00255     0.930 -4.60 result.991 
+## 6 -77.2   -77.2 -2.98 0.00327     0.930 -4.60 result.1109</code></pre>
 <hr>
 </div>
 <div id="results-data-visualization" class="section level2">
@@ -232,7 +227,7 @@
 ##  [7] GenomicRanges_1.32.7        GenomeInfoDb_1.16.0        
 ##  [9] IRanges_2.14.12             S4Vectors_0.18.3           
 ## [11] BiocGenerics_0.26.0         biotmleData_1.4.0          
-## [13] biotmle_1.7.0               dplyr_0.7.7                
+## [13] biotmle_1.7.1               dplyr_0.7.7                
 ## [15] BiocStyle_2.8.2            
 ## 
 ## loaded via a namespace (and not attached):
@@ -245,19 +240,20 @@
 ## [19] pkgconfig_2.0.2        listenv_0.7.0          bookdown_0.7.21       
 ## [22] zlibbioc_1.26.0        purrr_0.2.5            scales_1.0.0          
 ## [25] tibble_1.4.2           ggplot2_3.1.0          lazyeval_0.2.1        
-## [28] magrittr_1.5           crayon_1.3.4           memoise_1.1.0         
-## [31] evaluate_0.12          fs_1.2.6               future_1.10.0         
-## [34] MASS_7.3-51.1          forcats_0.3.0          SuperLearner_2.0-24   
-## [37] xml2_1.2.0             tools_3.5.1            stringr_1.3.1         
-## [40] munsell_0.5.0          ggsci_2.9              compiler_3.5.1        
-## [43] pkgdown_1.1.0          rlang_0.3.0.1          grid_3.5.1            
-## [46] RCurl_1.95-4.11        iterators_1.0.10       labeling_0.3          
-## [49] bitops_1.0-6           rmarkdown_1.10         gtable_0.2.0          
-## [52] codetools_0.2-15       roxygen2_6.1.0.9000    R6_2.3.0              
-## [55] nnls_1.4               knitr_1.20             doFuture_0.6.0        
-## [58] bindr_0.1.1            commonmark_1.6         rprojroot_1.3-2       
-## [61] desc_1.2.0             stringi_1.2.4          tmle_1.3.0-1          
-## [64] Rcpp_0.12.19           tidyselect_0.2.5       xfun_0.4</code></pre>
+## [28] cli_1.0.1              magrittr_1.5           crayon_1.3.4          
+## [31] memoise_1.1.0          evaluate_0.12          fansi_0.4.0           
+## [34] fs_1.2.6               future_1.10.0          MASS_7.3-51.1         
+## [37] forcats_0.3.0          SuperLearner_2.0-24    xml2_1.2.0            
+## [40] tools_3.5.1            stringr_1.3.1          munsell_0.5.0         
+## [43] ggsci_2.9              compiler_3.5.1         pkgdown_1.1.0         
+## [46] rlang_0.3.0.1          grid_3.5.1             RCurl_1.95-4.11       
+## [49] iterators_1.0.10       labeling_0.3           bitops_1.0-6          
+## [52] rmarkdown_1.10         gtable_0.2.0           codetools_0.2-15      
+## [55] roxygen2_6.1.0.9000    R6_2.3.0               nnls_1.4              
+## [58] knitr_1.20             doFuture_0.6.0         utf8_1.1.4            
+## [61] bindr_0.1.1            commonmark_1.6         rprojroot_1.3-2       
+## [64] desc_1.2.0             stringi_1.2.4          tmle_1.3.0-1          
+## [67] Rcpp_0.12.19           tidyselect_0.2.5       xfun_0.4</code></pre>
 </div>
   </div>
 
