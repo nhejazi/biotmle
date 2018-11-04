@@ -35,27 +35,26 @@ __Author:__ [Nima Hejazi](https://nimahejazi.org)
 
 ## What's `biotmle`?
 
-`biotmle` is an R package that facilitates biomarker discovery by generalizing
-the moderated t-statistic [@smyth2004linear] for use with target parameters that
-have asymptotically linear representations [@vdl2011targeted]. The set of
-methods implemented rely on the use of targeted maximum likelihood (TML)
-estimation to transform biological sequencing data (e.g., microarray, RNA-seq)
-based on the (efficient) influence function (EIF) representation of a particular
-causal target parameter (e.g., average treatment effect). The transformed data
-(rotated into influence function space) are then be subjected to a moderated
-test for differences between the statistical estimate of the target parameter
-and a hypothesized value of said parameter (usually a null value defined in
-relation to the parameter itself). Such an approach provides a valid and
-conservative statistical hypothesis test of a statistically estimable target
-parameter while controlling the standard error (derived from the variance of the
-EIF) such that the error rate of the test is more strongly controlled relative
-to testing procedures that do fail moderate the variance estimate
-[@hejazi2018+variance] while simultaneously avoiding many of the pitfalls that
-plague analogous procedures predicated upon correctly specifying linear models
-[@smyth2004linear]. Utilities are also provided for performing clustering based
-on _supervised distance matrices_, using the EIF-based estimates to draw out
-underlying contributions of biomarkers to the target parameter of interest
-[@pollard2008supervised].
+The `biotmle` R package facilitates biomarker discovery through a generalization
+of the moderated t-statistic [@smyth2004linear] that extends the procedure to
+locally efficient estimators of asymptotically linear target parameters
+[@tsiatis2007semiparametric]. The set of methods implemented modify targeted
+maximum likelihood (TML) estimators of statistical (or causal) target parameters
+(e.g., average treatment effect) to apply variance moderation to the efficient
+influence function (EIF) representation of the target parameter
+[@vdl2011targeted,@vdl2018targeted]. The influence function-based representation
+of the data are then subjected to a moderated hypothesis test of the statistical
+estimate of the target parameter, effectively stabilizing the standard error
+estimates (derived directly from the relevant efficient influence function) and
+allowing such estimators to be employed in smaller sample sizes, such as those
+common in computational biology and bioinformatics applications. The resultant
+procedure, _supervised variance moderation_, allows for the construction of a
+conservative hypothesis test of a statistically estimable target parameter that
+controls the standard error in a manner that reduces the false discovery rate or
+the family-wise error rate [@hejazi2018+supervised]. Utilities are also provided
+for performing clustering through _supervised distance matrices_, using the
+EIF-based estimates to draw out the underlying contributions of individual
+biomarkers to the target parameter of interest [@pollard2008supervised].
 
 ---
 
@@ -132,13 +131,13 @@ After using the `biotmle` R package, please cite both of the following:
           url = {https://doi.org/10.21105/joss.00295}
         }
 
-        @article{hejazi2018+variance,
+        @article{hejazi2018+supervised,
           url = {https://arxiv.org/abs/1710.05451},
           year = {2018+},
           author = {Hejazi, Nima S and {Kherad-Pajouh}, Sara and {van der
             Laan}, Mark J and Hubbard, Alan E},
-          title = {Variance moderation of locally efficient estimators in
-            high-dimensional biology}
+          title = {Supervised variance moderation of locally efficient
+            estimators in high-dimensional biology}
         }
 
 ---

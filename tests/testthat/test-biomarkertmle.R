@@ -1,5 +1,4 @@
 library(dplyr)
-library(biotmle)
 library(biotmleData)
 library(SummarizedExperiment)
 data(illuminaData)

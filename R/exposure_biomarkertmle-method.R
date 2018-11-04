@@ -24,6 +24,7 @@
 #' @param family (character) - specification of error family: "binomial" or
 #'  "gaussian"
 #'
+#' @importFrom assertthat assert_that
 #' @importFrom tmle tmle
 #'
 #' @return TMLE-based estimate of the relationship between biomarker expression
@@ -40,14 +41,10 @@ biomarkerTMLE_exposure <- function(Y,
                                    Q_lib) {
 
   # check the case that Y is passed in as a column of a data.frame
-  if (class(Y) == "data.frame") Y <- as.numeric(Y[, 1])
-  if (class(A) == "data.frame") A <- as.numeric(A[, 1])
-  if (length(a) == 1) {
-    warning("Comparisons should be made against a particular level of A.")
-  }
-  if (!is.null(subj_ids)) {
-    subj_ids <- as.numeric(subj_ids)
-  }
+  if (any(class(Y) == "data.frame")) Y <- as.numeric(unlist(Y[, 1]))
+  if (any(class(A) == "data.frame")) A <- as.numeric(unlist(A[, 1]))
+  if (!is.null(subj_ids)) subj_ids <- as.numeric(subj_ids)
+  assertthat::assert_that(length(a) > 1)
 
   # initialize
   eif <- NULL

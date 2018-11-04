@@ -10,6 +10,7 @@
 #' @param ... - other arguments to be passed to functions \code{limma::voom} or
 #'  \code{limma::voomWithQualityWeights} as appropriate.
 #'
+#' @importFrom tibble as_tibble
 #' @importFrom limma voom voomWithQualityWeights
 #' @importFrom SummarizedExperiment assay
 #'
@@ -26,15 +27,18 @@ rnaseq_ic <- function(biotmle, weights = TRUE, ...) {
   stopifnot(class(weights) == "logical")
 
   # extract count data from appropriate slot of SummarizedExperiment object
-  ngs_data <- as.data.frame(assay(biotmle))
+  ngs_data <- tibble::as_tibble(assay(biotmle))
 
   # invoke the "voom" transform from LIMMA
   if (weights) {
     voom_data <- limma::voomWithQualityWeights(ngs_data,
-      normalize.method = "scale"
+      normalize.method = "scale",
+      ...
     )
   } else {
-    voom_data <- limma::voom(ngs_data, normalize.method = "scale")
+    voom_data <- limma::voom(ngs_data,
+                             normalize.method = "scale",
+                             ...)
   }
   return(voom_data)
 }

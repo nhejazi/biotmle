@@ -32,29 +32,29 @@ Status](http://joss.theoj.org/papers/02be843d9bab1b598187bfbb08ce3949/status.svg
 
 ## What’s `biotmle`?
 
-`biotmle` is an R package that facilitates biomarker discovery by
-generalizing the moderated t-statistic (Smyth 2004) for use with target
-parameters that have asymptotically linear representations (van der Laan
-and Rose 2011). The set of methods implemented rely on the use of
-targeted maximum likelihood (TML) estimation to transform biological
-sequencing data (e.g., microarray, RNA-seq) based on the (efficient)
-influence function (EIF) representation of a particular causal target
-parameter (e.g., average treatment effect). The transformed data
-(rotated into influence function space) are then be subjected to a
-moderated test for differences between the statistical estimate of the
-target parameter and a hypothesized value of said parameter (usually a
-null value defined in relation to the parameter itself). Such an
-approach provides a valid and conservative statistical hypothesis test
-of a statistically estimable target parameter while controlling the
-standard error (derived from the variance of the EIF) such that the
-error rate of the test is more strongly controlled relative to testing
-procedures that do fail moderate the variance estimate (Hejazi et al.,
-n.d.) while simultaneously avoiding many of the pitfalls that plague
-analogous procedures predicated upon correctly specifying linear models
-(Smyth 2004). Utilities are also provided for performing clustering
-based on *supervised distance matrices*, using the EIF-based estimates
-to draw out underlying contributions of biomarkers to the target
-parameter of interest (Pollard and van der Laan 2008).
+The `biotmle` R package facilitates biomarker discovery through a
+generalization of the moderated t-statistic (Smyth 2004) that extends
+the procedure to locally efficient estimators of asymptotically linear
+target parameters (Tsiatis 2007). The set of methods implemented modify
+targeted maximum likelihood (TML) estimators of statistical (or causal)
+target parameters (e.g., average treatment effect) to apply variance
+moderation to the efficient influence function (EIF) representation of
+the target parameter (van der Laan and Rose 2011,@vdl2018targeted). The
+influence function-based representation of the data are then subjected
+to a moderated hypothesis test of the statistical estimate of the target
+parameter, effectively stabilizing the standard error estimates (derived
+directly from the relevant efficient influence function) and allowing
+such estimators to be employed in smaller sample sizes, such as those
+common in computational biology and bioinformatics applications. The
+resultant procedure, *supervised variance moderation*, allows for the
+construction of a conservative hypothesis test of a statistically
+estimable target parameter that controls the standard error in a manner
+that reduces the false discovery rate or the family-wise error rate
+(Hejazi et al., n.d.). Utilities are also provided for performing
+clustering through *supervised distance matrices*, using the EIF-based
+estimates to draw out the underlying contributions of individual
+biomarkers to the target parameter of interest (Pollard and van der Laan
+2008).
 
 -----
 
@@ -134,13 +134,13 @@ After using the `biotmle` R package, please cite both of the following:
       url = {https://doi.org/10.21105/joss.00295}
     }
 
-    @article{hejazi2018+variance,
+    @article{hejazi2018+supervised,
       url = {https://arxiv.org/abs/1710.05451},
       year = {2018+},
       author = {Hejazi, Nima S and {Kherad-Pajouh}, Sara and {van der
         Laan}, Mark J and Hubbard, Alan E},
-      title = {Variance moderation of locally efficient estimators in
-        high-dimensional biology}
+      title = {Supervised variance moderation of locally efficient
+        estimators in high-dimensional biology}
     }
 ```
 
@@ -177,11 +177,12 @@ See file `LICENSE` for details.
 
 <div id="refs" class="references">
 
-<div id="ref-hejazi2018+variance">
+<div id="ref-hejazi2018+supervised">
 
 Hejazi, Nima S, Sara Kherad-Pajouh, Mark J van der Laan, and Alan E
-Hubbard. n.d. “Variance Moderation of Locally Efficient Estimators in
-High-Dimensional Biology.” <https://arxiv.org/abs/1710.05451>.
+Hubbard. n.d. “Supervised Variance Moderation of Locally Efficient
+Estimators in High-Dimensional Biology.”
+<https://arxiv.org/abs/1710.05451>.
 
 </div>
 
@@ -202,11 +203,26 @@ Walter de Gruyter: 1–25. <https://doi.org/10.2202/1544-6115.1027>.
 
 </div>
 
+<div id="ref-tsiatis2007semiparametric">
+
+Tsiatis, Anastasios. 2007. *Semiparametric Theory and Missing Data*.
+Springer Science & Business Media.
+
+</div>
+
 <div id="ref-vdl2011targeted">
 
 van der Laan, Mark J., and Sherri Rose. 2011. *Targeted Learning: Causal
 Inference for Observational and Experimental Data*. Springer Science &
 Business Media.
+
+</div>
+
+<div id="ref-vdl2018targeted">
+
+van der Laan, Mark J, and Sherri Rose. 2018. *Targeted Learning in Data
+Science: Causal Inference for Complex Longitudinal Studies*. Springer
+Science & Business Media.
 
 </div>
 

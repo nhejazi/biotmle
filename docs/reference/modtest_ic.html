@@ -127,7 +127,7 @@ space, based on the average treatment effect parameter.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>modtest_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"BH"</span>)</pre>
+    <pre class="usage"><span class='fu'>modtest_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"BH"</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -142,6 +142,10 @@ space, based on the average treatment effect parameter.</p>
 are generated from the moderated tests. The recommended (and default) method
 is that of Benjamini and Hochberg. See <a href='http://www.rdocumentation.org/packages/limma/topics/toptable'>topTable</a> for a list of
 appropriate methods.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Other arguments to be passed directly to <code><a href='http://www.rdocumentation.org/packages/limma/topics/toptable'>limma::topTable</a></code>.</p></td>
     </tr>
     </table>
     
