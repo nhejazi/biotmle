@@ -9,6 +9,7 @@
 #'  are generated from the moderated tests. The recommended (and default) method
 #'  is that of Benjamini and Hochberg. See \link[limma]{topTable} for a list of
 #'  appropriate methods.
+#' @param ... Other arguments to be passed directly to \code{limma::topTable}.
 #'
 #' @importFrom limma lmFit eBayes topTable
 #'
@@ -25,7 +26,8 @@
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #
 modtest_ic <- function(biotmle,
-                       adjust = "BH") {
+                       adjust = "BH",
+                       ...) {
   stopifnot(class(biotmle) == "bioTMLE")
   biomarkerTMLEout <- as.data.frame(biotmle@tmleOut)
 
@@ -34,8 +36,10 @@ modtest_ic <- function(biotmle,
   fit <- limma::eBayes(fit = fit)
 
   tt <- limma::topTable(
-    fit = fit, coef = 1, adjust.method = "BH",
-    sort.by = "none", number = Inf
+    fit = fit,
+    coef = 1,
+    adjust.method = adjust,
+    ...
   )
   tt$IDs <- rownames(biomarkerTMLEout)
 
