@@ -9,9 +9,7 @@ env:
 language: r
 sudo: required
 cache: packages
-repos:
-  CRAN: http://cran.rstudio.com
-  ropensci: http://packages.ropensci.com
+cran: https://cran.rstudio.com
 
 warnings_are_errors: true
 r_build_args: '--no-manual'
