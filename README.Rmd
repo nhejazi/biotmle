@@ -29,7 +29,8 @@ knitr::opts_chunk$set(
 
 > Targeted Learning with Moderated Statistics for Biomarker Discovery
 
-__Author:__ [Nima Hejazi](https://nimahejazi.org)
+__Authors:__ [Nima Hejazi](https://nimahejazi.org) and [Alan
+Hubbard](https://hubbard.berkeley.edu)
 
 ---
 

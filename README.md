@@ -26,7 +26,8 @@ Status](http://joss.theoj.org/papers/02be843d9bab1b598187bfbb08ce3949/status.svg
 
 > Targeted Learning with Moderated Statistics for Biomarker Discovery
 
-**Author:** [Nima Hejazi](https://nimahejazi.org)
+**Authors:** [Nima Hejazi](https://nimahejazi.org) and [Alan
+Hubbard](https://hubbard.berkeley.edu)
 
 -----
 

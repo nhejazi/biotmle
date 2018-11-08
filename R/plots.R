@@ -31,7 +31,7 @@
 #
 plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
   if (type == "pvals_raw") {
-    p <- ggplot2::ggplot(as.data.frame(x@topTable), ggplot2::aes(P.Value)) +
+    p <- ggplot2::ggplot(x@topTable, ggplot2::aes(P.Value)) +
       ggplot2::geom_histogram(ggplot2::aes(
         y = ..count..,
         fill = ..count..
@@ -59,9 +59,7 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
   return(p)
 }
 
-# ==============================================================================#
-## NEXT FUNCTION ===============================================================
-# ==============================================================================#
+################################################################################
 
 #' Volcano plot for class biotmle
 #'
@@ -104,7 +102,7 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 volcano_ic <- function(biotmle, fc_bound = 3.0, pval_bound = 0.2) {
   stopifnot(class(biotmle) == "bioTMLE")
 
-  tt_volcano <- as.data.frame(biotmle@topTable) %>%
+  tt_volcano <- biotmle@topTable %>%
     dplyr::arrange(adj.P.Val) %>%
     dplyr::mutate(
       logFC = I(logFC),
@@ -126,14 +124,11 @@ volcano_ic <- function(biotmle, fc_bound = 3.0, pval_bound = 0.2) {
     ggplot2::ggtitle("Volcano Plot: Average Treatment Effect") +
     ggsci::scale_fill_gsea() +
     ggplot2::guides(color = ggplot2::guide_legend(title = NULL)) +
-    # ggplot2::guides(color = FALSE) +
     ggplot2::theme_bw()
   return(p)
 }
 
-# ==============================================================================#
-## NEXT FUNCTION ===============================================================
-# ==============================================================================#
+################################################################################
 
 utils::globalVariables(c(
   "adj.P.Val", ".", "..count..", "P.Value", "color",
@@ -202,7 +197,7 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05,
       message(paste(top, "biomarkers not found below specified FDR cutoff."))
     }
 
-    if (class(x@tmleOut) == "EList") {
+    if (any(class(x@tmleOut) %in% "EList")) {
       biomarkerTMLEout_top <- x@tmleOut$E %>%
         data.frame() %>%
         dplyr::filter(rownames(x@tmleOut) %in% topbiomarkersFDR$ID)
@@ -212,7 +207,7 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05,
     }
     plot_title <- paste("Supervised Heatmap of Top", top, "Biomarkers")
   } else {
-    if (class(x@tmleOut) == "EList") {
+    if (any(class(x@tmleOut) %in% "EList")) {
       biomarkerTMLEout_top <- x@tmleOut$E %>%
         as.data.frame()
     } else {

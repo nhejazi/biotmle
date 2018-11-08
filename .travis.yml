@@ -9,6 +9,7 @@ env:
 language: r
 sudo: required
 cache: packages
+cran: https://cran.rstudio.com
 
 warnings_are_errors: true
 r_build_args: '--no-manual'
