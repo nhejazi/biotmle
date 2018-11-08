@@ -10,8 +10,8 @@ language: r
 sudo: required
 cache: packages
 repos:
-  CRAN: https://cran.rstudio.com
-  ropensci: https://packages.ropensci.com
+  CRAN: http://cran.rstudio.com
+  ropensci: http://packages.ropensci.com
 
 warnings_are_errors: true
 r_build_args: '--no-manual'
