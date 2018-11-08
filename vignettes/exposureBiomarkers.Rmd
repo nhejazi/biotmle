@@ -161,7 +161,8 @@ designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
 designVar <- as.numeric(designVar == max(designVar))
 
 # build heatmap
-heatmap_ic(x = limmaTMLEout, design = designVar, FDRcutoff = 0.05, top = 25)
+heatmap_ic(x = limmaTMLEout, left.label = "none", scale = TRUE,
+           design = designVar, FDRcutoff = 0.05, top = 25)
 ```
 
 The heatmap produced in this way is actually a form of _supervised clustering_,
