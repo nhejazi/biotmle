@@ -221,7 +221,6 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05,
 
   # build supervised heatmap
   superheat::superheat(as.matrix(biomarkerTMLEout_top),
-    row.dendrogram = TRUE,
     grid.hline.col = "white", force.grid.hline = TRUE,
     grid.vline.col = "white", force.grid.vline = TRUE,
     membership.cols = annot,

@@ -162,6 +162,7 @@ designVar <- as.numeric(designVar == max(designVar))
 
 # build heatmap
 heatmap_ic(x = limmaTMLEout, left.label = "none", scale = TRUE,
+           clustering.method = "hierarchical", row.dendrogram = TRUE,
            design = designVar, FDRcutoff = 0.05, top = 25)
 ```
 
