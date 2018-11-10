@@ -176,7 +176,7 @@ biomarkertmle <- function(se,
     Y <- tibble::as_tibble(t(as.matrix(assay(se))))
   }
   # simple sanity check of whether Y includes array values
-  if (unique(lapply(Y, class)) != "numeric") {
+  if (!all(apply(Y, 2, class) == "numeric")) {
     stop("Warning - values in Y do not appear to be numeric...")
   }
 
@@ -190,8 +190,8 @@ biomarkertmle <- function(se,
   }
 
   # coerce matrix of baseline covariates to numeric
-  if (!all(unique(sapply(W, class)) == "numeric")) {
-    W <- tibble::as_tibble(sapply(W, as.numeric))
+  if (!all(apply(W, 2, class) == "numeric")) {
+    W <- tibble::as_tibble(apply(W, 2, as.numeric))
   }
 
   # perform multi-level TMLE (of the ATE) for genes as Y
