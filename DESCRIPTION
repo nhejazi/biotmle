@@ -1,6 +1,6 @@
 Package: biotmle
 Title: Targeted Learning with Moderated Statistics for Biomarker Discovery
-Version: 1.7.1
+Version: 1.7.2
 Authors@R: c(
     person("Nima", "Hejazi", email = "nh@nimahejazi.org",
            role = c("aut", "cre", "cph"),
@@ -26,7 +26,7 @@ Description: This package facilitates the discovery of biomarkers from
     whose estimators admit asymptotically linear representations.
 Depends: R (>= 3.4)
 License: file LICENSE
-URL: https://github.com/nhejazi/biotmle
+URL: https://code.nimahejazi.org/biotmle
 BugReports: https://github.com/nhejazi/biotmle/issues
 Encoding: UTF-8
 LazyData: true

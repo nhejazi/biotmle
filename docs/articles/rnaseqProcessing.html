@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.2</span>
       </span>
     </div>
 
@@ -60,14 +60,7 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/nhejazi/biotmle">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -82,9 +75,9 @@
       <h1>Processing and Analyzing RNA-Seq Data</h1>
                         <h4 class="author">Nima Hejazi</h4>
             
-            <h4 class="date">2018-11-07</h4>
+            <h4 class="date">2018-11-10</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/nhejazi/biotmle/blob/master/vignettes/rnaseqProcessing.Rmd"><code>vignettes/rnaseqProcessing.Rmd</code></a></small>
+      
       <div class="hidden name"><code>rnaseqProcessing.Rmd</code></div>
 
     </div>
@@ -159,7 +152,7 @@
 <a class="sourceLine" id="cb6-8" data-line-number="8">                               <span class="dt">Q_lib =</span> <span class="kw">c</span>(<span class="st">"SL.mean"</span>, <span class="st">"SL.glm"</span>,</a>
 <a class="sourceLine" id="cb6-9" data-line-number="9">                                         <span class="st">"SL.randomForest"</span>, <span class="st">"SL.nnet"</span>)</a>
 <a class="sourceLine" id="cb6-10" data-line-number="10">                              )</a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="kw">head</span>(rnaseqTMLEout<span class="op">@</span>tmleOut<span class="op">$</span>E[, <span class="kw">seq_len</span>(<span class="dv">6</span>)])</a></code></pre></div>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="kw">head</span>(<span class="kw"><a href="../reference/eif.html">eif</a></span>(rnaseqTMLEout)<span class="op">$</span>E[, <span class="kw">seq_len</span>(<span class="dv">6</span>)])</a></code></pre></div>
 <pre><code>##                [,1]       [,2]      [,3]       [,4]      [,5]       [,6]
 ## result.1 -329.83655 -212.28070 160.39144   32.96832 -36.05786 -146.77124
 ## result.2   91.43805 -129.00196 -39.20680  -47.18052  44.29473  -30.83862
@@ -168,7 +161,7 @@
 ## result.5   11.71456 -148.33216  93.43461   47.79556  61.82086 -229.99698
 ## result.6 -183.73280   -4.00971  45.02578  -53.02987  -4.00971  -69.37162</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/modtest_ic.html">modtest_ic</a></span>(<span class="dt">biotmle =</span> rnaseqTMLEout)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">head</span>(limmaTMLEout<span class="op">@</span>topTable)</a></code></pre></div>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">head</span>(<span class="kw"><a href="../reference/toptable.html">toptable</a></span>(limmaTMLEout))</a></code></pre></div>
 <pre><code>## # A tibble: 6 x 7
 ##   logFC AveExpr     t P.Value adj.P.Val     B ID         
 ##   &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;      
@@ -191,7 +184,10 @@
 <a class="sourceLine" id="cb12-2" data-line-number="2">designVar &lt;-<span class="st"> </span><span class="kw">as.data.frame</span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/SummarizedExperiment/topics/SummarizedExperiment-class">colData</a></span>(se))[, varInt_index]</a>
 <a class="sourceLine" id="cb12-3" data-line-number="3">design &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(designVar <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(designVar))</a>
 <a class="sourceLine" id="cb12-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">design =</span> design, <span class="dt">FDRcutoff =</span> <span class="fl">1.0</span>, <span class="dt">top =</span> <span class="dv">10</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout,</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">           <span class="dt">row.dendrogram =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">           <span class="dt">clustering.method =</span> <span class="st">"hierarchical"</span>,</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">           <span class="dt">design =</span> design, <span class="dt">FDRcutoff =</span> <span class="fl">1.0</span>, <span class="dt">top =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p><img src="rnaseqProcessing_files/figure-html/heatmap_limma_results-1.png" width="700"></p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../reference/volcano_ic.html">volcano_ic</a></span>(<span class="dt">biotmle =</span> limmaTMLEout)</a></code></pre></div>
 <p><img src="rnaseqProcessing_files/figure-html/volcano_plot_limma_results-1.png" width="700"></p>
@@ -227,7 +223,7 @@
 ##  [7] GenomicRanges_1.32.7        GenomeInfoDb_1.16.0        
 ##  [9] IRanges_2.14.12             S4Vectors_0.18.3           
 ## [11] BiocGenerics_0.26.0         biotmleData_1.4.0          
-## [13] biotmle_1.7.1               dplyr_0.7.7                
+## [13] biotmle_1.7.2               dplyr_0.7.7                
 ## [15] BiocStyle_2.8.2            
 ## 
 ## loaded via a namespace (and not attached):
