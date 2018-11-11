@@ -29,7 +29,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.1</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">1.7.2</span>
       </span>
     </div>
 
@@ -60,14 +60,7 @@
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="https://github.com/nhejazi/biotmle">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
+<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -82,9 +75,9 @@
       <h1>Identifying Biomarkers from an Exposure Variable</h1>
                         <h4 class="author">Nima Hejazi</h4>
             
-            <h4 class="date">2018-11-07</h4>
+            <h4 class="date">2018-11-10</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/nhejazi/biotmle/blob/master/vignettes/exposureBiomarkers.Rmd"><code>vignettes/exposureBiomarkers.Rmd</code></a></small>
+      
       <div class="hidden name"><code>exposureBiomarkers.Rmd</code></div>
 
     </div>
@@ -149,7 +142,8 @@
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># build heatmap</span></a>
 <a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">left.label =</span> <span class="st">"none"</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">           <span class="dt">design =</span> designVar, <span class="dt">FDRcutoff =</span> <span class="fl">0.05</span>, <span class="dt">top =</span> <span class="dv">25</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb7-7" data-line-number="7">           <span class="dt">clustering.method =</span> <span class="st">"hierarchical"</span>, <span class="dt">row.dendrogram =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">           <span class="dt">design =</span> designVar, <span class="dt">FDRcutoff =</span> <span class="fl">0.05</span>, <span class="dt">top =</span> <span class="dv">25</span>)</a></code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/heatmap_limma_results-1.png" width="700"></p>
 <p>The heatmap produced in this way is actually a form of <em>supervised clustering</em>, as described more generally (“supervised distance matrices”) by <span class="citation">Pollard and van der Laan (2008)</span>, wherein the notion of deriving clustering procedures from the results of supervised learning methods is formulated. Since the heatmap is based on the contributions of observations to the efficient influence function (EIF) of the target parameter, it directly visualizes the degree to which each biomarker informs the difference (due to the treatment effect) represented by the average treatment effect.</p>
 <p>The volcano plot is standard graphical tools for examining how changes in expression relate to the raw p-value. The utility of such plots lies in their providing a convenient way to identify and systematically ignore those genomic objects that have extremely low p-values due to extremely low variance between observations. The <code>volcano_ic</code> function provides much of the same interpretation, except that the fold change values displayed in the x-axis refer to changes in the <em>contributions of each biomarker to the Average Treatment Effect</em> (in standard practice, for microarray technology, these would be fold changes in gene expression). The plot produced is a <code>ggplot2</code> object and can be modified in place if stored properly. For our analysis:</p>
@@ -187,7 +181,7 @@
 ##  [7] GenomicRanges_1.32.7        GenomeInfoDb_1.16.0        
 ##  [9] IRanges_2.14.12             S4Vectors_0.18.3           
 ## [11] BiocGenerics_0.26.0         biotmleData_1.4.0          
-## [13] biotmle_1.7.1               dplyr_0.7.7                
+## [13] biotmle_1.7.2               dplyr_0.7.7                
 ## [15] BiocStyle_2.8.2            
 ## 
 ## loaded via a namespace (and not attached):

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Volcano plot for class biotmle — volcano_ic • biotmle</title>
+<title>Accessor for Results Table of Moderated Influence Function Hypothesis Test — toptable • biotmle</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,10 +30,9 @@
 
 
 
-<meta property="og:title" content="Volcano plot for class biotmle — volcano_ic" />
+<meta property="og:title" content="Accessor for Results Table of Moderated Influence Function Hypothesis Test — toptable" />
 
-<meta property="og:description" content="Volcano plot of the log-changes in the target causal paramter against the
-log raw p-values from the moderated t-test." />
+<meta property="og:description" content="Accessor for Results Table of Moderated Influence Function Hypothesis Test" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -108,70 +107,35 @@ log raw p-values from the moderated t-test." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Volcano plot for class biotmle</h1>
+    <h1>Accessor for Results Table of Moderated Influence Function Hypothesis Test</h1>
     
-    <div class="hidden name"><code>volcano_ic.Rd</code></div>
+    <div class="hidden name"><code>toptable.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Volcano plot of the log-changes in the target causal paramter against the
-log raw p-values from the moderated t-test.</p>
+    <p>Accessor for Results Table of Moderated Influence Function Hypothesis Test</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>volcano_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>fc_bound</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>pval_bound</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</pre>
+    <pre class="usage"><span class='fu'>toptable</span>(<span class='no'>object</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>biotmle</th>
-      <td><p>object of class <code>biotmle</code> as produced by an appropriate
-call to <code>biomarkertmle</code></p></td>
-    </tr>
-    <tr>
-      <th>fc_bound</th>
-      <td><p>(numeric) - indicates the highest magnitude of the fold to be
-colored along the x-axis of the volcano plot; this limits the observations
-to be considered differentially expressed to those in a user-specified
-interval.</p></td>
-    </tr>
-    <tr>
-      <th>pval_bound</th>
-      <td><p>(numeric) - indicates the largest corrected p-value to be
-colored along the y-axis of the volcano plot; this limits observations
-considered as differentially expressed to those in a user-specified
-interval.</p></td>
+      <th>object</th>
+      <td><p>S4 object of class <code>bioTMLE</code>.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>object of class <code>ggplot</code> containing a standard volcano plot of
- the log-fold change in the causal target parameter against the raw log
- p-value computed from the moderated tests in <code>modtest_ic</code>.</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>library</span>(<span class='no'>dplyr</span>)
-<span class='fu'>library</span>(<span class='no'>biotmleData</span>)
-<span class='fu'>library</span>(<span class='no'>SummarizedExperiment</span>)
-<span class='fu'>data</span>(<span class='no'>biomarkertmleOut</span>)
-
-<span class='no'>limmaTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='modtest_ic.html'>modtest_ic</a></span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>biomarkerTMLEout</span>)
-
-<span class='fu'>volcano_ic</span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>limmaTMLEout</span>)</div><div class='img'><img src='volcano_ic-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

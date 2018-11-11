@@ -33,6 +33,8 @@ setClassUnion(
 #' @export .biotmle
 #' @exportClass bioTMLE
 #'
+#' @rdname bioTMLE-class
+#'
 #' @examples
 #' library(SummarizedExperiment)
 #' library(biotmleData)
@@ -65,3 +67,34 @@ setClassUnion(
   ),
   contains = "SummarizedExperiment"
 )
+
+################################################################################
+
+#' Accessor for Table of Raw Efficient Influence Function Values
+#'
+#' @param object S4 object of class \code{bioTMLE}.
+#'
+#' @importFrom assertthat assert_that
+#'
+#' @export
+#
+eif <- function(object) {
+  assertthat::assert_that(class(object) == "bioTMLE")
+  object@tmleOut
+}
+
+################################################################################
+
+#' Accessor for Results Table of Moderated Influence Function Hypothesis Test
+#'
+#' @param object S4 object of class \code{bioTMLE}.
+#'
+#' @importFrom assertthat assert_that
+#'
+#' @export
+#
+toptable <- function(object) {
+  assertthat::assert_that(class(object) == "bioTMLE")
+  object@topTable
+}
+
