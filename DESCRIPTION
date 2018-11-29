@@ -63,4 +63,5 @@ biocViews:
     DifferentialExpression,
     Sequencing,
     Microarray,
-    RNASeq
+    RNASeq,
+    ImmunoOncology
