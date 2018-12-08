@@ -22,8 +22,8 @@ Description: This package facilitates the discovery of biomarkers from
     associations of potential biomarkers with exposure and outcome variables by
     implementing an estimation procedure that combines a generalization of
     moderated statistics with targeted minimum loss-based estimates (TMLE) of
-    parameters defined via causal inference (e.g., Average Treatment Effect)
-    whose estimators admit asymptotically linear representations.
+    causal parameters (e.g., Average Treatment Effect) whose estimators admit
+    asymptotically linear representations (in terms of influence functions).
 Depends: R (>= 3.4)
 License: file LICENSE
 URL: https://code.nimahejazi.org/biotmle
@@ -31,21 +31,21 @@ BugReports: https://github.com/nhejazi/biotmle/issues
 Encoding: UTF-8
 LazyData: true
 Imports:
+    stats,
+    methods,
     dplyr,
     tibble,
     ggplot2,
     ggsci,
     superheat,
     assertthat,
-    doFuture,
     future,
-    stats,
-    methods,
-    limma,
+    doFuture,
     S4Vectors,
     BiocGenerics,
     BiocParallel,
     SummarizedExperiment,
+    limma,
     tmle
 Suggests:
     testthat,
@@ -57,7 +57,7 @@ Suggests:
     DBI,
     biotmleData (>= 1.1.1)
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0.9000
+RoxygenNote: 6.1.1
 biocViews:
     GeneExpression,
     DifferentialExpression,

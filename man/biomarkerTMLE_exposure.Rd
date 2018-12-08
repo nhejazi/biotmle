@@ -5,7 +5,7 @@
 \title{TMLE procedure using ATE for Biomarker Identication from Exposure}
 \usage{
 biomarkerTMLE_exposure(Y, W, A, a, subj_ids = NULL,
-  family = "gaussian", g_lib, Q_lib)
+  family = "gaussian", g_lib, Q_lib, ...)
 }
 \arguments{
 \item{Y}{A \code{numeric} vector of expression values for a single biomarker.}
@@ -30,10 +30,16 @@ version of the variance estimate from the efficient influence function.}
 "gaussian"}
 
 \item{g_lib}{(char vector) - library of learning algorithms to be used in
-fitting the "g" step of the standard TMLE procedure.}
+fitting the propensity score E[A | W] (the nuisance parameter denoted "g" in
+the literature on targeted minimum loss-based estimation).}
 
 \item{Q_lib}{(char vector) - library of learning algorithms to be used in
-fitting the "Q" step of the standard TMLE procedure.}
+fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
+"Q" in the literature on targeted minimum loss-based estimation).}
+
+\item{...}{Additional arguments to be passed directly to \code{tmle::tmle} in
+fitting the targeted minimum loss-based estimator of the average treatment
+effect. Consult the documentation of that function for details.}
 }
 \value{
 TMLE-based estimate of the relationship between biomarker expression
