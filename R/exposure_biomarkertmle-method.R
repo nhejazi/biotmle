@@ -17,12 +17,17 @@
 #'  will be coerced to numeric if not provided in the appropriate form (e.g., as
 #'  \code{character}). The call to \code{tmle::tmle} will utilized a corrected
 #'  version of the variance estimate from the efficient influence function.
-#' @param g_lib (char vector) - library of learning algorithms to be used in
-#'  fitting the "g" step of the standard TMLE procedure.
-#' @param Q_lib (char vector) - library of learning algorithms to be used in
-#'  fitting the "Q" step of the standard TMLE procedure.
 #' @param family (character) - specification of error family: "binomial" or
 #'  "gaussian"
+#' @param g_lib (char vector) - library of learning algorithms to be used in
+#'  fitting the propensity score E[A | W] (the nuisance parameter denoted "g" in
+#'  the literature on targeted minimum loss-based estimation).
+#' @param Q_lib (char vector) - library of learning algorithms to be used in
+#'  fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
+#'  "Q" in the literature on targeted minimum loss-based estimation).
+#' @param ... Additional arguments to be passed directly to \code{tmle::tmle} in
+#'  fitting the targeted minimum loss-based estimator of the average treatment
+#'  effect. Consult the documentation of that function for details.
 #'
 #' @importFrom assertthat assert_that
 #' @importFrom tmle tmle
@@ -38,7 +43,8 @@ biomarkerTMLE_exposure <- function(Y,
                                    subj_ids = NULL,
                                    family = "gaussian",
                                    g_lib,
-                                   Q_lib) {
+                                   Q_lib,
+                                   ...) {
 
   # check the case that Y is passed in as a column of a data.frame
   if (any(class(Y) == "data.frame")) Y <- as.numeric(unlist(Y[, 1]))
@@ -60,7 +66,8 @@ biomarkerTMLE_exposure <- function(Y,
       Q.SL.library = Q_lib,
       family = family,
       id = subj_ids,
-      verbose = FALSE
+      verbose = FALSE,
+      ...
     )
     g_0 <- fit_tmle$g$g1W
     Qst_0 <- fit_tmle$Qstar[, 2]

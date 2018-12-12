@@ -46,11 +46,14 @@ utils::globalVariables(c("assay<-"))
 #'  subject should have the exact same numerical identifier; coerced to class
 #'  \code{numeric} if not provided in the appropriate form.
 #' @param g_lib (char vector) - library of learning algorithms to be used in
-#'  fitting the propensity score (the nuisance parameter denoted "g" in the
-#'  literature on targeted minimum loss-based estimation).
+#'  fitting the propensity score E[A | W] (the nuisance parameter denoted "g" in
+#'  the literature on targeted minimum loss-based estimation).
 #' @param Q_lib (char vector) - library of learning algorithms to be used in
-#'  fitting the outcome regression (the nuisance parameter denoted "Q" in the
-#'  literature on targeted minimum loss-based estimation).
+#'  fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
+#'  "Q" in the literature on targeted minimum loss-based estimation).
+#' @param ... Additional arguments to be passed directly to \code{tmle::tmle} in
+#'  fitting the targeted minimum loss-based estimator of the average treatment
+#'  effect. Consult the documentation of that function for details.
 #'
 #' @importFrom SummarizedExperiment assay colData rowData SummarizedExperiment
 #' @importFrom BiocParallel register bplapply bpprogressbar DoparParam
@@ -85,7 +88,7 @@ utils::globalVariables(c("assay<-"))
 #'                                   parallel = FALSE,
 #'                                   family = "gaussian",
 #'                                   g_lib = c("SL.mean", "SL.glm"),
-#'                                   Q_lib = "SL.mean"
+#'                                   Q_lib = "SL.glm"
 #'                                  )
 #
 biomarkertmle <- function(se,
@@ -98,13 +101,12 @@ biomarkertmle <- function(se,
                           family = "gaussian",
                           subj_ids = NULL,
                           g_lib = c(
-                            "SL.glm", "SL.randomForest", "SL.nnet",
-                            "SL.polymars", "SL.mean"
+                            "SL.mean", "SL.glm", "SL.earth"
                           ),
                           Q_lib = c(
-                            "SL.glm", "SL.randomForest", "SL.nnet",
-                            "SL.mean"
-                          )) {
+                            "SL.mean", "SL.glm", "SL.earth", "SL.ranger"
+                          ),
+                          ...) {
 
   # ============================================================================
   # catch input and return in output object for user convenience
@@ -203,7 +205,8 @@ biomarkertmle <- function(se,
     g_lib = g_lib,
     Q_lib = Q_lib,
     family = family,
-    subj_ids = subj_ids
+    subj_ids = subj_ids,
+    ...
   )
   biomarkerTMLEout <- do.call(cbind.data.frame, biomarkerTMLEout)
 
