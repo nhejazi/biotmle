@@ -29,7 +29,6 @@ r_packages:
   - BiocManager
 
 r_github_packages:
-  - r-lib/devtools
   - r-lib/sessioninfo
   - jimhester/covr
   - nhejazi/biotmleData
