@@ -74,23 +74,24 @@ utils::globalVariables(c("assay<-"))
 #' library(biotmleData)
 #' data(illuminaData)
 #' library(SummarizedExperiment)
-#' "%ni%" = Negate("%in%")
+#' "%ni%" <- Negate("%in%")
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
-#'      data.frame %>%
-#'      dplyr::mutate(age = as.numeric(age > median(age))) %>%
-#'      DataFrame
+#'   data.frame() %>%
+#'   dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'   DataFrame()
 #'
 #' varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
 #'
-#' biomarkerTMLEout <- biomarkertmle(se = illuminaData[1:2, ],
-#'                                   varInt = varInt_index,
-#'                                   parallel = FALSE,
-#'                                   family = "gaussian",
-#'                                   g_lib = c("SL.mean", "SL.glm"),
-#'                                   Q_lib = "SL.glm"
-#'                                  )
-#
+#' biomarkerTMLEout <- biomarkertmle(
+#'   se = illuminaData[1:2, ],
+#'   varInt = varInt_index,
+#'   parallel = FALSE,
+#'   family = "gaussian",
+#'   g_lib = c("SL.mean", "SL.glm"),
+#'   Q_lib = "SL.glm"
+#' )
+#' #
 biomarkertmle <- function(se,
                           varInt,
                           normalized = TRUE,

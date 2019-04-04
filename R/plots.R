@@ -28,7 +28,7 @@
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
 #' plot(x = limmaTMLEout, type = "pvals_adj")
-#
+#' #
 plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
   if (type == "pvals_raw") {
     p <- ggplot2::ggplot(x@topTable, ggplot2::aes(P.Value)) +
@@ -98,7 +98,7 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
 #' volcano_ic(biotmle = limmaTMLEout)
-#
+#' #
 volcano_ic <- function(biotmle, fc_bound = 3.0, pval_bound = 0.2) {
   stopifnot(class(biotmle) == "bioTMLE")
 
@@ -170,9 +170,9 @@ utils::globalVariables(c(
 #' data(biomarkertmleOut)
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
-#'      data.frame %>%
-#'      dplyr::mutate(age = as.numeric(age > median(age))) %>%
-#'      DataFrame
+#'   data.frame() %>%
+#'   dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'   DataFrame()
 #'
 #' varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
 #' designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
@@ -181,7 +181,7 @@ utils::globalVariables(c(
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
 #' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 15)
-#
+#' #
 heatmap_ic <- function(x, ..., design, FDRcutoff = 0.05,
                        type = c("top", "all"), top = 25) {
   stopifnot(class(x) == "bioTMLE")

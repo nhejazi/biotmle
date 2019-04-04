@@ -1,6 +1,6 @@
 Package: biotmle
 Title: Targeted Learning with Moderated Statistics for Biomarker Discovery
-Version: 1.7.2
+Version: 1.7.3
 Authors@R: c(
     person("Nima", "Hejazi", email = "nh@nimahejazi.org",
            role = c("aut", "cre", "cph"),
@@ -8,15 +8,16 @@ Authors@R: c(
     person("Alan", "Hubbard", email = "hubbard@berkeley.edu",
            role = c("aut", "ths"),
            comment = c(ORCID = "0000-0002-3769-0127")),
-  person("Mark", "van der Laan", email = "laan@stat.berkeley.edu",
-         role = c("ctb", "ths"),
-         comment = c(ORCID = "0000-0003-1432-5511")),
+    person("Mark", "van der Laan", email = "laan@stat.berkeley.edu",
+           role = c("ctb", "ths"),
+           comment = c(ORCID = "0000-0003-1432-5511")),
     person("Weixin", "Cai", email = "wcai@berkeley.edu",
            role = "ctb",
            comment = c(ORCID = "0000-0003-2680-3066"))
     )
 Maintainer: Nima Hejazi <nhejazi@berkeley.edu>
-Author: Nima Hejazi [aut, cre, cph], Alan Hubbard [aut, ths], Weixin Cai [ctb]
+Author: Nima Hejazi [aut, cre, cph], Alan Hubbard [aut, ths], Mark van der
+    Laan [ctb, ths], Weixin Cai [ctb]
 Description: This package facilitates the discovery of biomarkers from
     biological sequencing data (e.g., microarrays, RNA-seq) based on the
     associations of potential biomarkers with exposure and outcome variables by
