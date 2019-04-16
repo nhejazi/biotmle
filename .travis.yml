@@ -20,8 +20,7 @@ r:
   - bioc-devel
 
 before_install:
-  - Rscript -e 'source("https://bioconductor.org/biocLite.R"); biocLite()'
-  #- Rscript -e 'update.packages(ask = FALSE)'
+  - Rscript -e 'update.packages(ask = FALSE)'
 
 r_packages:
   - devtools
@@ -29,8 +28,8 @@ r_packages:
   - BiocManager
 
 r_github_packages:
+  - r-lib/covr
   - r-lib/sessioninfo
-  - jimhester/covr
   - nhejazi/biotmleData
 
 bioc_packages:
@@ -42,7 +41,7 @@ bioc_packages:
   - limma
 
 after_success:
-  ## coverage
+  # coverage
   - travis_wait 60 Rscript -e "covr::codecov(line_exclusions = list('R/plots.R'))"
   - R CMD BiocCheck .
 
@@ -53,4 +52,3 @@ notifications:
   email:
     on_success: change
     on_failure: change
-

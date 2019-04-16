@@ -43,9 +43,9 @@ data(illuminaData)
 data(biomarkertmleOut)
 
 colData(illuminaData) <- colData(illuminaData) \%>\%
-     data.frame \%>\%
-     dplyr::mutate(age = as.numeric(age > median(age))) \%>\%
-     DataFrame
+  data.frame() \%>\%
+  dplyr::mutate(age = as.numeric(age > median(age))) \%>\%
+  DataFrame()
 
 varInt_index <- which(names(colData(illuminaData)) \%in\% "benzene")
 designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
@@ -54,4 +54,5 @@ design <- as.numeric(designVar == max(designVar))
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
 heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 15)
+#
 }

@@ -141,7 +141,7 @@ After using the `biotmle` R package, please cite both of the following:
       author = {Hejazi, Nima S and {Kherad-Pajouh}, Sara and {van der
         Laan}, Mark J and Hubbard, Alan E},
       title = {Supervised variance moderation of locally efficient
-        estimators in high-dimensional biology}
+        estimators, with applications in in high-dimensional biology}
     }
 ```
 
@@ -167,7 +167,7 @@ ES021369-05](https://projectreporter.nih.gov/project_info_description.cfm?aid=92
 
 ## License
 
-© 2016-2018 [Nima S. Hejazi](https://nimahejazi.org)
+© 2016-2019 [Nima S. Hejazi](https://nimahejazi.org)
 
 The contents of this repository are distributed under the MIT license.
 See file `LICENSE` for details.

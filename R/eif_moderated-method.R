@@ -25,7 +25,7 @@
 #' data(biomarkertmleOut)
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
-#
+#' #
 modtest_ic <- function(biotmle,
                        adjust = "BH",
                        ...) {
