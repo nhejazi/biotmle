@@ -29,7 +29,7 @@ environment:
 
 build_script:
   - travis-tool.sh install_deps
-  - travis-tool.sh install_github jimhester/covr
+  - travis-tool.sh install_github r-lib/covr
   - travis-tool.sh install_github nhejazi/biotmleData
   - travis-tool.sh install_bioc BiocCheck
   - travis-tool.sh install_bioc BiocStyle
@@ -77,4 +77,3 @@ notifications:
    on_build_success: true
    on_build_failure: true
    on_build_status_changed: true
-
