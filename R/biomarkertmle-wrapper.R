@@ -51,6 +51,12 @@ utils::globalVariables(c("assay<-"))
 #' @param Q_lib (char vector) - library of learning algorithms to be used in
 #'  fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
 #'  "Q" in the literature on targeted minimum loss-based estimation).
+#' @param ci_type The type of confidence interval to be constructed. By default,
+#'  confidence intervals are generated based on the normal approximation but
+#'  more conservative inference is attainable (and preferable under deviations
+#'  from normality) based on concentration inequalities (e.g., the procedures of
+#'  Hoeffding, Bernstein, or Bennett) or alternative reference distributions
+#'  (e.g., logistic).
 #' @param ... Additional arguments to be passed directly to \code{tmle::tmle} in
 #'  fitting the targeted minimum loss-based estimator of the average treatment
 #'  effect. Consult the documentation of that function for details.
@@ -107,12 +113,15 @@ biomarkertmle <- function(se,
                           Q_lib = c(
                             "SL.mean", "SL.glm", "SL.earth", "SL.ranger"
                           ),
+                          ci_type = c("normal", "logistic", "bernstein",
+                                      "bennett", "hoeffding"),
                           ...) {
 
   # ============================================================================
   # catch input and return in output object for user convenience
   # ============================================================================
   call <- match.call(expand.dots = TRUE)
+  ci_type <- match.arg(ci_type)
 
   # ============================================================================
   # invoke S4 class constructor for "bioTMLE" object
@@ -207,6 +216,7 @@ biomarkertmle <- function(se,
     Q_lib = Q_lib,
     family = family,
     subj_ids = subj_ids,
+    ci_type = ci_type,
     ...
   )
   biomarkerTMLEout <- do.call(cbind.data.frame, biomarkerTMLEout)

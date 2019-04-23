@@ -50,13 +50,16 @@ standard error estimates (derived directly from the relevant efficient influence
 function) and allowing such estimators to be employed in smaller sample sizes,
 such as those common in computational biology and bioinformatics applications.
 The resultant procedure, _supervised variance moderation_, allows for the
-construction of a conservative hypothesis test of a statistically estimable
-target parameter that controls the standard error in a manner that reduces the
-false discovery rate or the family-wise error rate [@hejazi2018+supervised].
-Utilities are also provided for performing clustering through _supervised
-distance matrices_, using the EIF-based estimates to draw out the underlying
-contributions of individual biomarkers to the target parameter of interest
-[@pollard2008supervised].
+construction of a conservative hypothesis test of a statistical target parameter
+that stabilizes standard error in a manner that reduces the false discovery rate
+or the family-wise error rate [@hejazi2018+supervised]. Improvements upon prior
+TML-based approaches to biomarker discovery (e.g., @bembom2009biomarker) include
+the use of concentration inequality tail bounds to provide robust inference even
+when the finite-sample distribution of the estimator deviates from normality
+[@rosenblum2009confidence]. Utilities are also provided for performing
+clustering through _supervised distance matrices_, using the EIF-based estimates
+to draw out the underlying contributions of individual biomarkers to the target
+parameter of interest [@pollard2008supervised].
 
 ---
 

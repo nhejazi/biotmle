@@ -128,7 +128,8 @@ treatment, using Targeted Minimum Loss-Based Estimation.</p>
   <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bppar_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>future_param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>, <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"SL.mean"</span>,
   <span class='st'>"SL.glm"</span>, <span class='st'>"SL.earth"</span>), <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>, <span class='st'>"SL.earth"</span>,
-  <span class='st'>"SL.ranger"</span>), <span class='no'>...</span>)</pre>
+  <span class='st'>"SL.ranger"</span>), <span class='kw'>ci_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"normal"</span>, <span class='st'>"logistic"</span>, <span class='st'>"bernstein"</span>, <span class='st'>"bennett"</span>,
+  <span class='st'>"hoeffding"</span>), <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,6 +210,15 @@ the literature on targeted minimum loss-based estimation).</p></td>
       <td><p>(char vector) - library of learning algorithms to be used in
 fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
 "Q" in the literature on targeted minimum loss-based estimation).</p></td>
+    </tr>
+    <tr>
+      <th>ci_type</th>
+      <td><p>The type of confidence interval to be constructed. By default,
+confidence intervals are generated based on the normal approximation but
+more conservative inference is attainable (and preferable under deviations
+from normality) based on concentration inequalities (e.g., the procedures of
+Hoeffding, Bernstein, or Bennett) or alternative reference distributions
+(e.g., logistic).</p></td>
     </tr>
     <tr>
       <th>...</th>

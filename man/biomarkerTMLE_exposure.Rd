@@ -5,7 +5,8 @@
 \title{TMLE procedure using ATE for Biomarker Identication from Exposure}
 \usage{
 biomarkerTMLE_exposure(Y, W, A, a, subj_ids = NULL,
-  family = "gaussian", g_lib, Q_lib, ...)
+  family = "gaussian", g_lib, Q_lib, ci_type = c("normal", "logistic",
+  "bernstein", "bennett", "hoeffding"), ...)
 }
 \arguments{
 \item{Y}{A \code{numeric} vector of expression values for a single biomarker.}
@@ -36,6 +37,13 @@ the literature on targeted minimum loss-based estimation).}
 \item{Q_lib}{(char vector) - library of learning algorithms to be used in
 fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
 "Q" in the literature on targeted minimum loss-based estimation).}
+
+\item{ci_type}{The type of confidence interval to be constructed. By default,
+confidence intervals are generated based on the normal approximation but
+more conservative inference is attainable (and preferable under deviations
+from normality) based on concentration inequalities (e.g., the procedures of
+Hoeffding, Bernstein, or Bennett) or alternative reference distributions
+(e.g., logistic).}
 
 \item{...}{Additional arguments to be passed directly to \code{tmle::tmle} in
 fitting the targeted minimum loss-based estimator of the average treatment

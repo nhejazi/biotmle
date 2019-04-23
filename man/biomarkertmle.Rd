@@ -8,7 +8,8 @@ biomarkertmle(se, varInt, normalized = TRUE, ngscounts = FALSE,
   parallel = TRUE, bppar_type = NULL, future_param = NULL,
   family = "gaussian", subj_ids = NULL, g_lib = c("SL.mean",
   "SL.glm", "SL.earth"), Q_lib = c("SL.mean", "SL.glm", "SL.earth",
-  "SL.ranger"), ...)
+  "SL.ranger"), ci_type = c("normal", "logistic", "bernstein", "bennett",
+  "hoeffding"), ...)
 }
 \arguments{
 \item{se}{(SummarizedExperiment) - containing expression or next-generation
@@ -65,6 +66,13 @@ the literature on targeted minimum loss-based estimation).}
 \item{Q_lib}{(char vector) - library of learning algorithms to be used in
 fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
 "Q" in the literature on targeted minimum loss-based estimation).}
+
+\item{ci_type}{The type of confidence interval to be constructed. By default,
+confidence intervals are generated based on the normal approximation but
+more conservative inference is attainable (and preferable under deviations
+from normality) based on concentration inequalities (e.g., the procedures of
+Hoeffding, Bernstein, or Bennett) or alternative reference distributions
+(e.g., logistic).}
 
 \item{...}{Additional arguments to be passed directly to \code{tmle::tmle} in
 fitting the targeted minimum loss-based estimator of the average treatment

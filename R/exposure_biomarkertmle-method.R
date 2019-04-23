@@ -25,6 +25,12 @@
 #' @param Q_lib (char vector) - library of learning algorithms to be used in
 #'  fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
 #'  "Q" in the literature on targeted minimum loss-based estimation).
+#' @param ci_type The type of confidence interval to be constructed. By default,
+#'  confidence intervals are generated based on the normal approximation but
+#'  more conservative inference is attainable (and preferable under deviations
+#'  from normality) based on concentration inequalities (e.g., the procedures of
+#'  Hoeffding, Bernstein, or Bennett) or alternative reference distributions
+#'  (e.g., logistic).
 #' @param ... Additional arguments to be passed directly to \code{tmle::tmle} in
 #'  fitting the targeted minimum loss-based estimator of the average treatment
 #'  effect. Consult the documentation of that function for details.
@@ -44,6 +50,9 @@ biomarkerTMLE_exposure <- function(Y,
                                    family = "gaussian",
                                    g_lib,
                                    Q_lib,
+                                   ci_type = c("normal", "logistic",
+                                               "bernstein", "bennett",
+                                               "hoeffding"),
                                    ...) {
 
   # check the case that Y is passed in as a column of a data.frame
