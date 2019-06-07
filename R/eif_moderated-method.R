@@ -9,8 +9,14 @@
 #'  are generated from the moderated tests. The recommended (and default) method
 #'  is that of Benjamini and Hochberg. See \link[limma]{topTable} for a list of
 #'  appropriate methods.
+#' @param pval_type The reference distribution to be used for computing the
+#'  p-value. Those based on the normal approximation tend to provide misleading
+#'  inference when working with moderately sized (finite) samples. Use of the
+#'  logistic distribution has been found to empirically improve performance in
+#'  settings where multiple hypothesis testing is a concern.
 #' @param ... Other arguments to be passed directly to \code{limma::topTable}.
 #'
+#' @importFrom stats plogis
 #' @importFrom tibble as_tibble
 #' @importFrom limma lmFit eBayes topTable
 #'
@@ -25,17 +31,22 @@
 #' data(biomarkertmleOut)
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
-#' #
+#'
 modtest_ic <- function(biotmle,
                        adjust = "BH",
+                       pval_type = c("normal", "logistic"),
                        ...) {
+  # check for input type and set argument defaults
   stopifnot(class(biotmle) == "bioTMLE")
   biomarkerTMLEout <- as.data.frame(biotmle@tmleOut)
+  pval_type <- match.arg(pval_type)
 
+  # build design matrix for forcing limma to only perform shrinkage
   design <- rep(1, nrow(colData(biotmle)))
   fit <- limma::lmFit(object = biomarkerTMLEout, design = design)
   fit <- limma::eBayes(fit = fit)
 
+  # compute inference
   tt <- limma::topTable(
     fit = fit,
     coef = 1,
@@ -43,6 +54,15 @@ modtest_ic <- function(biotmle,
     adjust.method = adjust,
     ...
   )
+
+  # potentially alter confidence interval type
+  if (pval_type == "logistic") {
+    # get p-value based on logistic distribution reference
+    p_val <- 2 * stats::plogis(-abs(tt$t), location = 0, scale = sqrt(3) / pi)
+    tt$P.Value <- p_val
+  }
+
+  # clean up for output
   tt$ID <- rownames(tt)
   biotmle@topTable <- tibble::as_tibble(tt)
   return(biotmle)
