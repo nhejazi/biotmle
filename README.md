@@ -26,8 +26,9 @@ Status](http://joss.theoj.org/papers/02be843d9bab1b598187bfbb08ce3949/status.svg
 
 > Targeted Learning with Moderated Statistics for Biomarker Discovery
 
-**Authors:** [Nima Hejazi](https://nimahejazi.org) and [Alan
-Hubbard](https://hubbard.berkeley.edu)
+**Authors:** [Nima Hejazi](https://nimahejazi.org), [Alan
+Hubbard](https://hubbard.berkeley.edu), and [Mark van der
+Laan](https://vanderlaan-lab.org)
 
 -----
 
@@ -52,14 +53,14 @@ construction of a conservative hypothesis test of a statistical target
 parameter that stabilizes standard error in a manner that reduces the
 false discovery rate or the family-wise error rate (Hejazi et al.,
 n.d.). Improvements upon prior TML-based approaches to biomarker
-discovery (e.g., Bembom et al. (2009)) include the use of concentration
-inequality tail bounds to provide robust inference even when the
-finite-sample distribution of the estimator deviates from normality
-(Rosenblum and van der Laan 2009). Utilities are also provided for
-performing clustering through *supervised distance matrices*, using the
-EIF-based estimates to draw out the underlying contributions of
-individual biomarkers to the target parameter of interest (Pollard and
-van der Laan 2008).
+discovery (e.g., Bembom et al. (2009)) include the use of reference
+distributions inspired by concentration inequality tail bounds to
+provide robust inference even when the finite-sample distribution of the
+estimator deviates from normality (Rosenblum and van der Laan 2009).
+Utilities are also provided for performing clustering through
+*supervised distance matrices*, using the EIF-based estimates to draw
+out underlying contributions of biomarkers to the target parameter of
+interest (Pollard and van der Laan 2008).
 
 -----
 
@@ -139,13 +140,13 @@ After using the `biotmle` R package, please cite both of the following:
       url = {https://doi.org/10.21105/joss.00295}
     }
 
-    @article{hejazi2018+supervised,
+    @article{hejazi2019+supervised,
       url = {https://arxiv.org/abs/1710.05451},
-      year = {2018+},
+      year = {2019+},
       author = {Hejazi, Nima S and {Kherad-Pajouh}, Sara and {van der
         Laan}, Mark J and Hubbard, Alan E},
       title = {Supervised variance moderation of locally efficient
-        estimators, with applications in in high-dimensional biology}
+        estimators, with applications in high-dimensional biology}
     }
 ```
 
