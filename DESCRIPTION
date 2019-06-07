@@ -1,6 +1,6 @@
 Package: biotmle
 Title: Targeted Learning with Moderated Statistics for Biomarker Discovery
-Version: 1.7.3
+Version: 1.9.0
 Authors@R: c(
     person("Nima", "Hejazi", email = "nh@nimahejazi.org",
            role = c("aut", "cre", "cph"),
@@ -9,7 +9,7 @@ Authors@R: c(
            role = c("aut", "ths"),
            comment = c(ORCID = "0000-0002-3769-0127")),
     person("Mark", "van der Laan", email = "laan@stat.berkeley.edu",
-           role = c("ctb", "ths"),
+           role = c("aut", "ths"),
            comment = c(ORCID = "0000-0003-1432-5511")),
     person("Weixin", "Cai", email = "wcai@berkeley.edu",
            role = "ctb",
@@ -53,6 +53,9 @@ Suggests:
     knitr,
     rmarkdown,
     BiocStyle,
+    earth,
+    glmnet,
+    randomForest,
     SuperLearner,
     Matrix,
     DBI,

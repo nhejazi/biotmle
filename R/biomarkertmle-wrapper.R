@@ -102,10 +102,10 @@ biomarkertmle <- function(se,
                           family = "gaussian",
                           subj_ids = NULL,
                           g_lib = c(
-                            "SL.mean", "SL.glm", "SL.earth"
+                            "SL.mean", "SL.glm", "SL.glmnet", "SL.earth"
                           ),
                           Q_lib = c(
-                            "SL.mean", "SL.glm", "SL.earth", "SL.ranger"
+                            "SL.mean", "SL.glm", "SL.randomForest"
                           ),
                           ...) {
 

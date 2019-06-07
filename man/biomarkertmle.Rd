@@ -7,8 +7,8 @@
 biomarkertmle(se, varInt, normalized = TRUE, ngscounts = FALSE,
   parallel = TRUE, bppar_type = NULL, future_param = NULL,
   family = "gaussian", subj_ids = NULL, g_lib = c("SL.mean",
-  "SL.glm", "SL.earth"), Q_lib = c("SL.mean", "SL.glm", "SL.earth",
-  "SL.ranger"), ...)
+  "SL.glm", "SL.glmnet", "SL.earth"), Q_lib = c("SL.mean", "SL.glm",
+  "SL.randomForest"), ...)
 }
 \arguments{
 \item{se}{(SummarizedExperiment) - containing expression or next-generation
