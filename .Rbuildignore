@@ -12,5 +12,4 @@
 ^README\.Rmd$
 ^README\.html$
 ^README-.*\.png$
-^README-refs\.bib$
 
