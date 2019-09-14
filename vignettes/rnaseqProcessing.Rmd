@@ -4,7 +4,7 @@ author: "[Nima Hejazi](https://nimahejazi.org)"
 date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document
-bibliography: vignette-refs.bib
+bibliography: ../inst/REFERENCES.bib
 vignette: >
   %\VignetteIndexEntry{Processing and Analyzing RNA-Seq Data}
   %\VignetteEngine{knitr::rmarkdown}
