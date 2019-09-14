@@ -26,9 +26,9 @@ Status](http://joss.theoj.org/papers/02be843d9bab1b598187bfbb08ce3949/status.svg
 
 > Targeted Learning with Moderated Statistics for Biomarker Discovery
 
-**Authors:** [Nima Hejazi](https://nimahejazi.org), [Alan
-Hubbard](https://hubbard.berkeley.edu), and [Mark van der
-Laan](https://vanderlaan-lab.org)
+**Authors:** [Nima Hejazi](https://nimahejazi.org), [Mark van der
+Laan](https://vanderlaan-lab.org), and [Alan
+Hubbard](https://hubbard.berkeley.edu)
 
 -----
 
@@ -140,13 +140,13 @@ After using the `biotmle` R package, please cite both of the following:
       url = {https://doi.org/10.21105/joss.00295}
     }
 
-    @article{hejazi2019+supervised,
+    @article{hejazi2019+generalization,
       url = {https://arxiv.org/abs/1710.05451},
       year = {2019+},
-      author = {Hejazi, Nima S and {Kherad-Pajouh}, Sara and {van der
-        Laan}, Mark J and Hubbard, Alan E},
-      title = {Supervised variance moderation of locally efficient
-        estimators, with applications in high-dimensional biology}
+      author = {Hejazi, Nima S and {van der Laan}, Mark J and Smith, Martyn
+        T and Hubbard, Alan E},
+      title = {A generalization of moderated statistics to data adaptive
+        semiparametric estimation in high-dimensional biology}
     }
 ```
 
@@ -193,11 +193,11 @@ Medicine* 28 (1). Wiley Online Library: 152–72.
 
 </div>
 
-<div id="ref-hejazi2018+supervised">
+<div id="ref-hejazi2019+generalization">
 
-Hejazi, Nima S, Sara Kherad-Pajouh, Mark J van der Laan, and Alan E
-Hubbard. n.d. “Supervised Variance Moderation of Locally Efficient
-Estimators in High-Dimensional Biology.”
+Hejazi, Nima S, Mark J van der Laan, Martyn T Smith, and Alan E Hubbard.
+n.d. “A Generalization of Moderated Statistics to Data Adaptive
+Semiparametric Estimation in High-Dimensional Biology.”
 <https://arxiv.org/abs/1710.05451>.
 
 </div>

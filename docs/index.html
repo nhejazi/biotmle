@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>biotmle • biotmle</title>
+<title>Targeted Learning with Moderated Statistics for Biomarker Discovery • biotmle</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="biotmle">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script><meta property="og:title" content="Targeted Learning with Moderated Statistics for Biomarker Discovery">
 <meta property="og:description" content="This package facilitates the discovery of biomarkers from
     biological sequencing data (e.g., microarrays, RNA-seq) based on the
     associations of potential biomarkers with exposure and outcome variables by
@@ -25,7 +25,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-article">
+    <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">biotmle</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.7.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.9.0</span>
       </span>
     </div>
 
@@ -77,13 +77,9 @@
 <!--/.navbar -->
 
       
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    
 
-    
-    
-<!-- README.md is generated from README.Rmd. Please edit that file -->
+      </header><div class="row">
+  <div class="contents col-md-9">
 <div id="rbiotmle" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#rbiotmle" class="anchor"></a>R/<code>biotmle</code>
@@ -92,12 +88,12 @@
 <blockquote>
 <p>Targeted Learning with Moderated Statistics for Biomarker Discovery</p>
 </blockquote>
-<p><strong>Authors:</strong> <a href="https://nimahejazi.org">Nima Hejazi</a>, <a href="https://hubbard.berkeley.edu">Alan Hubbard</a>, and <a href="https://vanderlaan-lab.org">Mark van der Laan</a></p>
+<p><strong>Authors:</strong> <a href="https://nimahejazi.org">Nima Hejazi</a>, <a href="https://vanderlaan-lab.org">Mark van der Laan</a>, and <a href="https://hubbard.berkeley.edu">Alan Hubbard</a></p>
 <hr>
 <div id="whats-biotmle" class="section level2">
 <h2 class="hasAnchor">
 <a href="#whats-biotmle" class="anchor"></a>What’s <code>biotmle</code>?</h2>
-<p>The <code>biotmle</code> R package facilitates biomarker discovery through a generalization of the moderated t-statistic <span class="citation">(Smyth 2004)</span> that extends the procedure to locally efficient estimators of asymptotically linear target parameters <span class="citation">(Tsiatis 2007)</span>. The set of methods implemented modify targeted maximum likelihood (TML) estimators of statistical (or causal) target parameters (e.g., average treatment effect) to apply variance moderation to the efficient influence function (EIF) representation of the target parameter <span class="citation">(van der Laan and Rose 2011, 2018)</span>. The influence function-based representation of the data are then subjected to a moderated hypothesis test of the statistical estimate of the target parameter, effectively stabilizing the standard error estimates (derived directly from the relevant efficient influence function) and allowing such estimators to be employed in smaller sample sizes, such as those common in computational biology and bioinformatics applications. The resultant procedure, <em>supervised variance moderation</em>, allows for the construction of a conservative hypothesis test of a statistical target parameter that stabilizes standard error in a manner that reduces the false discovery rate or the family-wise error rate <span class="citation">(Hejazi et al., n.d.)</span>. Improvements upon prior TML-based approaches to biomarker discovery (e.g., <span class="citation">Bembom et al. (2009)</span>) include the use of reference distributions inspired by concentration inequality tail bounds to provide robust inference even when the finite-sample distribution of the estimator deviates from normality <span class="citation">(Rosenblum and van der Laan 2009)</span>. Utilities are also provided for performing clustering through <em>supervised distance matrices</em>, using the EIF-based estimates to draw out underlying contributions of biomarkers to the target parameter of interest <span class="citation">(Pollard and van der Laan 2008)</span>.</p>
+<p>The <code>biotmle</code> R package facilitates biomarker discovery through a generalization of the moderated t-statistic (Smyth 2004) that extends the procedure to locally efficient estimators of asymptotically linear target parameters (Tsiatis 2007). The set of methods implemented modify targeted maximum likelihood (TML) estimators of statistical (or causal) target parameters (e.g., average treatment effect) to apply variance moderation to the efficient influence function (EIF) representation of the target parameter (van der Laan and Rose 2011, 2018). The influence function-based representation of the data are then subjected to a moderated hypothesis test of the statistical estimate of the target parameter, effectively stabilizing the standard error estimates (derived directly from the relevant efficient influence function) and allowing such estimators to be employed in smaller sample sizes, such as those common in computational biology and bioinformatics applications. The resultant procedure, <em>supervised variance moderation</em>, allows for the construction of a conservative hypothesis test of a statistical target parameter that stabilizes standard error in a manner that reduces the false discovery rate or the family-wise error rate (Hejazi et al., n.d.). Improvements upon prior TML-based approaches to biomarker discovery (e.g., Bembom et al. (2009)) include the use of reference distributions inspired by concentration inequality tail bounds to provide robust inference even when the finite-sample distribution of the estimator deviates from normality (Rosenblum and van der Laan 2009). Utilities are also provided for performing clustering through <em>supervised distance matrices</em>, using the EIF-based estimates to draw out underlying contributions of biomarkers to the target parameter of interest (Pollard and van der Laan 2008).</p>
 <hr>
 </div>
 <div id="installation" class="section level2">
@@ -149,13 +145,13 @@
       url = {https://doi.org/10.21105/joss.00295}
     }
 
-    @article{hejazi2019+supervised,
+    @article{hejazi2019+generalization,
       url = {https://arxiv.org/abs/1710.05451},
       year = {2019+},
-      author = {Hejazi, Nima S and {Kherad-Pajouh}, Sara and {van der
-        Laan}, Mark J and Hubbard, Alan E},
-      title = {Supervised variance moderation of locally efficient
-        estimators, with applications in high-dimensional biology}
+      author = {Hejazi, Nima S and {van der Laan}, Mark J and Smith, Martyn
+        T and Hubbard, Alan E},
+      title = {A generalization of moderated statistics to data adaptive
+        semiparametric estimation in high-dimensional biology}
     }</code></pre>
 <hr>
 </div>
@@ -181,34 +177,81 @@
 <p>The contents of this repository are distributed under the MIT license. See file <code>LICENSE</code> for details.</p>
 <hr>
 </div>
-<div id="references" class="section level2 unnumbered">
+<div id="references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
 <div id="refs" class="references">
+
 <div id="ref-bembom2009biomarker">
-<p>Bembom, Oliver, Maya L Petersen, Soo-Yon Rhee, W Jeffrey Fessel, Sandra E Sinisi, Robert W Shafer, and Mark J van der Laan. 2009. “Biomarker Discovery Using Targeted Maximum-Likelihood Estimation: Application to the Treatment of Antiretroviral-Resistant Hiv Infection.” <em>Statistics in Medicine</em> 28 (1). Wiley Online Library: 152–72.</p>
+
+Bembom, Oliver, Maya L Petersen, Soo-Yon Rhee, W Jeffrey Fessel, Sandra
+E Sinisi, Robert W Shafer, and Mark J van der Laan. 2009. “Biomarker
+Discovery Using Targeted Maximum-Likelihood Estimation: Application to
+the Treatment of Antiretroviral-Resistant Hiv Infection.” *Statistics in
+Medicine* 28 (1). Wiley Online Library: 152–72.
+
 </div>
-<div id="ref-hejazi2018+supervised">
-<p>Hejazi, Nima S, Sara Kherad-Pajouh, Mark J van der Laan, and Alan E Hubbard. n.d. “Supervised Variance Moderation of Locally Efficient Estimators in High-Dimensional Biology.” <a href="https://arxiv.org/abs/1710.05451" class="uri">https://arxiv.org/abs/1710.05451</a>.</p>
+
+<div id="ref-hejazi2019+generalization">
+
+Hejazi, Nima S, Mark J van der Laan, Martyn T Smith, and Alan E Hubbard.
+n.d. “A Generalization of Moderated Statistics to Data Adaptive
+Semiparametric Estimation in High-Dimensional Biology.”
+<https:>.
+
+</https:>
 </div>
+
 <div id="ref-pollard2008supervised">
-<p>Pollard, Katherine S, and Mark J van der Laan. 2008. “Supervised Distance Matrices.” <em>Statistical Applications in Genetics and Molecular Biology</em> 7 (1). De Gruyter.</p>
+
+Pollard, Katherine S, and Mark J van der Laan. 2008. “Supervised
+Distance Matrices.” *Statistical Applications in Genetics and Molecular
+Biology* 7 (1). De Gruyter.
+
 </div>
+
 <div id="ref-rosenblum2009confidence">
-<p>Rosenblum, Michael A, and Mark J van der Laan. 2009. “Confidence Intervals for the Population Mean Tailored to Small Sample Sizes, with Applications to Survey Sampling.” <em>The International Journal of Biostatistics</em> 5 (1). De Gruyter.</p>
+
+Rosenblum, Michael A, and Mark J van der Laan. 2009. “Confidence
+Intervals for the Population Mean Tailored to Small Sample Sizes, with
+Applications to Survey Sampling.” *The International Journal of
+Biostatistics* 5 (1). De Gruyter.
+
 </div>
+
 <div id="ref-smyth2004linear">
-<p>Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for Assessing Differential Expression in Microarray Experiments.” <em>Statistical Applications in Genetics and Molecular Biology</em> 3 (1). Walter de Gruyter: 1–25. <a href="https://doi.org/10.2202/1544-6115.1027" class="uri">https://doi.org/10.2202/1544-6115.1027</a>.</p>
+
+Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for
+Assessing Differential Expression in Microarray Experiments.”
+*Statistical Applications in Genetics and Molecular Biology* 3 (1).
+Walter de Gruyter: 1–25. <https:>.
+
+</https:>
 </div>
+
 <div id="ref-tsiatis2007semiparametric">
-<p>Tsiatis, Anastasios. 2007. <em>Semiparametric Theory and Missing Data</em>. Springer Science &amp; Business Media.</p>
+
+Tsiatis, Anastasios. 2007. *Semiparametric Theory and Missing Data*.
+Springer Science &amp; Business Media.
+
 </div>
+
 <div id="ref-vdl2011targeted">
-<p>van der Laan, Mark J., and Sherri Rose. 2011. <em>Targeted Learning: Causal Inference for Observational and Experimental Data</em>. Springer Science &amp; Business Media.</p>
+
+van der Laan, Mark J., and Sherri Rose. 2011. *Targeted Learning: Causal
+Inference for Observational and Experimental Data*. Springer Science &amp;
+Business Media.
+
 </div>
+
 <div id="ref-vdl2018targeted">
-<p>van der Laan, Mark J, and Sherri Rose. 2018. <em>Targeted Learning in Data Science: Causal Inference for Complex Longitudinal Studies</em>. Springer Science &amp; Business Media.</p>
+
+van der Laan, Mark J, and Sherri Rose. 2018. *Targeted Learning in Data
+Science: Causal Inference for Complex Longitudinal Studies*. Springer
+Science &amp; Business Media.
+
 </div>
+
 </div>
 </div>
 </div>
@@ -231,6 +274,12 @@
 </li>
 </ul>
 </div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
+</ul>
+</div>
 <div class="citation">
 <h2>Citation</h2>
 <ul class="list-unstyled">
@@ -240,14 +289,14 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Nima Hejazi <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-7127-2789" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
-<li>Alan Hubbard <br><small class="roles"> Author, thesis advisor </small> <a href="https://orcid.org/0000-0002-3769-0127" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
-<li>Mark van der Laan <br><small class="roles"> Author, thesis advisor </small> <a href="https://orcid.org/0000-0003-1432-5511" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID" height="16"></a> </li>
+<li>Nima Hejazi <br><small class="roles"> Author, maintainer, copyright holder </small> <a href="https://orcid.org/0000-0002-7127-2789" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<li>Alan Hubbard <br><small class="roles"> Author, thesis advisor </small> <a href="https://orcid.org/0000-0002-3769-0127" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
+<li>Mark van der Laan <br><small class="roles"> Author, thesis advisor </small> <a href="https://orcid.org/0000-0003-1432-5511" target="orcid.widget"><img src="https://members.orcid.org/sites/default/files/vector_iD_icon.svg" class="orcid" alt="ORCID"></a> </li>
 <li><a href="authors.html">All authors...</a></li>
 </ul>
 </div>
 
-      <div class="dev-status">
+  <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
 <li><a href="https://travis-ci.org/nhejazi/biotmle"><img src="https://travis-ci.org/nhejazi/biotmle.svg?branch=master" alt="Travis-CI Build Status"></a></li>
@@ -263,7 +312,6 @@
 </ul>
 </div>
 </div>
-
 </div>
 
 
@@ -272,12 +320,14 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>
