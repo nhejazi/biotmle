@@ -58,10 +58,7 @@ for the corresponding moderated test statistics (e.g., logistic distribution),
 inspired by tail bounds based on concentration
 inequalities [@rosenblum2009confidence]; the latter prove critical for obtaining
 robust inference when the finite-sample distribution of the estimator deviates
-from normality . Utilities are also provided for performing clustering through
-_supervised distance matrices_, using the EIF-based estimates to draw out
-underlying contributions of biomarkers to the target parameter of interest
-[@pollard2008supervised].
+from normality.
 
 ---
 
@@ -90,7 +87,7 @@ available under branches with numbers prefixed by "RELEASE_". For example, to
 install the version of this package available via Bioconductor 3.6, use
 
 ```{r gh-develop-installation, eval = FALSE}
-devtools::install_github("nhejazi/biotmle", ref = "RELEASE_3_6")
+remotes::install_github("nhejazi/biotmle", ref = "RELEASE_3_6")
 ```
 
 ---

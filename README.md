@@ -56,11 +56,7 @@ conservative reference distributions for the corresponding moderated
 test statistics (e.g., logistic distribution), inspired by tail bounds
 based on concentration inequalities (Rosenblum and van der Laan 2009);
 the latter prove critical for obtaining robust inference when the
-finite-sample distribution of the estimator deviates from normality .
-Utilities are also provided for performing clustering through
-*supervised distance matrices*, using the EIF-based estimates to draw
-out underlying contributions of biomarkers to the target parameter of
-interest (Pollard and van der Laan 2008).
+finite-sample distribution of the estimator deviates from normality.
 
 -----
 
@@ -90,7 +86,7 @@ example, to install the version of this package available via
 Bioconductor 3.6, use
 
 ``` r
-devtools::install_github("nhejazi/biotmle", ref = "RELEASE_3_6")
+remotes::install_github("nhejazi/biotmle", ref = "RELEASE_3_6")
 ```
 
 -----
@@ -214,14 +210,6 @@ Hejazi, Nima S, Mark J van der Laan, Martyn T Smith, and Alan E Hubbard.
 n.d. “A Generalization of Moderated Statistics to Data Adaptive
 Semiparametric Estimation in High-Dimensional Biology.”
 <https://arxiv.org/abs/1710.05451>.
-
-</div>
-
-<div id="ref-pollard2008supervised">
-
-Pollard, Katherine S, and Mark J van der Laan. 2008. “Supervised
-Distance Matrices.” *Statistical Applications in Genetics and Molecular
-Biology* 7 (1). De Gruyter.
 
 </div>
 
