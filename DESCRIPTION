@@ -15,16 +15,13 @@ Authors@R: c(
            role = "ctb",
            comment = c(ORCID = "0000-0003-2680-3066"))
     )
-Maintainer: Nima Hejazi <nhejazi@berkeley.edu>
-Author: Nima Hejazi [aut, cre, cph], Alan Hubbard [aut, ths], Mark van der
-    Laan [ctb, ths], Weixin Cai [ctb]
 Description: This package facilitates the discovery of biomarkers from
     biological sequencing data (e.g., microarrays, RNA-seq) based on the
-    associations of potential biomarkers with exposure and outcome variables by
-    implementing an estimation procedure that combines a generalization of
-    moderated statistics with targeted minimum loss-based estimates (TMLE) of
-    causal parameters (e.g., Average Treatment Effect) whose estimators admit
-    asymptotically linear representations (in terms of influence functions).
+    associations of potential biomarkers with exposure variables by implementing
+    an inferential procedure that combines a generalization of moderated
+    statistics with targeted minimum loss estimates of the average treatment
+    effect whose estimator admits an asymptotically linear representations (in
+    terms of an efficient influence function).
 Depends: R (>= 3.4)
 License: file LICENSE
 URL: https://code.nimahejazi.org/biotmle

@@ -27,7 +27,7 @@ Status](http://joss.theoj.org/papers/02be843d9bab1b598187bfbb08ce3949/status.svg
 > Targeted Learning with Moderated Statistics for Biomarker Discovery
 
 **Authors:** [Nima Hejazi](https://nimahejazi.org), [Mark van der
-Laan](https://vanderlaan-lab.org), and [Alan
+Laan](https://vanderlaan-lab.org/about), and [Alan
 Hubbard](https://hubbard.berkeley.edu)
 
 -----
@@ -40,23 +40,23 @@ the procedure to locally efficient estimators of asymptotically linear
 target parameters (Tsiatis 2007). The set of methods implemented modify
 targeted maximum likelihood (TML) estimators of statistical (or causal)
 target parameters (e.g., average treatment effect) to apply variance
-moderation to the efficient influence function (EIF) representation of
-the target parameter (van der Laan and Rose 2011, 2018). The influence
-function-based representation of the data are then subjected to a
-moderated hypothesis test of the statistical estimate of the target
-parameter, effectively stabilizing the standard error estimates (derived
-directly from the relevant efficient influence function) and allowing
-such estimators to be employed in smaller sample sizes, such as those
-common in computational biology and bioinformatics applications. The
-resultant procedure, *supervised variance moderation*, allows for the
-construction of a conservative hypothesis test of a statistical target
-parameter that stabilizes standard error in a manner that reduces the
-false discovery rate or the family-wise error rate (Hejazi et al.,
-n.d.). Improvements upon prior TML-based approaches to biomarker
-discovery (e.g., Bembom et al. (2009)) include the use of reference
-distributions inspired by concentration inequality tail bounds to
-provide robust inference even when the finite-sample distribution of the
-estimator deviates from normality (Rosenblum and van der Laan 2009).
+moderation to the standard variance estimator based on the efficient
+influence function (EIF) of the target parameter (van der Laan and Rose
+2011, 2018). By performing a moderated hypothesis test that pools the
+individual probe-specific EIF-based variance estimates, a robust
+variance estimator is constructed, which stabilizes the standard error
+estimates and improves the performance of such estimators both in
+smaller samples and in settings where the EIF is poorly estimated. The
+resultant procedure allows for the construction of conservative
+hypothesis tests that reduce the false discovery rate and/or the
+family-wise error rate (Hejazi et al., n.d.). Improvements upon prior
+TML-based approaches to biomarker discovery (e.g., Bembom et al. (2009))
+include both the moderated variance estimator as well as the use of
+conservative reference distributions for the corresponding moderated
+test statistics (e.g., logistic distribution), inspired by tail bounds
+based on concentration inequalities (Rosenblum and van der Laan 2009);
+the latter prove critical for obtaining robust inference when the
+finite-sample distribution of the estimator deviates from normality .
 Utilities are also provided for performing clustering through
 *supervised distance matrices*, using the EIF-based estimates to draw
 out underlying contributions of biomarkers to the target parameter of
@@ -78,11 +78,10 @@ BiocManager::install("biotmle")
 ```
 
 To contribute, install the bleeding-edge *development version* from
-GitHub via
-[`devtools`](https://www.rstudio.com/products/rpackages/devtools/):
+GitHub via [`remotes`](https://CRAN.R-project.org/package=remotes):
 
 ``` r
-devtools::install_github("nhejazi/biotmle")
+remotes::install_github("nhejazi/biotmle")
 ```
 
 Current and prior [Bioconductor](https://bioconductor.org) releases are
@@ -140,13 +139,29 @@ After using the `biotmle` R package, please cite both of the following:
       url = {https://doi.org/10.21105/joss.00295}
     }
 
-    @article{hejazi2019+generalization,
-      url = {https://arxiv.org/abs/1710.05451},
-      year = {2019+},
+    @article{hejazi2019generalization,
       author = {Hejazi, Nima S and {van der Laan}, Mark J and Smith, Martyn
         T and Hubbard, Alan E},
       title = {A generalization of moderated statistics to data adaptive
-        semiparametric estimation in high-dimensional biology}
+        semiparametric estimation in high-dimensional biology},
+      journal={arxiv},
+      volume={},
+      number={},
+      pages={},
+      year = {2019},
+      publisher={},
+      doi = {},
+      url = {https://arxiv.org/abs/1710.05451}
+    }
+
+    @manual{hejazi2019biotmlebioc,
+      author = {Hejazi, Nima S and {van der Laan}, Mark J and Hubbard, Alan
+        E},
+      title = {{biotmle}: {Targeted Learning} with moderated statistics for
+        biomarker discovery},
+      doi = {10.18129/B9.bioc.biotmle},
+      url = {https://bioconductor.org/packages/biotmle},
+      note = {R package version 1.8.0}
     }
 ```
 

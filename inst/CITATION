@@ -1,21 +1,37 @@
-citHeader("Please cite the paper below for the 'biotmle' software package
-           itself. Please also make sure to cite the appropriate methodology
-           articles describing the statistical techniques being relied upon.")
+citHeader("Please cite the following works when using the 'biotmle' software
+           package, including both the software tool and the article describing
+           the statistical methodology.")
 
-citEntry(
-    entry        = "Article",
-    doi          = "10.21105/joss.00295",
-    url          = "https://doi.org/10.21105/joss.00295",
-    year         = "2017",
-    month        = "July",
-    publisher    = "The Open Journal",
-    volume       = "2",
-    number       = "15",
-    author       = "Nima S. Hejazi, Weixin Cai, Alan E. Hubbard",
-    title        = "biotmle: Targeted Learning for Biomarker Discovery",
-    journal      = "The Journal of Open Source Software",
-    textVersion  = paste("Hejazi, NS, Cai, W, and Hubbard, AE (2017).",
-                         "biotmle: Targeted Learning for Biomarker Discovery.",
-                         "The Journal of Open Source Software, 2(15).",
-                         "15")
-)
+year <- format(Sys.Date(), "%Y")
+note <- sprintf("R package version %s", meta$Version)
+
+bibentry(bibtype = "Manual",
+         title = "{biotmle}: Targeted Learning with moderated statistics for biomarker discovery",
+         author = c(person("Nima", "Hejazi", "S"),
+                    person("Mark", "van der Laan", "J"),
+                    person("Alan", "Hubbard", "E")),
+         year = year,
+         note = note,
+         doi = "10.18129/B9.bioc.biotmle",
+         url = "https://bioconductor.org/packages/biotmle")
+
+bibentry(bibtype = "Article",
+         journal = "The Journal of Open Source Software",
+         title = "biotmle: Targeted Learning for Biomarker Discovery",
+         author = c(person("Nima", "Hejazi", "S"),
+                    person("Weixin", "Cai"),
+                    person("Alan", "Hubbard", "E")),
+         year = "2017",
+         doi = "10.21105/joss.00295",
+         url = "https://doi.org/10.21105/joss.00295")
+
+bibentry(bibtype = "Article",
+         journal = "arxiv",
+         title = "A generalization of moderated statistics to data adaptive semiparametric estimation in high-dimensional biology",
+         author = c(person("Nima", "Hejazi", "S"),
+                    person("Mark", "van der Laan", "J"),
+                    person("Martyn", "Smith", "T"),
+                    person("Alan", "Hubbard", "E")),
+         year = "2019",
+         doi = "",
+         url = "https://arxiv.org/abs/1710.05451")
