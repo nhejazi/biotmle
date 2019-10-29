@@ -49,14 +49,16 @@ estimates and improves the performance of such estimators both in
 smaller samples and in settings where the EIF is poorly estimated. The
 resultant procedure allows for the construction of conservative
 hypothesis tests that reduce the false discovery rate and/or the
-family-wise error rate (Hejazi et al., n.d.). Improvements upon prior
-TML-based approaches to biomarker discovery (e.g., Bembom et al. (2009))
-include both the moderated variance estimator as well as the use of
-conservative reference distributions for the corresponding moderated
-test statistics (e.g., logistic distribution), inspired by tail bounds
-based on concentration inequalities (Rosenblum and van der Laan 2009);
-the latter prove critical for obtaining robust inference when the
-finite-sample distribution of the estimator deviates from normality.
+family-wise error rate
+(<span class="citeproc-not-found" data-reference-id="hejazi2019+generalization">**???**</span>).
+Improvements upon prior TML-based approaches to biomarker discovery
+(e.g., Bembom et al. (2009)) include both the moderated variance
+estimator as well as the use of conservative reference distributions for
+the corresponding moderated test statistics (e.g., logistic
+distribution), inspired by tail bounds based on concentration
+inequalities (Rosenblum and van der Laan 2009); the latter prove
+critical for obtaining robust inference when the finite-sample
+distribution of the estimator deviates from normality.
 
 -----
 
@@ -201,15 +203,6 @@ E Sinisi, Robert W Shafer, and Mark J van der Laan. 2009. “Biomarker
 Discovery Using Targeted Maximum-Likelihood Estimation: Application to
 the Treatment of Antiretroviral-Resistant Hiv Infection.” *Statistics in
 Medicine* 28 (1). Wiley Online Library: 152–72.
-
-</div>
-
-<div id="ref-hejazi2019+generalization">
-
-Hejazi, Nima S, Mark J van der Laan, Martyn T Smith, and Alan E Hubbard.
-n.d. “A Generalization of Moderated Statistics to Data Adaptive
-Semiparametric Estimation in High-Dimensional Biology.”
-<https://arxiv.org/abs/1710.05451>.
 
 </div>
 
