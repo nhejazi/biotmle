@@ -39,12 +39,12 @@ Imports:
     assertthat,
     future,
     doFuture,
+    tmle (>= 1.4.0.1),
     S4Vectors,
     BiocGenerics,
     BiocParallel,
     SummarizedExperiment,
-    limma,
-    tmle
+    limma
 Suggests:
     testthat,
     knitr,

@@ -4,8 +4,8 @@
 \alias{biomarkerTMLE_exposure}
 \title{TMLE procedure using ATE for Biomarker Identication from Exposure}
 \usage{
-biomarkerTMLE_exposure(Y, W, A, a, subj_ids = NULL,
-  family = "gaussian", g_lib, Q_lib, ...)
+biomarkerTMLE_exposure(Y, W, A, a, subj_ids = NULL, g_lib, Q_lib,
+  cv_folds = 5, ...)
 }
 \arguments{
 \item{Y}{A \code{numeric} vector of expression values for a single biomarker.}
@@ -20,26 +20,24 @@ design matrix whose effect on expression values is of interest.}
 which comparisons are to be made.}
 
 \item{subj_ids}{A \code{numeric} vector of subject IDs to be passed directly
-to \code{tmle::tmle} when there are repeated measures; measurements on the
-same subject should have the exact same numerical identifier. These values
-will be coerced to numeric if not provided in the appropriate form (e.g., as
-\code{character}). The call to \code{tmle::tmle} will utilized a corrected
-version of the variance estimate from the efficient influence function.}
+to \code{\link[tmle]{tmle}} when there are repeated measures; measurements
+on the same subject should have the exact same numerical identifier. The
+correction performed utilizes a more conservative estimator of the variance
+based on the efficient influence function.}
 
-\item{family}{(character) - specification of error family: "binomial" or
-"gaussian"}
+\item{g_lib}{A \code{character} vector identifying the library of learning
+algorithms to be used in fitting the propensity score P[A = 1 | W].}
 
-\item{g_lib}{(char vector) - library of learning algorithms to be used in
-fitting the propensity score E[A | W] (the nuisance parameter denoted "g" in
-the literature on targeted minimum loss-based estimation).}
+\item{Q_lib}{A \code{character} vector identifying the library of learning
+algorithms to be used in fitting the outcome regression E[Y | A, W].}
 
-\item{Q_lib}{(char vector) - library of learning algorithms to be used in
-fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
-"Q" in the literature on targeted minimum loss-based estimation).}
+\item{cv_folds}{A \code{numeric} scalar indicating how many folds to use in
+performing targeted minimum loss estimation. Cross-validated estimates are
+more robust, allowing relaxing of theoretical conditions and construction of
+conservative variance estimates.}
 
-\item{...}{Additional arguments to be passed directly to \code{tmle::tmle} in
-fitting the targeted minimum loss-based estimator of the average treatment
-effect. Consult the documentation of that function for details.}
+\item{...}{Additional arguments passed to \code{\link[tmle]{tmle}} in fitting
+the targeted minimum loss estimator of the average treatment effect.}
 }
 \value{
 TMLE-based estimate of the relationship between biomarker expression

@@ -128,8 +128,8 @@ exposure on biological expression values associated with a given biomarker,
 controlling for a user-specified set of baseline covariates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>biomarkerTMLE_exposure</span>(<span class='no'>Y</span>, <span class='no'>W</span>, <span class='no'>A</span>, <span class='no'>a</span>, <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>, <span class='no'>g_lib</span>, <span class='no'>Q_lib</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>biomarkerTMLE_exposure</span>(<span class='no'>Y</span>, <span class='no'>W</span>, <span class='no'>A</span>, <span class='no'>a</span>, <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>g_lib</span>, <span class='no'>Q_lib</span>,
+  <span class='kw'>cv_folds</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,34 +156,32 @@ which comparisons are to be made.</p></td>
     <tr>
       <th>subj_ids</th>
       <td><p>A <code>numeric</code> vector of subject IDs to be passed directly
-to <code><a href='https://rdrr.io/pkg/tmle/man/tmle.html'>tmle::tmle</a></code> when there are repeated measures; measurements on the
-same subject should have the exact same numerical identifier. These values
-will be coerced to numeric if not provided in the appropriate form (e.g., as
-<code>character</code>). The call to <code><a href='https://rdrr.io/pkg/tmle/man/tmle.html'>tmle::tmle</a></code> will utilized a corrected
-version of the variance estimate from the efficient influence function.</p></td>
-    </tr>
-    <tr>
-      <th>family</th>
-      <td><p>(character) - specification of error family: "binomial" or
-"gaussian"</p></td>
+to <code><a href='https://rdrr.io/pkg/tmle/man/tmle.html'>tmle</a></code> when there are repeated measures; measurements
+on the same subject should have the exact same numerical identifier. The
+correction performed utilizes a more conservative estimator of the variance
+based on the efficient influence function.</p></td>
     </tr>
     <tr>
       <th>g_lib</th>
-      <td><p>(char vector) - library of learning algorithms to be used in
-fitting the propensity score E[A | W] (the nuisance parameter denoted "g" in
-the literature on targeted minimum loss-based estimation).</p></td>
+      <td><p>A <code>character</code> vector identifying the library of learning
+algorithms to be used in fitting the propensity score P[A = 1 | W].</p></td>
     </tr>
     <tr>
       <th>Q_lib</th>
-      <td><p>(char vector) - library of learning algorithms to be used in
-fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
-"Q" in the literature on targeted minimum loss-based estimation).</p></td>
+      <td><p>A <code>character</code> vector identifying the library of learning
+algorithms to be used in fitting the outcome regression E[Y | A, W].</p></td>
+    </tr>
+    <tr>
+      <th>cv_folds</th>
+      <td><p>A <code>numeric</code> scalar indicating how many folds to use in
+performing targeted minimum loss estimation. Cross-validated estimates are
+more robust, allowing relaxing of theoretical conditions and construction of
+conservative variance estimates.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments to be passed directly to <code><a href='https://rdrr.io/pkg/tmle/man/tmle.html'>tmle::tmle</a></code> in
-fitting the targeted minimum loss-based estimator of the average treatment
-effect. Consult the documentation of that function for details.</p></td>
+      <td><p>Additional arguments passed to <code><a href='https://rdrr.io/pkg/tmle/man/tmle.html'>tmle</a></code> in fitting
+the targeted minimum loss estimator of the average treatment effect.</p></td>
     </tr>
     </table>
 

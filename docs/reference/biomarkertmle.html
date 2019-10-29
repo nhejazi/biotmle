@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Biomarker Evaluation with Targeted Minimum Loss-Based Estimation of the ATE — biomarkertmle • biotmle</title>
+<title>Biomarker Evaluation with Targeted Minimum Loss Estimation of the ATE — biomarkertmle • biotmle</title>
 
 
 <!-- jquery -->
@@ -35,10 +35,10 @@
 
 
 
-<meta property="og:title" content="Biomarker Evaluation with Targeted Minimum Loss-Based Estimation of the ATE — biomarkertmle" />
+<meta property="og:title" content="Biomarker Evaluation with Targeted Minimum Loss Estimation of the ATE — biomarkertmle" />
 <meta property="og:description" content="Computes the causal target parameter defined as the difference between the
 biomarker expression values under treatment and those same values under no
-treatment, using Targeted Minimum Loss-Based Estimation." />
+treatment, using Targeted Minimum Loss Estimation." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,7 +117,7 @@ treatment, using Targeted Minimum Loss-Based Estimation." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Biomarker Evaluation with Targeted Minimum Loss-Based Estimation of the ATE</h1>
+    <h1>Biomarker Evaluation with Targeted Minimum Loss Estimation of the ATE</h1>
     
     <div class="hidden name"><code>biomarkertmle.Rd</code></div>
     </div>
@@ -125,13 +125,13 @@ treatment, using Targeted Minimum Loss-Based Estimation." />
     <div class="ref-description">
     <p>Computes the causal target parameter defined as the difference between the
 biomarker expression values under treatment and those same values under no
-treatment, using Targeted Minimum Loss-Based Estimation.</p>
+treatment, using Targeted Minimum Loss Estimation.</p>
     </div>
 
     <pre class="usage"><span class='fu'>biomarkertmle</span>(<span class='no'>se</span>, <span class='no'>varInt</span>, <span class='kw'>normalized</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ngscounts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bppar_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>future_param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>, <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>,
-  <span class='st'>"SL.glm"</span>, <span class='st'>"SL.glmnet"</span>, <span class='st'>"SL.earth"</span>), <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>,
+  <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cv_folds</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>,
+  <span class='st'>"SL.glmnet"</span>, <span class='st'>"SL.earth"</span>), <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>,
   <span class='st'>"SL.randomForest"</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -169,38 +169,40 @@ that are microarray-type (i.e., so-called "targeted" assays).</p></td>
       <th>parallel</th>
       <td><p>(logical) - whether or not to use parallelization in the
 estimation procedure. Invoking parallelization happens through a
-combination of calls to <code>future</code> and <code>BiocParallel</code>. If this
-argument is set to <code>TRUE</code>, <code><a href='https://rdrr.io/pkg/future/man/multiprocess.html'>future::multiprocess</a></code> is used,
-and if <code>FALSE</code>, <code><a href='https://rdrr.io/pkg/future/man/sequential.html'>future::sequential</a></code> is used, alongside
-<code><a href='https://rdrr.io/pkg/BiocParallel/man/bplapply.html'>BiocParallel::bplapply</a></code>. Other options for evaluation through
+combination of calls to <span class="pkg">future</span> and <span class="pkg">BiocParallel</span>. If this
+argument is set to <code>TRUE</code>, <code><a href='https://rdrr.io/pkg/future/man/multiprocess.html'>multiprocess</a></code> is used,
+and if <code>FALSE</code>, <code><a href='https://rdrr.io/pkg/future/man/sequential.html'>sequential</a></code> is used, alongside
+<code><a href='https://rdrr.io/pkg/BiocParallel/man/bplapply.html'>bplapply</a></code>. Other options for evaluation through
 futures may be invoked by setting the argument <code>future_param</code>.</p></td>
     </tr>
     <tr>
       <th>bppar_type</th>
       <td><p>(character) - specifies the type of backend to be used with
 the parallelization invoked by <code>BiocParallel</code>. Consult the manual page
-for <code><a href='https://rdrr.io/pkg/BiocParallel/man/BiocParallelParam-class.html'>BiocParallel::BiocParallelParam</a></code> for possible types and
+for <code><a href='https://rdrr.io/pkg/BiocParallel/man/BiocParallelParam-class.html'>BiocParallelParam</a></code> for possible types and
 descriptions on their appropriate uses. The default for this argument is
-<code>NULL</code>, which silently uses <code><a href='https://rdrr.io/pkg/BiocParallel/man/DoparParam-class.html'>BiocParallel::DoparParam</a></code>.</p></td>
+<code>NULL</code>, which silently uses <code><a href='https://rdrr.io/pkg/BiocParallel/man/DoparParam-class.html'>DoparParam</a></code>.</p></td>
     </tr>
     <tr>
       <th>future_param</th>
       <td><p>(character) - specifies the type of parallelization to be
 invoked when using futures for evaluation. For a list of the available
-types, please consult the documentation for <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan</a></code>. The default
-setting (this argument set to <code>NULL</code>) silently invokes
-<code><a href='https://rdrr.io/pkg/future/man/multiprocess.html'>future::multiprocess</a></code>. Be careful if changing this setting.</p></td>
-    </tr>
-    <tr>
-      <th>family</th>
-      <td><p>(character) - specification of error family: "binomial" or
-"gaussian".</p></td>
+types, please consult the documentation for <code><a href='https://rdrr.io/pkg/future/man/plan.html'>plan</a></code>. The
+default setting (this argument set to <code>NULL</code>) silently invokes
+<code><a href='https://rdrr.io/pkg/future/man/multiprocess.html'>multiprocess</a></code>. Be careful if changing this setting.</p></td>
     </tr>
     <tr>
       <th>subj_ids</th>
       <td><p>(numeric vector) - subject IDs to be passed directly to
-subject should have the exact same numerical identifier; coerced to class
-<code>numeric</code> if not provided in the appropriate form.</p></td>
+the same subject should have the exact same numerical identifier; coerced to
+class <code>numeric</code> if not provided in the appropriate form.</p></td>
+    </tr>
+    <tr>
+      <th>cv_folds</th>
+      <td><p>A <code>numeric</code> scalar indicating how many folds to use in
+performing targeted minimum loss estimation. Cross-validated estimates are
+more robust, allowing relaxing of theoretical conditions and construction of
+conservative variance estimates.</p></td>
     </tr>
     <tr>
       <th>g_lib</th>
@@ -216,9 +218,8 @@ fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments to be passed directly to <code><a href='https://rdrr.io/pkg/tmle/man/tmle.html'>tmle::tmle</a></code> in
-fitting the targeted minimum loss-based estimator of the average treatment
-effect. Consult the documentation of that function for details.</p></td>
+      <td><p>Additional arguments to be passed to <code><a href='https://rdrr.io/pkg/tmle/man/tmle.html'>tmle</a></code> in
+fitting the targeted minimum loss estimator of the average treatment effect.</p></td>
     </tr>
     </table>
 
@@ -266,7 +267,6 @@ effect. Consult the documentation of that function for details.</p></td>
   <span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>illuminaData</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ],
   <span class='kw'>varInt</span> <span class='kw'>=</span> <span class='no'>varInt_index</span>,
   <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>family</span> <span class='kw'>=</span> <span class='st'>"gaussian"</span>,
   <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>),
   <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='st'>"SL.glm"</span>
 )</div><div class='output co'>#&gt; <span class='warning'>Warning: Sequential evaluation is strongly discouraged. </span>
