@@ -138,11 +138,11 @@ After using the `biotmle` R package, please cite both of the following:
     }
 
     @article{hejazi2019generalization,
-      author = {Hejazi, Nima S and {van der Laan}, Mark J and Smith, Martyn
-        T and Hubbard, Alan E},
+      author = {Hejazi, Nima S and {van der Laan}, Mark J and Hubbard, Alan
+        E},
       title = {A generalization of moderated statistics to data adaptive
         semiparametric estimation in high-dimensional biology},
-      journal={arxiv},
+      journal={under review},
       volume={},
       number={},
       pages={},
@@ -159,7 +159,7 @@ After using the `biotmle` R package, please cite both of the following:
         biomarker discovery},
       doi = {10.18129/B9.bioc.biotmle},
       url = {https://bioconductor.org/packages/biotmle},
-      note = {R package version 1.8.0}
+      note = {R package version 1.10.0}
     }
 ```
 
