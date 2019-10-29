@@ -1,10 +1,10 @@
 utils::globalVariables(c("assay<-"))
 
-#' Biomarker Evaluation with Targeted Minimum Loss-Based Estimation of the ATE
+#' Biomarker Evaluation with Targeted Minimum Loss Estimation of the ATE
 #'
 #' Computes the causal target parameter defined as the difference between the
 #' biomarker expression values under treatment and those same values under no
-#' treatment, using Targeted Minimum Loss-Based Estimation.
+#' treatment, using Targeted Minimum Loss Estimation.
 #'
 #' @param se (SummarizedExperiment) - containing expression or next-generation
 #'  sequencing data in the "assays" slot and a matrix of phenotype-level data
@@ -24,36 +24,37 @@ utils::globalVariables(c("assay<-"))
 #'  that are microarray-type (i.e., so-called "targeted" assays).
 #' @param parallel (logical) - whether or not to use parallelization in the
 #'  estimation procedure. Invoking parallelization happens through a
-#'  combination of calls to \code{future} and \code{BiocParallel}. If this
-#'  argument is set to \code{TRUE}, \code{future::multiprocess} is used,
-#'  and if \code{FALSE}, \code{future::sequential} is used, alongside
-#'  \code{BiocParallel::bplapply}. Other options for evaluation through
+#'  combination of calls to \pkg{future} and \pkg{BiocParallel}. If this
+#'  argument is set to \code{TRUE}, \code{\link[future]{multiprocess}} is used,
+#'  and if \code{FALSE}, \code{\link[future]{sequential}} is used, alongside
+#'  \code{\link[BiocParallel]{bplapply}}. Other options for evaluation through
 #'  futures may be invoked by setting the argument \code{future_param}.
 #' @param bppar_type (character) - specifies the type of backend to be used with
 #'  the parallelization invoked by \code{BiocParallel}. Consult the manual page
-#'  for \code{BiocParallel::BiocParallelParam} for possible types and
+#'  for \code{\link[BiocParallel]{BiocParallelParam}} for possible types and
 #'  descriptions on their appropriate uses. The default for this argument is
-#'  \code{NULL}, which silently uses \code{BiocParallel::DoparParam}.
+#'  \code{NULL}, which silently uses \code{\link[BiocParallel]{DoparParam}}.
 #' @param future_param (character) - specifies the type of parallelization to be
 #'  invoked when using futures for evaluation. For a list of the available
-#'  types, please consult the documentation for \code{future::plan}. The default
-#'  setting (this argument set to \code{NULL}) silently invokes
-#'  \code{future::multiprocess}. Be careful if changing this setting.
-#' @param family (character) - specification of error family: "binomial" or
-#'  "gaussian".
+#'  types, please consult the documentation for \code{\link[future]{plan}}. The
+#'  default setting (this argument set to \code{NULL}) silently invokes
+#'  \code{\link[future]{multiprocess}}. Be careful if changing this setting.
 #' @param subj_ids (numeric vector) - subject IDs to be passed directly to
-#   \code{tmle::tmle} when there are repeated measures; measurements on the same
-#'  subject should have the exact same numerical identifier; coerced to class
-#'  \code{numeric} if not provided in the appropriate form.
+#   \code{\link[tmle]{tmle}} when there are repeated measures; measurements on
+#'  the same subject should have the exact same numerical identifier; coerced to
+#'  class \code{numeric} if not provided in the appropriate form.
+#' @param cv_folds A \code{numeric} scalar indicating how many folds to use in
+#'  performing targeted minimum loss estimation. Cross-validated estimates are
+#'  more robust, allowing relaxing of theoretical conditions and construction of
+#'  conservative variance estimates.
 #' @param g_lib (char vector) - library of learning algorithms to be used in
 #'  fitting the propensity score E[A | W] (the nuisance parameter denoted "g" in
 #'  the literature on targeted minimum loss-based estimation).
 #' @param Q_lib (char vector) - library of learning algorithms to be used in
 #'  fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
 #'  "Q" in the literature on targeted minimum loss-based estimation).
-#' @param ... Additional arguments to be passed directly to \code{tmle::tmle} in
-#'  fitting the targeted minimum loss-based estimator of the average treatment
-#'  effect. Consult the documentation of that function for details.
+#' @param ... Additional arguments to be passed to \code{\link[tmle]{tmle}} in
+#'  fitting the targeted minimum loss estimator of the average treatment effect.
 #'
 #' @importFrom SummarizedExperiment assay colData rowData SummarizedExperiment
 #' @importFrom BiocParallel register bplapply bpprogressbar DoparParam
@@ -87,7 +88,6 @@ utils::globalVariables(c("assay<-"))
 #'   se = illuminaData[1:2, ],
 #'   varInt = varInt_index,
 #'   parallel = FALSE,
-#'   family = "gaussian",
 #'   g_lib = c("SL.mean", "SL.glm"),
 #'   Q_lib = "SL.glm"
 #' )
@@ -99,8 +99,8 @@ biomarkertmle <- function(se,
                           parallel = TRUE,
                           bppar_type = NULL,
                           future_param = NULL,
-                          family = "gaussian",
                           subj_ids = NULL,
+                          cv_folds = 5,
                           g_lib = c(
                             "SL.mean", "SL.glm", "SL.glmnet", "SL.earth"
                           ),
@@ -109,14 +109,14 @@ biomarkertmle <- function(se,
                           ),
                           ...) {
 
-  # ============================================================================
+  # ===========================================================================
   # catch input and return in output object for user convenience
-  # ============================================================================
+  # ===========================================================================
   call <- match.call(expand.dots = TRUE)
 
-  # ============================================================================
+  # ===========================================================================
   # invoke S4 class constructor for "bioTMLE" object
-  # ============================================================================
+  # ===========================================================================
   biotmle <- .biotmle(
     SummarizedExperiment(
       assays = list(expMeasures = assay(se)),
@@ -128,18 +128,18 @@ biomarkertmle <- function(se,
     topTable = tibble::as_tibble(matrix(NA, 10, 10))
   )
 
-  # ============================================================================
+  # ===========================================================================
   # invoke the voom transform from LIMMA if next-generation sequencing data)
-  # ============================================================================
+  # ===========================================================================
   if (ngscounts) {
     voom_out <- rnaseq_ic(biotmle)
     voom_exp <- 2^(voom_out$E)
     assay(se) <- voom_exp
   }
 
-  # ============================================================================
+  # ===========================================================================
   # set up parallelization based on input
-  # ============================================================================
+  # ===========================================================================
   doFuture::registerDoFuture()
   if (parallel == TRUE) {
     if (!is.null(future_param)) {
@@ -166,9 +166,9 @@ biomarkertmle <- function(se,
   BiocParallel::bpprogressbar(bp_type) <- TRUE
   BiocParallel::register(bp_type, default = TRUE)
 
-  # ============================================================================
+  # ===========================================================================
   # TMLE procedure to identify biomarkers based on an EXPOSURE
-  # ============================================================================
+  # ===========================================================================
 
   # median normalization
   if (!ngscounts && !normalized) {
@@ -202,10 +202,9 @@ biomarkertmle <- function(se,
     biomarkerTMLE_exposure,
     W = W,
     A = A,
-    a = unique(A),
+    a = sort(unique(A)),
     g_lib = g_lib,
     Q_lib = Q_lib,
-    family = family,
     subj_ids = subj_ids,
     ...
   )
