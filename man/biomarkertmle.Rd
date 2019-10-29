@@ -11,11 +11,11 @@ biomarkertmle(se, varInt, normalized = TRUE, ngscounts = FALSE,
   "SL.randomForest"), ...)
 }
 \arguments{
-\item{se}{(SummarizedExperiment) - containing expression or next-generation
-sequencing data in the "assays" slot and a matrix of phenotype-level data
-in the "colData" slot.}
+\item{se}{A \code{SummarizedExperiment} containing microarray expression
+or next-generation sequencing data in the \code{assays} slot and a matrix of
+phenotype-level data in the \code{colData} slot.}
 
-\item{varInt}{(numeric) - indicating the column of the design matrix
+\item{varInt}{A \code{numeric} indicating the column of the design matrix
 corresponding to the treatment or outcome of interest (in the
 \code{colData} slot of the \code{SummarizedExperiment} argument "se").}
 
