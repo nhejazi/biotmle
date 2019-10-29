@@ -6,10 +6,10 @@ utils::globalVariables(c("assay<-"))
 #' biomarker expression values under treatment and those same values under no
 #' treatment, using Targeted Minimum Loss Estimation.
 #'
-#' @param se (SummarizedExperiment) - containing expression or next-generation
-#'  sequencing data in the "assays" slot and a matrix of phenotype-level data
-#'  in the "colData" slot.
-#' @param varInt (numeric) - indicating the column of the design matrix
+#' @param se A \code{SummarizedExperiment} containing microarray expression
+#'  or next-generation sequencing data in the \code{assays} slot and a matrix of
+#'  phenotype-level data in the \code{colData} slot.
+#' @param varInt A \code{numeric} indicating the column of the design matrix
 #'  corresponding to the treatment or outcome of interest (in the
 #'  \code{colData} slot of the \code{SummarizedExperiment} argument "se").
 #' @param normalized (logical) - whether the data included in the \code{assay}
@@ -150,8 +150,7 @@ biomarkertmle <- function(se,
     }
   } else if (parallel == FALSE) {
     warning(paste(
-      "Sequential evaluation is strongly discouraged.",
-      "\n Proceed with caution."
+      "Sequential evaluation over many probes may take a long time."
     ))
     future::plan(future::sequential)
   }
@@ -180,7 +179,7 @@ biomarkertmle <- function(se,
   }
   # simple sanity check of whether Y includes array values
   if (!all(apply(Y, 2, class) == "numeric")) {
-    stop("Warning - values in Y do not appear to be numeric...")
+    stop("Warning - values in Y do not appear to be numeric.")
   }
 
   # exposure / treatment
