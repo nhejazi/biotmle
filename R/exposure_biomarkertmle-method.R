@@ -12,22 +12,20 @@
 #' @param a The \code{numeric} value indicating levels of \code{A} above against
 #'  which comparisons are to be made.
 #' @param subj_ids A \code{numeric} vector of subject IDs to be passed directly
-#'  to \code{tmle::tmle} when there are repeated measures; measurements on the
-#'  same subject should have the exact same numerical identifier. These values
-#'  will be coerced to numeric if not provided in the appropriate form (e.g., as
-#'  \code{character}). The call to \code{tmle::tmle} will utilized a corrected
-#'  version of the variance estimate from the efficient influence function.
-#' @param family (character) - specification of error family: "binomial" or
-#'  "gaussian"
-#' @param g_lib (char vector) - library of learning algorithms to be used in
-#'  fitting the propensity score E[A | W] (the nuisance parameter denoted "g" in
-#'  the literature on targeted minimum loss-based estimation).
-#' @param Q_lib (char vector) - library of learning algorithms to be used in
-#'  fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
-#'  "Q" in the literature on targeted minimum loss-based estimation).
-#' @param ... Additional arguments to be passed directly to \code{tmle::tmle} in
-#'  fitting the targeted minimum loss-based estimator of the average treatment
-#'  effect. Consult the documentation of that function for details.
+#'  to \code{\link[tmle]{tmle}} when there are repeated measures; measurements
+#'  on the same subject should have the exact same numerical identifier. The
+#'  correction performed utilizes a more conservative estimator of the variance
+#'  based on the efficient influence function.
+#' @param g_lib A \code{character} vector identifying the library of learning
+#'  algorithms to be used in fitting the propensity score P[A = 1 | W].
+#' @param Q_lib A \code{character} vector identifying the library of learning
+#'  algorithms to be used in fitting the outcome regression E[Y | A, W].
+#' @param cv_folds A \code{numeric} scalar indicating how many folds to use in
+#'  performing targeted minimum loss estimation. Cross-validated estimates are
+#'  more robust, allowing relaxing of theoretical conditions and construction of
+#'  conservative variance estimates.
+#' @param ... Additional arguments passed to \code{\link[tmle]{tmle}} in fitting
+#'  the targeted minimum loss estimator of the average treatment effect.
 #'
 #' @importFrom assertthat assert_that
 #' @importFrom tmle tmle
@@ -41,14 +39,18 @@ biomarkerTMLE_exposure <- function(Y,
                                    A,
                                    a,
                                    subj_ids = NULL,
-                                   family = "gaussian",
                                    g_lib,
                                    Q_lib,
+                                   cv_folds = 5,
                                    ...) {
   # check the case that Y is passed in as a column of a data.frame
   if (any(class(Y) == "data.frame")) Y <- as.numeric(unlist(Y[, 1]))
   if (any(class(A) == "data.frame")) A <- as.numeric(unlist(A[, 1]))
-  if (!is.null(subj_ids)) subj_ids <- as.numeric(subj_ids)
+  if (is.null(subj_ids)) {
+    subj_ids <- seq_along(Y)
+  } else {
+    subj_ids <- as.numeric(subj_ids)
+  }
   assertthat::assert_that(length(a) > 1)
 
   # initialize
@@ -63,8 +65,10 @@ biomarkerTMLE_exposure <- function(Y,
       W = W,
       g.SL.library = g_lib,
       Q.SL.library = Q_lib,
-      family = family,
       id = subj_ids,
+      V = cv_folds,
+      prescreenW.g = FALSE,
+      target.gwt = FALSE,
       verbose = FALSE,
       ...
     )
@@ -74,7 +78,6 @@ biomarkerTMLE_exposure <- function(Y,
     EY <- c(EY, EY_0)
     eif <- cbind(eif, (A_star / g_0) * (Y - Qst_0) + Qst_0 - EY_0)
   }
-
   EY_diff <- EY[seq_along(a)[-1]] - EY[1]
   eif_diff <- eif[, seq_along(a)[-1]] - eif[, 1]
 

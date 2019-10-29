@@ -80,7 +80,6 @@ the design matrix. We demonstrate the necessary syntax for calling
 ```{r biomarkerTMLE_eval, eval=FALSE}
 biomarkerTMLEout <- biomarkertmle(se = illuminaData,
                                   varInt = varInt_index,
-                                  family = "gaussian",
                                   g_lib = c("SL.glmnet", "SL.randomForest",
                                             "SL.polymars", "SL.mean"),
                                   Q_lib = c("SL.glmnet", "SL.randomForest",
