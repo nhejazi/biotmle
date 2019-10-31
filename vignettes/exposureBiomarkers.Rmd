@@ -1,6 +1,6 @@
 ---
 title: "Identifying Biomarkers from an Exposure Variable with `biotmle`"
-author: "[Nima Hejazi](https://nimahejazi.org)"
+author: "Nima Hejazi"
 date: "`r Sys.Date()`"
 output:
   BiocStyle::html_document

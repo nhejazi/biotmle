@@ -51,7 +51,7 @@ standard error estimates and improves the performance of such estimators both in
 smaller samples and in settings where the EIF is poorly estimated. The resultant
 procedure allows for the construction of conservative hypothesis tests that
 reduce the false discovery rate and/or the family-wise error rate
-[@hejazi2019+generalization]. Improvements upon prior TML-based approaches to
+[@hejazi2019generalization]. Improvements upon prior TML-based approaches to
 biomarker discovery (e.g., @bembom2009biomarker) include both the moderated
 variance estimator as well as the use of conservative reference distributions
 for the corresponding moderated test statistics (e.g., logistic distribution),

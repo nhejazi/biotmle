@@ -49,8 +49,7 @@ estimates and improves the performance of such estimators both in
 smaller samples and in settings where the EIF is poorly estimated. The
 resultant procedure allows for the construction of conservative
 hypothesis tests that reduce the false discovery rate and/or the
-family-wise error rate
-(<span class="citeproc-not-found" data-reference-id="hejazi2019+generalization">**???**</span>).
+family-wise error rate (Hejazi, van der Laan, and Hubbard 2019).
 Improvements upon prior TML-based approaches to biomarker discovery
 (e.g., Bembom et al. (2009)) include both the moderated variance
 estimator as well as the use of conservative reference distributions for
@@ -203,6 +202,15 @@ E Sinisi, Robert W Shafer, and Mark J van der Laan. 2009. “Biomarker
 Discovery Using Targeted Maximum-Likelihood Estimation: Application to
 the Treatment of Antiretroviral-Resistant Hiv Infection.” *Statistics in
 Medicine* 28 (1). Wiley Online Library: 152–72.
+
+</div>
+
+<div id="ref-hejazi2019generalization">
+
+Hejazi, Nima S, Mark J van der Laan, and Alan E Hubbard. 2019. “A
+Generalization of Moderated Statistics to Data Adaptive Semiparametric
+Estimation in High-Dimensional Biology.” *Under Review*.
+<https://arxiv.org/abs/1710.05451>.
 
 </div>
 
