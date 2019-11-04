@@ -5,7 +5,7 @@
 \title{TMLE procedure using ATE for Biomarker Identication from Exposure}
 \usage{
 biomarkerTMLE_exposure(Y, W, A, a, subj_ids = NULL, g_lib, Q_lib,
-  cv_folds = 5, ...)
+  cv_folds, ...)
 }
 \arguments{
 \item{Y}{A \code{numeric} vector of expression values for a single biomarker.}

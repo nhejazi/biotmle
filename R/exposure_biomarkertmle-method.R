@@ -41,7 +41,7 @@ biomarkerTMLE_exposure <- function(Y,
                                    subj_ids = NULL,
                                    g_lib,
                                    Q_lib,
-                                   cv_folds = 5,
+                                   cv_folds,
                                    ...) {
   # check the case that Y is passed in as a column of a data.frame
   if (any(class(Y) == "data.frame")) Y <- as.numeric(unlist(Y[, 1]))

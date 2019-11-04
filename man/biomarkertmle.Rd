@@ -21,10 +21,10 @@ corresponding to the treatment or outcome of interest (in the
 
 \item{normalized}{(logical) - whether the data included in the \code{assay}
 slot of the input \code{SummarizedExperiment} object has been normalized
-already. The default is set to \code{TRUE} since it is expected that most
-practitioners would apply normalization methods appropriate to the type of
-assay being analyzed. If set to \code{FALSE}, median normalization is
-performed for microarray (i.e., non-RNA-seq) data.}
+already. The default is set to \code{TRUE} with the expectation that a
+normalization method has been applied, appropriate to the type of assay
+being analyzed. If set to \code{FALSE}, median normalization is performed
+for microarray (i.e., non-RNA-seq) data.}
 
 \item{ngscounts}{(logical) - whether the data are counts generated from a
 next-generation sequencing (NGS) experiment (e.g., RNA-seq). The default
@@ -104,5 +104,4 @@ biomarkerTMLEout <- biomarkertmle(
   g_lib = c("SL.mean", "SL.glm"),
   Q_lib = "SL.glm"
 )
-#
 }
