@@ -162,7 +162,8 @@ biomarkertmle <- function(se,
   if (!ngscounts && !normalized) {
     # median normalization
     exp_normed <- limma::normalizeBetweenArrays(as.matrix(assay(se)),
-                                                method = "scale")
+      method = "scale"
+    )
     Y <- tibble::as_tibble(t(exp_normed))
   } else {
     Y <- tibble::as_tibble(t(as.matrix(assay(se))))
@@ -252,19 +253,21 @@ biomarkerTMLE_exposure <- function(Y,
 
   # fit standard (possibly CV) TML estimator (n.b., guard = NULL)
   a_0 <- sort(unique(A[!is.na(A)]))
-  tmle_fit <- drtmle::drtmle(Y = Y,
-                             A = A,
-                             W = W,
-                             a_0 = a_0,
-                             stratify = TRUE,
-                             SL_g = g_lib,
-                             SL_Q = Q_lib,
-                             cvFolds = cv_folds,
-                             returnModels = TRUE,
-                             guard = NULL,
-                             parallel = FALSE,
-                             use_future = FALSE,
-                             ...)
+  tmle_fit <- drtmle::drtmle(
+    Y = Y,
+    A = A,
+    W = W,
+    a_0 = a_0,
+    stratify = TRUE,
+    SL_g = g_lib,
+    SL_Q = Q_lib,
+    cvFolds = cv_folds,
+    returnModels = TRUE,
+    guard = NULL,
+    parallel = FALSE,
+    use_future = FALSE,
+    ...
+  )
 
   # compute ATE and estimated EIF by delta method
   ate_tmle <- tmle_fit$tmle$est[seq_along(a_0)[-1]] - tmle_fit$tmle$est[1]

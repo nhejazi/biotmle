@@ -16,6 +16,7 @@ library(dplyr)
 library(biotmle)
 library(biotmleData)
 library(SummarizedExperiment, quietly=TRUE)
+library(SuperLearner)
 ```
 
 ## Introduction

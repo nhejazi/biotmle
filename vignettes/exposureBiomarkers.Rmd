@@ -43,6 +43,7 @@ library(biotmle)
 library(biotmleData)
 data(illuminaData)
 library(SummarizedExperiment, quietly=TRUE)
+library(SuperLearner)
 ```
 
 In order to perform Targeted Minimum Loss-Based Estimation, we need three

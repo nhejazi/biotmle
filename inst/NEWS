@@ -1,3 +1,24 @@
+biotmle 1.11.0 (BioC 3.11):
+- Change of estimation backend from the `tmle` package to the `drtmle` package.
+- Removal of option to have repeated subjects since unsupported in new backend.
+
+---
+
+biotmle 1.10.0 (BioC 3.10):
+- No significant updates.
+
+---
+
+biotmle 1.8.0 (BioC 3.9):
+- No significant updates.
+
+---
+
+biotmle 1.6.0 (BioC 3.8):
+- No significant updates.
+
+---
+
 biotmle 1.4.0 (BioC 3.7):
 - An updated release of this package for Bioconductor 3.7, released April 2018.
 - This release primarily implements minor changes, including the use of colors
