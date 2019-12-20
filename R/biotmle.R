@@ -39,20 +39,14 @@ utils::globalVariables(c("assay<-"))
 #'  types, please consult the documentation for \code{\link[future]{plan}}. The
 #'  default setting (this argument set to \code{NULL}) silently invokes
 #'  \code{\link[future]{multiprocess}}. Be careful if changing this setting.
-#' @param subj_ids (numeric vector) - subject IDs to be passed directly to
-#   \code{\link[tmle]{tmle}} when there are repeated measures; measurements on
-#'  the same subject should have the exact same numerical identifier; coerced to
-#'  class \code{numeric} if not provided in the appropriate form.
 #' @param cv_folds A \code{numeric} scalar indicating how many folds to use in
 #'  performing targeted minimum loss estimation. Cross-validated estimates are
 #'  more robust, allowing relaxing of theoretical conditions and construction of
 #'  conservative variance estimates.
 #' @param g_lib (char vector) - library of learning algorithms to be used in
-#'  fitting the propensity score E[A | W] (the nuisance parameter denoted "g" in
-#'  the literature on targeted minimum loss-based estimation).
+#'  fitting the propensity score E[A | W] = P(A = a | W).
 #' @param Q_lib (char vector) - library of learning algorithms to be used in
-#'  fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
-#'  "Q" in the literature on targeted minimum loss-based estimation).
+#'  fitting the outcome regression E[Y | A, W].
 #' @param ... Additional arguments to be passed to \code{\link[tmle]{tmle}} in
 #'  fitting the targeted minimum loss estimator of the average treatment effect.
 #'
@@ -75,7 +69,6 @@ utils::globalVariables(c("assay<-"))
 #' library(biotmleData)
 #' data(illuminaData)
 #' library(SummarizedExperiment)
-#' "%ni%" <- Negate("%in%")
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
 #'   data.frame() %>%
@@ -98,7 +91,6 @@ biomarkertmle <- function(se,
                           parallel = TRUE,
                           bppar_type = NULL,
                           future_param = NULL,
-                          subj_ids = NULL,
                           cv_folds = 5,
                           g_lib = c(
                             "SL.mean", "SL.glm", "SL.glmnet", "SL.earth"
@@ -167,12 +159,11 @@ biomarkertmle <- function(se,
   # ===========================================================================
   # TMLE procedure to identify biomarkers based on an EXPOSURE
   # ===========================================================================
-
-  # median normalization
   if (!ngscounts && !normalized) {
-    Y <- tibble::as_tibble(t(limma::normalizeBetweenArrays(as.matrix(assay(se)),
-      method = "scale"
-    )))
+    # median normalization
+    exp_normed <- limma::normalizeBetweenArrays(as.matrix(assay(se)),
+                                                method = "scale")
+    Y <- tibble::as_tibble(t(exp_normed))
   } else {
     Y <- tibble::as_tibble(t(as.matrix(assay(se))))
   }
@@ -200,11 +191,9 @@ biomarkertmle <- function(se,
     biomarkerTMLE_exposure,
     W = W,
     A = A,
-    a = sort(unique(A)),
     g_lib = g_lib,
     Q_lib = Q_lib,
     cv_folds = cv_folds,
-    subj_ids = subj_ids,
     ...
   )
   biomarkerTMLEout <- do.call(cbind.data.frame, biomarkerTMLEout)
@@ -216,4 +205,77 @@ biomarkertmle <- function(se,
     biotmle@tmleOut <- voom_out
   }
   return(biotmle)
+}
+
+################################################################################
+
+#' TMLE procedure using ATE for Biomarker Identication from Exposure
+#'
+#' This function performs influence curve-based estimation of the effect of an
+#' exposure on biological expression values associated with a given biomarker,
+#' controlling for a user-specified set of baseline covariates.
+#'
+#' @param Y A \code{numeric} vector of expression values for a single biomarker.
+#' @param W A \code{Matrix} of \code{numeric} values corresponding to baseline
+#'  covariates to be marginalized over in the estimation process.
+#' @param A A \code{numeric} vector of discretized exposure vector (e.g., from a
+#'  design matrix whose effect on expression values is of interest.
+#' @param g_lib A \code{character} vector identifying the library of learning
+#'  algorithms to be used in fitting the propensity score P[A = a | W].
+#' @param Q_lib A \code{character} vector identifying the library of learning
+#'  algorithms to be used in fitting the outcome regression E[Y | A, W].
+#' @param cv_folds A \code{numeric} scalar indicating how many folds to use in
+#'  performing targeted minimum loss estimation. Cross-validated estimates are
+#'  more robust, allowing relaxing of theoretical conditions and construction of
+#'  conservative variance estimates.
+#' @param ... Additional arguments passed to \code{\link[drtmle]{drtmle}} in
+#'  fitting the targeted minimum loss estimator of the average treatment effect.
+#'
+#' @importFrom assertthat assert_that
+#' @importFrom drtmle drtmle
+#'
+#' @return TMLE-based estimate of the relationship between biomarker expression
+#'  and changes in an exposure variable, computed iteratively and saved in the
+#'  \code{tmleOut} slot in a \code{biotmle} object.
+#
+biomarkerTMLE_exposure <- function(Y,
+                                   W,
+                                   A,
+                                   g_lib,
+                                   Q_lib,
+                                   cv_folds,
+                                   ...) {
+  # check the case that Y is passed in as a column of a data.frame
+  if (any(class(Y) == "data.frame")) Y <- as.numeric(unlist(Y[, 1]))
+  if (any(class(A) == "data.frame")) A <- as.numeric(unlist(A[, 1]))
+  assertthat::assert_that(length(unique(A)) > 1)
+
+  # fit standard (possibly CV) TML estimator (n.b., guard = NULL)
+  a_0 <- sort(unique(A[!is.na(A)]))
+  tmle_fit <- drtmle::drtmle(Y = Y,
+                             A = A,
+                             W = W,
+                             a_0 = a_0,
+                             stratify = TRUE,
+                             SL_g = g_lib,
+                             SL_Q = Q_lib,
+                             cvFolds = cv_folds,
+                             returnModels = TRUE,
+                             guard = NULL,
+                             parallel = FALSE,
+                             use_future = FALSE,
+                             ...)
+
+  # compute ATE and estimated EIF by delta method
+  ate_tmle <- tmle_fit$tmle$est[seq_along(a_0)[-1]] - tmle_fit$tmle$est[1]
+  eif_tmle_delta <- tmle_fit$ic$ic[, seq_along(a_0)[-1]] - tmle_fit$ic$ic[, 1]
+
+  # return only highest contrast (e.g., a[1] v a[5]) if many contrasts
+  if (!is.vector(eif_tmle_delta)) {
+    out <- eif_tmle_delta[, ncol(eif_tmle_delta)] + ate_tmle[length(ate_tmle)]
+  } else {
+    out <- eif_tmle_delta + ate_tmle
+  }
+  assertthat::assert_that(is.vector(out))
+  return(out)
 }

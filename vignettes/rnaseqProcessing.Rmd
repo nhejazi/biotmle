@@ -15,8 +15,7 @@ vignette: >
 library(dplyr)
 library(biotmle)
 library(biotmleData)
-suppressMessages(library(SummarizedExperiment))
-"%ni%" = Negate("%in%")
+library(SummarizedExperiment, quietly=TRUE)
 ```
 
 ## Introduction

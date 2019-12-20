@@ -42,8 +42,7 @@ library(dplyr)
 library(biotmle)
 library(biotmleData)
 data(illuminaData)
-suppressMessages(library(SummarizedExperiment))
-"%ni%" = Negate("%in%")
+library(SummarizedExperiment, quietly=TRUE)
 ```
 
 In order to perform Targeted Minimum Loss-Based Estimation, we need three
@@ -80,10 +79,10 @@ the design matrix. We demonstrate the necessary syntax for calling
 ```{r biomarkerTMLE_eval, eval=FALSE}
 biomarkerTMLEout <- biomarkertmle(se = illuminaData,
                                   varInt = varInt_index,
-                                  g_lib = c("SL.glmnet", "SL.randomForest",
-                                            "SL.polymars", "SL.mean"),
-                                  Q_lib = c("SL.glmnet", "SL.randomForest",
-                                            "SL.nnet", "SL.mean")
+                                  g_lib = c("SL.mean", "SL.glm"),
+                                  Q_lib = c("SL.mean", "SL.step.interaction",
+                                            "SL.earth", "SL.randomForest"),
+                                  parallel = FALSE
                                  )
 ```
 
@@ -196,4 +195,3 @@ volcano_ic(biotmle = limmaTMLEout)
 ```{r sessionInfo, echo=FALSE}
 sessionInfo()
 ```
-

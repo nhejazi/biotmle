@@ -4,8 +4,7 @@
 \alias{heatmap_ic}
 \title{Heatmap for class biotmle}
 \usage{
-heatmap_ic(x, ..., design, FDRcutoff = 0.05, type = c("top", "all"),
-  top = 25)
+heatmap_ic(x, ..., design, FDRcutoff = 0.05, type = c("top", "all"), top = 25)
 }
 \arguments{
 \item{x}{Object of class \code{biotmle} as produced by an appropriate call to
