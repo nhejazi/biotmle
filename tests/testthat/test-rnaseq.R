@@ -3,7 +3,6 @@ library(SummarizedExperiment)
 library(biotmleData)
 data(illuminaData)
 
-
 ## SETUP TESTS #################################################################
 set.seed(6423709)
 n <- 50
@@ -38,7 +37,6 @@ biotmle <- .biotmle(
   topTable = as.data.frame(matrix(NA, 10, 10))
 )
 voom_out <- rnaseq_ic(biotmle)
-
 
 ## BEGIN TESTS #################################################################
 test_that("Object returned by RNA-seq tools matches output of voom", {

@@ -203,8 +203,10 @@ biomarkertmle <- function(se,
     )
   }
   biomarkertmle_params <- do.call(c, lapply(biomarkertmle_out, `[[`, "param"))
-  biomarkertmle_eifs <- do.call(cbind.data.frame,
-                                lapply(biomarkertmle_out, `[[`, "eif"))
+  biomarkertmle_eifs <- do.call(
+    cbind.data.frame,
+    lapply(biomarkertmle_out, `[[`, "eif")
+  )
 
   biotmle@ateOut <- as.numeric(biomarkertmle_params)
   if (!ngscounts) {
@@ -276,7 +278,7 @@ exp_biomarkertmle <- function(Y,
       parallel = FALSE,
       use_future = FALSE,
       ...
-     )
+    )
   )
 
   # compute ATE and estimated EIF by delta method

@@ -27,9 +27,25 @@
 #' @export modtest_ic
 #'
 #' @examples
+#' library(dplyr)
 #' library(biotmleData)
+#' library(SuperLearner)
 #' library(SummarizedExperiment)
-#' data(biomarkertmleOut)
+#' data(illuminaData)
+#'
+#' colData(illuminaData) <- colData(illuminaData) %>%
+#'   data.frame() %>%
+#'   dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'   DataFrame()
+#' benz_idx <- which(names(colData(illuminaData)) %in% "benzene")
+#'
+#' biomarkerTMLEout <- biomarkertmle(
+#'   se = illuminaData[1:2, ],
+#'   varInt = benz_idx,
+#'   parallel = FALSE,
+#'   g_lib = c("SL.mean", "SL.glm"),
+#'   Q_lib = c("SL.bayesglm", "SL.glmnet")
+#' )
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 modtest_ic <- function(biotmle,
@@ -39,11 +55,13 @@ modtest_ic <- function(biotmle,
   # check for input type and set argument defaults
   assertthat::assert_that(class(biotmle) == "bioTMLE")
   pval_type <- match.arg(pval_type)
-  biomarkertmle_out2 <- as.matrix(biotmle@tmleOut) - biotmle@ateOut
+  biomarkertmle_out <- as.matrix(biotmle@tmleOut)
 
   # build design matrix for forcing limma to only perform shrinkage
-  fit <- limma::lmFit(object = biomarkertmle_out,
-                      design = rep(1, nrow(colData(biotmle))))
+  fit <- limma::lmFit(
+    object = biomarkertmle_out,
+    design = rep(1, nrow(colData(biotmle)))
+  )
   fit <- limma::eBayes(fit = fit)
 
   # compute inference

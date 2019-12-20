@@ -7,8 +7,8 @@
 \method{plot}{bioTMLE}(x, ..., type = "pvals_adj")
 }
 \arguments{
-\item{x}{object of class \code{biotmle} as produced by an appropriate call to
-\code{biomarkertmle}}
+\item{x}{object of class \code{biotmle} as produced by an appropriate call
+to \code{biomarkertmle}}
 
 \item{...}{additional arguments passed \code{plot} as necessary}
 
@@ -23,13 +23,29 @@ object of class \code{ggplot} containing a histogram of the raw or
 Histogram of raw or FDR-adjusted p-values from the moderated t-test.
 }
 \examples{
+\dontrun{
 library(dplyr)
 library(biotmleData)
+library(SuperLearner)
 library(SummarizedExperiment)
-data(biomarkertmleOut)
+data(illuminaData)
+
+colData(illuminaData) <- colData(illuminaData) \%>\%
+  data.frame() \%>\%
+  dplyr::mutate(age = as.numeric(age > median(age))) \%>\%
+  DataFrame()
+benz_idx <- which(names(colData(illuminaData)) \%in\% "benzene")
+
+biomarkerTMLEout <- biomarkertmle(
+  se = illuminaData,
+  varInt = benz_idx,
+  parallel = FALSE,
+  g_lib = c("SL.mean", "SL.glm"),
+  Q_lib = c("SL.bayesglm", "SL.glmnet")
+)
 
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
 plot(x = limmaTMLEout, type = "pvals_adj")
-#
+}
 }

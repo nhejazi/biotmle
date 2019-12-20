@@ -5,7 +5,6 @@ library(SuperLearner)
 library(SummarizedExperiment)
 data(illuminaData)
 
-
 ## SETUP TESTS #################################################################
 colData(illuminaData) <- colData(illuminaData) %>%
   data.frame() %>%
@@ -35,9 +34,9 @@ test_that("modtest_ic output contains data frame in topTable slot", {
   expect_true(any(class(limmaTMLEout@topTable) == "data.frame"))
 })
 
-test_that("topTable slot has column names produced by limma::topTable", {
+test_that("topTable slot has most column names produced by limma::topTable", {
   expect_named(
     limmaTMLEout@topTable,
-    c("logFC", "AveExpr", "t", "P.Value", "adj.P.Val", "B", "ID")
+    c("AveExpr", "t", "P.Value", "adj.P.Val", "B", "ID")
   )
 })

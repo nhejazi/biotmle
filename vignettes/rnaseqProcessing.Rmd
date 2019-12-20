@@ -44,7 +44,6 @@ exp_var <- c(rep(1, n), rep(0, n))
 batch <- rep(1:2, n)
 covar <- rep(1, n * 2)
 design <- as.data.frame(cbind(exp_var, batch, covar))
-
 head(ngs_data[, 1:7])
 ```
 
@@ -62,20 +61,15 @@ se
 
 ## Analysis: Assessing the Effect of Exposure
 
-```{r biomarkertmle, eval=FALSE}
-rnaseqTMLEout <- biomarkertmle(se = se,
+```{r biomarkertmle}
+probe_idx <- sample(nrow(se), 15)
+rnaseqTMLEout <- biomarkertmle(se = se[probe_idx, ],
                                varInt = 1,
                                ngscounts = TRUE,
-                               parallel = TRUE,
-                               family = "gaussian",
+                               parallel = FALSE,
                                g_lib = c("SL.mean", "SL.glm"),
                                Q_lib = c("SL.bayesglm", "SL.xgboost")
                               )
-head(eif(rnaseqTMLEout)$E[, seq_len(6)])
-```
-
-```{r load_biomarkerTMLE_result, echo=FALSE}
-data(rnaseqtmleOut)
 head(eif(rnaseqTMLEout)$E[, seq_len(6)])
 ```
 

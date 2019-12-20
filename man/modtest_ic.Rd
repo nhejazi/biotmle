@@ -32,9 +32,25 @@ Performs variance shrinkage via application of an empirical Bayes procedure
 influence function space, based on the average treatment effect parameter.
 }
 \examples{
+library(dplyr)
 library(biotmleData)
+library(SuperLearner)
 library(SummarizedExperiment)
-data(biomarkertmleOut)
+data(illuminaData)
+
+colData(illuminaData) <- colData(illuminaData) \%>\%
+  data.frame() \%>\%
+  dplyr::mutate(age = as.numeric(age > median(age))) \%>\%
+  DataFrame()
+benz_idx <- which(names(colData(illuminaData)) \%in\% "benzene")
+
+biomarkerTMLEout <- biomarkertmle(
+  se = illuminaData[1:2, ],
+  varInt = benz_idx,
+  parallel = FALSE,
+  g_lib = c("SL.mean", "SL.glm"),
+  Q_lib = c("SL.bayesglm", "SL.glmnet")
+)
 
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 }
