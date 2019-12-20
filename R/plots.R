@@ -94,6 +94,7 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #' @importFrom ggsci scale_fill_gsea
 #' @importFrom stats quantile
 #' @importFrom assertthat assert_that
+#' @importFrom methods is
 #'
 #' @return object of class \code{ggplot} containing a standard volcano plot of
 #'  the log-fold change in the causal target parameter against the raw log
@@ -129,7 +130,7 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #' }
 volcano_ic <- function(biotmle, ate_bound = 1.0, pval_bound = 0.2) {
   # check class since not a generic method
-  assertthat::assert_that(class(biotmle) == "bioTMLE")
+  assertthat::assert_that(is(biotmle, "bioTMLE"))
 
   tt_volcano <- biotmle@topTable %>%
     dplyr::arrange(adj.P.Val) %>%
@@ -184,6 +185,7 @@ utils::globalVariables(c(
 #' @importFrom dplyr "%>%" arrange filter slice
 #' @importFrom superheat superheat
 #' @importFrom assertthat assert_that
+#' @importFrom methods is
 #'
 #' @return heatmap (from \pkg{superheat}) using hierarchical clustering to plot
 #'  the changes in the variable importance measure for all subjects across a
@@ -219,7 +221,7 @@ utils::globalVariables(c(
 heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
                        type = c("top", "all"), top = 25) {
   # check class since not a generic method
-  assertthat::assert_that(class(x) == "bioTMLE")
+  assertthat::assert_that(is(x, "bioTMLE"))
   type <- match.arg(type)
 
   if (type == "top") {

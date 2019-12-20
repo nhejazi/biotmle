@@ -2,13 +2,16 @@
 % Please edit documentation in R/utils.R
 \name{toptable}
 \alias{toptable}
-\title{Accessor for Results Table of Moderated Influence Function Hypothesis Test}
+\title{Accessor for Results of Moderated Influence Function Hypothesis Testing}
 \usage{
 toptable(object)
 }
 \arguments{
 \item{object}{S4 object of class \code{bioTMLE}.}
 }
+\value{
+contents of \code{topTable} slot of object of class \code{biotmle}.
+}
 \description{
-Accessor for Results Table of Moderated Influence Function Hypothesis Test
+Accessor for Results of Moderated Influence Function Hypothesis Testing
 }

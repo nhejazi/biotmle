@@ -9,6 +9,9 @@ eif(object)
 \arguments{
 \item{object}{S4 object of class \code{bioTMLE}.}
 }
+\value{
+contents of \code{tmleOut} slot of object of class \code{biotmle}.
+}
 \description{
 Accessor for Table of Raw Efficient Influence Function Values
 }

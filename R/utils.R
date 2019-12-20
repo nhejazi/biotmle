@@ -73,24 +73,30 @@ setClassUnion(
 #'
 #' @param object S4 object of class \code{bioTMLE}.
 #'
+#' @importFrom methods is
 #' @importFrom assertthat assert_that
+#'
+#' @return contents of \code{tmleOut} slot of object of class \code{biotmle}.
 #'
 #' @export
 eif <- function(object) {
-  assertthat::assert_that(class(object) == "bioTMLE")
+  assertthat::assert_that(is(object, "biotmle"))
   object@tmleOut
 }
 
 ################################################################################
 
-#' Accessor for Results Table of Moderated Influence Function Hypothesis Test
+#' Accessor for Results of Moderated Influence Function Hypothesis Testing
 #'
 #' @param object S4 object of class \code{bioTMLE}.
 #'
+#' @importFrom methods is
 #' @importFrom assertthat assert_that
+#'
+#' @return contents of \code{topTable} slot of object of class \code{biotmle}.
 #'
 #' @export
 toptable <- function(object) {
-  assertthat::assert_that(class(object) == "bioTMLE")
+  assertthat::assert_that(is(object, "biotmle"))
   object@topTable
 }

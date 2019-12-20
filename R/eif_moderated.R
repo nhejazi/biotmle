@@ -20,6 +20,7 @@
 #' @importFrom tibble as_tibble
 #' @importFrom assertthat assert_that
 #' @importFrom limma lmFit eBayes topTable
+#' @importFrom methods is
 #'
 #' @return \code{biotmle} object containing output from \code{limma::lmFit} and
 #'  \code{limma::topTable}
@@ -53,7 +54,7 @@ modtest_ic <- function(biotmle,
                        pval_type = c("logistic", "normal"),
                        ...) {
   # check for input type and set argument defaults
-  assertthat::assert_that(class(biotmle) == "bioTMLE")
+  assertthat::assert_that(is(biotmle, "bioTMLE"))
   pval_type <- match.arg(pval_type)
   biomarkertmle_out <- as.matrix(biotmle@tmleOut)
 
