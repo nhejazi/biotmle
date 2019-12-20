@@ -68,10 +68,8 @@ rnaseqTMLEout <- biomarkertmle(se = se,
                                ngscounts = TRUE,
                                parallel = TRUE,
                                family = "gaussian",
-                               g_lib = c("SL.mean", "SL.glm",
-                                         "SL.randomForest"),
-                               Q_lib = c("SL.mean", "SL.glm",
-                                         "SL.randomForest", "SL.nnet")
+                               g_lib = c("SL.mean", "SL.glm"),
+                               Q_lib = c("SL.bayesglm", "SL.xgboost")
                               )
 head(eif(rnaseqTMLEout)$E[, seq_len(6)])
 ```

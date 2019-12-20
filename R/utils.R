@@ -1,8 +1,8 @@
 #' S4 class union data.frame_OR_EList
 #'
-#' @description Virtual class union containing members of both \code{data.frame}
-#'  and \code{limma::Elist}, used internally to handle situations when a
-#'  returned object has a type that cannot be guessed from the function call.
+#' @description Virtual class union containing members of \code{data.frame} and
+#'  \code{limma::Elist}, used internally to handle situations when a returned
+#'  object has a type that cannot be guessed from the function call.
 #'
 #' @return fusion of classes \code{data.frame} and \code{EList}, used within
 #'  \code{.biotmle} by class \code{bioTMLE} to handle uncertainty in the object
@@ -14,7 +14,6 @@
 #' @importClassesFrom S4Vectors Vector Annotated
 #'
 #' @export
-#
 setClassUnion(
   name = "data.frame_OR_EList",
   members = c("data.frame", "EList")
@@ -49,6 +48,7 @@ setClassUnion(
 #'       colData = colData(se)
 #'     ),
 #'     call = call,
+#'     ateOut = as.numeric(rep(NA, 10)),
 #'     tmleOut = as.data.frame(matrix(NA, 10, 10)),
 #'     topTable = as.data.frame(matrix(NA, 10, 10))
 #'   )
@@ -56,11 +56,11 @@ setClassUnion(
 #' }
 #'
 #' example_class <- example_biotmle_class(se = illuminaData)
-#' #
 .biotmle <- methods::setClass(
   Class = "bioTMLE",
   slots = list(
     call = "call",
+    ateOut = "vector",
     tmleOut = "data.frame_OR_EList",
     topTable = "data.frame"
   ),
@@ -76,7 +76,6 @@ setClassUnion(
 #' @importFrom assertthat assert_that
 #'
 #' @export
-#
 eif <- function(object) {
   assertthat::assert_that(class(object) == "bioTMLE")
   object@tmleOut
@@ -91,7 +90,6 @@ eif <- function(object) {
 #' @importFrom assertthat assert_that
 #'
 #' @export
-#
 toptable <- function(object) {
   assertthat::assert_that(class(object) == "bioTMLE")
   object@topTable

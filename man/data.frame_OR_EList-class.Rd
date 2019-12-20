@@ -10,7 +10,7 @@ fusion of classes \code{data.frame} and \code{EList}, used within
  passed to slot "tmleOut".
 }
 \description{
-Virtual class union containing members of both \code{data.frame}
- and \code{limma::Elist}, used internally to handle situations when a
- returned object has a type that cannot be guessed from the function call.
+Virtual class union containing members of \code{data.frame} and
+ \code{limma::Elist}, used internally to handle situations when a returned
+ object has a type that cannot be guessed from the function call.
 }

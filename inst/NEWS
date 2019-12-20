@@ -1,6 +1,7 @@
 biotmle 1.11.0 (BioC 3.11):
 - Change of estimation backend from the `tmle` package to the `drtmle` package.
 - Removal of option to have repeated subjects since unsupported in new backend.
+- Adds argument `bppar_debug` to facilitate debugging around parallelization.
 
 ---
 
