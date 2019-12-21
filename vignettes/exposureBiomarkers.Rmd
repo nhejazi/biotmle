@@ -77,14 +77,12 @@ the design matrix. We demonstrate the necessary syntax for calling the
 `biomarkertmle` function below, on a small number of the probes:
 
 ```{r biomarkerTMLE_eval, message=FALSE, warning=FALSE}
-# sample probe IDs
-probe_idx <- sample(nrow(illuminaData), 10)
-
 # compute TML estimates to evaluate differentially expressed biomarkers
-biotmle_out <- biomarkertmle(se = illuminaData[probe_idx, ],
+biotmle_out <- biomarkertmle(se = illuminaData[1:20, ],
                              varInt = benz_idx,
                              g_lib = c("SL.mean", "SL.glm"),
                              Q_lib = c("SL.bayesglm", "SL.xgboost"),
+                             cv_folds = 2,
                              parallel = FALSE
                             )
 ```
