@@ -80,7 +80,7 @@ setClassUnion(
 #'
 #' @export
 eif <- function(object) {
-  assertthat::assert_that(is(object, "biotmle"))
+  assertthat::assert_that(is(object, "bioTMLE"))
   object@tmleOut
 }
 
@@ -97,6 +97,6 @@ eif <- function(object) {
 #'
 #' @export
 toptable <- function(object) {
-  assertthat::assert_that(is(object, "biotmle"))
+  assertthat::assert_that(is(object, "bioTMLE"))
   object@topTable
 }

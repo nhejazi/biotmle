@@ -36,9 +36,9 @@
 
 
 <meta property="og:title" content="Moderated Statistical Tests for Influence Functions — modtest_ic" />
-<meta property="og:description" content="Performs variance shrinkage via the empirical Bayes procedure of LIMMA on the
-observed data after a transformation moving the data to influence function
-space, based on the average treatment effect parameter." />
+<meta property="og:description" content="Performs variance shrinkage via application of an empirical Bayes procedure
+(of LIMMA) on the observed data after a transformation moving the data to
+influence function space, based on the average treatment effect parameter." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -71,7 +71,7 @@ space, based on the average treatment effect parameter." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -95,9 +95,6 @@ space, based on the average treatment effect parameter." />
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable with `biotmle`</a>
-    </li>
-    <li>
-      <a href="../articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data with `biotmle`</a>
     </li>
   </ul>
 </li>
@@ -123,13 +120,12 @@ space, based on the average treatment effect parameter." />
     </div>
 
     <div class="ref-description">
-    <p>Performs variance shrinkage via the empirical Bayes procedure of LIMMA on the
-observed data after a transformation moving the data to influence function
-space, based on the average treatment effect parameter.</p>
+    <p>Performs variance shrinkage via application of an empirical Bayes procedure
+(of LIMMA) on the observed data after a transformation moving the data to
+influence function space, based on the average treatment effect parameter.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>modtest_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"BH"</span>, <span class='kw'>pval_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"normal"</span>, <span class='st'>"logistic"</span>),
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>modtest_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>adjust</span> <span class='kw'>=</span> <span class='st'>"BH"</span>, <span class='kw'>pval_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"normal"</span>, <span class='st'>"logistic"</span>), <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,7 +137,7 @@ space, based on the average treatment effect parameter.</p>
     <tr>
       <th>adjust</th>
       <td><p>the multiple testing correction to be applied to p-values that
-are generated from the moderated tests. The recommended (and default) method
+are generated from the moderated tests. The recommended (default) method
 is that of Benjamini and Hochberg. See <a href='https://rdrr.io/pkg/limma/man/toptable.html'>topTable</a> for a list of
 appropriate methods.</p></td>
     </tr>
@@ -165,10 +161,25 @@ settings where multiple hypothesis testing is a concern.</p></td>
  <code><a href='https://rdrr.io/pkg/limma/man/toptable.html'>limma::topTable</a></code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>biotmleData</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>biotmleData</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>SuperLearner</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>SummarizedExperiment</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomarkertmleOut</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>illuminaData</span>)
 
+<span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>age</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>age</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>(<span class='no'>age</span>))) <span class='kw'>%&gt;%</span>
+  <span class='fu'>DataFrame</span>()
+<span class='no'>benz_idx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>)) <span class='kw'>%in%</span> <span class='st'>"benzene"</span>)
+
+<span class='no'>biomarkerTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='biomarkertmle.html'>biomarkertmle</a></span>(
+  <span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>illuminaData</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ],
+  <span class='kw'>varInt</span> <span class='kw'>=</span> <span class='no'>benz_idx</span>,
+  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>),
+  <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.bayesglm"</span>, <span class='st'>"SL.glmnet"</span>)
+)</div><div class='output co'>#&gt; <span class='warning'>Warning: Sequential evaluation over many probes may take a long time.</span></div><div class='input'>
 <span class='no'>limmaTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'>modtest_ic</span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>biomarkerTMLEout</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

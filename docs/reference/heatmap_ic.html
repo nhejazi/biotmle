@@ -36,11 +36,10 @@
 
 
 <meta property="og:title" content="Heatmap for class biotmle — heatmap_ic" />
-<meta property="og:description" content="Heatmap of the contributions of a select subset of biomarkers to the variable
+<meta property="og:description" content="Heatmap of contributions of a select subset of biomarkers to the variable
 importance measure changes as assessed by influence curve-based estimation,
-across all subjects. The heatmap produced performs supervised clustering, in
-the sense first described in Pollard &amp;amp; van der Laan (2008)
-&amp;lt;doi:10.2202/1544-6115.1404&amp;gt;." />
+across all subjects. The heatmap produced performs supervised clustering, as
+per Pollard &amp;amp; van der Laan (2008) &amp;lt;doi:10.2202/1544-6115.1404&amp;gt;." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -73,7 +72,7 @@ the sense first described in Pollard &amp;amp; van der Laan (2008)
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -97,9 +96,6 @@ the sense first described in Pollard &amp;amp; van der Laan (2008)
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable with `biotmle`</a>
-    </li>
-    <li>
-      <a href="../articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data with `biotmle`</a>
     </li>
   </ul>
 </li>
@@ -125,23 +121,21 @@ the sense first described in Pollard &amp;amp; van der Laan (2008)
     </div>
 
     <div class="ref-description">
-    <p>Heatmap of the contributions of a select subset of biomarkers to the variable
+    <p>Heatmap of contributions of a select subset of biomarkers to the variable
 importance measure changes as assessed by influence curve-based estimation,
-across all subjects. The heatmap produced performs supervised clustering, in
-the sense first described in Pollard &amp; van der Laan (2008)
-&lt;doi:10.2202/1544-6115.1404&gt;.</p>
+across all subjects. The heatmap produced performs supervised clustering, as
+per Pollard &amp; van der Laan (2008) &lt;doi:10.2202/1544-6115.1404&gt;.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>heatmap_ic</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>design</span>, <span class='kw'>FDRcutoff</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"top"</span>, <span class='st'>"all"</span>),
-  <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>25</span>)</pre>
+    <pre class="usage"><span class='fu'>heatmap_ic</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='no'>design</span>, <span class='kw'>FDRcutoff</span> <span class='kw'>=</span> <span class='fl'>0.25</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"top"</span>, <span class='st'>"all"</span>), <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>25</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>Object of class <code>biotmle</code> as produced by an appropriate call to
-<code>biomarkertmle</code></p></td>
+      <td><p>Object of class <code>biotmle</code> as produced by an appropriate call
+to <code>biomarkertmle</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -150,7 +144,7 @@ necessary</p></td>
     </tr>
     <tr>
       <th>design</th>
-      <td><p>A vector providing the contrast to be displayed in the heatmap.</p></td>
+      <td><p>A vector giving the contrast to be displayed in the heatmap.</p></td>
     </tr>
     <tr>
       <th>FDRcutoff</th>
@@ -169,30 +163,35 @@ necessary</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>heatmap (from the superheat package) using hierarchical clustering to
- plot the changes in the variable importance measure for all subjects across
- a specified top number of biomarkers.</p>
+    <p>heatmap (from <span class="pkg">superheat</span>) using hierarchical clustering to plot
+ the changes in the variable importance measure for all subjects across a
+ specified top number of biomarkers.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>biotmleData</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>SummarizedExperiment</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>illuminaData</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomarkertmleOut</span>)
 
 <span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>() <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>age</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>age</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>(<span class='no'>age</span>))) <span class='kw'>%&gt;%</span>
   <span class='fu'>DataFrame</span>()
+<span class='no'>benz_idx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>)) <span class='kw'>%in%</span> <span class='st'>"benzene"</span>)
 
-<span class='no'>varInt_index</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>)) <span class='kw'>%in%</span> <span class='st'>"benzene"</span>)
-<span class='no'>designVar</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>))[, <span class='no'>varInt_index</span>]
-<span class='no'>design</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>designVar</span> <span class='kw'>==</span> <span class='fu'><a href='https://rdrr.io/r/base/Extremes.html'>max</a></span>(<span class='no'>designVar</span>))
+<span class='no'>biomarkerTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='biomarkertmle.html'>biomarkertmle</a></span>(
+  <span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>illuminaData</span>,
+  <span class='kw'>varInt</span> <span class='kw'>=</span> <span class='no'>benz_idx</span>,
+  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>),
+  <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.bayesglm"</span>, <span class='st'>"SL.glmnet"</span>)
+)
 
 <span class='no'>limmaTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='modtest_ic.html'>modtest_ic</a></span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>biomarkerTMLEout</span>)
 
-<span class='fu'>heatmap_ic</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>limmaTMLEout</span>, <span class='kw'>design</span> <span class='kw'>=</span> <span class='no'>design</span>, <span class='kw'>FDRcutoff</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>15</span>)</div><div class='img'><img src='heatmap_ic-1.png' alt='' width='700' height='433' /></div><div class='input'>#
-</div></pre>
+<span class='fu'>heatmap_ic</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>limmaTMLEout</span>, <span class='kw'>design</span> <span class='kw'>=</span> <span class='no'>design</span>, <span class='kw'>FDRcutoff</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>top</span> <span class='kw'>=</span> <span class='fl'>15</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

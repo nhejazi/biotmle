@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>TMLE procedure using ATE for Biomarker Identication from Exposure — biomarkerTMLE_exposure • biotmle</title>
+<title>TMLE procedure using ATE for Biomarker Identication from Exposure — exp_biomarkertmle • biotmle</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="TMLE procedure using ATE for Biomarker Identication from Exposure — biomarkerTMLE_exposure" />
+<meta property="og:title" content="TMLE procedure using ATE for Biomarker Identication from Exposure — exp_biomarkertmle" />
 <meta property="og:description" content="This function performs influence curve-based estimation of the effect of an
 exposure on biological expression values associated with a given biomarker,
 controlling for a user-specified set of baseline covariates." />
@@ -71,7 +71,7 @@ controlling for a user-specified set of baseline covariates." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -96,9 +96,6 @@ controlling for a user-specified set of baseline covariates." />
     <li>
       <a href="../articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable with `biotmle`</a>
     </li>
-    <li>
-      <a href="../articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data with `biotmle`</a>
-    </li>
   </ul>
 </li>
       </ul>
@@ -119,7 +116,7 @@ controlling for a user-specified set of baseline covariates." />
     <div class="page-header">
     <h1>TMLE procedure using ATE for Biomarker Identication from Exposure</h1>
     
-    <div class="hidden name"><code>biomarkerTMLE_exposure.Rd</code></div>
+    <div class="hidden name"><code>exp_biomarkertmle.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -128,15 +125,19 @@ exposure on biological expression values associated with a given biomarker,
 controlling for a user-specified set of baseline covariates.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>biomarkerTMLE_exposure</span>(<span class='no'>Y</span>, <span class='no'>W</span>, <span class='no'>A</span>, <span class='no'>a</span>, <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>g_lib</span>, <span class='no'>Q_lib</span>,
-  <span class='kw'>cv_folds</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>exp_biomarkertmle</span>(<span class='no'>Y</span>, <span class='no'>A</span>, <span class='no'>W</span>, <span class='no'>g_lib</span>, <span class='no'>Q_lib</span>, <span class='no'>cv_folds</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>Y</th>
-      <td><p>A <code>numeric</code> vector of expression values for a single biomarker.</p></td>
+      <td><p>A <code>numeric</code> vector of expression values for a given biomarker.</p></td>
+    </tr>
+    <tr>
+      <th>A</th>
+      <td><p>A <code>numeric</code> vector of discretized exposure vector (e.g., from
+a design matrix whose effect on expression values is of interest.</p></td>
     </tr>
     <tr>
       <th>W</th>
@@ -144,27 +145,9 @@ controlling for a user-specified set of baseline covariates.</p>
 covariates to be marginalized over in the estimation process.</p></td>
     </tr>
     <tr>
-      <th>A</th>
-      <td><p>A <code>numeric</code> vector of discretized exposure vector (e.g., from a
-design matrix whose effect on expression values is of interest.</p></td>
-    </tr>
-    <tr>
-      <th>a</th>
-      <td><p>The <code>numeric</code> value indicating levels of <code>A</code> above against
-which comparisons are to be made.</p></td>
-    </tr>
-    <tr>
-      <th>subj_ids</th>
-      <td><p>A <code>numeric</code> vector of subject IDs to be passed directly
-to <code><a href='https://rdrr.io/pkg/tmle/man/tmle.html'>tmle</a></code> when there are repeated measures; measurements
-on the same subject should have the exact same numerical identifier. The
-correction performed utilizes a more conservative estimator of the variance
-based on the efficient influence function.</p></td>
-    </tr>
-    <tr>
       <th>g_lib</th>
       <td><p>A <code>character</code> vector identifying the library of learning
-algorithms to be used in fitting the propensity score P[A = 1 | W].</p></td>
+algorithms to be used in fitting the propensity score P[A = a | W].</p></td>
     </tr>
     <tr>
       <th>Q_lib</th>
@@ -175,13 +158,14 @@ algorithms to be used in fitting the outcome regression E[Y | A, W].</p></td>
       <th>cv_folds</th>
       <td><p>A <code>numeric</code> scalar indicating how many folds to use in
 performing targeted minimum loss estimation. Cross-validated estimates are
-more robust, allowing relaxing of theoretical conditions and construction of
-conservative variance estimates.</p></td>
+more robust, allowing relaxing of theoretical conditions and construction
+of conservative variance estimates.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments passed to <code><a href='https://rdrr.io/pkg/tmle/man/tmle.html'>tmle</a></code> in fitting
-the targeted minimum loss estimator of the average treatment effect.</p></td>
+      <td><p>Additional arguments passed to <code><a href='https://rdrr.io/pkg/drtmle/man/drtmle.html'>drtmle</a></code> in
+computing the targeted minimum loss estimator of the average treatment
+effect.</p></td>
     </tr>
     </table>
 

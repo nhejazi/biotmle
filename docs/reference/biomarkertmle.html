@@ -71,7 +71,7 @@ treatment, using Targeted Minimum Loss Estimation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.1</span>
       </span>
     </div>
 
@@ -95,9 +95,6 @@ treatment, using Targeted Minimum Loss Estimation." />
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable with `biotmle`</a>
-    </li>
-    <li>
-      <a href="../articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data with `biotmle`</a>
     </li>
   </ul>
 </li>
@@ -128,11 +125,20 @@ biomarker expression values under treatment and those same values under no
 treatment, using Targeted Minimum Loss Estimation.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>biomarkertmle</span>(<span class='no'>se</span>, <span class='no'>varInt</span>, <span class='kw'>normalized</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>ngscounts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bppar_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>future_param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>subj_ids</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cv_folds</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>,
-  <span class='st'>"SL.glmnet"</span>, <span class='st'>"SL.earth"</span>), <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>,
-  <span class='st'>"SL.randomForest"</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>biomarkertmle</span>(
+  <span class='no'>se</span>,
+  <span class='no'>varInt</span>,
+  <span class='kw'>normalized</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>ngscounts</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>bppar_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>future_param</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>bppar_debug</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>cv_folds</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>, <span class='st'>"SL.bayesglm"</span>, <span class='st'>"SL.glmnet"</span>),
+  <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.bayesglm"</span>, <span class='st'>"SL.earth"</span>, <span class='st'>"SL.xgboost"</span>),
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -140,8 +146,8 @@ treatment, using Targeted Minimum Loss Estimation.</p>
     <tr>
       <th>se</th>
       <td><p>A <code>SummarizedExperiment</code> containing microarray expression
-or next-generation sequencing data in the <code>assays</code> slot and a matrix of
-phenotype-level data in the <code>colData</code> slot.</p></td>
+or next-generation sequencing data in the <code>assays</code> slot and a matrix
+of phenotype-level data in the <code>colData</code> slot.</p></td>
     </tr>
     <tr>
       <th>varInt</th>
@@ -151,85 +157,84 @@ corresponding to the treatment or outcome of interest (in the
     </tr>
     <tr>
       <th>normalized</th>
-      <td><p>(logical) - whether the data included in the <code>assay</code>
-slot of the input <code>SummarizedExperiment</code> object has been normalized
-already. The default is set to <code>TRUE</code> since it is expected that most
-practitioners would apply normalization methods appropriate to the type of
-assay being analyzed. If set to <code>FALSE</code>, median normalization is
-performed for microarray (i.e., non-RNA-seq) data.</p></td>
+      <td><p>A <code>logical</code> indicating whether the data included in
+the <code>assay</code> slot of the input <code>SummarizedExperiment</code> object has
+been normalized externally. The default is set to <code>TRUE</code> with the
+expectation that an appropriate normalization method has been applied. If
+set to <code>FALSE</code>, median normalization is performed for microarray data.</p></td>
     </tr>
     <tr>
       <th>ngscounts</th>
-      <td><p>(logical) - whether the data are counts generated from a
-next-generation sequencing (NGS) experiment (e.g., RNA-seq). The default
-setting assumes continuous expression measures as generated by platforms
-that are microarray-type (i.e., so-called "targeted" assays).</p></td>
+      <td><p>A <code>logical</code> indicating whether the data are counts
+generated from a next-generation sequencing experiment (e.g., RNA-seq). The
+default setting assumes continuous expression measures as generated by
+microarray platforms.</p></td>
     </tr>
     <tr>
       <th>parallel</th>
-      <td><p>(logical) - whether or not to use parallelization in the
-estimation procedure. Invoking parallelization happens through a
+      <td><p>A <code>logical</code> of whether or not to use parallelization in
+the estimation procedure. Invoking parallelization happens through a
 combination of calls to <span class="pkg">future</span> and <span class="pkg">BiocParallel</span>. If this
 argument is set to <code>TRUE</code>, <code><a href='https://rdrr.io/pkg/future/man/multiprocess.html'>multiprocess</a></code> is used,
-and if <code>FALSE</code>, <code><a href='https://rdrr.io/pkg/future/man/sequential.html'>sequential</a></code> is used, alongside
+and, if <code>FALSE</code>, <code><a href='https://rdrr.io/pkg/future/man/sequential.html'>sequential</a></code> is used, alongside
 <code><a href='https://rdrr.io/pkg/BiocParallel/man/bplapply.html'>bplapply</a></code>. Other options for evaluation through
 futures may be invoked by setting the argument <code>future_param</code>.</p></td>
     </tr>
     <tr>
       <th>bppar_type</th>
-      <td><p>(character) - specifies the type of backend to be used with
-the parallelization invoked by <code>BiocParallel</code>. Consult the manual page
-for <code><a href='https://rdrr.io/pkg/BiocParallel/man/BiocParallelParam-class.html'>BiocParallelParam</a></code> for possible types and
+      <td><p>A <code>character</code> specifying the type of parallelization
+backend to be invoked by <code>BiocParallel</code>. Consult the manual page for
+<code><a href='https://rdrr.io/pkg/BiocParallel/man/BiocParallelParam-class.html'>BiocParallelParam</a></code> for possible types and
 descriptions on their appropriate uses. The default for this argument is
 <code>NULL</code>, which silently uses <code><a href='https://rdrr.io/pkg/BiocParallel/man/DoparParam-class.html'>DoparParam</a></code>.</p></td>
     </tr>
     <tr>
       <th>future_param</th>
-      <td><p>(character) - specifies the type of parallelization to be
-invoked when using futures for evaluation. For a list of the available
+      <td><p>A <code>character</code> specifying the parallelization type
+to be invoked when using futures for evaluation. For a list of available
 types, please consult the documentation for <code><a href='https://rdrr.io/pkg/future/man/plan.html'>plan</a></code>. The
 default setting (this argument set to <code>NULL</code>) silently invokes
-<code><a href='https://rdrr.io/pkg/future/man/multiprocess.html'>multiprocess</a></code>. Be careful if changing this setting.</p></td>
+<code><a href='https://rdrr.io/pkg/future/man/multiprocess.html'>multiprocess</a></code>.</p></td>
     </tr>
     <tr>
-      <th>subj_ids</th>
-      <td><p>(numeric vector) - subject IDs to be passed directly to
-the same subject should have the exact same numerical identifier; coerced to
-class <code>numeric</code> if not provided in the appropriate form.</p></td>
+      <th>bppar_debug</th>
+      <td><p>A <code>logical</code> indicating whether or not to rely upon
+pkgBiocParallel. Setting this argument to <code>TRUE</code>, replaces the call
+to <code><a href='https://rdrr.io/pkg/BiocParallel/man/bplapply.html'>bplapply</a></code> by a call to <code>lapply</code>, which
+significantly reduces the overhead of debugging. Note that invoking this
+option overrides all other parallelization arguments.</p></td>
     </tr>
     <tr>
       <th>cv_folds</th>
       <td><p>A <code>numeric</code> scalar indicating how many folds to use in
-performing targeted minimum loss estimation. Cross-validated estimates are
-more robust, allowing relaxing of theoretical conditions and construction of
-conservative variance estimates.</p></td>
+performing targeted minimum loss estimation. Cross-validated estimates have
+been demonstrated to allow relaxation of certain theoretical conditions and
+and accommodate the construction of more conservative variance estimates.</p></td>
     </tr>
     <tr>
       <th>g_lib</th>
-      <td><p>(char vector) - library of learning algorithms to be used in
-fitting the propensity score E[A | W] (the nuisance parameter denoted "g" in
-the literature on targeted minimum loss-based estimation).</p></td>
+      <td><p>A <code>character</code> vector specifying the library of machine
+learning algorithms for use in fitting the propensity score P(A = a | W).</p></td>
     </tr>
     <tr>
       <th>Q_lib</th>
-      <td><p>(char vector) - library of learning algorithms to be used in
-fitting the outcome regression E[Y | A, W] (the nuisance parameter denoted
-"Q" in the literature on targeted minimum loss-based estimation).</p></td>
+      <td><p>A <code>character</code> vector specifying the library of machine
+learning algorithms for use in fitting the outcome regression E[Y | A,W].</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional arguments to be passed to <code><a href='https://rdrr.io/pkg/tmle/man/tmle.html'>tmle</a></code> in
-fitting the targeted minimum loss estimator of the average treatment effect.</p></td>
+      <td><p>Additional arguments to be passed to <code><a href='https://rdrr.io/pkg/drtmle/man/drtmle.html'>drtmle</a></code>
+in computing the targeted minimum loss estimator of the average treatment
+effect.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>S4 object of class <code>biotmle</code>, generated by sub-classing
- <code>SummarizedExperiment</code>, with additional slots containing <code>tmleOut</code>
- and <code>call</code>, among others, containing TMLE-based estimates of the
- relationship between a biomarker and exposure or outcome variable and the
- original call to this function (for user reference), respectively.</p>
+    <p>S4 object of class <code>biotmle</code>, inheriting from
+ <code>SummarizedExperiment</code>, with additional slots <code>tmleOut</code> and
+ <code>call</code>, among others, containing TML estimates of the ATE of exposure
+ on biomarker expression.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)</div><div class='output co'>#&gt; <span class='message'></span>
@@ -252,23 +257,21 @@ fitting the targeted minimum loss estimator of the average treatment effect.</p>
 #&gt; <span class='message'>    filter, lag</span></div><div class='output co'>#&gt; <span class='message'>The following objects are masked from ‘package:base’:</span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    intersect, setdiff, setequal, union</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>biotmleData</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>SuperLearner</span>)</div><div class='output co'>#&gt; <span class='message'>Loading required package: nnls</span></div><div class='output co'>#&gt; <span class='message'>Super Learner</span></div><div class='output co'>#&gt; <span class='message'>Version: 2.0-26</span></div><div class='output co'>#&gt; <span class='message'>Package created on 2019-10-27</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>SummarizedExperiment</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>illuminaData</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>SummarizedExperiment</span>)
-<span class='st'>"%ni%"</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Negate</a></span>(<span class='st'>"%in%"</span>)
 
 <span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>() <span class='kw'>%&gt;%</span>
   <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>age</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>age</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>(<span class='no'>age</span>))) <span class='kw'>%&gt;%</span>
   <span class='fu'>DataFrame</span>()
-
-<span class='no'>varInt_index</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>)) <span class='kw'>%in%</span> <span class='st'>"benzene"</span>)
+<span class='no'>benz_idx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>)) <span class='kw'>%in%</span> <span class='st'>"benzene"</span>)
 
 <span class='no'>biomarkerTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'>biomarkertmle</span>(
   <span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>illuminaData</span>[<span class='fl'>1</span>:<span class='fl'>2</span>, ],
-  <span class='kw'>varInt</span> <span class='kw'>=</span> <span class='no'>varInt_index</span>,
+  <span class='kw'>varInt</span> <span class='kw'>=</span> <span class='no'>benz_idx</span>,
   <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>),
-  <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='st'>"SL.glm"</span>
+  <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.bayesglm"</span>, <span class='st'>"SL.glmnet"</span>)
 )</div><div class='output co'>#&gt; <span class='warning'>Warning: Sequential evaluation over many probes may take a long time.</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: globals</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: future</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Attaching package: ‘future’</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:SummarizedExperiment’:</span>
 #&gt; <span class='message'></span>
@@ -278,8 +281,7 @@ fitting the targeted minimum loss estimator of the average treatment effect.</p>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>    values</span></div><div class='output co'>#&gt; <span class='message'>The following object is masked from ‘package:S4Vectors’:</span>
 #&gt; <span class='message'></span>
-#&gt; <span class='message'>    values</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: foreach</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: iterators</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: nnls</span></div><div class='input'>#
-</div></pre>
+#&gt; <span class='message'>    values</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: foreach</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: iterators</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: nloptr</span></div><div class='output co'>#&gt; <span class='message'>Loading required package: quadprog</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: arm</span></div><div class='output co'>#&gt; <span class='message'>Loading required namespace: glmnet</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

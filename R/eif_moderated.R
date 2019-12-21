@@ -51,7 +51,7 @@
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 modtest_ic <- function(biotmle,
                        adjust = "BH",
-                       pval_type = c("logistic", "normal"),
+                       pval_type = c("normal", "logistic"),
                        ...) {
   # check for input type and set argument defaults
   assertthat::assert_that(is(biotmle, "bioTMLE"))
