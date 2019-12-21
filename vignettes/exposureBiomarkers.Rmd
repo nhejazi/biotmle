@@ -44,6 +44,7 @@ library(biotmleData)
 library(SuperLearner)
 library(SummarizedExperiment, quietly=TRUE)
 data(illuminaData)
+set.seed(13847)
 ```
 
 In order to perform Targeted Minimum Loss-Based Estimation, we need three
@@ -76,7 +77,10 @@ the design matrix. We demonstrate the necessary syntax for calling the
 `biomarkertmle` function below, on a small number of the probes:
 
 ```{r biomarkerTMLE_eval, message=FALSE, warning=FALSE}
-probe_idx <- sample(nrow(illuminaData), 15)
+# sample probe IDs
+probe_idx <- sample(nrow(illuminaData), 10)
+
+# compute TML estimates to evaluate differentially expressed biomarkers
 biotmle_out <- biomarkertmle(se = illuminaData[probe_idx, ],
                              varInt = benz_idx,
                              g_lib = c("SL.mean", "SL.glm"),
