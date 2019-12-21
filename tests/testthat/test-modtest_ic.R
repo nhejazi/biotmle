@@ -37,6 +37,6 @@ test_that("modtest_ic output contains data frame in topTable slot", {
 test_that("topTable slot has most column names produced by limma::topTable", {
   expect_named(
     limmaTMLEout@topTable,
-    c("AveExpr", "t", "P.Value", "adj.P.Val", "B", "ID")
+    c("ID", "AveExpr", "t", "P.Value", "adj.P.Val", "B", "var_bayes")
   )
 })

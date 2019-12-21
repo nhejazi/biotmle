@@ -16,11 +16,12 @@
 #'  settings where multiple hypothesis testing is a concern.
 #' @param ... Other arguments to be passed directly to \code{limma::topTable}.
 #'
-#' @importFrom stats plogis
-#' @importFrom tibble as_tibble
-#' @importFrom assertthat assert_that
-#' @importFrom limma lmFit eBayes topTable
 #' @importFrom methods is
+#' @importFrom dplyr "%>%"
+#' @importFrom stats plogis p.adjust
+#' @importFrom limma lmFit eBayes topTable
+#' @importFrom tibble as_tibble rownames_to_column
+#' @importFrom assertthat assert_that
 #'
 #' @return \code{biotmle} object containing output from \code{limma::lmFit} and
 #'  \code{limma::topTable}
@@ -56,12 +57,15 @@ modtest_ic <- function(biotmle,
   # check for input type and set argument defaults
   assertthat::assert_that(is(biotmle, "bioTMLE"))
   pval_type <- match.arg(pval_type)
+
+  # extract influence function estimates and number of observations
   biomarkertmle_out <- as.matrix(biotmle@tmleOut)
+  n_obs <- nrow(colData(biotmle))
 
   # build design matrix for forcing limma to only perform shrinkage
   fit <- limma::lmFit(
     object = biomarkertmle_out,
-    design = rep(1, nrow(colData(biotmle)))
+    design = rep(1, n_obs)
   )
   fit <- limma::eBayes(fit = fit)
 
@@ -73,20 +77,25 @@ modtest_ic <- function(biotmle,
     adjust.method = adjust,
     sort.by = "none",
     ...
-  )
-
-  # remove log-fold change slot from output and overwrite expression with ATE
-  tt$logFC <- NULL
-  tt$AveExpr <- biotmle@ateOut
+  ) %>%
+    tibble::rownames_to_column(var = "ID") %>%
+    tibble::as_tibble() %>%
+    mutate(
+      # remove log-fold change and overwrite average expression with ATE
+      logFC = NULL,
+      AveExpr = biotmle@ateOut,
+      var_bayes = fit$s2.post / n_obs,
+    )
 
   # use logistic distribution as reference for p-values by default
   if (pval_type == "logistic") {
     p_val <- 2 * stats::plogis(-abs(tt$t), location = 0, scale = sqrt(3) / pi)
+    p_val_adj <- stats::p.adjust(p_val, method = adjust)
     tt$P.Value <- p_val
+    tt$adj.P.Val <- p_val_adj
   }
 
-  # clean up for output
-  tt$ID <- rownames(tt)
-  biotmle@topTable <- tibble::as_tibble(tt)
+  # store in slot of output object
+  biotmle@topTable <- tt
   return(biotmle)
 }
