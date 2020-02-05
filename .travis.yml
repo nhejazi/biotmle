@@ -20,13 +20,17 @@ r:
   - bioc-devel
 
 before_install:
-  - Rscript -e 'BiocManager::install(version = "devel", ask = FALSE)'
+  - Rscript -e 'BiocManager::install(ask = FALSE)'
 
 r_packages:
   - devtools
   - sessioninfo
   - covr
   - BiocManager
+  - future
+  - doFuture
+  - drtmle
+  - superheat
 
 r_github_packages:
   - r-lib/sessioninfo
