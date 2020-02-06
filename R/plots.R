@@ -37,7 +37,7 @@
 #'   varInt = benz_idx,
 #'   parallel = FALSE,
 #'   g_lib = c("SL.mean", "SL.glm"),
-#'   Q_lib = c("SL.bayesglm", "SL.glmnet")
+#'   Q_lib = c("SL.bayesglm", "SL.glm")
 #' )
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
@@ -121,7 +121,7 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #'   varInt = benz_idx,
 #'   parallel = FALSE,
 #'   g_lib = c("SL.mean", "SL.glm"),
-#'   Q_lib = c("SL.bayesglm", "SL.glmnet")
+#'   Q_lib = c("SL.bayesglm", "SL.glm")
 #' )
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
@@ -211,7 +211,7 @@ utils::globalVariables(c(
 #'   varInt = benz_idx,
 #'   parallel = FALSE,
 #'   g_lib = c("SL.mean", "SL.glm"),
-#'   Q_lib = c("SL.bayesglm", "SL.glmnet")
+#'   Q_lib = c("SL.bayesglm", "SL.glm")
 #' )
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
