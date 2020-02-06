@@ -70,7 +70,7 @@ log raw p-values from the moderated t-test." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.2</span>
       </span>
     </div>
 
@@ -94,9 +94,6 @@ log raw p-values from the moderated t-test." />
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable with `biotmle`</a>
-    </li>
-    <li>
-      <a href="../articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data with `biotmle`</a>
     </li>
   </ul>
 </li>
@@ -126,7 +123,7 @@ log raw p-values from the moderated t-test." />
 log raw p-values from the moderated t-test.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>volcano_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>fc_bound</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>pval_bound</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</pre>
+    <pre class="usage"><span class='fu'>volcano_ic</span>(<span class='no'>biotmle</span>, <span class='kw'>ate_bound</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>pval_bound</span> <span class='kw'>=</span> <span class='fl'>0.2</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -137,16 +134,16 @@ log raw p-values from the moderated t-test.</p>
 call to <code>biomarkertmle</code></p></td>
     </tr>
     <tr>
-      <th>fc_bound</th>
-      <td><p>(numeric) - indicates the highest magnitude of the fold to be
-colored along the x-axis of the volcano plot; this limits the observations
-to be considered differentially expressed to those in a user-specified
-interval.</p></td>
+      <th>ate_bound</th>
+      <td><p>A <code>numeric</code> indicating the highest magnitude of the
+average treatment effect to be colored on the x-axis of the volcano plot;
+this limits the observations to be considered differentially expressed to
+those in a user-specified interval.</p></td>
     </tr>
     <tr>
       <th>pval_bound</th>
-      <td><p>(numeric) - indicates the largest corrected p-value to be
-colored along the y-axis of the volcano plot; this limits observations
+      <td><p>A <code>numeric</code> indicating the largest corrected p-value
+to be colored on the y-axis of the volcano plot; this limits observations
 considered as differentially expressed to those in a user-specified
 interval.</p></td>
     </tr>
@@ -159,15 +156,31 @@ interval.</p></td>
  p-value computed from the moderated tests in <code>modtest_ic</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>dplyr</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>biotmleData</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>SuperLearner</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>SummarizedExperiment</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>biomarkertmleOut</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>illuminaData</span>)
+
+<span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>() <span class='kw'>%&gt;%</span>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>age</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='no'>age</span> <span class='kw'>&gt;</span> <span class='fu'><a href='https://rdrr.io/r/stats/median.html'>median</a></span>(<span class='no'>age</span>))) <span class='kw'>%&gt;%</span>
+  <span class='fu'>DataFrame</span>()
+<span class='no'>benz_idx</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>illuminaData</span>)) <span class='kw'>%in%</span> <span class='st'>"benzene"</span>)
+
+<span class='no'>biomarkerTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='biomarkertmle.html'>biomarkertmle</a></span>(
+  <span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>illuminaData</span>,
+  <span class='kw'>varInt</span> <span class='kw'>=</span> <span class='no'>benz_idx</span>,
+  <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>g_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.mean"</span>, <span class='st'>"SL.glm"</span>),
+  <span class='kw'>Q_lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"SL.bayesglm"</span>, <span class='st'>"SL.glmnet"</span>)
+)
 
 <span class='no'>limmaTMLEout</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='modtest_ic.html'>modtest_ic</a></span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>biomarkerTMLEout</span>)
 
-<span class='fu'>volcano_ic</span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>limmaTMLEout</span>)</div><div class='img'><img src='volcano_ic-1.png' alt='' width='700' height='433' /></div><div class='input'>#
-</div></pre>
+<span class='fu'>volcano_ic</span>(<span class='kw'>biotmle</span> <span class='kw'>=</span> <span class='no'>limmaTMLEout</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

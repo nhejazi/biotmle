@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transformation utility for using "voom" with biomarker TMLE procedure — rnaseq_ic • biotmle</title>
+<title>Utility for using voom transformation with TMLE for biomarker discovery — rnaseq_ic • biotmle</title>
 
 
 <!-- jquery -->
@@ -35,7 +35,7 @@
 
 
 
-<meta property="og:title" content="Transformation utility for using "voom" with biomarker TMLE procedure — rnaseq_ic" />
+<meta property="og:title" content="Utility for using voom transformation with TMLE for biomarker discovery — rnaseq_ic" />
 <meta property="og:description" content="This function prepares next-generation sequencing data (counts) for use with
 the biomarker TMLE procedure by invoking the voom transform of limma." />
 <meta name="twitter:card" content="summary" />
@@ -70,7 +70,7 @@ the biomarker TMLE procedure by invoking the voom transform of limma." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.2</span>
       </span>
     </div>
 
@@ -95,9 +95,6 @@ the biomarker TMLE procedure by invoking the voom transform of limma." />
     <li>
       <a href="../articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable with `biotmle`</a>
     </li>
-    <li>
-      <a href="../articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data with `biotmle`</a>
-    </li>
   </ul>
 </li>
       </ul>
@@ -116,7 +113,7 @@ the biomarker TMLE procedure by invoking the voom transform of limma." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Transformation utility for using "voom" with biomarker TMLE procedure</h1>
+    <h1>Utility for using voom transformation with TMLE for biomarker discovery</h1>
     
     <div class="hidden name"><code>rnaseq_ic.Rd</code></div>
     </div>
@@ -133,18 +130,18 @@ the biomarker TMLE procedure by invoking the voom transform of <code>limma</code
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>biotmle</th>
-      <td><p>(bioTMLE) - subclass of <code>SummarizedExperiment</code> containing
-next-generation sequencing (NGS) count data in the "assays" slot.</p></td>
+      <td><p>A <code>bioTMLE</code> object containing next-generation sequencing
+count data in its "assays" slot.</p></td>
     </tr>
     <tr>
       <th>weights</th>
-      <td><p>(logical) - whether to return quality weights of samples in
-the output object.</p></td>
+      <td><p>A <code>logical</code> indicating whether to return quality weights
+of samples in the output object.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>- other arguments to be passed to functions <code><a href='https://rdrr.io/pkg/limma/man/voom.html'>limma::voom</a></code> or
-<code><a href='https://rdrr.io/pkg/limma/man/voomWithQualityWeights.html'>limma::voomWithQualityWeights</a></code> as appropriate.</p></td>
+      <td><p>Other arguments to be passed to <code><a href='https://rdrr.io/pkg/limma/man/voom.html'>voom</a></code> or
+<code><a href='https://rdrr.io/pkg/limma/man/voomWithQualityWeights.html'>voomWithQualityWeights</a></code> as appropriate.</p></td>
     </tr>
     </table>
 

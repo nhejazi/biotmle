@@ -4,17 +4,16 @@
 \alias{heatmap_ic}
 \title{Heatmap for class biotmle}
 \usage{
-heatmap_ic(x, ..., design, FDRcutoff = 0.05, type = c("top", "all"),
-  top = 25)
+heatmap_ic(x, ..., design, FDRcutoff = 0.25, type = c("top", "all"), top = 25)
 }
 \arguments{
-\item{x}{Object of class \code{biotmle} as produced by an appropriate call to
-\code{biomarkertmle}}
+\item{x}{Object of class \code{biotmle} as produced by an appropriate call
+to \code{biomarkertmle}.}
 
 \item{...}{additional arguments passed to \code{superheat::superheat} as
 necessary}
 
-\item{design}{A vector providing the contrast to be displayed in the heatmap.}
+\item{design}{A vector giving the contrast to be displayed in the heatmap.}
 
 \item{FDRcutoff}{Cutoff to be used in controlling the False Discovery Rate.}
 
@@ -24,35 +23,39 @@ necessary}
 \item{top}{Number of identified biomarkers to plot in the heatmap.}
 }
 \value{
-heatmap (from the superheat package) using hierarchical clustering to
- plot the changes in the variable importance measure for all subjects across
- a specified top number of biomarkers.
+heatmap (from \pkg{superheat}) using hierarchical clustering to plot
+ the changes in the variable importance measure for all subjects across a
+ specified top number of biomarkers.
 }
 \description{
-Heatmap of the contributions of a select subset of biomarkers to the variable
+Heatmap of contributions of a select subset of biomarkers to the variable
 importance measure changes as assessed by influence curve-based estimation,
-across all subjects. The heatmap produced performs supervised clustering, in
-the sense first described in Pollard & van der Laan (2008)
-<doi:10.2202/1544-6115.1404>.
+across all subjects. The heatmap produced performs supervised clustering, as
+per Pollard & van der Laan (2008) <doi:10.2202/1544-6115.1404>.
 }
 \examples{
+\dontrun{
 library(dplyr)
 library(biotmleData)
 library(SummarizedExperiment)
 data(illuminaData)
-data(biomarkertmleOut)
 
 colData(illuminaData) <- colData(illuminaData) \%>\%
   data.frame() \%>\%
   dplyr::mutate(age = as.numeric(age > median(age))) \%>\%
   DataFrame()
+benz_idx <- which(names(colData(illuminaData)) \%in\% "benzene")
 
-varInt_index <- which(names(colData(illuminaData)) \%in\% "benzene")
-designVar <- as.data.frame(colData(illuminaData))[, varInt_index]
-design <- as.numeric(designVar == max(designVar))
+biomarkerTMLEout <- biomarkertmle(
+  se = illuminaData,
+  varInt = benz_idx,
+  parallel = FALSE,
+  g_lib = c("SL.mean", "SL.glm"),
+  Q_lib = c("SL.bayesglm", "SL.glm")
+)
 
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
 heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 15)
-#
+}
 }

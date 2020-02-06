@@ -1,20 +1,15 @@
+context("biomarkertmle estimation function.")
 library(dplyr)
 library(biotmleData)
+library(SuperLearner)
 library(SummarizedExperiment)
 data(illuminaData)
-"%ni%" <- Negate("%in%")
 
-context("biomarkertmle estimation function.")
-
-################################################################################
 ## SETUP TESTS #################################################################
-################################################################################
-
 colData(illuminaData) <- colData(illuminaData) %>%
   data.frame() %>%
   dplyr::mutate(age = as.numeric(age > median(age))) %>%
   DataFrame()
-
 varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
 
 biomarkerTMLEout <- biomarkertmle(
@@ -25,10 +20,7 @@ biomarkerTMLEout <- biomarkertmle(
   Q_lib = "SL.mean"
 )
 
-################################################################################
 ## BEGIN TESTS #################################################################
-################################################################################
-
 test_that("biomarkertmle output object is of class type S4", {
   expect_equivalent(typeof(biomarkerTMLEout), "S4")
 })

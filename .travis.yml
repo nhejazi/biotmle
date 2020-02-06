@@ -20,13 +20,27 @@ r:
   - bioc-devel
 
 before_install:
-  - Rscript -e 'BiocManager::install(version = "devel", ask = FALSE)'
+  - Rscript -e 'BiocManager::install(ask = FALSE)'
+
+
+addons:
+   apt:
+     update: true
+     sources:
+       - sourceline: 'ppa:cran/imagemagick'
+     packages:
+       - libmagick++-dev
 
 r_packages:
   - devtools
   - sessioninfo
   - covr
   - BiocManager
+  - future
+  - doFuture
+  - drtmle
+  - superheat
+  - magick
 
 r_github_packages:
   - r-lib/sessioninfo

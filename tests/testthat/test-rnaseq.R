@@ -1,13 +1,9 @@
+context("Utilities for RNA-seq data.")
 library(SummarizedExperiment)
 library(biotmleData)
 data(illuminaData)
 
-context("Utilities for next-generation / RNA-seq data.")
-
-################################################################################
 ## SETUP TESTS #################################################################
-################################################################################
-
 set.seed(6423709)
 n <- 50
 g <- 2500
@@ -40,13 +36,9 @@ biotmle <- .biotmle(
   tmleOut = as.data.frame(matrix(NA, 10, 10)),
   topTable = as.data.frame(matrix(NA, 10, 10))
 )
-
 voom_out <- rnaseq_ic(biotmle)
 
-################################################################################
 ## BEGIN TESTS #################################################################
-################################################################################
-
 test_that("Object returned by RNA-seq tools matches output of voom", {
   expect_is(voom_out, "EList")
 })

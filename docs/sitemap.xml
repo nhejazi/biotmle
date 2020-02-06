@@ -7,9 +7,6 @@
     <loc>https://code.nimahejazi.org/biotmle/reference/bioTMLE-class.html</loc>
   </url>
   <url>
-    <loc>https://code.nimahejazi.org/biotmle/reference/biomarkerTMLE_exposure.html</loc>
-  </url>
-  <url>
     <loc>https://code.nimahejazi.org/biotmle/reference/biomarkertmle.html</loc>
   </url>
   <url>
@@ -17,6 +14,9 @@
   </url>
   <url>
     <loc>https://code.nimahejazi.org/biotmle/reference/eif.html</loc>
+  </url>
+  <url>
+    <loc>https://code.nimahejazi.org/biotmle/reference/exp_biomarkertmle.html</loc>
   </url>
   <url>
     <loc>https://code.nimahejazi.org/biotmle/reference/heatmap_ic.html</loc>
@@ -38,8 +38,5 @@
   </url>
   <url>
     <loc>https://code.nimahejazi.org/biotmle/articles/exposureBiomarkers.html</loc>
-  </url>
-  <url>
-    <loc>https://code.nimahejazi.org/biotmle/articles/rnaseqProcessing.html</loc>
   </url>
 </urlset>

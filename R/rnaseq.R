@@ -1,18 +1,20 @@
-#' Transformation utility for using "voom" with biomarker TMLE procedure
+#' Utility for using voom transformation with TMLE for biomarker discovery
 #'
 #' This function prepares next-generation sequencing data (counts) for use with
 #' the biomarker TMLE procedure by invoking the voom transform of \code{limma}.
 #'
-#' @param biotmle (bioTMLE) - subclass of \code{SummarizedExperiment} containing
-#'  next-generation sequencing (NGS) count data in the "assays" slot.
-#' @param weights (logical) - whether to return quality weights of samples in
-#'  the output object.
-#' @param ... - other arguments to be passed to functions \code{limma::voom} or
-#'  \code{limma::voomWithQualityWeights} as appropriate.
+#' @param biotmle A \code{bioTMLE} object containing next-generation sequencing
+#'  count data in its "assays" slot.
+#' @param weights A \code{logical} indicating whether to return quality weights
+#'  of samples in the output object.
+#' @param ... Other arguments to be passed to \code{\link[limma]{voom}} or
+#'  \code{\link[limma]{voomWithQualityWeights}} as appropriate.
 #'
 #' @importFrom tibble as_tibble
 #' @importFrom limma voom voomWithQualityWeights
 #' @importFrom SummarizedExperiment assay
+#' @importFrom assertthat assert_that
+#' @importFrom methods is
 #'
 #' @export rnaseq_ic
 #'
@@ -21,10 +23,9 @@
 #'  passed into the biomarker TMLE procedure.
 #
 rnaseq_ic <- function(biotmle, weights = TRUE, ...) {
-
   # check arguments
-  stopifnot(class(biotmle) == "bioTMLE")
-  stopifnot(class(weights) == "logical")
+  assertthat::assert_that(is(biotmle, "bioTMLE"))
+  assertthat::assert_that(is.logical(weights))
 
   # extract count data from appropriate slot of SummarizedExperiment object
   ngs_data <- tibble::as_tibble(assay(biotmle))

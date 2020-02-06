@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.2</span>
       </span>
     </div>
 
@@ -56,9 +56,6 @@
 <li>
       <a href="../articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable with `biotmle`</a>
     </li>
-    <li>
-      <a href="../articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data with `biotmle`</a>
-    </li>
   </ul>
 </li>
       </ul>
@@ -77,9 +74,9 @@
     <div class="page-header toc-ignore">
       <h1>Identifying Biomarkers from an Exposure Variable with <code>biotmle</code>
 </h1>
-                        <h4 class="author"><a href="https://nimahejazi.org">Nima Hejazi</a></h4>
+                        <h4 class="author">Nima Hejazi</h4>
             
-            <h4 class="date">2019-10-29</h4>
+            <h4 class="date">2019-12-21</h4>
       
       
       <div class="hidden name"><code>exposureBiomarkers.Rmd</code></div>
@@ -102,62 +99,60 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(biotmle)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(biotmleData)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(illuminaData)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/message.html">suppressMessages</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(SummarizedExperiment))</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="st">"%ni%"</span> =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/funprog.html">Negate</a></span>(<span class="st">"%in%"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(SuperLearner)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(SummarizedExperiment, <span class="dt">quietly=</span><span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(illuminaData)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="dv">13847</span>)</a></code></pre></div>
 <p>In order to perform Targeted Minimum Loss-Based Estimation, we need three separate data structures: (1) <em>W</em>, baseline covariates that could potentially confound the association of biomarkers with the exposure of interest; (2) <em>A</em>, the exposure of interest; and (3) <em>Y</em>, the biomarkers of interest. All values in <em>W</em> and <em>A</em> ought to be discretized, in order to avoid practical violations of the assumption of positivity. With the <code>illuminaData</code> data set below, we discretize the age variable in the phenotype-level data below (this can be accessed via the <code>colData</code> of the <code>SummarizedExperiment</code> object). To invoke the biomarker assessment function (<code>biomarkertmle</code>), we also need to specify a variable of interest (or the position of said variable in the design matrix). We do both in just a few lines below:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># discretize "age" in the phenotype-level data</span></a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span>(illuminaData) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span>(illuminaData) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span>data.frame <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="dt">age =</span> <span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(age <span class="op">&gt;</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/median.html">median</a></span>(age))) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span>DataFrame</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="co"># specify column index of treatment/exposure variable of interest</span></a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">varInt_index &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span>(illuminaData)) <span class="op">%in%</span><span class="st"> "benzene"</span>)</a></code></pre></div>
-<p>The TMLE-based biomarker discovery process can be invoked using the <code>biomarkertmle</code> function. The procedure is quite resource-intensive because it evaluates the association of each individual potential biomarker (of which there are over 20,000 in the included data set) with an exposure of interest, while accounting for potential confounding based on all other covariates included in the design matrix. We demonstrate the necessary syntax for calling <code>biomarkertmle</code> below:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">biomarkerTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/biomarkertmle.html">biomarkertmle</a></span>(<span class="dt">se =</span> illuminaData,</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">                                  <span class="dt">varInt =</span> varInt_index,</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">                                  <span class="dt">g_lib =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">                                            <span class="st">"SL.polymars"</span>, <span class="st">"SL.mean"</span>),</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">                                  <span class="dt">Q_lib =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SL.glmnet"</span>, <span class="st">"SL.randomForest"</span>,</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">                                            <span class="st">"SL.nnet"</span>, <span class="st">"SL.mean"</span>)</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">                                 )</a></code></pre></div>
+<a class="sourceLine" id="cb2-6" data-line-number="6">benz_idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span>(illuminaData)) <span class="op">%in%</span><span class="st"> "benzene"</span>)</a></code></pre></div>
+<p>The TMLE-based biomarker discovery process can be invoked using the <code>biomarkertmle</code> function. The procedure is quite resource-intensive because it evaluates the association of each individual potential biomarker (of which there are over 20,000 in the included data set) with an exposure of interest, while accounting for potential confounding based on all other covariates included in the design matrix. We demonstrate the necessary syntax for calling the <code>biomarkertmle</code> function below, on a small number of the probes:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># compute TML estimates to evaluate differentially expressed biomarkers</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">biotmle_out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/biomarkertmle.html">biomarkertmle</a></span>(<span class="dt">se =</span> illuminaData[<span class="dv">1</span><span class="op">:</span><span class="dv">20</span>, ],</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">                             <span class="dt">varInt =</span> benz_idx,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">                             <span class="dt">g_lib =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SL.mean"</span>, <span class="st">"SL.glm"</span>),</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">                             <span class="dt">Q_lib =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"SL.bayesglm"</span>, <span class="st">"SL.xgboost"</span>),</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">                             <span class="dt">cv_folds =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">                             <span class="dt">parallel =</span> <span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">                            )</a></code></pre></div>
 <p>The output of <code>biomarkertmle</code> is an object of class <code>bioTMLE</code>, containing four new slots: (1) <code>call</code>, the call to <code>biomarkertmle</code>; (2) <code>topTable</code>, an empty slot meant to hold the output of <code><a href="https://rdrr.io/pkg/limma/man/toptable.html">limma::topTable</a></code>, after a later call to <code>modtest_ic</code>; and (3) <code>tmleOut</code>, a <code>data.frame</code> containing the point estimates of the associations of each biomarker with the exposure of interest based on the influence curve representation of the Average Treatment Effect.</p>
 <p>The output of <code>biomarkertmle</code> can be directly fed to <code>modtest_ic</code>, a wrapper around <code><a href="https://rdrr.io/pkg/limma/man/lmFit.html">limma::lmFit</a></code> and <code><a href="https://rdrr.io/pkg/limma/man/toptable.html">limma::topTable</a></code> that outputs a <code>biotmle</code> object with the slots described above completely filled in. The <code>modtest_ic</code> function requires as input a <code>biotmle</code> object containing a data frame in the <code>tmleOut</code> field as well as a design matrix indicating the groupwise difference to be tested. The design matrix should contain an intercept term and a term for the exposure of interest (with discretized exposure levels). <em>Based on the relevant statistical theory, it is not appropriate to include any further terms in the design matrix (n.b., this differs from standard calls to <code><a href="https://rdrr.io/pkg/limma/man/lmFit.html">limma::lmFit</a></code>)</em>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">limmaTMLEout &lt;-<span class="st"> </span><span class="kw"><a href="../reference/modtest_ic.html">modtest_ic</a></span>(<span class="dt">biotmle =</span> biomarkerTMLEout)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">modtmle_out &lt;-<span class="st"> </span><span class="kw"><a href="../reference/modtest_ic.html">modtest_ic</a></span>(<span class="dt">biotmle =</span> biotmle_out)</a></code></pre></div>
 <p>After invoking <code>modtest_ic</code>, the resultant <code>bioTMLE</code> object will contain all information relevant to the analytic procedure for identifying biomarkers: that is, it will contain the original call to <code>biomarkertmle</code>, the result of running <code><a href="https://rdrr.io/pkg/limma/man/toptable.html">limma::topTable</a></code>, and the result of running <code>biomarkertmle</code>. The statistical results of this procedure can be extracted from the <code>topTable</code> object in the <code>bioTMLE</code> object produced by <code>modtest_ic</code>.</p>
 <hr>
 </div>
 <div id="visualization-of-results" class="section level2">
 <h2 class="hasAnchor">
 <a href="#visualization-of-results" class="anchor"></a>Visualization of Results</h2>
-<p>This package provides several plotting methods that can be used to visualize the results of the TMLE-based biomarker discovery process.</p>
+<p>This package provides several plotting methods that can be used to visualize the results of the TMLE-based biomarker discovery process. We demonstrate the syntax for calling the generic plotting methods below but refrain from showing the plots themselves since they are not particularly informative.</p>
 <p>The <code>plot</code> method for a <code>bioTMLE</code> object will produce a histogram of the adjusted p-values of each biomarker (based on the Benjamini-Hochberg procedure for controlling the False Discovery Rate) as generated by <code><a href="https://rdrr.io/pkg/limma/man/toptable.html">limma::topTable</a></code>:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_adj"</span>)</a></code></pre></div>
-<p><img src="exposureBiomarkers_files/figure-html/pval_hist_limma_adjp-1.png" width="700"></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> modtmle_out, <span class="dt">type =</span> <span class="st">"pvals_adj"</span>)</a></code></pre></div>
 <p>Setting the argument <code>type = "pvals_raw"</code> will instead produce a histogram of the raw p-values <em>(these are less informative and should, in general, not be used for inferential purposes, as the computation producing these p-values ignores the multiple testing nature of the biomarker discovery problem)</em>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">type =</span> <span class="st">"pvals_raw"</span>)</a></code></pre></div>
-<p><img src="exposureBiomarkers_files/figure-html/pval_hist_limma_rawp-1.png" width="700"></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(<span class="dt">x =</span> modtmle_out, <span class="dt">type =</span> <span class="st">"pvals_raw"</span>)</a></code></pre></div>
 <p>Heatmaps are useful graphics for visualizing the relationship between measures on genomic objects and covariates of interest. The <code>heatmap_ic</code> function provides this graphic for <code>bioTMLE</code> objects, allowing for the relationship between the exposure variable and some number of “top” biomarkers (as determined by the call to <code>modtest_ic</code>) to be visualized. In general, the heatmap for <code>bioTMLE</code> objects expresses how the contributions of each biomarker to the Average Treatment Effect (ATE) vary across differences in the exposure variable (that is, there is a causal interpretation to the findings). The plot produced is a <code>ggplot2</code> object and can be modified in place if stored properly. For our analysis:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">varInt_index &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span>(illuminaData)) <span class="op">%in%</span><span class="st"> "benzene"</span>)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">designVar &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span>(illuminaData))[, varInt_index]</a>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">benz_idx &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span>(illuminaData)) <span class="op">%in%</span><span class="st"> "benzene"</span>)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">designVar &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">colData</a></span>(illuminaData))[, benz_idx]</a>
 <a class="sourceLine" id="cb7-3" data-line-number="3">designVar &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(designVar <span class="op">==</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(designVar))</a>
 <a class="sourceLine" id="cb7-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co"># build heatmap</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> limmaTMLEout, <span class="dt">left.label =</span> <span class="st">"none"</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw"><a href="../reference/heatmap_ic.html">heatmap_ic</a></span>(<span class="dt">x =</span> modtmle_out, <span class="dt">left.label =</span> <span class="st">"none"</span>, <span class="dt">scale =</span> <span class="ot">TRUE</span>,</a>
 <a class="sourceLine" id="cb7-7" data-line-number="7">           <span class="dt">clustering.method =</span> <span class="st">"hierarchical"</span>, <span class="dt">row.dendrogram =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8">           <span class="dt">design =</span> designVar, <span class="dt">FDRcutoff =</span> <span class="fl">0.05</span>, <span class="dt">top =</span> <span class="dv">25</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb7-8" data-line-number="8">           <span class="dt">design =</span> designVar, <span class="dt">FDRcutoff =</span> <span class="dv">1</span>, <span class="dt">top =</span> <span class="dv">10</span>)</a></code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/heatmap_limma_results-1.png" width="700"></p>
-<p>The heatmap produced in this way is actually a form of <em>supervised clustering</em>, as described more generally (“supervised distance matrices”) by <span class="citation">Pollard and van der Laan (2008)</span>, wherein the notion of deriving clustering procedures from the results of supervised learning methods is formulated. Since the heatmap is based on the contributions of observations to the efficient influence function (EIF) of the target parameter, it directly visualizes the degree to which each biomarker informs the difference (due to the treatment effect) represented by the average treatment effect.</p>
-<p>The volcano plot is standard graphical tools for examining how changes in expression relate to the raw p-value. The utility of such plots lies in their providing a convenient way to identify and systematically ignore those genomic objects that have extremely low p-values due to extremely low variance between observations. The <code>volcano_ic</code> function provides much of the same interpretation, except that the fold change values displayed in the x-axis refer to changes in the <em>contributions of each biomarker to the Average Treatment Effect</em> (in standard practice, for microarray technology, these would be fold changes in gene expression). The plot produced is a <code>ggplot2</code> object and can be modified in place if stored properly. For our analysis:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/volcano_ic.html">volcano_ic</a></span>(<span class="dt">biotmle =</span> limmaTMLEout)</a></code></pre></div>
+<p>The heatmap produced in this way is actually a form of <em>supervised clustering</em>, as described more generally (as <em>supervised distance matrices</em>) by <span class="citation">Pollard and van der Laan (2008)</span>, wherein the notion of deriving clustering procedures from the results of supervised learning methods is formulated. Since the heatmap is based on the contributions of observations to the efficient influence function (EIF) of the target parameter, it directly visualizes the degree to which each biomarker informs the difference (due to the treatment effect) represented by the average treatment effect.</p>
+<p>The volcano plot is standard graphical tools for examining how changes in expression relate to the raw p-value. The utility of such plots lies in their providing a convenient way to identify and systematically ignore those genomic objects that have extremely low p-values due to extremely low variance between observations. The <code>volcano_ic</code> function provides much of the same interpretation, except that the fold change values displayed in the x-axis refer to changes in the <em>contributions of each biomarker to the Average Treatment Effect</em> (in standard practice, for microarray technology, these would be fold changes in gene expression). The plot produced is a <code>ggplot2</code> object and, as such, can be modified in place. For our analysis:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/volcano_ic.html">volcano_ic</a></span>(<span class="dt">biotmle =</span> modtmle_out)</a></code></pre></div>
 <p><img src="exposureBiomarkers_files/figure-html/volcano_plot_limma_results-1.png" width="700"></p>
 <hr>
 </div>
 <div id="session-information" class="section level2">
 <h2 class="hasAnchor">
 <a href="#session-information" class="anchor"></a>Session Information</h2>
-<pre><code>## R version 3.6.1 (2019-07-05)
+<pre><code>## R version 3.6.2 (2019-12-12)
 ## Platform: x86_64-pc-linux-gnu (64-bit)
 ## Running under: Ubuntu 18.04.3 LTS
 ## 
@@ -178,46 +173,49 @@
 ## [8] methods   base     
 ## 
 ## other attached packages:
-##  [1] SummarizedExperiment_1.14.1 DelayedArray_0.10.0        
-##  [3] BiocParallel_1.18.1         matrixStats_0.55.0         
-##  [5] Biobase_2.44.0              GenomicRanges_1.36.1       
-##  [7] GenomeInfoDb_1.20.0         IRanges_2.18.3             
-##  [9] S4Vectors_0.22.1            BiocGenerics_0.30.0        
-## [11] biotmleData_1.8.0           biotmle_1.11.0             
-## [13] dplyr_0.8.3                 BiocStyle_2.12.0           
+##  [1] quadprog_1.5-8              nloptr_1.2.1               
+##  [3] doFuture_0.8.2              iterators_1.0.12           
+##  [5] foreach_1.4.7               future_1.15.1              
+##  [7] globals_0.12.5              SummarizedExperiment_1.16.0
+##  [9] DelayedArray_0.12.0         BiocParallel_1.20.0        
+## [11] matrixStats_0.55.0          Biobase_2.46.0             
+## [13] GenomicRanges_1.38.0        GenomeInfoDb_1.22.0        
+## [15] IRanges_2.20.1              S4Vectors_0.24.0           
+## [17] BiocGenerics_0.32.0         SuperLearner_2.0-26        
+## [19] nnls_1.4                    biotmleData_1.10.0         
+## [21] biotmle_1.11.2              dplyr_0.8.3                
+## [23] BiocStyle_2.14.0           
 ## 
 ## loaded via a namespace (and not attached):
-##  [1] Rcpp_1.0.2               lattice_0.20-38         
-##  [3] listenv_0.7.0            glmnet_2.0-18           
-##  [5] assertthat_0.2.1         rprojroot_1.3-2         
-##  [7] digest_0.6.22            foreach_1.4.7           
-##  [9] R6_2.4.0                 nnls_1.4                
-## [11] backports_1.1.5          evaluate_0.14           
-## [13] ggplot2_3.2.1            pillar_1.4.2            
-## [15] zlibbioc_1.30.0          rlang_0.4.1             
-## [17] lazyeval_0.2.2           Matrix_1.2-17           
-## [19] rmarkdown_1.16           pkgdown_1.4.1           
-## [21] labeling_0.3             desc_1.2.0              
-## [23] stringr_1.4.0            RCurl_1.95-4.12         
-## [25] munsell_0.5.0            compiler_3.6.1          
-## [27] xfun_0.10                pkgconfig_2.0.3         
-## [29] superheat_0.1.0          globals_0.12.4          
-## [31] htmltools_0.4.0          tidyselect_0.2.5        
-## [33] tibble_2.1.3             GenomeInfoDbData_1.2.1  
-## [35] bookdown_0.14            codetools_0.2-16        
-## [37] doFuture_0.8.1           future_1.14.0           
-## [39] tmle_1.4.0.1             crayon_1.3.4            
-## [41] MASS_7.3-51.4            bitops_1.0-6            
-## [43] grid_3.6.1               gtable_0.3.0            
-## [45] magrittr_1.5             scales_1.0.0            
-## [47] stringi_1.4.3            XVector_0.24.0          
-## [49] fs_1.3.1                 limma_3.40.6            
-## [51] ggdendro_0.1-20          ggsci_2.9               
-## [53] iterators_1.0.12         tools_3.6.1             
-## [55] glue_1.3.1               purrr_0.3.3             
-## [57] yaml_2.2.0               colorspace_1.4-1        
-## [59] SuperLearner_2.0-25-9000 BiocManager_1.30.9      
-## [61] memoise_1.1.0            knitr_1.25</code></pre>
+##  [1] nlme_3.1-143            bitops_1.0-6            fs_1.3.1               
+##  [4] progress_1.2.2          rprojroot_1.3-2         ggsci_2.9              
+##  [7] tools_3.6.2             backports_1.1.5         R6_2.4.1               
+## [10] superheat_0.1.0         future.batchtools_0.8.1 lazyeval_0.2.2         
+## [13] colorspace_1.4-1        withr_2.1.2             tidyselect_0.2.5       
+## [16] prettyunits_1.0.2       compiler_3.6.2          quantreg_5.54          
+## [19] SparseM_1.78            ggdendro_0.1-20         desc_1.2.0             
+## [22] labeling_0.3            bookdown_0.16           scales_1.1.0           
+## [25] checkmate_1.9.4         rappdirs_0.3.1          pkgdown_1.4.1          
+## [28] stringr_1.4.0           digest_0.6.23           np_0.60-9              
+## [31] minqa_1.2.4             rmarkdown_2.0           XVector_0.26.0         
+## [34] pkgconfig_2.0.3         htmltools_0.4.0         lme4_1.1-21            
+## [37] limma_3.42.0            rlang_0.4.2             farver_2.0.1           
+## [40] RCurl_1.95-4.12         magrittr_1.5            GenomeInfoDbData_1.2.2 
+## [43] Matrix_1.2-18           Rcpp_1.0.3              munsell_0.5.0          
+## [46] abind_1.4-5             lifecycle_0.1.0         stringi_1.4.3          
+## [49] yaml_2.2.0              debugme_1.1.0           MASS_7.3-51.5          
+## [52] zlibbioc_1.32.0         grid_3.6.2              listenv_0.8.0          
+## [55] crayon_1.3.4            lattice_0.20-38         splines_3.6.2          
+## [58] hms_0.5.2               batchtools_0.9.11       zeallot_0.1.0          
+## [61] knitr_1.26              pillar_1.4.3            boot_1.3-24            
+## [64] cubature_2.0.4          base64url_1.4           xgboost_0.90.0.2       
+## [67] future.apply_1.3.0      codetools_0.2-16        drtmle_1.0.5           
+## [70] glue_1.3.1              evaluate_0.14           data.table_1.12.8      
+## [73] BiocManager_1.30.10     vctrs_0.2.1             MatrixModels_0.4-1     
+## [76] gtable_0.3.0            purrr_0.3.3             assertthat_0.2.1       
+## [79] ggplot2_3.2.1           xfun_0.11               coda_0.19-3            
+## [82] arm_1.10-1              tibble_2.1.3            memoise_1.1.0          
+## [85] brew_1.0-6</code></pre>
 <div id="refs" class="references">
 <div id="ref-pearl2000causality">
 <p>Pearl, Judea. 2000. <em>Causality: Models, Reasoning, and Inference</em>. Cambridge University Press.</p>

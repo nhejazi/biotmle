@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biotmle</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.11.2</span>
       </span>
     </div>
 
@@ -93,9 +93,6 @@
   <ul class="dropdown-menu" role="menu">
     <li>
       <a href="../articles/exposureBiomarkers.html">Identifying Biomarkers from an Exposure Variable with `biotmle`</a>
-    </li>
-    <li>
-      <a href="../articles/rnaseqProcessing.html">Processing and Analyzing RNA-Seq Data with `biotmle`</a>
     </li>
   </ul>
 </li>
@@ -172,14 +169,14 @@
       <span class='kw'>colData</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html'>colData</a></span>(<span class='no'>se</span>)
     ),
     <span class='kw'>call</span> <span class='kw'>=</span> <span class='no'>call</span>,
+    <span class='kw'>ateOut</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fl'>NA</span>, <span class='fl'>10</span>)),
     <span class='kw'>tmleOut</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA</span>, <span class='fl'>10</span>, <span class='fl'>10</span>)),
     <span class='kw'>topTable</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></span>(<span class='fl'>NA</span>, <span class='fl'>10</span>, <span class='fl'>10</span>))
   )
   <span class='fu'><a href='https://rdrr.io/r/base/function.html'>return</a></span>(<span class='no'>biotmle</span>)
 }
 
-<span class='no'>example_class</span> <span class='kw'>&lt;-</span> <span class='fu'>example_biotmle_class</span>(<span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>illuminaData</span>)
-<span class='co'>#</span></div></pre>
+<span class='no'>example_class</span> <span class='kw'>&lt;-</span> <span class='fu'>example_biotmle_class</span>(<span class='kw'>se</span> <span class='kw'>=</span> <span class='no'>illuminaData</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

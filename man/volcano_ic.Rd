@@ -4,19 +4,19 @@
 \alias{volcano_ic}
 \title{Volcano plot for class biotmle}
 \usage{
-volcano_ic(biotmle, fc_bound = 3, pval_bound = 0.2)
+volcano_ic(biotmle, ate_bound = 1, pval_bound = 0.2)
 }
 \arguments{
 \item{biotmle}{object of class \code{biotmle} as produced by an appropriate
 call to \code{biomarkertmle}}
 
-\item{fc_bound}{(numeric) - indicates the highest magnitude of the fold to be
-colored along the x-axis of the volcano plot; this limits the observations
-to be considered differentially expressed to those in a user-specified
-interval.}
+\item{ate_bound}{A \code{numeric} indicating the highest magnitude of the
+average treatment effect to be colored on the x-axis of the volcano plot;
+this limits the observations to be considered differentially expressed to
+those in a user-specified interval.}
 
-\item{pval_bound}{(numeric) - indicates the largest corrected p-value to be
-colored along the y-axis of the volcano plot; this limits observations
+\item{pval_bound}{A \code{numeric} indicating the largest corrected p-value
+to be colored on the y-axis of the volcano plot; this limits observations
 considered as differentially expressed to those in a user-specified
 interval.}
 }
@@ -30,13 +30,29 @@ Volcano plot of the log-changes in the target causal paramter against the
 log raw p-values from the moderated t-test.
 }
 \examples{
+\dontrun{
 library(dplyr)
 library(biotmleData)
+library(SuperLearner)
 library(SummarizedExperiment)
-data(biomarkertmleOut)
+data(illuminaData)
+
+colData(illuminaData) <- colData(illuminaData) \%>\%
+  data.frame() \%>\%
+  dplyr::mutate(age = as.numeric(age > median(age))) \%>\%
+  DataFrame()
+benz_idx <- which(names(colData(illuminaData)) \%in\% "benzene")
+
+biomarkerTMLEout <- biomarkertmle(
+  se = illuminaData,
+  varInt = benz_idx,
+  parallel = FALSE,
+  g_lib = c("SL.mean", "SL.glm"),
+  Q_lib = c("SL.bayesglm", "SL.glm")
+)
 
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
 volcano_ic(biotmle = limmaTMLEout)
-#
+}
 }
