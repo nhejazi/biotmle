@@ -109,6 +109,6 @@ biomarkerTMLEout <- biomarkertmle(
   varInt = benz_idx,
   parallel = FALSE,
   g_lib = c("SL.mean", "SL.glm"),
-  Q_lib = c("SL.bayesglm", "SL.glmnet")
+  Q_lib = c("SL.bayesglm", "SL.glm")
 )
 }

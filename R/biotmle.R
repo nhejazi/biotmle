@@ -86,7 +86,7 @@ utils::globalVariables(c("assay<-"))
 #'   varInt = benz_idx,
 #'   parallel = FALSE,
 #'   g_lib = c("SL.mean", "SL.glm"),
-#'   Q_lib = c("SL.bayesglm", "SL.glmnet")
+#'   Q_lib = c("SL.bayesglm", "SL.glm")
 #' )
 biomarkertmle <- function(se,
                           varInt,
@@ -135,8 +135,8 @@ biomarkertmle <- function(se,
       future::plan(future::multiprocess)
     }
   } else if (parallel == FALSE) {
-    warning(paste(
-      "Sequential evaluation over many probes may take a long time."
+    message(paste(
+      "Note: Sequential evaluation over many probes may take a long time."
     ))
     future::plan(future::sequential)
   }
@@ -249,7 +249,6 @@ biomarkertmle <- function(se,
 #' @return TMLE-based estimate of the relationship between biomarker expression
 #'  and changes in an exposure variable, computed iteratively and saved in the
 #'  \code{tmleOut} slot in a \code{biotmle} object.
-#
 exp_biomarkertmle <- function(Y,
                               A,
                               W,

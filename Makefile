@@ -28,3 +28,6 @@ buildfast:
 
 style:
 	Rscript -e "styler::style_pkg()"
+
+pr: style doc check site
+	echo "If all checks have passed, you are ready to submit PR"
