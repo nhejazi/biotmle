@@ -1,6 +1,6 @@
 Package: biotmle
 Title: Targeted Learning with Moderated Statistics for Biomarker Discovery
-Version: 1.13.0
+Version: 1.14.0
 Authors@R: c(
     person("Nima", "Hejazi", email = "nh@nimahejazi.org",
            role = c("aut", "cre", "cph"),
