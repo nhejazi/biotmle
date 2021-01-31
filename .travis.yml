@@ -17,7 +17,7 @@ r_check_args: '--no-build-vignettes --no-manual'
 
 r:
   - bioc-release
-  - bioc-devel
+  #- bioc-devel
 
 addons:
    apt:
@@ -26,9 +26,6 @@ addons:
        - sourceline: 'ppa:cran/imagemagick'
      packages:
        - libmagick++-dev
-
-#before_install:
-  #- Rscript -e 'BiocManager::install(ask = FALSE)'
 
 r_packages:
   - devtools

@@ -99,7 +99,7 @@
 <div id="whats-biotmle" class="section level2">
 <h2 class="hasAnchor">
 <a href="#whats-biotmle" class="anchor"></a>What’s <code>biotmle</code>?</h2>
-<p>The <code>biotmle</code> R package facilitates biomarker discovery through a generalization of the moderated t-statistic (Smyth 2004) that extends the procedure to locally efficient estimators of asymptotically linear target parameters (Tsiatis 2007). The set of methods implemented modify targeted maximum likelihood (TML) estimators of statistical (or causal) target parameters (e.g., average treatment effect) to apply variance moderation to the standard variance estimator based on the efficient influence function (EIF) of the target parameter (van der Laan and Rose 2011, 2018). By performing a moderated hypothesis test that pools the individual probe-specific EIF-based variance estimates, a robust variance estimator is constructed, which stabilizes the standard error estimates and improves the performance of such estimators both in smaller samples and in settings where the EIF is poorly estimated. The resultant procedure allows for the construction of conservative hypothesis tests that reduce the false discovery rate and/or the family-wise error rate (Hejazi, van der Laan, and Hubbard 2020). Improvements upon prior TML-based approaches to biomarker discovery (e.g., Bembom et al. (2009)) include both the moderated variance estimator as well as the use of conservative reference distributions for the corresponding moderated test statistics (e.g., logistic distribution), inspired by tail bounds based on concentration inequalities (Rosenblum and van der Laan 2009); the latter prove critical for obtaining robust inference when the finite-sample distribution of the estimator deviates from normality.</p>
+<p>The <code>biotmle</code> R package facilitates biomarker discovery through a generalization of the moderated t-statistic (Smyth 2004) that extends the procedure to locally efficient estimators of asymptotically linear target parameters (Tsiatis 2007). The set of methods implemented modify targeted maximum likelihood (TML) estimators of statistical (or causal) target parameters (e.g., average treatment effect) to apply variance moderation to the standard variance estimator based on the efficient influence function (EIF) of the target parameter (van der Laan and Rose 2011, 2018). By performing a moderated hypothesis test that pools the individual probe-specific EIF-based variance estimates, a robust variance estimator is constructed, which stabilizes the standard error estimates and improves the performance of such estimators both in smaller samples and in settings where the EIF is poorly estimated. The resultant procedure allows for the construction of conservative hypothesis tests that reduce the false discovery rate and/or the family-wise error rate (Hejazi, van der Laan, and Hubbard 2021). Improvements upon prior TML-based approaches to biomarker discovery (e.g., Bembom et al. (2009)) include both the moderated variance estimator as well as the use of conservative reference distributions for the corresponding moderated test statistics (e.g., logistic distribution), inspired by tail bounds based on concentration inequalities (Rosenblum and van der Laan 2009); the latter prove critical for obtaining robust inference when the finite-sample distribution of the estimator deviates from normality.</p>
 <hr>
 </div>
 <div id="installation" class="section level2">
@@ -154,7 +154,7 @@
       url = {https://doi.org/10.21105/joss.00295}
     }
 
-    @article{hejazi2020generalization,
+    @article{hejazi2021generalization,
       author = {Hejazi, Nima S and {van der Laan}, Mark J and Hubbard, Alan
         E},
       title = {A generalization of moderated statistics to data adaptive
@@ -163,7 +163,7 @@
       volume={},
       number={},
       pages={},
-      year = {2020},
+      year = {2021+},
       publisher={},
       doi = {},
       url = {https://arxiv.org/abs/1710.05451}
@@ -198,7 +198,7 @@
 <div id="license" class="section level2">
 <h2 class="hasAnchor">
 <a href="#license" class="anchor"></a>License</h2>
-<p>© 2016-2020 <a href="https://nimahejazi.org">Nima S. Hejazi</a></p>
+<p>© 2016-2021 <a href="https://nimahejazi.org">Nima S. Hejazi</a></p>
 <p>The contents of this repository are distributed under the MIT license. See file <code>LICENSE</code> for details.</p>
 <hr>
 </div>
@@ -209,8 +209,8 @@
 <div id="ref-bembom2009biomarker">
 <p>Bembom, Oliver, Maya L Petersen, Soo-Yon Rhee, W Jeffrey Fessel, Sandra E Sinisi, Robert W Shafer, and Mark J van der Laan. 2009. “Biomarker Discovery Using Targeted Maximum-Likelihood Estimation: Application to the Treatment of Antiretroviral-Resistant Hiv Infection.” <em>Statistics in Medicine</em> 28 (1): 152–72.</p>
 </div>
-<div id="ref-hejazi2020generalization">
-<p>Hejazi, Nima S, Mark J van der Laan, and Alan E Hubbard. 2020. “A Generalization of Moderated Statistics to Data Adaptive Semiparametric Estimation in High-Dimensional Biology.” <em>Under Review</em>. <a href="https://arxiv.org/abs/1710.05451" class="uri">https://arxiv.org/abs/1710.05451</a>.</p>
+<div id="ref-hejazi2021generalization">
+<p>Hejazi, Nima S, Mark J van der Laan, and Alan E Hubbard. 2021. “A Generalization of Moderated Statistics to Data Adaptive Semiparametric Estimation in High-Dimensional Biology.” <em>Under Review</em>. <a href="https://arxiv.org/abs/1710.05451" class="uri">https://arxiv.org/abs/1710.05451</a>.</p>
 </div>
 <div id="ref-rosenblum2009confidence">
 <p>Rosenblum, Michael A, and Mark J van der Laan. 2009. “Confidence Intervals for the Population Mean Tailored to Small Sample Sizes, with Applications to Survey Sampling.” <em>The International Journal of Biostatistics</em> 5 (1).</p>
@@ -276,7 +276,7 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://travis-ci.org/nhejazi/biotmle"><img src="https://travis-ci.org/nhejazi/biotmle.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://travis-ci.com/nhejazi/biotmle"><img src="https://travis-ci.com/nhejazi/biotmle.svg?branch=master" alt="Travis-CI Build Status"></a></li>
 <li><a href="https://ci.appveyor.com/project/nhejazi/biotmle/"><img src="https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
 <li><a href="https://codecov.io/github/nhejazi/biotmle?branch=master"><img src="https://img.shields.io/codecov/c/github/nhejazi/biotmle/master.svg" alt="Coverage Status"></a></li>
 <li><a href="http://www.repostatus.org/#active"><img src="http://www.repostatus.org/badges/latest/active.svg" alt="Project Status: Active – The project has reached a stable, usable state and is being actively developed."></a></li>
