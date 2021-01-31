@@ -1,11 +1,10 @@
-context("moderated testing of influence curve-based estimates.")
 library(dplyr)
 library(biotmleData)
 library(SuperLearner)
 library(SummarizedExperiment)
 data(illuminaData)
 
-## SETUP TESTS #################################################################
+## SETUP TESTS ################################################################
 colData(illuminaData) <- colData(illuminaData) %>%
   data.frame() %>%
   dplyr::mutate(age = as.numeric(age > median(age))) %>%
@@ -21,7 +20,7 @@ biomarkerTMLEout <- biomarkertmle(
 )
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
-## BEGIN TESTS #################################################################
+## BEGIN TESTS ################################################################
 test_that("modtest_ic output object is of class type S4", {
   expect_equivalent(typeof(limmaTMLEout), "S4")
 })

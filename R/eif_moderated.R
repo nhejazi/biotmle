@@ -14,7 +14,7 @@
 #'  inference when working with moderately sized (finite) samples. Use of the
 #'  logistic distribution has been found to empirically improve performance in
 #'  settings where multiple hypothesis testing is a concern.
-#' @param ... Other arguments to be passed directly to \code{limma::topTable}.
+#' @param ... Other arguments passed to \code{\link[limma]{topTable}}.
 #'
 #' @importFrom methods is
 #' @importFrom dplyr "%>%"
@@ -23,8 +23,8 @@
 #' @importFrom tibble as_tibble rownames_to_column
 #' @importFrom assertthat assert_that
 #'
-#' @return \code{biotmle} object containing output from \code{limma::lmFit} and
-#'  \code{limma::topTable}
+#' @return \code{biotmle} object containing the results of applying both
+#'  \code{\link[limma]{lmFit}} and \code{\link[limma]{topTable}}.
 #'
 #' @export modtest_ic
 #'

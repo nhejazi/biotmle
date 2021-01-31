@@ -17,7 +17,7 @@ of samples in the output object.}
 \code{\link[limma]{voomWithQualityWeights}} as appropriate.}
 }
 \value{
-\code{EList} object containing voom-transformed "expression" measures
+\code{EList} object containing voom-transformed expression measures
  of count data (actually, the mean-variance trend) in the "E" slot, to be
  passed into the biomarker TMLE procedure.
 }

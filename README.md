@@ -4,7 +4,7 @@
 # R/`biotmle`
 
 [![Travis-CI Build
-Status](https://travis-ci.org/nhejazi/biotmle.svg?branch=master)](https://travis-ci.org/nhejazi/biotmle)
+Status](https://travis-ci.com/nhejazi/biotmle.svg?branch=master)](https://travis-ci.com/nhejazi/biotmle)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=master&svg=true)](https://ci.appveyor.com/project/nhejazi/biotmle/)
 [![Coverage
@@ -49,7 +49,7 @@ estimates and improves the performance of such estimators both in
 smaller samples and in settings where the EIF is poorly estimated. The
 resultant procedure allows for the construction of conservative
 hypothesis tests that reduce the false discovery rate and/or the
-family-wise error rate (Hejazi, van der Laan, and Hubbard 2020).
+family-wise error rate (Hejazi, van der Laan, and Hubbard 2021).
 Improvements upon prior TML-based approaches to biomarker discovery
 (e.g., Bembom et al. (2009)) include both the moderated variance
 estimator as well as the use of conservative reference distributions for
@@ -136,7 +136,7 @@ After using the `biotmle` R package, please cite both of the following:
       url = {https://doi.org/10.21105/joss.00295}
     }
 
-    @article{hejazi2020generalization,
+    @article{hejazi2021generalization,
       author = {Hejazi, Nima S and {van der Laan}, Mark J and Hubbard, Alan
         E},
       title = {A generalization of moderated statistics to data adaptive
@@ -145,7 +145,7 @@ After using the `biotmle` R package, please cite both of the following:
       volume={},
       number={},
       pages={},
-      year = {2020},
+      year = {2021+},
       publisher={},
       doi = {},
       url = {https://arxiv.org/abs/1710.05451}
@@ -184,7 +184,7 @@ ES021369-05](https://projectreporter.nih.gov/project_info_description.cfm?aid=92
 
 ## License
 
-© 2016-2020 [Nima S. Hejazi](https://nimahejazi.org)
+© 2016-2021 [Nima S. Hejazi](https://nimahejazi.org)
 
 The contents of this repository are distributed under the MIT license.
 See file `LICENSE` for details.
@@ -201,13 +201,13 @@ Bembom, Oliver, Maya L Petersen, Soo-Yon Rhee, W Jeffrey Fessel, Sandra
 E Sinisi, Robert W Shafer, and Mark J van der Laan. 2009. “Biomarker
 Discovery Using Targeted Maximum-Likelihood Estimation: Application to
 the Treatment of Antiretroviral-Resistant Hiv Infection.” *Statistics in
-Medicine* 28 (1). Wiley Online Library: 152–72.
+Medicine* 28 (1): 152–72.
 
 </div>
 
-<div id="ref-hejazi2020generalization">
+<div id="ref-hejazi2021generalization">
 
-Hejazi, Nima S, Mark J van der Laan, and Alan E Hubbard. 2020. “A
+Hejazi, Nima S, Mark J van der Laan, and Alan E Hubbard. 2021. “A
 Generalization of Moderated Statistics to Data Adaptive Semiparametric
 Estimation in High-Dimensional Biology.” *Under Review*.
 <https://arxiv.org/abs/1710.05451>.
@@ -219,7 +219,7 @@ Estimation in High-Dimensional Biology.” *Under Review*.
 Rosenblum, Michael A, and Mark J van der Laan. 2009. “Confidence
 Intervals for the Population Mean Tailored to Small Sample Sizes, with
 Applications to Survey Sampling.” *The International Journal of
-Biostatistics* 5 (1). De Gruyter.
+Biostatistics* 5 (1).
 
 </div>
 
@@ -227,8 +227,8 @@ Biostatistics* 5 (1). De Gruyter.
 
 Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for
 Assessing Differential Expression in Microarray Experiments.”
-*Statistical Applications in Genetics and Molecular Biology* 3 (1).
-Walter de Gruyter: 1–25. <https://doi.org/10.2202/1544-6115.1027>.
+*Statistical Applications in Genetics and Molecular Biology* 3 (1):
+1–25. <https://doi.org/10.2202/1544-6115.1027>.
 
 </div>
 

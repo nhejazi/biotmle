@@ -1,6 +1,6 @@
 Package: biotmle
 Title: Targeted Learning with Moderated Statistics for Biomarker Discovery
-Version: 1.13.0
+Version: 1.15.0
 Authors@R: c(
     person("Nima", "Hejazi", email = "nh@nimahejazi.org",
            role = c("aut", "cre", "cph"),
@@ -54,13 +54,13 @@ Suggests:
     BiocStyle,
     arm,
     earth,
-    xgboost,
+    ranger,
     SuperLearner,
     Matrix,
     DBI,
     biotmleData (>= 1.1.1)
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 biocViews:
     Regression,
     GeneExpression,

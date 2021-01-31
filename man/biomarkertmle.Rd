@@ -15,7 +15,7 @@ biomarkertmle(
   bppar_debug = FALSE,
   cv_folds = 1,
   g_lib = c("SL.mean", "SL.glm", "SL.bayesglm", "SL.glmnet"),
-  Q_lib = c("SL.mean", "SL.bayesglm", "SL.earth", "SL.xgboost"),
+  Q_lib = c("SL.mean", "SL.bayesglm", "SL.earth", "SL.ranger"),
   ...
 )
 }
