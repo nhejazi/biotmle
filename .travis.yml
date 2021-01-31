@@ -19,10 +19,6 @@ r:
   - bioc-release
   - bioc-devel
 
-before_install:
-  - Rscript -e 'BiocManager::install(ask = FALSE)'
-
-
 addons:
    apt:
      update: true
@@ -30,6 +26,9 @@ addons:
        - sourceline: 'ppa:cran/imagemagick'
      packages:
        - libmagick++-dev
+
+#before_install:
+  #- Rscript -e 'BiocManager::install(ask = FALSE)'
 
 r_packages:
   - devtools
