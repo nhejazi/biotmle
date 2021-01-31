@@ -1,10 +1,8 @@
-context("biotmle S4 class.")
 library(SummarizedExperiment)
 library(biotmleData)
 data(illuminaData)
 
-
-## SETUP TESTS #################################################################
+## SETUP TESTS ################################################################
 example_biotmle_class <- function(se) {
   call <- match.call(expand.dots = TRUE)
   biotmle <- .biotmle(
@@ -21,7 +19,7 @@ example_biotmle_class <- function(se) {
 }
 biotmle <- example_biotmle_class(se = illuminaData)
 
-## BEGIN TESTS #################################################################
+## BEGIN TESTS ################################################################
 test_that("biotmle object is of class type S4", {
   expect_equivalent(typeof(biotmle), "S4")
 })

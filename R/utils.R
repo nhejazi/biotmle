@@ -19,7 +19,7 @@ setClassUnion(
   members = c("data.frame", "EList")
 )
 
-################################################################################
+###############################################################################
 
 #' Constructor for class bioTMLE
 #'
@@ -67,7 +67,7 @@ setClassUnion(
   contains = "SummarizedExperiment"
 )
 
-################################################################################
+###############################################################################
 
 #' Accessor for Table of Raw Efficient Influence Function Values
 #'
@@ -84,7 +84,7 @@ eif <- function(object) {
   object@tmleOut
 }
 
-################################################################################
+###############################################################################
 
 #' Accessor for Results of Moderated Influence Function Hypothesis Testing
 #'

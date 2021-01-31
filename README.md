@@ -201,7 +201,7 @@ Bembom, Oliver, Maya L Petersen, Soo-Yon Rhee, W Jeffrey Fessel, Sandra
 E Sinisi, Robert W Shafer, and Mark J van der Laan. 2009. “Biomarker
 Discovery Using Targeted Maximum-Likelihood Estimation: Application to
 the Treatment of Antiretroviral-Resistant Hiv Infection.” *Statistics in
-Medicine* 28 (1). Wiley Online Library: 152–72.
+Medicine* 28 (1): 152–72.
 
 </div>
 
@@ -219,7 +219,7 @@ Estimation in High-Dimensional Biology.” *Under Review*.
 Rosenblum, Michael A, and Mark J van der Laan. 2009. “Confidence
 Intervals for the Population Mean Tailored to Small Sample Sizes, with
 Applications to Survey Sampling.” *The International Journal of
-Biostatistics* 5 (1). De Gruyter.
+Biostatistics* 5 (1).
 
 </div>
 
@@ -227,8 +227,8 @@ Biostatistics* 5 (1). De Gruyter.
 
 Smyth, Gordon K. 2004. “Linear Models and Empirical Bayes Methods for
 Assessing Differential Expression in Microarray Experiments.”
-*Statistical Applications in Genetics and Molecular Biology* 3 (1).
-Walter de Gruyter: 1–25. <https://doi.org/10.2202/1544-6115.1027>.
+*Statistical Applications in Genetics and Molecular Biology* 3 (1):
+1–25. <https://doi.org/10.2202/1544-6115.1027>.
 
 </div>
 

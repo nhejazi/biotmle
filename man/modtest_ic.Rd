@@ -20,11 +20,11 @@ inference when working with moderately sized (finite) samples. Use of the
 logistic distribution has been found to empirically improve performance in
 settings where multiple hypothesis testing is a concern.}
 
-\item{...}{Other arguments to be passed directly to \code{limma::topTable}.}
+\item{...}{Other arguments passed to \code{\link[limma]{topTable}}.}
 }
 \value{
-\code{biotmle} object containing output from \code{limma::lmFit} and
- \code{limma::topTable}
+\code{biotmle} object containing the results of applying both
+ \code{\link[limma]{lmFit}} and \code{\link[limma]{topTable}}.
 }
 \description{
 Performs variance shrinkage via application of an empirical Bayes procedure

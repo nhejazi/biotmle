@@ -54,13 +54,13 @@ Suggests:
     BiocStyle,
     arm,
     earth,
-    xgboost,
+    ranger,
     SuperLearner,
     Matrix,
     DBI,
     biotmleData (>= 1.1.1)
 VignetteBuilder: knitr
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
 biocViews:
     Regression,
     GeneExpression,

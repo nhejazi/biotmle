@@ -18,10 +18,9 @@
 #'
 #' @export rnaseq_ic
 #'
-#' @return \code{EList} object containing voom-transformed "expression" measures
+#' @return \code{EList} object containing voom-transformed expression measures
 #'  of count data (actually, the mean-variance trend) in the "E" slot, to be
 #'  passed into the biomarker TMLE procedure.
-#
 rnaseq_ic <- function(biotmle, weights = TRUE, ...) {
   # check arguments
   assertthat::assert_that(is(biotmle, "bioTMLE"))

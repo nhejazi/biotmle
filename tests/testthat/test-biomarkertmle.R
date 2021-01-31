@@ -1,14 +1,13 @@
-context("biomarkertmle estimation function.")
 library(dplyr)
 library(biotmleData)
 library(SuperLearner)
 library(SummarizedExperiment)
 data(illuminaData)
 
-## SETUP TESTS #################################################################
+## SETUP TESTS ################################################################
 colData(illuminaData) <- colData(illuminaData) %>%
   data.frame() %>%
-  dplyr::mutate(age = as.numeric(age > median(age))) %>%
+  mutate(age = as.numeric(age > median(age))) %>%
   DataFrame()
 varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
 
@@ -17,10 +16,10 @@ biomarkerTMLEout <- biomarkertmle(
   varInt = varInt_index,
   parallel = FALSE,
   g_lib = c("SL.mean", "SL.glm"),
-  Q_lib = "SL.mean"
+  Q_lib = c("SL.mean", "SL.glm")
 )
 
-## BEGIN TESTS #################################################################
+## BEGIN TESTS ################################################################
 test_that("biomarkertmle output object is of class type S4", {
   expect_equivalent(typeof(biomarkerTMLEout), "S4")
 })
@@ -29,10 +28,10 @@ test_that("biomarkertmle object is of appropriate custom class", {
   expect_equivalent(class(biomarkerTMLEout), "bioTMLE")
 })
 
-test_that("biomarkertmle output is consistent using example data", {
+test_that("biomarkertmle consistently stores input example data", {
   expect_equal(
     assay(biomarkerTMLEout)[1, c(17, 83, 117)],
-    c(360.7073, 375.9316, 319.3649)
+    assay(illuminaData)[1, c(17, 83, 117)],
   )
 })
 

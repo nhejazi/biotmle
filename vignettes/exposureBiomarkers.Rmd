@@ -81,7 +81,7 @@ the design matrix. We demonstrate the necessary syntax for calling the
 biotmle_out <- biomarkertmle(se = illuminaData[1:20, ],
                              varInt = benz_idx,
                              g_lib = c("SL.mean", "SL.glm"),
-                             Q_lib = c("SL.bayesglm", "SL.xgboost"),
+                             Q_lib = c("SL.bayesglm", "SL.ranger"),
                              cv_folds = 2,
                              parallel = FALSE
                             )
