@@ -34,7 +34,7 @@ build_script:
   - echo Current directory=%CD%
   - travis-tool.sh install_r base64 BiocManager testthat knitr
   - travis-tool.sh install_github r-lib/remotes r-lib/covr
-  - travis-tool.sh install_r drtmle future doFuture superheat DBI xgboost \
+  - travis-tool.sh install_r drtmle future doFuture superheat DBI ranger \
     arm earth ggsci
   - travis-tool.sh install_bioc BiocStyle BiocCheck BiocGenerics S4Vectors \
     SummarizedExperiment limma

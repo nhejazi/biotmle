@@ -101,7 +101,7 @@ biomarkertmle <- function(se,
                             "SL.mean", "SL.glm", "SL.bayesglm", "SL.glmnet"
                           ),
                           Q_lib = c(
-                            "SL.mean", "SL.bayesglm", "SL.earth", "SL.xgboost"
+                            "SL.mean", "SL.bayesglm", "SL.earth", "SL.ranger"
                           ),
                           ...) {
 

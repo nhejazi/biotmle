@@ -54,7 +54,7 @@ Suggests:
     BiocStyle,
     arm,
     earth,
-    xgboost,
+    ranger,
     SuperLearner,
     Matrix,
     DBI,
