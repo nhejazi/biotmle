@@ -3,10 +3,7 @@
 
 # R/`biotmle`
 
-[![Travis-CI Build
-Status](https://travis-ci.com/nhejazi/biotmle.svg?branch=master)](https://travis-ci.com/nhejazi/biotmle)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/nhejazi/biotmle?branch=master&svg=true)](https://ci.appveyor.com/project/nhejazi/biotmle/)
+[![R-CMD-check](https://github.com/nhejazi/biotmle/workflows/R-CMD-check/badge.svg)](https://github.com/nhejazi/biotmle/actions)
 [![Coverage
 Status](https://img.shields.io/codecov/c/github/nhejazi/biotmle/master.svg)](https://codecov.io/github/nhejazi/biotmle?branch=master)
 [![Project Status: Active – The project has reached a stable, usable
@@ -137,8 +134,8 @@ After using the `biotmle` R package, please cite both of the following:
     }
 
     @article{hejazi2021generalization,
-      author = {Hejazi, Nima S and {van der Laan}, Mark J and Hubbard, Alan
-        E},
+      author = {Hejazi, Nima S and Boileau, Philippe and {van der Laan},
+        Mark J and Hubbard, Alan E},
       title = {A generalization of moderated statistics to data adaptive
         semiparametric estimation in high-dimensional biology},
       journal={under review},
