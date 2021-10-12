@@ -19,7 +19,7 @@
 #' @method plot bioTMLE
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SuperLearner)
@@ -28,16 +28,16 @@
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
 #'   data.frame() %>%
-#'   dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'   mutate(age = as.numeric(age > median(age))) %>%
 #'   DataFrame()
 #' benz_idx <- which(names(colData(illuminaData)) %in% "benzene")
 #'
 #' biomarkerTMLEout <- biomarkertmle(
 #'   se = illuminaData,
 #'   varInt = benz_idx,
-#'   parallel = FALSE,
+#'   bppar_type = BiocParallel::SerialParam(),
 #'   g_lib = c("SL.mean", "SL.glm"),
-#'   Q_lib = c("SL.bayesglm", "SL.glm")
+#'   Q_lib = c("SL.mean", "SL.glm")
 #' )
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
@@ -103,7 +103,7 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #' @export volcano_ic
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SuperLearner)
@@ -112,16 +112,16 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
 #'   data.frame() %>%
-#'   dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'   mutate(age = as.numeric(age > median(age))) %>%
 #'   DataFrame()
 #' benz_idx <- which(names(colData(illuminaData)) %in% "benzene")
 #'
 #' biomarkerTMLEout <- biomarkertmle(
 #'   se = illuminaData,
 #'   varInt = benz_idx,
-#'   parallel = FALSE,
+#'   bppar_type = BiocParallel::SerialParam(),
 #'   g_lib = c("SL.mean", "SL.glm"),
-#'   Q_lib = c("SL.bayesglm", "SL.glm")
+#'   Q_lib = c("SL.mean", "SL.glm")
 #' )
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
@@ -194,7 +194,7 @@ utils::globalVariables(c(
 #' @export heatmap_ic
 #'
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SummarizedExperiment)
@@ -202,21 +202,21 @@ utils::globalVariables(c(
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
 #'   data.frame() %>%
-#'   dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'   mutate(age = as.numeric(age > median(age))) %>%
 #'   DataFrame()
 #' benz_idx <- which(names(colData(illuminaData)) %in% "benzene")
 #'
 #' biomarkerTMLEout <- biomarkertmle(
 #'   se = illuminaData,
 #'   varInt = benz_idx,
-#'   parallel = FALSE,
+#'   bppar_type = BiocParallel::SerialParam(),
 #'   g_lib = c("SL.mean", "SL.glm"),
-#'   Q_lib = c("SL.bayesglm", "SL.glm")
+#'   Q_lib = c("SL.mean", "SL.glm")
 #' )
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
-#' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 15)
+#' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 10)
 #' }
 heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
                        type = c("top", "all"), top = 25) {

@@ -12,7 +12,7 @@ biomarkertmle(
   bppar_type = BiocParallel::MulticoreParam(),
   bppar_debug = FALSE,
   cv_folds = 1,
-  g_lib = c("SL.mean", "SL.glm", "SL.bayesglm", "SL.glmnet"),
+  g_lib = c("SL.mean", "SL.glm", "SL.bayesglm"),
   Q_lib = c("SL.mean", "SL.bayesglm", "SL.earth", "SL.ranger"),
   ...
 )
@@ -83,7 +83,7 @@ data(illuminaData)
 
 colData(illuminaData) <- colData(illuminaData) \%>\%
   data.frame() \%>\%
-  dplyr::mutate(age = as.numeric(age > median(age))) \%>\%
+  mutate(age = as.numeric(age > median(age))) \%>\%
   DataFrame()
 benz_idx <- which(names(colData(illuminaData)) \%in\% "benzene")
 
@@ -92,6 +92,6 @@ biomarkerTMLEout <- biomarkertmle(
   varInt = benz_idx,
   bppar_type = BiocParallel::SerialParam(),
   g_lib = c("SL.mean", "SL.glm"),
-  Q_lib = c("SL.bayesglm", "SL.glm")
+  Q_lib = c("SL.mean", "SL.glm")
 )
 }

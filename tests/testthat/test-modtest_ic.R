@@ -7,16 +7,16 @@ data(illuminaData)
 ## SETUP TESTS ################################################################
 colData(illuminaData) <- colData(illuminaData) %>%
   data.frame() %>%
-  dplyr::mutate(age = as.numeric(age > median(age))) %>%
+  mutate(age = as.numeric(age > median(age))) %>%
   DataFrame()
 varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
 
 biomarkerTMLEout <- biomarkertmle(
   se = illuminaData[1:2, ],
   varInt = varInt_index,
-  parallel = FALSE,
+  bppar_type = BiocParallel::SerialParam(),
   g_lib = c("SL.mean", "SL.glm"),
-  Q_lib = "SL.mean"
+  Q_lib = "SL.glm"
 )
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 

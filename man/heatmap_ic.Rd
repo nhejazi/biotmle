@@ -34,7 +34,7 @@ across all subjects. The heatmap produced performs supervised clustering, as
 per Pollard & van der Laan (2008) <doi:10.2202/1544-6115.1404>.
 }
 \examples{
-\donttest{
+\dontrun{
 library(dplyr)
 library(biotmleData)
 library(SummarizedExperiment)
@@ -42,20 +42,20 @@ data(illuminaData)
 
 colData(illuminaData) <- colData(illuminaData) \%>\%
   data.frame() \%>\%
-  dplyr::mutate(age = as.numeric(age > median(age))) \%>\%
+  mutate(age = as.numeric(age > median(age))) \%>\%
   DataFrame()
 benz_idx <- which(names(colData(illuminaData)) \%in\% "benzene")
 
 biomarkerTMLEout <- biomarkertmle(
   se = illuminaData,
   varInt = benz_idx,
-  parallel = FALSE,
+  bppar_type = BiocParallel::SerialParam(),
   g_lib = c("SL.mean", "SL.glm"),
-  Q_lib = c("SL.bayesglm", "SL.glm")
+  Q_lib = c("SL.mean", "SL.glm")
 )
 
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 
-heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 15)
+heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 10)
 }
 }

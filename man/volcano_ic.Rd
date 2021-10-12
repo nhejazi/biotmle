@@ -30,7 +30,7 @@ Volcano plot of the log-changes in the target causal paramter against the
 log raw p-values from the moderated t-test.
 }
 \examples{
-\donttest{
+\dontrun{
 library(dplyr)
 library(biotmleData)
 library(SuperLearner)
@@ -39,16 +39,16 @@ data(illuminaData)
 
 colData(illuminaData) <- colData(illuminaData) \%>\%
   data.frame() \%>\%
-  dplyr::mutate(age = as.numeric(age > median(age))) \%>\%
+  mutate(age = as.numeric(age > median(age))) \%>\%
   DataFrame()
 benz_idx <- which(names(colData(illuminaData)) \%in\% "benzene")
 
 biomarkerTMLEout <- biomarkertmle(
   se = illuminaData,
   varInt = benz_idx,
-  parallel = FALSE,
+  bppar_type = BiocParallel::SerialParam(),
   g_lib = c("SL.mean", "SL.glm"),
-  Q_lib = c("SL.bayesglm", "SL.glm")
+  Q_lib = c("SL.mean", "SL.glm")
 )
 
 limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)

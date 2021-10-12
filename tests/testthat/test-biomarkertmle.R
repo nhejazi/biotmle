@@ -14,7 +14,7 @@ varInt_index <- which(names(colData(illuminaData)) %in% "benzene")
 biomarkerTMLEout <- biomarkertmle(
   se = illuminaData[1:2, ],
   varInt = varInt_index,
-  parallel = FALSE,
+  bppar_type = BiocParallel::SerialParam(),
   g_lib = c("SL.mean", "SL.glm"),
   Q_lib = c("SL.mean", "SL.glm")
 )

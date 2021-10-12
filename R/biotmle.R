@@ -62,7 +62,7 @@ utils::globalVariables(c("assay<-"))
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
 #'   data.frame() %>%
-#'   dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'   mutate(age = as.numeric(age > median(age))) %>%
 #'   DataFrame()
 #' benz_idx <- which(names(colData(illuminaData)) %in% "benzene")
 #'
@@ -71,7 +71,7 @@ utils::globalVariables(c("assay<-"))
 #'   varInt = benz_idx,
 #'   bppar_type = BiocParallel::SerialParam(),
 #'   g_lib = c("SL.mean", "SL.glm"),
-#'   Q_lib = c("SL.bayesglm", "SL.glm")
+#'   Q_lib = c("SL.mean", "SL.glm")
 #' )
 biomarkertmle <- function(se,
                           varInt,
@@ -81,7 +81,7 @@ biomarkertmle <- function(se,
                           bppar_debug = FALSE,
                           cv_folds = 1,
                           g_lib = c(
-                            "SL.mean", "SL.glm", "SL.bayesglm", "SL.glmnet"
+                            "SL.mean", "SL.glm", "SL.bayesglm"
                           ),
                           Q_lib = c(
                             "SL.mean", "SL.bayesglm", "SL.earth", "SL.ranger"
@@ -97,8 +97,8 @@ biomarkertmle <- function(se,
       colData = colData(se)
     ),
     call = call,
-    tmleOut = tibble::as_tibble(matrix(NA, 10, 10)),
-    topTable = tibble::as_tibble(matrix(NA, 10, 10))
+    tmleOut = tibble::as_tibble(matrix(NA, 10, 10), .name_repair = "minimal"),
+    topTable = tibble::as_tibble(matrix(NA, 10, 10), .name_repair = "minimal")
   )
 
   # invoke the voom transform from LIMMA if next-generation sequencing data)
@@ -118,9 +118,9 @@ biomarkertmle <- function(se,
     exp_normed <- limma::normalizeBetweenArrays(as.matrix(assay(se)),
       method = "scale"
     )
-    Y <- tibble::as_tibble(t(exp_normed))
+    Y <- tibble::as_tibble(t(exp_normed), .name_repair = "minimal")
   } else {
-    Y <- tibble::as_tibble(t(as.matrix(assay(se))))
+    Y <- tibble::as_tibble(t(as.matrix(assay(se))), .name_repair = "minimal")
   }
   # simple sanity check of whether Y includes array values
   if (!all(apply(Y, 2, class) == "numeric")) {
@@ -128,17 +128,18 @@ biomarkertmle <- function(se,
   }
 
   # exposure / treatment
-  A <- as.numeric(colData(se)[, varInt])
+  A <- as.numeric(SummarizedExperiment::colData(se)[, varInt])
 
   # baseline covariates
-  W <- tibble::as_tibble(as.data.frame(colData(se)[, -varInt]))
-  if (dim(W)[2] == 0) {
+  W <- tibble::as_tibble(SummarizedExperiment::colData(se)[, -varInt],
+                         .name_repair = "minimal")
+  if (is.null(dim(W)[2])) {
     W <- as.numeric(rep(1, length(A)))
   }
 
   # coerce matrix of baseline covariates to numeric
   if (!all(is.numeric(apply(W, 2, class)))) {
-    W <- tibble::as_tibble(apply(W, 2, as.numeric))
+    W <- tibble::as_tibble(apply(W, 2, as.numeric), .name_repair = "minimal")
   }
 
   # perform multi-level TMLE (of the ATE) for genes as Y
@@ -171,7 +172,8 @@ biomarkertmle <- function(se,
 
   biotmle@ateOut <- as.numeric(biomarkertmle_params)
   if (!ngscounts) {
-    biotmle@tmleOut <- tibble::as_tibble(t(as.matrix(biomarkertmle_eifs)))
+    biotmle@tmleOut <- tibble::as_tibble(t(as.matrix(biomarkertmle_eifs)),
+                                         .name_repair = "minimal")
   } else {
     voom_out$E <- t(as.matrix(biomarkertmle_eifs))
     biotmle@tmleOut <- voom_out
