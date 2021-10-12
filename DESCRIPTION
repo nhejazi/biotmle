@@ -39,8 +39,6 @@ Imports:
     ggsci,
     superheat,
     assertthat,
-    future,
-    doFuture,
     drtmle (>= 1.0.4),
     S4Vectors,
     BiocGenerics,
@@ -60,7 +58,7 @@ Suggests:
     DBI,
     biotmleData (>= 1.1.1)
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 biocViews:
     Regression,
     GeneExpression,

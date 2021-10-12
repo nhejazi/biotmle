@@ -1,3 +1,20 @@
+biotmle 1.15.0 (BioC 3.14):
+- Removal of `future` and `doFuture` for simplification of parallelization. All
+  control of parallel computation now done through `BiocParallel`.
+
+---
+
+biotmle 1.13.0 (BioC 3.13):
+- No significant updates.
+
+---
+
+
+biotmle 1.12.0 (BioC 3.12):
+- No significant updates.
+
+---
+
 biotmle 1.11.0 (BioC 3.11):
 - Change of estimation backend from the `tmle` package to the `drtmle` package.
 - Removal of option to have repeated subjects since unsupported in new backend.
