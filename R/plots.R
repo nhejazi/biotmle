@@ -226,7 +226,7 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
 
   if (type == "top") {
     topbiomarkersFDR <- x@topTable %>%
-      subset(adj.P.Val < FDRcutoff) %>%
+      dplyr::filter(adj.P.Val < FDRcutoff) %>%
       dplyr::arrange(adj.P.Val) %>%
       dplyr::slice(seq_len(top))
 

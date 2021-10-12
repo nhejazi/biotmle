@@ -172,8 +172,12 @@ biomarkertmle <- function(se,
 
   biotmle@ateOut <- as.numeric(biomarkertmle_params)
   if (!ngscounts) {
-    biotmle@tmleOut <- tibble::as_tibble(t(as.matrix(biomarkertmle_eifs)),
-                                         .name_repair = "minimal")
+    biomarker_eifs <- t(as.matrix(biomarkertmle_eifs))
+    colnames(biomarker_eifs) <- colnames(se)
+    biotmle@tmleOut <- tibble::as_tibble(
+      biomarker_eifs,
+      .name_repair = "minimal"
+    )
   } else {
     voom_out$E <- t(as.matrix(biomarkertmle_eifs))
     biotmle@tmleOut <- voom_out
