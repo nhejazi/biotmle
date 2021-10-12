@@ -28,16 +28,16 @@
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
 #'   data.frame() %>%
-#'   dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'   mutate(age = as.numeric(age > median(age))) %>%
 #'   DataFrame()
 #' benz_idx <- which(names(colData(illuminaData)) %in% "benzene")
 #'
 #' biomarkerTMLEout <- biomarkertmle(
 #'   se = illuminaData,
 #'   varInt = benz_idx,
-#'   parallel = FALSE,
+#'   bppar_type = BiocParallel::SerialParam(),
 #'   g_lib = c("SL.mean", "SL.glm"),
-#'   Q_lib = c("SL.bayesglm", "SL.glm")
+#'   Q_lib = c("SL.mean", "SL.glm")
 #' )
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
@@ -112,16 +112,16 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
 #'   data.frame() %>%
-#'   dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'   mutate(age = as.numeric(age > median(age))) %>%
 #'   DataFrame()
 #' benz_idx <- which(names(colData(illuminaData)) %in% "benzene")
 #'
 #' biomarkerTMLEout <- biomarkertmle(
 #'   se = illuminaData,
 #'   varInt = benz_idx,
-#'   parallel = FALSE,
+#'   bppar_type = BiocParallel::SerialParam(),
 #'   g_lib = c("SL.mean", "SL.glm"),
-#'   Q_lib = c("SL.bayesglm", "SL.glm")
+#'   Q_lib = c("SL.mean", "SL.glm")
 #' )
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
@@ -202,21 +202,21 @@ utils::globalVariables(c(
 #'
 #' colData(illuminaData) <- colData(illuminaData) %>%
 #'   data.frame() %>%
-#'   dplyr::mutate(age = as.numeric(age > median(age))) %>%
+#'   mutate(age = as.numeric(age > median(age))) %>%
 #'   DataFrame()
 #' benz_idx <- which(names(colData(illuminaData)) %in% "benzene")
 #'
 #' biomarkerTMLEout <- biomarkertmle(
 #'   se = illuminaData,
 #'   varInt = benz_idx,
-#'   parallel = FALSE,
+#'   bppar_type = BiocParallel::SerialParam(),
 #'   g_lib = c("SL.mean", "SL.glm"),
-#'   Q_lib = c("SL.bayesglm", "SL.glm")
+#'   Q_lib = c("SL.mean", "SL.glm")
 #' )
 #'
 #' limmaTMLEout <- modtest_ic(biotmle = biomarkerTMLEout)
 #'
-#' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 15)
+#' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 10)
 #' }
 heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
                        type = c("top", "all"), top = 25) {
@@ -226,7 +226,7 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
 
   if (type == "top") {
     topbiomarkersFDR <- x@topTable %>%
-      subset(adj.P.Val < FDRcutoff) %>%
+      dplyr::filter(adj.P.Val < FDRcutoff) %>%
       dplyr::arrange(adj.P.Val) %>%
       dplyr::slice(seq_len(top))
 

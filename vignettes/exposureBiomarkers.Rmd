@@ -41,6 +41,7 @@ First, we load the `biotmle` package and the (included) `illuminaData` data set:
 library(dplyr)
 library(biotmle)
 library(biotmleData)
+library(BiocParallel)
 library(SuperLearner)
 library(SummarizedExperiment, quietly=TRUE)
 data(illuminaData)
@@ -63,7 +64,7 @@ do both in just a few lines below:
 # discretize "age" in the phenotype-level data
 colData(illuminaData) <- colData(illuminaData) %>%
   data.frame %>%
-  dplyr::mutate(age = as.numeric(age > median(age))) %>%
+  mutate(age = as.numeric(age > median(age))) %>%
   DataFrame
 benz_idx <- which(names(colData(illuminaData)) %in% "benzene")
 ```
@@ -83,9 +84,13 @@ biotmle_out <- biomarkertmle(se = illuminaData[1:20, ],
                              g_lib = c("SL.mean", "SL.glm"),
                              Q_lib = c("SL.bayesglm", "SL.ranger"),
                              cv_folds = 2,
-                             parallel = FALSE
+                             bppar_type = SerialParam()
                             )
 ```
+
+Note that parallelization is controlled entirely through the [`BiocParallel`
+package](https://bioconductor.org/packages/release/bioc/html/BiocParallel.html),
+and we set `SerialParam()` here for _sequential_ evaluation.
 
 The output of `biomarkertmle` is an object of class `bioTMLE`, containing four
 new slots: (1) `call`, the call to `biomarkertmle`; (2) `topTable`, an empty

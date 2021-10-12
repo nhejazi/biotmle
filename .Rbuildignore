@@ -12,4 +12,5 @@
 ^README\.Rmd$
 ^README\.html$
 ^README-.*\.png$
-
+^LICENSE\.md$
+^\.github$
