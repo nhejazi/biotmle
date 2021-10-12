@@ -30,7 +30,7 @@ Volcano plot of the log-changes in the target causal paramter against the
 log raw p-values from the moderated t-test.
 }
 \examples{
-\dontrun{
+\donttest{
 library(dplyr)
 library(biotmleData)
 library(SuperLearner)

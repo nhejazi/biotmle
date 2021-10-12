@@ -34,7 +34,7 @@ across all subjects. The heatmap produced performs supervised clustering, as
 per Pollard & van der Laan (2008) <doi:10.2202/1544-6115.1404>.
 }
 \examples{
-\dontrun{
+\donttest{
 library(dplyr)
 library(biotmleData)
 library(SummarizedExperiment)

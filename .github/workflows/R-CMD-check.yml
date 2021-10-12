@@ -50,14 +50,20 @@ jobs:
       - name: Install package dependencies
         run: |
           install.packages(c("remotes", "rcmdcheck", "covr", "sessioninfo", "BiocManager"))
-          BiocManager::install()
+          BiocManager::install(c("BiocCheck", "BiocGenerics", "BiocStyle", "S4Vectors", "SummarizedExperiment", "limma", "biotmleData"), ask = FALSE)
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
 
-      - name: Check package
+      - name: R CMD Check package
         run: |
           options(crayon.enabled = TRUE)
           rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
+        shell: Rscript {0}
+
+      - name: BiocCheck package
+        run: |
+          options(crayon.enabled = TRUE)
+          BiocCheck::BiocCheck('.', `no-check-bioc-help`=TRUE, `no-check-formatting`=TRUE)
         shell: Rscript {0}
 
       - name: Upload code coverage

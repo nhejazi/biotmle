@@ -90,7 +90,7 @@ benz_idx <- which(names(colData(illuminaData)) \%in\% "benzene")
 biomarkerTMLEout <- biomarkertmle(
   se = illuminaData[1:2, ],
   varInt = benz_idx,
-  parallel = FALSE,
+  bppar_type = BiocParallel::SerialParam(),
   g_lib = c("SL.mean", "SL.glm"),
   Q_lib = c("SL.bayesglm", "SL.glm")
 )
