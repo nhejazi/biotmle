@@ -69,7 +69,7 @@ utils::globalVariables(c("assay<-"))
 #' biomarkerTMLEout <- biomarkertmle(
 #'   se = illuminaData[1:2, ],
 #'   varInt = benz_idx,
-#'   parallel = FALSE,
+#'   bppar_type = BiocParallel::SerialParam(),
 #'   g_lib = c("SL.mean", "SL.glm"),
 #'   Q_lib = c("SL.bayesglm", "SL.glm")
 #' )
@@ -137,7 +137,7 @@ biomarkertmle <- function(se,
   }
 
   # coerce matrix of baseline covariates to numeric
-  if (!all(apply(W, 2, class) == "numeric")) {
+  if (!all(is.numeric(apply(W, 2, class)))) {
     W <- tibble::as_tibble(apply(W, 2, as.numeric))
   }
 

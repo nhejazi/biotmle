@@ -19,7 +19,7 @@
 #' @method plot bioTMLE
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SuperLearner)
@@ -103,7 +103,7 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #' @export volcano_ic
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SuperLearner)
@@ -194,7 +194,7 @@ utils::globalVariables(c(
 #' @export heatmap_ic
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SummarizedExperiment)

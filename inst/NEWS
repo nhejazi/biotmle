@@ -1,16 +1,34 @@
-biotmle 1.15.0 (BioC 3.14):
+biotmle 1.18.0 (BioC 3.14):
+- Forthcoming.
+
+---
+
+biotmle 1.17.0:
 - Removal of `future` and `doFuture` for simplification of parallelization. All
   control of parallel computation now done through `BiocParallel`.
 
 ---
 
-biotmle 1.13.0 (BioC 3.13):
+biotmle 1.16.0 (BioC 3.13):
 - No significant updates.
 
 ---
 
+biotmle 1.15.0:
+- No significant updates.
 
-biotmle 1.12.0 (BioC 3.12):
+---
+
+biotmle 1.14.0 (BioC 3.12):
+- No significant updates.
+
+---
+biotmle 1.13.0:
+- No significant updates.
+
+---
+
+biotmle 1.12.0:
 - No significant updates.
 
 ---

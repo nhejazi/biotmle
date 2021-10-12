@@ -24,12 +24,12 @@ Description: Tools for differential expression biomarker discovery based on
     biomarkers using a generalization of moderated statistics for use with the
     estimated efficient influence function. The procedure accommodates the use
     of ensemble machine learning for the estimation of nuisance functions.
-Depends: R (>= 3.4)
-License: file LICENSE
+Depends: R (>= 4.1)
+License: MIT
 URL: https://code.nimahejazi.org/biotmle
 BugReports: https://github.com/nhejazi/biotmle/issues
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 Imports:
     stats,
     methods,
