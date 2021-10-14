@@ -17,7 +17,7 @@
 #' @param ... Other arguments passed to \code{\link[limma]{topTable}}.
 #'
 #' @importFrom methods is
-#' @importFrom dplyr "%>%"
+#' @importFrom dplyr "%>%" mutate select
 #' @importFrom stats plogis p.adjust
 #' @importFrom limma lmFit eBayes topTable
 #' @importFrom tibble as_tibble rownames_to_column
@@ -78,14 +78,15 @@ modtest_ic <- function(biotmle,
     sort.by = "none",
     ...
   ) %>%
-    tibble::rownames_to_column(var = "ID") %>%
-    tibble::as_tibble() %>%
-    mutate(
+    tibble::as_tibble(.name_repair = "minimal") %>%
+    dplyr::mutate(
       # remove log-fold change and overwrite average expression with ATE
+      ID = biotmle@NAMES,
       logFC = NULL,
       AveExpr = biotmle@ateOut,
       var_bayes = fit$s2.post / n_obs,
-    )
+    ) %>%
+    dplyr::select(ID, AveExpr, t, P.Value, adj.P.Val, B, var_bayes)
 
   # use logistic distribution as reference for p-values by default
   if (pval_type == "logistic") {
