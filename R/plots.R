@@ -237,10 +237,10 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
     if (any(class(x@tmleOut) %in% "EList")) {
       biomarkerTMLEout_top <- x@tmleOut$E %>%
         data.frame() %>%
-        dplyr::filter(rownames(x@tmleOut) %in% topbiomarkersFDR$ID)
+        dplyr::filter(rownames(x) %in% topbiomarkersFDR$ID)
     } else {
       biomarkerTMLEout_top <- x@tmleOut %>%
-        dplyr::filter(rownames(x@tmleOut) %in% topbiomarkersFDR$ID)
+        dplyr::filter(rownames(x) %in% topbiomarkersFDR$ID)
     }
     plot_title <- paste("Supervised Heatmap of Top", top, "Biomarkers")
   } else {
