@@ -4,13 +4,21 @@
 \alias{heatmap_ic}
 \title{Heatmap for class biotmle}
 \usage{
-heatmap_ic(x, ..., design, FDRcutoff = 0.25, type = c("top", "all"), top = 25)
+heatmap_ic(
+  x,
+  ...,
+  design,
+  FDRcutoff = 0.25,
+  type = c("top", "all"),
+  top = 25,
+  scale = TRUE
+)
 }
 \arguments{
 \item{x}{Object of class \code{biotmle} as produced by an appropriate call
 to \code{biomarkertmle}.}
 
-\item{...}{additional arguments passed to \code{superheat::superheat} as
+\item{...}{additional arguments passed to \code{ggplot2::geom_tile} as
 necessary}
 
 \item{design}{A vector giving the contrast to be displayed in the heatmap.}
@@ -21,11 +29,17 @@ necessary}
 (as defined by FDR-corrected p-value) of biomarkers or all biomarkers.}
 
 \item{top}{Number of identified biomarkers to plot in the heatmap.}
+
+\item{scale}{A \code{logical} indicating whether each biomarker's
+contributions should be standardized (centered and scaled to unit variance)
+across subjects before plotting. Standardizing makes biomarkers measured on
+different scales visually comparable; biomarkers with no variation across
+subjects are centered but not rescaled, so that they remain plottable.}
 }
 \value{
-heatmap (from \pkg{superheat}) using hierarchical clustering to plot
- the changes in the variable importance measure for all subjects across a
- specified top number of biomarkers.
+object of class \code{ggplot} containing a heatmap that uses
+ hierarchical clustering to plot the changes in the variable importance
+ measure for all subjects across a specified top number of biomarkers.
 }
 \description{
 Heatmap of contributions of a select subset of biomarkers to the variable

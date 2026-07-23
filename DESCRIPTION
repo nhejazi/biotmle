@@ -40,7 +40,6 @@ Imports:
     tibble,
     ggplot2,
     ggsci,
-    superheat,
     assertthat,
     drtmle (>= 1.0.4),
     S4Vectors,
@@ -61,7 +60,6 @@ Suggests:
     DBI,
     biotmleData (>= 1.1.1)
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
 biocViews:
     Regression,
     GeneExpression,
@@ -70,3 +68,4 @@ biocViews:
     Microarray,
     RNASeq,
     ImmunoOncology
+Config/roxygen2/version: 8.0.0

@@ -1,5 +1,18 @@
 biotmle 1.18.0 (BioC 3.14):
-- Forthcoming.
+- Removal of the `superheat` dependency, which has been archived on CRAN. The
+  heatmap drawn by `heatmap_ic()` is now built directly with `ggplot2`, so the
+  package no longer depends on any plotting package beyond `ggplot2`, which it
+  already required.
+- `heatmap_ic()` now returns a `ggplot` object, which can be stored and further
+  modified in place, rather than drawing to the active graphics device as a
+  side effect.
+- `heatmap_ic()` gains a `scale` argument controlling whether each biomarker's
+  contributions are standardized across observations before plotting; this
+  replaces the argument of the same name previously forwarded to `superheat`.
+- Arguments passed to `heatmap_ic()` via `...` are now forwarded to
+  `ggplot2::geom_tile()` rather than to `superheat::superheat()`. Calls that
+  relied on `superheat`-specific arguments (e.g., `left.label`,
+  `clustering.method`, `row.dendrogram`) must be updated.
 
 ---
 

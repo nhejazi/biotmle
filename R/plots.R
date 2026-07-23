@@ -8,8 +8,8 @@
 #'  adjusted p-values (adjustment performed via Benjamini-Hochberg)
 #' @param ... additional arguments passed \code{plot} as necessary
 #'
-#' @importFrom ggplot2 ggplot aes geom_histogram guides guide_legend xlab ylab
-#'  ggtitle theme_bw
+#' @importFrom ggplot2 ggplot aes geom_histogram guides guide_legend xlab
+#' @importFrom ggplot2 ylab ggtitle theme_bw
 #'
 #' @return object of class \code{ggplot} containing a histogram of the raw or
 #'  Benjamini-Hochberg corrected p-values (depending on user input).
@@ -89,8 +89,8 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #'  interval.
 #'
 #' @importFrom dplyr "%>%" arrange mutate select filter
-#' @importFrom ggplot2 ggplot aes geom_point guides guide_legend xlab ylab
-#'  ggtitle theme_bw
+#' @importFrom ggplot2 ggplot aes geom_point guides guide_legend xlab
+#' @importFrom ggplot2 ylab ggtitle theme_bw
 #' @importFrom ggsci scale_fill_gsea
 #' @importFrom stats quantile
 #' @importFrom assertthat assert_that
@@ -162,8 +162,31 @@ volcano_ic <- function(biotmle, ate_bound = 1.0, pval_bound = 0.2) {
 
 utils::globalVariables(c(
   "adj.P.Val", ".", "..count..", "P.Value", "color",
-  "AveExpr", "logPval"
+  "AveExpr", "logPval", "subject", "biomarker", "group", "eif_contrib",
+  "ID", "B", "var_bayes"
 ))
+
+#' Order the rows of a matrix by hierarchical clustering
+#'
+#' @param mat A \code{matrix} whose rows are to be ordered.
+#'
+#' @importFrom stats dist hclust
+#'
+#' @return An \code{integer} vector giving the clustered row ordering of
+#'  \code{mat}. Falls back on the original ordering when there are too few rows
+#'  to cluster or when the distance matrix is degenerate.
+#'
+#' @noRd
+cluster_rows <- function(mat) {
+  if (nrow(mat) < 3) {
+    return(seq_len(nrow(mat)))
+  }
+  row_dist <- stats::dist(mat)
+  if (anyNA(row_dist)) {
+    return(seq_len(nrow(mat)))
+  }
+  stats::hclust(row_dist, method = "average")$order
+}
 
 #' Heatmap for class biotmle
 #'
@@ -179,17 +202,23 @@ utils::globalVariables(c(
 #' @param type A \code{character} describing whether to plot only a top number
 #'  (as defined by FDR-corrected p-value) of biomarkers or all biomarkers.
 #' @param top Number of identified biomarkers to plot in the heatmap.
-#' @param ... additional arguments passed to \code{superheat::superheat} as
+#' @param scale A \code{logical} indicating whether each biomarker's
+#'  contributions should be standardized (centered and scaled to unit variance)
+#'  across subjects before plotting. Standardizing makes biomarkers measured on
+#'  different scales visually comparable; biomarkers with no variation across
+#'  subjects are centered but not rescaled, so that they remain plottable.
+#' @param ... additional arguments passed to \code{ggplot2::geom_tile} as
 #'  necessary
 #'
 #' @importFrom dplyr "%>%" arrange filter slice
-#' @importFrom superheat superheat
+#' @importFrom ggplot2 ggplot aes geom_tile facet_grid vars ggtitle xlab
+#' @importFrom ggplot2 ylab scale_fill_gradient2 theme_bw theme element_blank
 #' @importFrom assertthat assert_that
 #' @importFrom methods is
 #'
-#' @return heatmap (from \pkg{superheat}) using hierarchical clustering to plot
-#'  the changes in the variable importance measure for all subjects across a
-#'  specified top number of biomarkers.
+#' @return object of class \code{ggplot} containing a heatmap that uses
+#'  hierarchical clustering to plot the changes in the variable importance
+#'  measure for all subjects across a specified top number of biomarkers.
 #'
 #' @export heatmap_ic
 #'
@@ -219,10 +248,18 @@ utils::globalVariables(c(
 #' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 10)
 #' }
 heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
-                       type = c("top", "all"), top = 25) {
+                       type = c("top", "all"), top = 25, scale = TRUE) {
   # check class since not a generic method
   assertthat::assert_that(is(x, "bioTMLE"))
   type <- match.arg(type)
+
+  # the EIF contributions: biomarkers along rows, subjects along columns
+  eif_mat <- if (any(class(x@tmleOut) %in% "EList")) {
+    as.matrix(x@tmleOut$E)
+  } else {
+    as.matrix(x@tmleOut)
+  }
+  rownames(eif_mat) <- rownames(x)
 
   if (type == "top") {
     topbiomarkersFDR <- x@topTable %>%
@@ -234,34 +271,76 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
       message(paste(top, "biomarkers not found below specified FDR cutoff."))
     }
 
-    if (any(class(x@tmleOut) %in% "EList")) {
-      biomarkerTMLEout_top <- x@tmleOut$E %>%
-        data.frame() %>%
-        dplyr::filter(rownames(x) %in% topbiomarkersFDR$ID)
-    } else {
-      biomarkerTMLEout_top <- x@tmleOut %>%
-        dplyr::filter(rownames(x) %in% topbiomarkersFDR$ID)
-    }
+    eif_mat <- eif_mat[rownames(eif_mat) %in% topbiomarkersFDR$ID, ,
+      drop = FALSE
+    ]
     plot_title <- paste("Supervised Heatmap of Top", top, "Biomarkers")
   } else {
-    if (any(class(x@tmleOut) %in% "EList")) {
-      biomarkerTMLEout_top <- x@tmleOut$E %>%
-        as.data.frame()
-    } else {
-      biomarkerTMLEout_top <- x@tmleOut
-    }
     plot_title <- "Heatmap of Biomarkers with Supervised Clustering"
+  }
+
+  assertthat::assert_that(nrow(eif_mat) > 0)
+  assertthat::assert_that(length(design) == ncol(eif_mat))
+
+  if (is.null(colnames(eif_mat))) {
+    colnames(eif_mat) <- paste0("obs", seq_len(ncol(eif_mat)))
+  }
+
+  # standardize each biomarker across subjects for visual comparability,
+  # leaving biomarkers with no variation untouched to avoid dividing by zero
+  if (scale) {
+    eif_mat <- t(apply(eif_mat, 1, function(bmark) {
+      bmark_sd <- stats::sd(bmark)
+      if (is.na(bmark_sd) || bmark_sd == 0) {
+        return(bmark - mean(bmark))
+      }
+      (bmark - mean(bmark)) / bmark_sd
+    }))
   }
 
   # group labels
   annot <- ifelse(design == 0, "Control", "Treated")
 
-  # build supervised heatmap
-  superheat::superheat(as.matrix(biomarkerTMLEout_top),
-    grid.hline.col = "white", force.grid.hline = TRUE,
-    grid.vline.col = "white", force.grid.vline = TRUE,
-    membership.cols = annot,
-    title = plot_title,
-    ...
+  # supervised clustering: cluster biomarkers across all subjects, then order
+  # subjects by clustering within each exposure group
+  row_levels <- rownames(eif_mat)[cluster_rows(eif_mat)]
+  col_levels <- unlist(lapply(c("Control", "Treated"), function(grp) {
+    grp_mat <- eif_mat[, annot == grp, drop = FALSE]
+    colnames(grp_mat)[cluster_rows(t(grp_mat))]
+  }))
+
+  # as.vector() unrolls the matrix column-wise, so biomarkers vary fastest
+  eif_long <- data.frame(
+    biomarker = factor(rownames(eif_mat), levels = row_levels),
+    subject = factor(rep(colnames(eif_mat), each = nrow(eif_mat)),
+      levels = col_levels
+    ),
+    group = factor(rep(annot, each = nrow(eif_mat)),
+      levels = c("Control", "Treated")
+    ),
+    eif_contrib = as.vector(eif_mat)
   )
+
+  p <- ggplot2::ggplot(
+    eif_long,
+    ggplot2::aes(x = subject, y = biomarker, fill = eif_contrib)
+  ) +
+    ggplot2::geom_tile(colour = "white", ...) +
+    ggplot2::facet_grid(
+      cols = ggplot2::vars(group), scales = "free_x", space = "free_x"
+    ) +
+    ggplot2::scale_fill_gradient2(
+      name = if (scale) "Scaled EIF\ncontribution" else "EIF\ncontribution",
+      midpoint = 0
+    ) +
+    ggplot2::ggtitle(plot_title) +
+    ggplot2::xlab("Observation") +
+    ggplot2::ylab("Biomarker") +
+    ggplot2::theme_bw() +
+    ggplot2::theme(
+      axis.text.x = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank(),
+      panel.grid = ggplot2::element_blank()
+    )
+  return(p)
 }
