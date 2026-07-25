@@ -15,3 +15,5 @@
 ^LICENSE\.md$
 ^\.github$
 ^\.claude$
+^.*\.BiocCheck$
+^.*\.Rcheck$

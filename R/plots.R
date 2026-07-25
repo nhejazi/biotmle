@@ -327,7 +327,7 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
       dplyr::slice(seq_len(top))
 
     if (nrow(topbiomarkersFDR) < top) {
-      message(paste(top, "biomarkers not found below specified FDR cutoff."))
+      message(top, " biomarkers not found below specified FDR cutoff.")
     }
 
     eif_mat <- eif_mat[rownames(eif_mat) %in% topbiomarkersFDR$ID, ,
