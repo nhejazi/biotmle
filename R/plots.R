@@ -166,26 +166,74 @@ utils::globalVariables(c(
   "ID", "B", "var_bayes"
 ))
 
+#' Cluster the rows of a matrix hierarchically
+#'
+#' @param mat A \code{matrix} whose rows are to be clustered.
+#'
+#' @importFrom stats dist hclust
+#'
+#' @return An object of class \code{hclust}, or \code{NULL} when there are too
+#'  few rows to cluster or when the distance matrix is degenerate.
+#'
+#' @noRd
+cluster_fit <- function(mat) {
+  if (nrow(mat) < 3) {
+    return(NULL)
+  }
+  row_dist <- stats::dist(mat)
+  if (anyNA(row_dist)) {
+    return(NULL)
+  }
+  stats::hclust(row_dist, method = "average")
+}
+
 #' Order the rows of a matrix by hierarchical clustering
 #'
 #' @param mat A \code{matrix} whose rows are to be ordered.
 #'
-#' @importFrom stats dist hclust
-#'
 #' @return An \code{integer} vector giving the clustered row ordering of
-#'  \code{mat}. Falls back on the original ordering when there are too few rows
-#'  to cluster or when the distance matrix is degenerate.
+#'  \code{mat}, falling back on the original ordering when \code{mat} cannot be
+#'  clustered.
 #'
 #' @noRd
-cluster_rows <- function(mat) {
-  if (nrow(mat) < 3) {
+cluster_order <- function(mat) {
+  row_clust <- cluster_fit(mat)
+  if (is.null(row_clust)) {
     return(seq_len(nrow(mat)))
   }
-  row_dist <- stats::dist(mat)
-  if (anyNA(row_dist)) {
-    return(seq_len(nrow(mat)))
-  }
-  stats::hclust(row_dist, method = "average")$order
+  row_clust$order
+}
+
+#' Build a row dendrogram panel aligned to a heatmap's discrete y-axis
+#'
+#' @param row_clust An object of class \code{hclust} for the heatmap rows.
+#' @param n_rows A \code{numeric} giving the number of heatmap rows, used to
+#'  match the panel's extent to the heatmap's discrete y-axis.
+#'
+#' @importFrom ggplot2 ggplot aes geom_segment scale_x_reverse
+#' @importFrom ggplot2 scale_y_continuous theme_void .data
+#' @importFrom ggdendro dendro_data segment
+#' @importFrom stats as.dendrogram
+#'
+#' @return An object of class \code{ggplot} containing the dendrogram, drawn
+#'  sideways so that its leaves align with the rows of the heatmap.
+#'
+#' @noRd
+dendrogram_panel <- function(row_clust, n_rows) {
+  dendro_segs <- ggdendro::segment(
+    ggdendro::dendro_data(stats::as.dendrogram(row_clust), type = "rectangle")
+  )
+  # the dendrogram is drawn transposed (x and y swapped) so that its leaves run
+  # vertically, and reversed so that it grows leftward away from the heatmap
+  ggplot2::ggplot(dendro_segs) +
+    ggplot2::geom_segment(ggplot2::aes(
+      x = .data$y, y = .data$x, xend = .data$yend, yend = .data$xend
+    )) +
+    ggplot2::scale_x_reverse(expand = c(0, 0)) +
+    ggplot2::scale_y_continuous(
+      limits = c(0.5, n_rows + 0.5), expand = c(0, 0)
+    ) +
+    ggplot2::theme_void()
 }
 
 #' Heatmap for class biotmle
@@ -207,18 +255,28 @@ cluster_rows <- function(mat) {
 #'  across subjects before plotting. Standardizing makes biomarkers measured on
 #'  different scales visually comparable; biomarkers with no variation across
 #'  subjects are centered but not rescaled, so that they remain plottable.
+#' @param row_dendrogram A \code{logical} indicating whether the hierarchical
+#'  clustering of the biomarkers should additionally be drawn as a dendrogram
+#'  alongside the heatmap. Biomarkers are ordered by this clustering whether or
+#'  not the dendrogram itself is drawn. When there are too few biomarkers to
+#'  cluster, the dendrogram is silently omitted.
 #' @param ... additional arguments passed to \code{ggplot2::geom_tile} as
 #'  necessary
 #'
 #' @importFrom dplyr "%>%" arrange filter slice
 #' @importFrom ggplot2 ggplot aes geom_tile facet_grid vars ggtitle xlab
 #' @importFrom ggplot2 ylab scale_fill_gradient2 theme_bw theme element_blank
+#' @importFrom ggplot2 scale_y_discrete
+#' @importFrom patchwork wrap_plots plot_annotation
 #' @importFrom assertthat assert_that
 #' @importFrom methods is
 #'
 #' @return object of class \code{ggplot} containing a heatmap that uses
 #'  hierarchical clustering to plot the changes in the variable importance
-#'  measure for all subjects across a specified top number of biomarkers.
+#'  measure for all subjects across a specified top number of biomarkers. When
+#'  \code{row_dendrogram} is \code{TRUE}, the returned object is a
+#'  \pkg{patchwork} composition of the dendrogram and the heatmap, which still
+#'  inherits from \code{ggplot}.
 #'
 #' @export heatmap_ic
 #'
@@ -248,7 +306,8 @@ cluster_rows <- function(mat) {
 #' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 10)
 #' }
 heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
-                       type = c("top", "all"), top = 25, scale = TRUE) {
+                       type = c("top", "all"), top = 25, scale = TRUE,
+                       row_dendrogram = FALSE) {
   # check class since not a generic method
   assertthat::assert_that(is(x, "bioTMLE"))
   type <- match.arg(type)
@@ -303,10 +362,16 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
 
   # supervised clustering: cluster biomarkers across all subjects, then order
   # subjects by clustering within each exposure group
-  row_levels <- rownames(eif_mat)[cluster_rows(eif_mat)]
+  row_clust <- cluster_fit(eif_mat)
+  row_order <- if (is.null(row_clust)) {
+    seq_len(nrow(eif_mat))
+  } else {
+    row_clust$order
+  }
+  row_levels <- rownames(eif_mat)[row_order]
   col_levels <- unlist(lapply(c("Control", "Treated"), function(grp) {
     grp_mat <- eif_mat[, annot == grp, drop = FALSE]
-    colnames(grp_mat)[cluster_rows(t(grp_mat))]
+    colnames(grp_mat)[cluster_order(t(grp_mat))]
   }))
 
   # as.vector() unrolls the matrix column-wise, so biomarkers vary fastest
@@ -333,6 +398,9 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
       name = if (scale) "Scaled EIF\ncontribution" else "EIF\ncontribution",
       midpoint = 0
     ) +
+    # tiles are flush with the panel edge so that a dendrogram drawn alongside
+    # lines up with the rows exactly
+    ggplot2::scale_y_discrete(expand = c(0, 0)) +
     ggplot2::ggtitle(plot_title) +
     ggplot2::xlab("Observation") +
     ggplot2::ylab("Biomarker") +
@@ -342,5 +410,16 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
       axis.ticks.x = ggplot2::element_blank(),
       panel.grid = ggplot2::element_blank()
     )
-  return(p)
+
+  if (!row_dendrogram || is.null(row_clust)) {
+    return(p)
+  }
+
+  # the title is promoted to the composition so that it spans both panels
+  # rather than sitting over the narrow dendrogram alone
+  p_dendro <- dendrogram_panel(row_clust, nrow(eif_mat))
+  patchwork::wrap_plots(p_dendro, p + ggplot2::ggtitle(NULL),
+    widths = c(1, 4)
+  ) +
+    patchwork::plot_annotation(title = plot_title)
 }

@@ -11,7 +11,8 @@ heatmap_ic(
   FDRcutoff = 0.25,
   type = c("top", "all"),
   top = 25,
-  scale = TRUE
+  scale = TRUE,
+  row_dendrogram = FALSE
 )
 }
 \arguments{
@@ -35,11 +36,20 @@ contributions should be standardized (centered and scaled to unit variance)
 across subjects before plotting. Standardizing makes biomarkers measured on
 different scales visually comparable; biomarkers with no variation across
 subjects are centered but not rescaled, so that they remain plottable.}
+
+\item{row_dendrogram}{A \code{logical} indicating whether the hierarchical
+clustering of the biomarkers should additionally be drawn as a dendrogram
+alongside the heatmap. Biomarkers are ordered by this clustering whether or
+not the dendrogram itself is drawn. When there are too few biomarkers to
+cluster, the dendrogram is silently omitted.}
 }
 \value{
 object of class \code{ggplot} containing a heatmap that uses
  hierarchical clustering to plot the changes in the variable importance
- measure for all subjects across a specified top number of biomarkers.
+ measure for all subjects across a specified top number of biomarkers. When
+ \code{row_dendrogram} is \code{TRUE}, the returned object is a
+ \pkg{patchwork} composition of the dendrogram and the heatmap, which still
+ inherits from \code{ggplot}.
 }
 \description{
 Heatmap of contributions of a select subset of biomarkers to the variable

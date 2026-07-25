@@ -106,6 +106,45 @@ test_that("heatmap_ic rejects a design of the wrong length", {
   )
 })
 
+test_that("heatmap_ic draws a dendrogram when row_dendrogram = TRUE", {
+  p <- heatmap_ic(
+    x = biotmle_obj, design = design, type = "all", row_dendrogram = TRUE
+  )
+  expect_s3_class(p, "patchwork")
+  expect_s3_class(p, "ggplot")
+  expect_error(ggplot2::ggplot_build(p), NA)
+})
+
+test_that("heatmap_ic omits the dendrogram by default", {
+  p <- heatmap_ic(x = biotmle_obj, design = design, type = "all")
+  expect_false(inherits(p, "patchwork"))
+})
+
+test_that("row_dendrogram does not change the biomarker ordering", {
+  p_plain <- heatmap_ic(x = biotmle_obj, design = design, type = "all")
+  p_dendro <- heatmap_ic(
+    x = biotmle_obj, design = design, type = "all", row_dendrogram = TRUE
+  )
+  expect_equal(
+    levels(p_plain$data$biomarker),
+    levels(p_dendro[[2]]$data$biomarker)
+  )
+})
+
+test_that("heatmap_ic omits the dendrogram when clustering is impossible", {
+  too_few <- .biotmle(se[seq_len(2), ],
+    call = quote(biomarkertmle()),
+    ateOut = rep(NA_real_, 2),
+    tmleOut = as.data.frame(eif_mat[seq_len(2), , drop = FALSE]),
+    topTable = top_table[seq_len(2), ]
+  )
+  p <- heatmap_ic(
+    x = too_few, design = design, type = "all", row_dendrogram = TRUE
+  )
+  expect_false(inherits(p, "patchwork"))
+  expect_error(ggplot2::ggplot_build(p), NA)
+})
+
 test_that("volcano_ic returns an object of class ggplot", {
   vp_table <- data.frame(
     ID = bmark_ids,

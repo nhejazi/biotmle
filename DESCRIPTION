@@ -40,6 +40,8 @@ Imports:
     tibble,
     ggplot2,
     ggsci,
+    ggdendro,
+    patchwork,
     assertthat,
     drtmle (>= 1.0.4),
     S4Vectors,
