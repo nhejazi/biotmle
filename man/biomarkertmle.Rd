@@ -43,7 +43,7 @@ for possible types and their descriptions. The default for this argument is
 \code{\link[BiocParallel]{MulticoreParam}}, for multicore evaluation.}
 
 \item{bppar_debug}{A \code{logical} indicating whether or not to rely upon
-pkg{BiocParallel}. Setting this argument to \code{TRUE}, replaces the call
+\pkg{BiocParallel}. Setting this argument to \code{TRUE}, replaces the call
 to \code{\link[BiocParallel]{bplapply}} by a call to \code{lapply}, which
 significantly reduces the overhead of debugging. Note that invoking this
 option overrides all other parallelization arguments.}

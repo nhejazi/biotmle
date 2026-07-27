@@ -26,7 +26,7 @@ utils::globalVariables(c("assay<-"))
 #'  for possible types and their descriptions. The default for this argument is
 #'  \code{\link[BiocParallel]{MulticoreParam}}, for multicore evaluation.
 #' @param bppar_debug A \code{logical} indicating whether or not to rely upon
-#'  pkg{BiocParallel}. Setting this argument to \code{TRUE}, replaces the call
+#'  \pkg{BiocParallel}. Setting this argument to \code{TRUE}, replaces the call
 #'  to \code{\link[BiocParallel]{bplapply}} by a call to \code{lapply}, which
 #'  significantly reduces the overhead of debugging. Note that invoking this
 #'  option overrides all other parallelization arguments.
@@ -73,21 +73,27 @@ utils::globalVariables(c("assay<-"))
 #'   g_lib = c("SL.mean", "SL.glm"),
 #'   Q_lib = c("SL.mean", "SL.glm")
 #' )
-biomarkertmle <- function(se,
-                          varInt,
-                          normalized = TRUE,
-                          ngscounts = FALSE,
-                          bppar_type = BiocParallel::MulticoreParam(),
-                          bppar_debug = FALSE,
-                          cv_folds = 1,
-                          g_lib = c(
-                            "SL.mean", "SL.glm", "SL.bayesglm"
-                          ),
-                          Q_lib = c(
-                            "SL.mean", "SL.bayesglm", "SL.earth", "SL.ranger"
-                          ),
-                          ...) {
-
+biomarkertmle <- function(
+  se,
+  varInt,
+  normalized = TRUE,
+  ngscounts = FALSE,
+  bppar_type = BiocParallel::MulticoreParam(),
+  bppar_debug = FALSE,
+  cv_folds = 1,
+  g_lib = c(
+    "SL.mean",
+    "SL.glm",
+    "SL.bayesglm"
+  ),
+  Q_lib = c(
+    "SL.mean",
+    "SL.bayesglm",
+    "SL.earth",
+    "SL.ranger"
+  ),
+  ...
+) {
   # catch input and invoke S4 class constructor for "bioTMLE" object
   call <- match.call(expand.dots = TRUE)
   biotmle <- .biotmle(
@@ -115,7 +121,8 @@ biomarkertmle <- function(se,
   # TMLE procedure to identify biomarkers based on an EXPOSURE
   if (!ngscounts && !normalized) {
     # median normalization
-    exp_normed <- limma::normalizeBetweenArrays(as.matrix(assay(se)),
+    exp_normed <- limma::normalizeBetweenArrays(
+      as.matrix(assay(se)),
       method = "scale"
     )
     Y <- tibble::as_tibble(t(exp_normed), .name_repair = "minimal")
@@ -123,16 +130,16 @@ biomarkertmle <- function(se,
     Y <- tibble::as_tibble(t(as.matrix(assay(se))), .name_repair = "minimal")
   }
   # simple sanity check of whether Y includes array values
-  if (!all(apply(Y, 2, class) == "numeric")) {
-    stop("Warning - values in Y do not appear to be numeric.")
-  }
+  stopifnot(all(apply(Y, 2, class) == "numeric"))
 
   # exposure / treatment
   A <- as.numeric(SummarizedExperiment::colData(se)[, varInt])
 
   # baseline covariates
-  W <- tibble::as_tibble(SummarizedExperiment::colData(se)[, -varInt],
-                         .name_repair = "minimal")
+  W <- tibble::as_tibble(
+    SummarizedExperiment::colData(se)[, -varInt],
+    .name_repair = "minimal"
+  )
   if (is.null(dim(W)[2])) {
     W <- as.numeric(rep(1, length(A)))
   }
@@ -144,7 +151,8 @@ biomarkertmle <- function(se,
 
   # perform multi-level TMLE (of the ATE) for genes as Y
   if (!bppar_debug) {
-    biomarkertmle_out <- BiocParallel::bplapply(Y[, seq_along(Y)],
+    biomarkertmle_out <- BiocParallel::bplapply(
+      Y[, seq_along(Y)],
       exp_biomarkertmle,
       W = W,
       A = A,
@@ -154,7 +162,8 @@ biomarkertmle <- function(se,
       ...
     )
   } else {
-    biomarkertmle_out <- lapply(Y[, seq_along(Y)],
+    biomarkertmle_out <- lapply(
+      Y[, seq_along(Y)],
       exp_biomarkertmle,
       W = W,
       A = A,
@@ -216,35 +225,31 @@ biomarkertmle <- function(se,
 #' @return TMLE-based estimate of the relationship between biomarker expression
 #'  and changes in an exposure variable, computed iteratively and saved in the
 #'  \code{tmleOut} slot in a \code{biotmle} object.
-exp_biomarkertmle <- function(Y,
-                              A,
-                              W,
-                              g_lib,
-                              Q_lib,
-                              cv_folds,
-                              ...) {
+exp_biomarkertmle <- function(Y, A, W, g_lib, Q_lib, cv_folds, ...) {
   # check the case that Y is passed in as a column of a data.frame
-  if (any(class(Y) == "data.frame")) Y <- as.numeric(unlist(Y[, 1]))
-  if (any(class(A) == "data.frame")) A <- as.numeric(unlist(A[, 1]))
+  if (is.data.frame(Y)) {
+    Y <- as.numeric(unlist(Y[, 1]))
+  }
+  if (is.data.frame(A)) {
+    A <- as.numeric(unlist(A[, 1]))
+  }
   assertthat::assert_that(length(unique(A)) > 1)
 
-  # fit standard (possibly CV) TML estimator (n.b., guard = NULL)
+  # fit TML estimator (n.b., guard = NULL to turn off DR inference)
   a_0 <- sort(unique(A[!is.na(A)]))
-  suppressWarnings(
-    tmle_fit <- drtmle::drtmle(
-      Y = Y,
-      A = A,
-      W = W,
-      a_0 = a_0,
-      SL_g = g_lib,
-      SL_Q = Q_lib,
-      cvFolds = cv_folds,
-      stratify = TRUE,
-      guard = NULL,
-      parallel = FALSE,
-      use_future = FALSE,
-      ...
-    )
+  tmle_fit <- drtmle::drtmle(
+    Y = Y,
+    A = A,
+    W = W,
+    a_0 = a_0,
+    SL_g = g_lib,
+    SL_Q = Q_lib,
+    cvFolds = cv_folds,
+    stratify = TRUE,
+    guard = NULL,
+    parallel = FALSE,
+    use_future = FALSE,
+    ...
   )
 
   # compute ATE and estimated EIF by delta method

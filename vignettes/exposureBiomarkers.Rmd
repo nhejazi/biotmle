@@ -163,8 +163,7 @@ designVar <- as.data.frame(colData(illuminaData))[, benz_idx]
 designVar <- as.numeric(designVar == max(designVar))
 
 # build heatmap
-heatmap_ic(x = modtmle_out, left.label = "none", scale = TRUE,
-           clustering.method = "hierarchical", row.dendrogram = TRUE,
+heatmap_ic(x = modtmle_out, scale = TRUE, row_dendrogram = TRUE,
            design = designVar, FDRcutoff = 1, top = 10)
 ```
 

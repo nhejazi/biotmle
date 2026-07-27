@@ -4,13 +4,22 @@
 \alias{heatmap_ic}
 \title{Heatmap for class biotmle}
 \usage{
-heatmap_ic(x, ..., design, FDRcutoff = 0.25, type = c("top", "all"), top = 25)
+heatmap_ic(
+  x,
+  ...,
+  design,
+  FDRcutoff = 0.25,
+  type = c("top", "all"),
+  top = 25,
+  scale = TRUE,
+  row_dendrogram = FALSE
+)
 }
 \arguments{
 \item{x}{Object of class \code{biotmle} as produced by an appropriate call
 to \code{biomarkertmle}.}
 
-\item{...}{additional arguments passed to \code{superheat::superheat} as
+\item{...}{additional arguments passed to \code{ggplot2::geom_tile} as
 necessary}
 
 \item{design}{A vector giving the contrast to be displayed in the heatmap.}
@@ -21,11 +30,26 @@ necessary}
 (as defined by FDR-corrected p-value) of biomarkers or all biomarkers.}
 
 \item{top}{Number of identified biomarkers to plot in the heatmap.}
+
+\item{scale}{A \code{logical} indicating whether each biomarker's
+contributions should be standardized (centered and scaled to unit variance)
+across subjects before plotting. Standardizing makes biomarkers measured on
+different scales visually comparable; biomarkers with no variation across
+subjects are centered but not rescaled, so that they remain plottable.}
+
+\item{row_dendrogram}{A \code{logical} indicating whether the hierarchical
+clustering of the biomarkers should additionally be drawn as a dendrogram
+alongside the heatmap. Biomarkers are ordered by this clustering whether or
+not the dendrogram itself is drawn. When there are too few biomarkers to
+cluster, the dendrogram is silently omitted.}
 }
 \value{
-heatmap (from \pkg{superheat}) using hierarchical clustering to plot
- the changes in the variable importance measure for all subjects across a
- specified top number of biomarkers.
+object of class \code{ggplot} containing a heatmap that uses
+ hierarchical clustering to plot the changes in the variable importance
+ measure for all subjects across a specified top number of biomarkers. When
+ \code{row_dendrogram} is \code{TRUE}, the returned object is a
+ \pkg{patchwork} composition of the dendrogram and the heatmap, which still
+ inherits from \code{ggplot}.
 }
 \description{
 Heatmap of contributions of a select subset of biomarkers to the variable
@@ -34,7 +58,7 @@ across all subjects. The heatmap produced performs supervised clustering, as
 per Pollard & van der Laan (2008) <doi:10.2202/1544-6115.1404>.
 }
 \examples{
-\dontrun{
+\donttest{
 library(dplyr)
 library(biotmleData)
 library(SummarizedExperiment)

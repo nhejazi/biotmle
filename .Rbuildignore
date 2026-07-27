@@ -14,3 +14,6 @@
 ^README-.*\.png$
 ^LICENSE\.md$
 ^\.github$
+^\.claude$
+^.*\.BiocCheck$
+^.*\.Rcheck$

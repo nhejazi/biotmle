@@ -1,6 +1,6 @@
 Package: biotmle
 Title: Targeted Learning with Moderated Statistics for Biomarker Discovery
-Version: 1.37.0
+Version: 1.37.1
 Authors@R: c(
     person("Nima", "Hejazi", email = "nh@nimahejazi.org",
            role = c("aut", "cre", "cph"),
@@ -27,7 +27,7 @@ Description: Tools for differential expression biomarker discovery based on
     biomarkers using a generalization of moderated statistics for use with the
     estimated efficient influence function. The procedure accommodates the use
     of ensemble machine learning for the estimation of nuisance functions.
-Depends: R (>= 4.0)
+Depends: R (>= 4.6.0)
 License: MIT + file LICENSE
 URL: https://code.nimahejazi.org/biotmle
 BugReports: https://github.com/nhejazi/biotmle/issues
@@ -40,7 +40,8 @@ Imports:
     tibble,
     ggplot2,
     ggsci,
-    superheat,
+    ggdendro,
+    patchwork,
     assertthat,
     drtmle (>= 1.0.4),
     S4Vectors,
@@ -61,7 +62,6 @@ Suggests:
     DBI,
     biotmleData (>= 1.1.1)
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
 biocViews:
     Regression,
     GeneExpression,
@@ -70,3 +70,4 @@ biocViews:
     Microarray,
     RNASeq,
     ImmunoOncology
+Config/roxygen2/version: 8.0.0

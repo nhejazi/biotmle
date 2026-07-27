@@ -1,5 +1,28 @@
-biotmle 1.18.0 (BioC 3.14):
-- Forthcoming.
+biotmle 1.37.1 (BioC 3.24):
+- Removal of the `superheat` dependency, which has been archived on CRAN. The
+  heatmap drawn by `heatmap_ic()` is now built directly with `ggplot2`.
+- `heatmap_ic()` gains a `row_dendrogram` argument, which restores the row
+  dendrogram previously available through `superheat`. Biomarkers are ordered
+  by hierarchical clustering whether or not the dendrogram is drawn, so this
+  argument affects only the display. It defaults to `FALSE`, matching the
+  default of the `superheat` argument it replaces. Drawing the dendrogram
+  introduces dependencies on `ggdendro` and `patchwork`.
+- `heatmap_ic()` now returns a `ggplot` object, which can be stored and further
+  modified in place, rather than drawing to the active graphics device as a
+  side effect.
+- `heatmap_ic()` gains a `scale` argument controlling whether each biomarker's
+  contributions are standardized across observations before plotting; this
+  replaces the argument of the same name previously forwarded to `superheat`.
+- Arguments passed to `heatmap_ic()` via `...` are now forwarded to
+  `ggplot2::geom_tile()` rather than to `superheat::superheat()`. Calls that
+  relied on `superheat`-specific arguments (e.g., `left.label`,
+  `clustering.method`, `row.dendrogram`) must be updated.
+
+---
+
+biotmle 1.18.0 (BioC 3.14) through 1.37.0 (BioC 3.24):
+- No significant updates; these version numbers reflect the automatic version
+  increments applied by Bioconductor at each release cycle.
 
 ---
 

@@ -3,3 +3,8 @@
 .RData
 vignettes/*.html
 README.html
+Rplots.pdf
+**/Rplots.pdf
+*.tar.gz
+*.Rcheck/
+*.BiocCheck/
