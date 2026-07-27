@@ -19,7 +19,7 @@
 #' @method plot bioTMLE
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SuperLearner)
@@ -47,9 +47,14 @@
 plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
   if (type == "pvals_raw") {
     p <- ggplot2::ggplot(x@topTable, ggplot2::aes(P.Value)) +
-      ggplot2::geom_histogram(ggplot2::aes(
-        y = ..count..,
-      ), colour = "white", na.rm = TRUE, binwidth = 0.025) +
+      ggplot2::geom_histogram(
+        ggplot2::aes(
+          y = ..count..,
+        ),
+        colour = "white",
+        na.rm = TRUE,
+        binwidth = 0.025
+      ) +
       ggplot2::ggtitle("Histogram of raw p-values") +
       ggplot2::xlab("magnitude of raw p-values")
   } else if (type == "pvals_adj") {
@@ -57,9 +62,14 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
       as.data.frame(x@topTable),
       ggplot2::aes(adj.P.Val)
     ) +
-      ggplot2::geom_histogram(ggplot2::aes(
-        y = ..count..,
-      ), colour = "white", na.rm = TRUE, binwidth = 0.025) +
+      ggplot2::geom_histogram(
+        ggplot2::aes(
+          y = ..count..,
+        ),
+        colour = "white",
+        na.rm = TRUE,
+        binwidth = 0.025
+      ) +
       ggplot2::ggtitle("Histogram of BH-corrected FDR p-values") +
       ggplot2::xlab("magnitude of BH-corrected p-values")
   }
@@ -103,7 +113,7 @@ plot.bioTMLE <- function(x, ..., type = "pvals_adj") {
 #' @export volcano_ic
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SuperLearner)
@@ -137,15 +147,17 @@ volcano_ic <- function(biotmle, ate_bound = 1.0, pval_bound = 0.2) {
     dplyr::mutate(
       AveExpr = I(AveExpr),
       logPval = -log10(P.Value),
-      color = ifelse((AveExpr > ate_bound) & (adj.P.Val < pval_bound), "1",
-        ifelse((AveExpr < -ate_bound) & (adj.P.Val < pval_bound),
-          "-1", "0"
-        )
+      color = ifelse(
+        (AveExpr > ate_bound) & (adj.P.Val < pval_bound),
+        "1",
+        ifelse((AveExpr < -ate_bound) & (adj.P.Val < pval_bound), "-1", "0")
       )
     ) %>%
     dplyr::select(which(colnames(.) %in% c("AveExpr", "logPval", "color"))) %>%
-    dplyr::filter((AveExpr > stats::quantile(AveExpr, probs = 0.05)) &
-      AveExpr < stats::quantile(AveExpr, probs = 0.95))
+    dplyr::filter(
+      (AveExpr > stats::quantile(AveExpr, probs = 0.05)) &
+        AveExpr < stats::quantile(AveExpr, probs = 0.95)
+    )
 
   p <- ggplot2::ggplot(tt_volcano, ggplot2::aes(x = AveExpr, y = logPval)) +
     ggplot2::geom_point(aes(colour = color)) +
@@ -161,9 +173,20 @@ volcano_ic <- function(biotmle, ate_bound = 1.0, pval_bound = 0.2) {
 ################################################################################
 
 utils::globalVariables(c(
-  "adj.P.Val", ".", "..count..", "P.Value", "color",
-  "AveExpr", "logPval", "subject", "biomarker", "group", "eif_contrib",
-  "ID", "B", "var_bayes"
+  "adj.P.Val",
+  ".",
+  "..count..",
+  "P.Value",
+  "color",
+  "AveExpr",
+  "logPval",
+  "subject",
+  "biomarker",
+  "group",
+  "eif_contrib",
+  "ID",
+  "B",
+  "var_bayes"
 ))
 
 #' Cluster the rows of a matrix hierarchically
@@ -227,11 +250,15 @@ dendrogram_panel <- function(row_clust, n_rows) {
   # vertically, and reversed so that it grows leftward away from the heatmap
   ggplot2::ggplot(dendro_segs) +
     ggplot2::geom_segment(ggplot2::aes(
-      x = .data$y, y = .data$x, xend = .data$yend, yend = .data$xend
+      x = .data$y,
+      y = .data$x,
+      xend = .data$yend,
+      yend = .data$xend
     )) +
     ggplot2::scale_x_reverse(expand = c(0, 0)) +
     ggplot2::scale_y_continuous(
-      limits = c(0.5, n_rows + 0.5), expand = c(0, 0)
+      limits = c(0.5, n_rows + 0.5),
+      expand = c(0, 0)
     ) +
     ggplot2::theme_void()
 }
@@ -281,7 +308,7 @@ dendrogram_panel <- function(row_clust, n_rows) {
 #' @export heatmap_ic
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' library(dplyr)
 #' library(biotmleData)
 #' library(SummarizedExperiment)
@@ -305,9 +332,16 @@ dendrogram_panel <- function(row_clust, n_rows) {
 #'
 #' heatmap_ic(x = limmaTMLEout, design = design, FDRcutoff = 0.05, top = 10)
 #' }
-heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
-                       type = c("top", "all"), top = 25, scale = TRUE,
-                       row_dendrogram = FALSE) {
+heatmap_ic <- function(
+  x,
+  ...,
+  design,
+  FDRcutoff = 0.25,
+  type = c("top", "all"),
+  top = 25,
+  scale = TRUE,
+  row_dendrogram = FALSE
+) {
   # check class since not a generic method
   assertthat::assert_that(is(x, "bioTMLE"))
   type <- match.arg(type)
@@ -330,7 +364,9 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
       message(top, " biomarkers not found below specified FDR cutoff.")
     }
 
-    eif_mat <- eif_mat[rownames(eif_mat) %in% topbiomarkersFDR$ID, ,
+    eif_mat <- eif_mat[
+      rownames(eif_mat) %in% topbiomarkersFDR$ID,
+      ,
       drop = FALSE
     ]
     plot_title <- paste("Supervised Heatmap of Top", top, "Biomarkers")
@@ -377,10 +413,12 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
   # as.vector() unrolls the matrix column-wise, so biomarkers vary fastest
   eif_long <- data.frame(
     biomarker = factor(rownames(eif_mat), levels = row_levels),
-    subject = factor(rep(colnames(eif_mat), each = nrow(eif_mat)),
+    subject = factor(
+      rep(colnames(eif_mat), each = nrow(eif_mat)),
       levels = col_levels
     ),
-    group = factor(rep(annot, each = nrow(eif_mat)),
+    group = factor(
+      rep(annot, each = nrow(eif_mat)),
       levels = c("Control", "Treated")
     ),
     eif_contrib = as.vector(eif_mat)
@@ -392,7 +430,9 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
   ) +
     ggplot2::geom_tile(colour = "white", ...) +
     ggplot2::facet_grid(
-      cols = ggplot2::vars(group), scales = "free_x", space = "free_x"
+      cols = ggplot2::vars(group),
+      scales = "free_x",
+      space = "free_x"
     ) +
     ggplot2::scale_fill_gradient2(
       name = if (scale) "Scaled EIF\ncontribution" else "EIF\ncontribution",
@@ -418,7 +458,9 @@ heatmap_ic <- function(x, ..., design, FDRcutoff = 0.25,
   # the title is promoted to the composition so that it spans both panels
   # rather than sitting over the narrow dendrogram alone
   p_dendro <- dendrogram_panel(row_clust, nrow(eif_mat))
-  patchwork::wrap_plots(p_dendro, p + ggplot2::ggtitle(NULL),
+  patchwork::wrap_plots(
+    p_dendro,
+    p + ggplot2::ggtitle(NULL),
     widths = c(1, 4)
   ) +
     patchwork::plot_annotation(title = plot_title)

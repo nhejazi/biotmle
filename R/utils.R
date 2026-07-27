@@ -79,6 +79,28 @@ setClassUnion(
 #' @return contents of \code{tmleOut} slot of object of class \code{biotmle}.
 #'
 #' @export
+#'
+#' @examples
+#' library(dplyr)
+#' library(biotmleData)
+#' library(SuperLearner)
+#' library(SummarizedExperiment)
+#' data(illuminaData)
+#'
+#' colData(illuminaData) <- colData(illuminaData) %>%
+#'   data.frame() %>%
+#'   mutate(age = as.numeric(age > median(age))) %>%
+#'   DataFrame()
+#' benz_idx <- which(names(colData(illuminaData)) %in% "benzene")
+#'
+#' biomarkerTMLEout <- biomarkertmle(
+#'   se = illuminaData[1:2, ],
+#'   varInt = benz_idx,
+#'   bppar_type = BiocParallel::SerialParam(),
+#'   g_lib = c("SL.mean", "SL.glm"),
+#'   Q_lib = c("SL.mean", "SL.glm")
+#' )
+#' eif(biomarkerTMLEout)
 eif <- function(object) {
   assertthat::assert_that(is(object, "bioTMLE"))
   object@tmleOut
@@ -96,6 +118,28 @@ eif <- function(object) {
 #' @return contents of \code{topTable} slot of object of class \code{biotmle}.
 #'
 #' @export
+#'
+#' @examples
+#' library(dplyr)
+#' library(biotmleData)
+#' library(SuperLearner)
+#' library(SummarizedExperiment)
+#' data(illuminaData)
+#'
+#' colData(illuminaData) <- colData(illuminaData) %>%
+#'   data.frame() %>%
+#'   mutate(age = as.numeric(age > median(age))) %>%
+#'   DataFrame()
+#' benz_idx <- which(names(colData(illuminaData)) %in% "benzene")
+#'
+#' biomarkerTMLEout <- biomarkertmle(
+#'   se = illuminaData[1:2, ],
+#'   varInt = benz_idx,
+#'   bppar_type = BiocParallel::SerialParam(),
+#'   g_lib = c("SL.mean", "SL.glm"),
+#'   Q_lib = c("SL.mean", "SL.glm")
+#' )
+#' toptable(biomarkerTMLEout)
 toptable <- function(object) {
   assertthat::assert_that(is(object, "bioTMLE"))
   object@topTable

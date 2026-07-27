@@ -23,7 +23,7 @@ object of class \code{ggplot} containing a histogram of the raw or
 Histogram of raw or FDR-adjusted p-values from the moderated t-test.
 }
 \examples{
-\dontrun{
+\donttest{
 library(dplyr)
 library(biotmleData)
 library(SuperLearner)
